@@ -5,7 +5,7 @@
 <title>Center Information</title>
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 <body>
@@ -43,26 +43,26 @@
             <h3>facilities</h3>
             <p>facility 1, facility 2, facility 3, facility 4, facility 5</p>
             <h3>center description</h3>
-			<p>few words describing the center</p>
- 			<span onClick="show('center_info')"><a href="#">edit</a></span> 
+			      <p>few words describing the center</p>
+ 			      <span onClick="show('center_info')"><a href="#">edit</a></span> 
             <div id="center_info" style="display:none">
               <form id="add-center-form">
- 		      <div class="form-group">            
-			    <input type="text" id="center_name" placeholder="Center Name" required>
-		      </div>
-              <div class="form-group">            
-			  	<input type="text" id="center_location" placeholder="Center Location" required>
-		      </div> 
-         	  <p class="subtitle">separate facilities with spaces</p>
-          	  <div class="form-group">            
-			    <input type="text" id="center_facilities" placeholder="Facilities In Center" required>
-		      </div> 
-           	  <p class="subtitle">describe center in few words</p>
-              <div class="form-group">
-           	    <textarea class="form-control"></textarea>
-              </div> 
-              <input id="add-center" type="submit" value="apply changes" class="btn btn-primary">
-           	</form>	
+ 		            <div class="form-group">            
+			            <input type="text" id="center_name" placeholder="Center Name" required>
+		            </div>
+                <div class="form-group">            
+			  	        <input type="text" id="center_location" placeholder="Center Location" required>
+		            </div> 
+         	      <p class="subtitle">separate facilities with spaces</p>
+          	    <div class="form-group">            
+			            <input type="text" id="center_facilities" placeholder="Facilities In Center" required>
+		            </div> 
+                <p class="subtitle">describe center in few words</p>
+                <div class="form-group">
+                  <textarea class="form-control"></textarea>
+                </div> 
+                <input id="add-center" type="submit" value="apply changes" class="btn btn-primary">
+              </form>	
             </div>
           </div>
         </div>
@@ -71,57 +71,52 @@
             <div class="logo"><strong class="text-primary">events scheduled</strong></div>
             <ul class="list">
               <li class="item"><span onClick="show('event_info')">event 1</span><span class="trash">x</span></li>
-              <div style="display:none" id="event_info">
-              	     
-        		<p class="subtitle">Event Name</p>   
-        		<p class="subtitle">Description</p>
- 				<p class="subtitle">User_name</p>   
-       		  </div>
+              <div style="display:none" id="event_info">	     
+        		    <p class="subtitle">Event Name</p>   
+        		    <p class="subtitle">Description</p>
+ 				        <p class="subtitle">User_name</p>   
+       		    </div>
               <li class="item"><span onClick="show('event_info2')">event 2</span><span class="trash">x</span></li>
               <div style="display:none" id="event_info2">
-                      
-        		<p class="subtitle">Event Name</p>   
-        		<p class="subtitle">Description</p>
- 				<p class="subtitle">User_name</p>   
-       		  </div>
+                <p class="subtitle">Event Name</p>   
+        		    <p class="subtitle">Description</p>
+ 				        <p class="subtitle">User_name</p>
+       		    </div>
               <li class="item"><span onClick="show('event_info3')">event 3</span><span class="trash">x</span></li>
               <div style="display:none" id="event_info3">
-                    
-        		<p class="subtitle">Event Name</p>   
-        		<p class="subtitle">Description</p>
- 				<p class="subtitle">User_name</p>   
-       		  </div>
+                <p class="subtitle">Event Name</p>   
+        		    <p class="subtitle">Description</p>
+ 				        <p class="subtitle">User_name</p>
+       		    </div>
               <li class="item"><span onClick="show('event_info4')">event 4</span><span class="trash">x</span></li>
               <div style="display:none" id="event_info4">
-                     
-        		<p class="subtitle">Event Name</p>   
-        		<p class="subtitle">Description</p>
- 				<p class="subtitle">User_name</p>   
-       		  </div>
+                <p class="subtitle">Event Name</p>   
+        		    <p class="subtitle">Description</p>
+ 				        <p class="subtitle">User_name</p>
+       		    </div>
               <li class="item"><span onClick="show('event_info5')">event 5</span><span class="trash">x</span></li>
               <div style="display:none" id="event_info5">      
-                <a href="modify_event.html" class="edit">edit</a>
-        		<p class="subtitle">Event Name</p>   
-        		<p class="subtitle">Description</p>
- 				<p class="subtitle">User_name</p>   
-       		  </div>
+                <p class="subtitle">Event Name</p>   
+        		    <p class="subtitle">Description</p>
+ 				        <p class="subtitle">User_name</p>
+       		    </div>
             </ul>
             <nav class="text-center">
-   			  <ul class="pagination">
-      <li> <a href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span> </a> </li>
-      <li class="active"><a href="#">1</a></li>
-      <li><a href="#">2</a></li>
-      <li><a href="#">3</a></li>
-      <li><a href="#">4</a></li>
-      <li class="disabled"><a href="#">5</a></li>
-      <li> <a href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span> </a> </li>
-    </ul>
-  			</nav>
+   			      <ul class="pagination">
+                <li> <a href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span> </a> </li>
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span> </a> </li>
+              </ul>
+  		    	</nav>
           </div>
         </div>
       </div>
-	</div>
-	<footer class="main-footer">
+  	</div>
+	  <footer class="main-footer">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12 text-center">
@@ -132,7 +127,8 @@
     </footer>
   </div>
 </section>
-<script src="jquery/jquery.min.js"></script>
-<script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="js/show_hidden_div.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
