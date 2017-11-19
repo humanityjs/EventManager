@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Dashboard</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/bootstrap.css" type="text/css">
+<link rel="stylesheet" href="css/style.css" type="text/css">
+</head>
+<body>
+<section class="page">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <a class="navbar-brand" href="admin_panel.html"><h1>event <strong class="text-primary">center </strong></h1></a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="admin_panel.html"><span class="nav-link-text">Dashboard</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="add_center.html"><span class="nav-link-text">add center</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"><span class="nav-link-text">profile</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="signin.html"><span class="nav-link-text">logout</span></a>
+        </li>
+      </ul>      
+    </div>
+  </nav>
+  <div class="inner-page">
+   	<div class="container-fluid">
+      <div class="row">
+        <div class="form-outer text-center d-flex align-items-center">
+          <div class="form-inner">
+            <div class="logo"><strong class="text-primary">list of functioning centers</strong></div>
+            <ul class="list">
+              <li class="item"><span onClick="show('center_info')">center 1</span><span class="trash">x</span></li>
+              <div style="display:none" id="center_info">
+              	<a href="view_center_event.html" class="edit">edit/view</a>      
+        		<p class="subtitle">Center Name</p>   
+        		<p class="subtitle">Center Location</p>
+        		<p class="subtitle">Facilities</p>
+        		<p class="subtitle">Description</p>    
+       		  </div>
+              <li class="item"><span onClick="show('center_info2')">center 2</span><span class="trash">x</span></li>
+              <div style="display:none" id="center_info2">
+                <a href="view_center_event.html" class="edit">edit/view</a>       
+        		<p class="subtitle">Center Name</p>   
+        		<p class="subtitle">Center Location</p>
+        		<p class="subtitle">Facilities</p>
+        		<p class="subtitle">Description</p>    
+       		  </div>
+              <li class="item"><span onClick="show('center_info3')">center 3</span><span class="trash">x</span></li>
+              <div style="display:none" id="center_info3">
+                <a href="view_center_event.html" class="edit">edit/view</a>     
+        		<p class="subtitle">Center Name</p>   
+        		<p class="subtitle">Center Location</p>
+        		<p class="subtitle">Facilities</p>
+        		<p class="subtitle">Description</p>    
+       		  </div>
+              <li class="item"><span onClick="show('center_info4')">center 4</span><span class="trash">x</span></li>
+              <div style="display:none" id="center_info4">
+                <a href="view_center_event.html" class="edit">edit/view</a>      
+        		<p class="subtitle">Center Name</p>   
+        		<p class="subtitle">Center Location</p>
+        		<p class="subtitle">Facilities</p>
+        		<p class="subtitle">Description</p>    
+       		  </div>
+              <li class="item"><span onClick="show('center_info5')">center 5</span><span class="trash">x</span></li>
+              <div style="display:none" id="center_info5">      
+                <a href="view_center_event.html" class="edit">edit/view</a>
+        		<p class="subtitle">Center Name</p>   
+        		<p class="subtitle">Center Location</p>
+        		<p class="subtitle">Facilities</p>
+        		<p class="subtitle">Description</p>    
+       		  </div>
+            </ul>
+            <nav class="text-center">
+   			  <ul class="pagination">
+      		    <li><a href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
+      			<li class="active"><a href="#">1</a></li>
+      			<li><a href="#">2</a></li>
+      			<li><a href="#">3</a></li>
+      			<li><a href="#">4</a></li>
+      			<li><a href="#">5</a></li>
+		        <li><a href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
+    		  </ul>
+  			</nav>
+          </div>
+        </div>
+      </div>
+	</div>
+	<footer class="main-footer">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 text-center">
+            <p>eCenter 2017</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</section>
+<script src="js/show_hidden_div.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
