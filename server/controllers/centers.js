@@ -1,109 +1,137 @@
 import centers from '../models/centers';
 
- class centerController {
-    
-    /**
-     * 
-     * 
-     * @static
-     * @param {any} req 
-     * @param {any} res 
-     * @returns 
-     * @memberof centerController
-     */
-    static getAllCenters(req, res) {
-        return res.json({
-            centers: centers,
-            error: false
-        }); 
-    }
-
-    static getSingleCenter(req, res) {
-        for (let i=0; i < centers.length; i++){
-            if(centers[i].id === parseInt(req.params.id, 10)){
-                return res.json({
-                    message: centers[i],
-                    error: false
-                });  
-            }
-        } 
-        return res.status(404).json({
-            message: "Center not Found",
-            error: true
-        }); 
-    }
+class centerController {
   /**
    * 
    * 
-   * @static
+   * Get All Centers
+   * @param {any} req 
+   * @param {any} res 
+   * @returns All the center in db
+   * @memberof centerController
+   */
+  static getAllCenters(req, res) {
+    return res.json({
+      centers: centers,
+      error: false
+    });   
+  }
+  
+  /**
+   * 
+   * 
+   * @static Get a single center
+   * @param {any} req 
+   * @param {any} res 
+   * @returns A single center
+   * @memberof centerController
+   */
+  static getSingleCenter(req, res) {
+    for (let i=0; i < centers.length; i++){
+      if(centers[i].id === parseInt(req.params.id, 10)){
+        return res.json({
+          message: centers[i],
+          error: false 
+        });  
+      } 
+    } 
+    return res.status(404).json({
+      message: "Center not Found",
+      error: true  
+    }); 
+  }
+    
+  /**
+   * 
+   * 
+   * @static Creates a new center
    * @param {obj} req 
    * @param {obj} res 
-   * @returns 
+   * @returns Success message with the list of centers
    * @memberof centerController
    */
   static postCenter(req, res) {
-      if(!req.body.name) {
-        return res.json({
-            message: centers,
-            error: true
-        });
-      }  
-      centers.push({
-          id: newId,
-          name,
-          location
+    if((!req.body.name) || (!req.body.location) || (!req.body.facilities)){
+      return res.json({
+        message: centers,
+        error: true
       });
-        return res.json({
-            message: "success",
-            error: false,
-            center
-        }); 
     }
-/**
- * 
- * 
- * @static
- * @param {obj} req 
- * @param {obj} res 
- * @returns 
- * @memberof centerController
- */
-static updateCenter(req, res) {
-        for (let i=0; i < centers.length; i++){
-            if(centers[i].id === parseInt(req.params.id, 10)){
-                centers[i].name = req.body.name || centers[i].name;
-                centers[i].location = req.body.location || centers[i].location;
-                console.log('body:', req, centers);
-                return res.json({
-                    message: "Success",
-                    error: false,
-                    centers
-                });  
-            } else {
-                console.log('wrong user');
-            }
-        }
-        return res.status(404).json({
-            message: "Center not Found",
-            error: true
-        }); 
-    }
+    const newId = centers.length + 1;
+    const name = req.body.name;
+    const location = req.body.location;
+    const facilities = req.body.facilities;
+    const description = req.body.description;
 
-    static deleteCenter(req, res) {
-        for (let i=0; i < centers.length; i++){
-            if(centers[i].id === parseInt(req.params.id, 10)){
-                centers.splice(i,1);
-                return res.json({
-                    message: "Success",
-                    error: false
-                });  
-            }
-        }
-        return res.status(404).json({
-            message: "Center not Found",
-            error: true
-        }); 
+    centers.push({
+      id: newId,
+      name,
+      location,
+      facilities,
+      description
+    });
+    return res.json({
+      message: "success",
+      error: false,
+      centers
+    }); 
+  }
+
+  /**
+  * 
+  * 
+  * @static Update a center
+  * @param {any} req 
+  * @param {any} res 
+  * @returns message and list of centers as the case may be
+  * @memberof centerController
+  */
+  static updateCenter(req, res) {
+    for (let i=0; i < centers.length; i++){
+      if (centers[i].id === parseInt(req.params.id, 10)){
+        centers[i].name = req.body.name || centers[i].name;
+        centers[i].location = req.body.location || centers[i].location;
+        centers[i].facilities = req.body.facilities || centers[i].facilities;
+        centers[i].description = req.body.description || centers[i].description;  
+    
+        return res.json({
+          message: "Success",
+          error: false,
+          centers
+        });        
+      } 
     }
+    return res.status(404).json({
+      message: "Center not Found",
+      error: true
+    }); 
+  }    
+    
+  /**
+   * 
+   * 
+   * @static Delete an Event
+   * @param {any} req 
+   * @param {any} res 
+   * @returns  
+   * @memberof centerController
+   */
+  static deleteCenter(req, res) {
+    for (let i=0; i < centers.length; i++){
+      if(centers[i].id === parseInt(req.params.id, 10)){
+        centers.splice(i,1);
+          return res.json({
+            message: "Center Deleted",
+            error: false
+          });  
+      }
+    }
+    return res.status(404).json({
+      message: "Center not Found",
+      error: true
+    }); 
+  }
+
 }
 
 export default centerController;
