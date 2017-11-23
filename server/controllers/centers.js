@@ -5,8 +5,8 @@ class centerController {
    * 
    * 
    * Get All Centers
-   * @param {any} req 
-   * @param {any} res 
+   * @param {obj} req 
+   * @param {obj} res 
    * @returns All the center in db
    * @memberof centerController
    */
@@ -21,8 +21,8 @@ class centerController {
    * 
    * 
    * @static Get a single center
-   * @param {any} req 
-   * @param {any} res 
+   * @param {obj} req 
+   * @param {obj} res 
    * @returns A single center
    * @memberof centerController
    */
@@ -81,8 +81,8 @@ class centerController {
   * 
   * 
   * @static Update a center
-  * @param {any} req 
-  * @param {any} res 
+  * @param {obj} req 
+  * @param {obj} res 
   * @returns message and list of centers as the case may be
   * @memberof centerController
   */
@@ -111,8 +111,8 @@ class centerController {
    * 
    * 
    * @static Delete an Event
-   * @param {any} req 
-   * @param {any} res 
+   * @param {obj} req 
+   * @param {obj} res 
    * @returns  
    * @memberof centerController
    */
