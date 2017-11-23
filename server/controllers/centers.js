@@ -1,4 +1,5 @@
 import centers from '../models/centers';
+import validate from '../middleware/validate';
 
 class centerController {
   /**
