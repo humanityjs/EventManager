@@ -2,13 +2,13 @@
 import express from 'express';
 import centerController from '../controllers/centers';
 import eventController from '../controllers/events';
-
+import Validate from '../middleware/validate';
 
 const router = express.Router();
 // Routes
 router.route('/centers')
 .get(centerController.getAllCenters)
-.post(centerController.postCenter);
+.post(Validate.postCenterValidation, centerController.postCenter);
 
 router.route('/centers/:id')
 .get(centerController.getSingleCenter)
