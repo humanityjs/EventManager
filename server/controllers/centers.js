@@ -11,20 +11,23 @@ import centers from '../models/centers';
 
     static getSingleCenter(req, res) {
         for (let i=0; i < centers.length; i++){
-            if(centers[i].id === parseInt(req.params.centerid, 10)){
-                centers[i].name = req.body.name;
+            if(centers[i].id === parseInt(req.params.id, 10)){
                 return res.json({
-                    center: centers[i],
+                    message: centers[i],
                     error: false
                 });  
             }
         } 
+        return res.status(404).json({
+            message: "Center not Found",
+            error: true
+        }); 
     }
   
     static postCenter(req, res) {
       if(!req.body.name) {
         return res.json({
-            message: "Center name is missing",
+            message: centers,
             error: true
         });
       }  
@@ -35,6 +38,38 @@ import centers from '../models/centers';
         }); 
     }
 
+    static updateCenter(req, res) {
+        for (let i=0; i < centers.length; i++){
+            if(centers[i].id === parseInt(req.params.id, 10)){
+                centers[i].name = req.body.name;
+                centers[i].location = req.body.location;
+                return res.json({
+                    message: "Success",
+                    error: false
+                });  
+            }
+        }
+        return res.status(404).json({
+            message: "Center not Found",
+            error: true
+        }); 
+    }
+
+    static deleteCenter(req, res) {
+        for (let i=0; i < centers.length; i++){
+            if(centers[i].id === parseInt(req.params.id, 10)){
+                centers.splice(i,1);
+                return res.json({
+                    message: "Success",
+                    error: false
+                });  
+            }
+        }
+        return res.status(404).json({
+            message: "Center not Found",
+            error: true
+        }); 
+    }
 }
 
 export default centerController;

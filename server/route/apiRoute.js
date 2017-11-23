@@ -1,7 +1,7 @@
 // Dependencies
 import express from 'express';
 import centerController from '../controllers/centers';
-import eventsController from '../controllers/events';
+import eventController from '../controllers/events';
 
 
 const router = express.Router();
@@ -10,12 +10,19 @@ router.route('/centers')
 .get(centerController.getAllCenters)
 .post(centerController.postCenter);
 
-router.route('/events')
-.get(eventsController)
-;
-
 router.route('/centers/:id')
-.get(centerController.getSingleCenter);
+.get(centerController.getSingleCenter)
+.put(centerController.updateCenter)
+.delete(centerController.deleteCenter);
+
+router.route('/events')
+.get(eventController.getAllEvents)
+.post(eventController.postEvent);
+
+router.route('/events/:id')
+.get(eventController.getSingleEvent)
+.put(eventController.updateEvent)
+.delete(eventController.deleteEvent);
 
 // Return router
 export default router;
