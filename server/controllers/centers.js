@@ -2,6 +2,15 @@ import centers from '../models/centers';
 
  class centerController {
     
+    /**
+     * 
+     * 
+     * @static
+     * @param {any} req 
+     * @param {any} res 
+     * @returns 
+     * @memberof centerController
+     */
     static getAllCenters(req, res) {
         return res.json({
             centers: centers,
@@ -23,30 +32,55 @@ import centers from '../models/centers';
             error: true
         }); 
     }
-  
-    static postCenter(req, res) {
+  /**
+   * 
+   * 
+   * @static
+   * @param {obj} req 
+   * @param {obj} res 
+   * @returns 
+   * @memberof centerController
+   */
+  static postCenter(req, res) {
       if(!req.body.name) {
         return res.json({
             message: centers,
             error: true
         });
       }  
-      centers.push(req, body);
+      centers.push({
+          id: newId,
+          name,
+          location
+      });
         return res.json({
             message: "success",
-            error: false
+            error: false,
+            center
         }); 
     }
-
-    static updateCenter(req, res) {
+/**
+ * 
+ * 
+ * @static
+ * @param {obj} req 
+ * @param {obj} res 
+ * @returns 
+ * @memberof centerController
+ */
+static updateCenter(req, res) {
         for (let i=0; i < centers.length; i++){
             if(centers[i].id === parseInt(req.params.id, 10)){
-                centers[i].name = req.body.name;
-                centers[i].location = req.body.location;
+                centers[i].name = req.body.name || centers[i].name;
+                centers[i].location = req.body.location || centers[i].location;
+                console.log('body:', req, centers);
                 return res.json({
                     message: "Success",
-                    error: false
+                    error: false,
+                    centers
                 });  
+            } else {
+                console.log('wrong user');
             }
         }
         return res.status(404).json({

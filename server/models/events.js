@@ -18,6 +18,7 @@ const events = [
         id:4,
         name:"Seminar",
         center: "Balmoral",
+        description:"Yout Empowerment Seminar"
     },
     {
         id:5,
