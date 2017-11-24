@@ -51,7 +51,7 @@ class eventController {
    * @memberof eventController
    */
   static postEvent(req, res) {
-    if((!req.body.name) || (!req.body.location) || (!req.body.facilities)){
+    if((!req.body.name) || (!req.body.center) || (!req.body.facilities)){
       return res.json({
         message: events,
         error: true
@@ -59,16 +59,16 @@ class eventController {
     }
     const newId = events.length + 1;
     const name = req.body.name;
-    const location = req.body.location;
+    const center = req.body.center;
     const facilities = req.body.facilities;
-    const description = req.body.description;
+    const Booked_Date = req.body.Booked_Date;
 
     events.push({
       id: newId,
       name,
-      location,
+      center,
       facilities,
-      description
+      Booked_Date
     });
     return res.json({
       message: "success",
@@ -90,9 +90,9 @@ class eventController {
     for (let i=0; i < events.length; i++){
       if (events[i].id === parseInt(req.params.id, 10)){
         events[i].name = req.body.name || events[i].name;
-        events[i].location = req.body.location || events[i].location;
+        events[i].center = req.body.center || events[i].center;
         events[i].facilities = req.body.facilities || events[i].facilities;
-        events[i].description = req.body.description || events[i].description;  
+        events[i].Booked_Date = req.body.Booked_Date || events[i].Booked_Date;  
     
         return res.json({
           message: "Success",
