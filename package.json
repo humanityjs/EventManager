@@ -5,15 +5,18 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --watch server --exec babel-node -- server/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --require babel-register --require babel-polyfill --recursive server/test/test.js"
   },
   "author": "Olayemi Lawal",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.26.0",
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
     "eslint": "^4.11.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
+    "mocha": "^4.0.1",
     "nodemon": "^1.12.1"
   },
   "dependencies": {
@@ -21,6 +24,7 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.26.0",
+    "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "validator": "^9.1.1"
   }

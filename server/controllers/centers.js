@@ -1,5 +1,5 @@
 import centers from '../models/centers';
-import validate from '../middleware/validate';
+
 
 class centerController {
   /**
@@ -12,7 +12,7 @@ class centerController {
    * @memberof centerController
    */
   static getAllCenters(req, res) {
-    return res.json({
+    return res.status(200).json({
       centers: centers,
       error: false
     });   
@@ -71,7 +71,7 @@ class centerController {
       facilities,
       description
     });
-    return res.json({
+    return res.status(200).json({
       message: "success",
       error: false,
       centers
