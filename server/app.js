@@ -18,3 +18,5 @@ app.use('/api/v1/', userRoute);
 app.listen(3005, () => {
     console.log('API is running on port 3005');
 });
+
+export default app;
