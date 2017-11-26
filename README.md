@@ -5,4 +5,4 @@ To set up web app
 Download git file to your local machine and open webpage on any web browser to view.
 
 TRAVIS BADGE
-https://travis-ci.org/Orlayhemmy/EventManager.svg?branch=develop
+[![Build Status](https://travis-ci.org/Orlayhemmy/EventManager.svg?branch=ft-travis)](https://travis-ci.org/Orlayhemmy/EventManager)
