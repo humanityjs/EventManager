@@ -10,5 +10,5 @@ Follow the instructions documented below will get a copy of the project up and r
 - Express
 
 # Installing
-- Downloa or clone project to you local machine
+- Download or clone project to you local machine
 - npm install
