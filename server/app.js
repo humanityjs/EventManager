@@ -15,8 +15,8 @@ app.get('/', (req, res) => {
 app.use('/api/v1/', userRoute);
 
 
-app.listen(3005, () => {
-    console.log('API is running on port 3005');
+app.listen(5000, () => {
+    console.log('API is running on port 5000');
 });
 
 export default app;
