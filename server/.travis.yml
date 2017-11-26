@@ -1,6 +1,7 @@
+dist: trusty
 language: node_js
 node_js:
-  - "stable" 
+  - stable 
                    
 before_script:
   - npm install
