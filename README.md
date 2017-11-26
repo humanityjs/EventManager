@@ -1,8 +1,14 @@
-# EventManager
-A web app that helps you get event centers according to your specification
-and it requires a signup for new user.
-To set up web app
-Download git file to your local machine and open webpage on any web browser to view.
+[![Build Status](https://travis-ci.org/Orlayhemmy/EventManager.svg?branch=develop)](https://travis-ci.org/Orlayhemmy/EventManager)
 
-TRAVIS BADGE
-https://travis-ci.org/Orlayhemmy/EventManager.svg?branch=develop
+# EventManager
+A web app that gets and books event centers according to your specifications.
+
+Follow the instructions documented below will get a copy of the project up and running on your local machine
+
+# Prerequisites
+- NodeJs
+- Express
+
+# Installing
+- Download or clone project to you local machine
+- npm install
