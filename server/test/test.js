@@ -46,7 +46,21 @@ describe('Centers', function() {
         res.should.have.status(200);
         res.should.be.json;
         res.body.should.be.a('object');
-        console.log(res.body);
+        res.body.message.should.have.property('id');
+        done();
+      });
+  });
+
+  it('should update a center detail PUT', function(done) {
+    chai.request(app)
+      .get('/api/v1/centers/1')
+      .send({
+        name:"Toluwani"
+    })
+      .end(function(err, res){
+        res.should.have.status(200);
+        res.should.be.json;
+        res.body.should.be.a('object');
         res.body.message.should.have.property('id');
         done();
       });

@@ -95,7 +95,7 @@ class centerController {
         centers[i].facilities = req.body.facilities || centers[i].facilities;
         centers[i].description = req.body.description || centers[i].description;  
     
-        return res.json({
+        return res.status(200).json({
           message: "Success",
           error: false,
           centers
