@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --watch server --exec babel-node -- server/app.js",
-    "test": "nyc --reporter=html --reporter=text mocha --require babel-register --require babel-polyfill --recursive server/test/test.js",
+    "test": "nyc --reporter=html --reporter=text mocha --require babel-register --require babel-polyfill --recursive server/test/test.js --exit",
     "coverage": "nyc report --reporter=text-icov | coveralls"
   },
   "author": "Olayemi Lawal",
