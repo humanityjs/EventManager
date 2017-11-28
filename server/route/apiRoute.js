@@ -2,6 +2,7 @@
 import express from 'express';
 import centerController from '../controllers/centers';
 import eventController from '../controllers/events';
+import userController from '../controllers/userController';
 import Validate from '../middleware/validate';
 
 const router = express.Router();
