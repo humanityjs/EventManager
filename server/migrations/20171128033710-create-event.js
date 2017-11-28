@@ -1,33 +1,33 @@
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('dbEvents', {
+    return queryInterface.createTable('Events', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.UUIDV4,
-        defaultValue: Sequelize.UUIDV4
+        type: Sequelize.INTEGER
       },
       title: {
         type: Sequelize.STRING
       },
-      centerId: {
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        references: {
-            model: 'dbCenters',
-            key: 'id'
-        }
-      },
-      booked_date: {
+      bookedDate: {
         type: Sequelize.DATE
       },
-      userId: {
+      UserId: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references: {
-            model: 'Users',
-            key: 'id'
+          model: 'Users',
+          key: 'id'
+        }
+      },
+      CenterId: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Center',
+          key: 'id'
         }
       },
       createdAt: {
@@ -41,6 +41,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('dbEvents');
+    return queryInterface.dropTable('Events');
   }
 };

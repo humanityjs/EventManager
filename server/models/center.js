@@ -1,19 +1,20 @@
+
 module.exports = (sequelize, DataTypes) => {
-  const Users = sequelize.define('Users', {
-  fullName: {
+  const Center = sequelize.define('center', {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
   },
-  email: {
+  location: {
       type: DataTypes.STRING,
       unique: true,
       allowNull: false
   },
-  password: {
+  description: {
       type: DataTypes.STRING,
       allowNull: false
   },
-  role: {
+  facilities: {
     type: DataTypes.STRING,
     unique: true,
     allowNull: false
@@ -22,12 +23,12 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        Users.hasMany(models.Center, {
+        Center.belongsTo(models.Users, {
           foreignKey: 'UserId',
-	        onDelete: 'CASCADE'
+          onDelete: 'CASCADE'
         });
       }
     }
   });
-  return Users;
+  return center;
 };
