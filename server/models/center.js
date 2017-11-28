@@ -1,6 +1,6 @@
 
 module.exports = (sequelize, DataTypes) => {
-  const Center = sequelize.define('center', {
+  const Center = sequelize.define('Center', {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -23,12 +23,12 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        Center.belongsTo(models.Users, {
+        Center.belongsTo(models.User, {
           foreignKey: 'UserId',
           onDelete: 'CASCADE'
         });
       }
     }
   });
-  return center;
+  return Center;
 };

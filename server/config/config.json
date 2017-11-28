@@ -2,14 +2,14 @@
   "development": {
     "username": "postgres",
     "password": "profyem001",
-    "database": "manager",
+    "database": "CenterManager",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
-    "username": "Orlayhemmy",
+    "username": "postgres",
     "password": "profyem001",
-    "database": "manager",
+    "database": "CenterManager",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
