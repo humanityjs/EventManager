@@ -1,0 +1,21 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "profyem001",
+    "database": "cmanager",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "port": 5432
+  },
+  "test": {
+    "username": "postgres",
+    "password": "profyem001",
+    "database": "cmanager",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "port": 5432
+  },
+  "production": {
+    "dialect": "postgres"
+  }
+}
