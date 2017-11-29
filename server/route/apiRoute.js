@@ -1,13 +1,12 @@
 // Dependencies
 import express from 'express';
-import UserController from '../controllers/userController'
-;
+import userController from '../controllers/userController';
 
 
 const router = express.Router();
 // Routes
 router.route('/users')
-.post(UserController.signup);
+.post(userController.signup);
 
 
 // Return router
