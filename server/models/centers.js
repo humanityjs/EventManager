@@ -5,37 +5,36 @@
  */
 export default (sequelize, DataTypes) => {
   const Centers = sequelize.define('Centers', {
-      cname: {
-          type: DataTypes.STRING,
-          allowNull: false
+    cname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    location: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    facilities: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Users',
+        key: 'id',
       },
-      location: {
-          type: DataTypes.STRING,
-          allowNull: false
-      },
-      facilities: {
-          type: DataTypes.STRING,
-          allowNull: false
-      },
-      description: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      userId: {
-          type: DataTypes.INTEGER,
-          references: {
-              model: 'Users',
-              key: 'id'
-          }
-      }
+    },
   });
   Centers.associate = (models) => {
-      Centers.belongsTo(models.Users, {
-          foreignKey: 'userId'
-      });
-      Centers.hasMany(models.Events, {
-          foreignKey: 'centerId'
-      });
+    Centers.belongsTo(models.Users, {
+      foreignKey: 'userId',
+    });
+    Centers.hasMany(models.Events, {
+      foreignKey: 'centerId',
+    });
   };
   return Centers;
 };

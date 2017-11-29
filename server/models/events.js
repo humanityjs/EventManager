@@ -35,7 +35,7 @@ export default (sequelize, DataTypes) => {
       Events.belongsTo(models.Centers, {
           foreignKey: 'centerId'
       });
-      Events.hasMany(models.Users, {
+      Events.belongsTo(models.Users, {
           foreignKey: 'userId'
       });
   };
