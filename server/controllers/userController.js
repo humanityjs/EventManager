@@ -19,18 +19,16 @@ export default class UserController {
      * @memberof UserController
      */
   static signup(req, res) {
-    const { fullname, email, password } = req.body;
+    const { fullname, email, password, isAdmin } = req.body;
 
     Users.findOne({
       where: {
-        email: {
-          $iLike: email,
-        },
+        email,
       },
-    }).then((userPresent) => {
+    }).then((foundUser) => {
       let error;
-      if (userPresent) {
-        if (userPresent.email === email) {
+      if (foundUser) {
+        if (foundUser.email === email) {
           error = email;
         }
         return res.status(400).json({
@@ -44,11 +42,12 @@ export default class UserController {
             fullname,
             email,
             password: hash,
+            isAdmin,
           }).then(user => res.status(201).json({
             message: 'Successfully created account',
             data: {
-              id: user.id,
-              email: user.email,
+              user,
+
             },
           }));
         });
@@ -58,5 +57,50 @@ export default class UserController {
         status: 'Failed',
         message: error.message,
       }));
+  }
+
+  /**
+     * User details are captured and authenticated against persisted database data
+     * @static
+     * @param {object} req
+     * @param {object} res
+     * @returns {object} Failure message or Success message with persisted database data
+     * @memberof UserController
+     */
+  static signin(req, res) {
+    const { email, password } = req.body;
+
+    Users.findOne({
+      where: {
+        email,
+      },
+    }).then((user) => {
+      if (user && user.email.toLowerCase === email.toLowerCase) {
+        const check = bcrypt.compareSync(password, user.password);
+        if (check) {
+          const payload = { email: user.email, isAdmin: user.isAdmin, id: user.id };
+          const userData = jwt.sign(payload, process.env.SECRET, {
+            expiresIn: 60 * 60 * 5,
+          });
+          req.body.token = userData;
+          return res.status(200).json({
+            message: 'You are now logged In',
+            data: {
+              user,
+            },
+            userData,
+          });
+        }
+        return res.status(400).json({
+          message: 'Invalid username or password',
+        });
+      }
+      return res.status(404).json({
+        message: 'User not found',
+      });
+    }).catch(error => res.status(500).json({
+      status: 'Failed',
+      message: error.message,
+    }));
   }
 }

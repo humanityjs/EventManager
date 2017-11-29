@@ -9,6 +9,7 @@ module.exports = {
     cname: {
       type: Sequelize.STRING,
       allowNull: false,
+      unique: true,
     },
     location: {
       type: Sequelize.STRING,

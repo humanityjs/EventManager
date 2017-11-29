@@ -8,6 +8,7 @@ export default (sequelize, DataTypes) => {
     cname: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     location: {
       type: DataTypes.STRING,
@@ -19,13 +20,6 @@ export default (sequelize, DataTypes) => {
     description: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    userId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'Users',
-        key: 'id',
-      },
     },
   });
   Centers.associate = (models) => {

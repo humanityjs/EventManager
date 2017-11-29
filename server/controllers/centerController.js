@@ -13,20 +13,31 @@ class CenterController {
    * @memberof CenterController
    */
   static getAllCenters(req, res) {
-    if (!req.query.sort) {
-      Centers.all().then((center) => {
+    const { isAdmin } = req.decoded;
+
+    // get centers
+    Centers.all().then((center) => {
+      if (isAdmin) {
+        // if centers are available
         if (center) {
+          // show centers
           return res.status(200).json({
             center,
           });
         }
+        // No center found
         return res.status(404).json({
           message: 'There are no available Centers',
         });
-      }).catch(error => res.status(404).json({
-        message: error.message,
-      }));
-    }
+      }
+      // Unauthorised user
+      return res.status(403).json({
+        message: 'Your are not allowed to view this page',
+        isAdmin,
+      });
+    }).catch(error => res.status(500).json({
+      message: error.message,
+    }));
   }
 
   /**
@@ -40,19 +51,26 @@ class CenterController {
    */
 
   static getSingleCenter(req, res) {
+    const { isAdmin } = req.decoded;
     Centers.findById(req.params.id)
       .then((center) => {
-        if (center) {
-          return res.status(200).json({
-            center,
+        if (isAdmin) {
+          if (center) {
+            return res.status(200).json({
+              center,
+            });
+          }
+          return res.status(400).json({
+            message: 'No Center Found',
           });
-        }
-        return res.status(400).json({
-          message: 'No Center Found',
-        }).catch(error => res.status(500).json({
-          message: error.message,
-        }));
-      });
+        }// Unauthorised user
+        return res.status(403).json({
+          message: 'Your are not allowed to view this page',
+          isAdmin,
+        });
+      }).catch(error => res.status(500).json({
+        message: error.message,
+      }));
   }
 
   /**
@@ -65,86 +83,68 @@ class CenterController {
    * @memberof centerController
    */
   static postCenter(req, res) {
-    const {
-      cname,
-      location,
-      description,
-      facilities,
-      userId,
-    } = req.body;
+    const { cname, location, description, facilities } = req.body;
+    const { id, isAdmin } = req.decoded;
+
+
+    const arr = facilities.split(',');
 
     Centers.create({
       cname,
       location,
       description,
-      facilities,
-      userId,
+      facilities: arr,
+      userId: id,
     }).then(center => res.status(201).json({
-      status: 'Success',
       message: 'Successfully created a center',
       data: {
         CenterName: center.cname,
       },
     })).catch(error => res.status(500).json({
-      status: 'Failed',
       message: error.message,
     }));
   }
 
   /**
-  *
-  *
-  * @static Update a center
-  * @param {obj} req
-  * @param {obj} res
-  * @returns message and list of centers as the case may be
-  * @memberof centerController
-  */
-  static updateCenter(req, res) {
-    for (let i = 0; i < centers.length; i++) {
-      if (centers[i].id === parseInt(req.params.id, 10)) {
-        centers[i].name = req.body.name || centers[i].name;
-        centers[i].location = req.body.location || centers[i].location;
-        centers[i].facilities = req.body.facilities || centers[i].facilities;
-        centers[i].description = req.body.description || centers[i].description;
+     * Modify a center
+     * @static
+     * @param {object} req
+     * @param {object} res
+     * @returns {object} insertion error messages or success messages
+     * @memberof CenterController
+     */
+    static updateCenter(req, res) {
+      const { title, ingredients, procedures } = req.body, { userId } = req.decoded,
+          centerId = req.params.centerID;
 
-        return res.status(200).json({
-          message: 'Success',
-          error: false,
-          centers,
-        });
-      }
-    }
-    return res.status(404).json({
-      message: 'Center not Found',
-      error: true,
-    });
+      return centers.findById(centerId).then((center) => {
+          if (center.userId === userId) {
+              return centers.update({
+                  title: (title) || center.title,
+                  ingredients: (ingredients) || center.ingredients,
+                  procedures: (procedures) || center.procedures
+              }, {
+                  where: {
+                      id: centerId
+                  }
+              }).then(() => res.status(201).json({
+                  status: 'Success',
+                  message: 'Successfully updated center'
+              })).catch(error => res.status(500).json({
+                  status: 'Failed',
+                  message: error.message
+              }));
+          }
+          return res.status(400).json({
+              status: 'Failed',
+              message: 'Can not update a center not created by you'
+          });
+      }).catch(() => res.status(404).json({
+          status: 'Failed',
+          message: `center with id: ${centerId}, not found`
+      }));
   }
 
-  /**
-   *
-   *
-   * @static Delete an Event
-   * @param {obj} req
-   * @param {obj} res
-   * @returns
-   * @memberof centerController
-   */
-  static deleteCenter(req, res) {
-    for (let i = 0; i < centers.length; i++) {
-      if (centers[i].id === parseInt(req.params.id, 10)) {
-        centers.splice(i, 1);
-        return res.json({
-          message: 'Center Deleted',
-          error: false,
-        });
-      }
-    }
-    return res.status(404).json({
-      message: 'Center not Found',
-      error: true,
-    });
-  }
 }
 
 export default CenterController;
