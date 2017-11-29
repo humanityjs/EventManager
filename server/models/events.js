@@ -1,41 +1,43 @@
-const events = [
-    {
-        id:1,
-        name:"Valedictory",
-        center: "Balmoral",
-        facilities:"Projector, Stage lights",
-        Booked_Date:"12/12/2017"
-    },
-    {
-        id:2,
-        name:"Wedding Ceremony",
-        center: "Faith Plaza",
-        facilities:"Projector, Stage lights",
-        Booked_Date:"12/12/2017"
-    },
-    {
-        id:3,
-        name:"Get together",
-        center: "Five Points",
-        facilities:"Projector, Stage lights",
-        Booked_Date:"12/12/2017"
-    },
-    {
-        id:4,
-        name:"Seminar",
-        center: "Balmoral",
-        facilities:"Projector, Stage lights",
-        Booked_Date:"12/12/2017"
-    },
-    {
-        id:5,
-        name:"Conference",
-        center: "Radisson Blu",
-        facilities:"Projector, Stage lights",
-        Booked_Date:"12/12/2017"
-    }
-    
-];
-
-export default events;
-
+/** Events database model with foreign associations
+ * @param  {obj} sequelize
+ * @param  {obj} DataTypes
+ * @returns {obj} Events model
+ */
+export default (sequelize, DataTypes) => {
+  const Events = sequelize.define('Events', {
+      title: {
+          type: DataTypes.STRING,
+          allowNull: false,
+      },
+      bookedDate: {
+          type: DataTypes.DATE,
+          unique: true,
+          allowNull: false
+      },
+      centerId: {
+        type: DataTypes.INTEGER,
+        onDelete: "CASCADE",
+        references: {
+            model: 'Users',
+            key: 'id'
+        }
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        onDelete: "CASCADE",
+        references: {
+            model: 'Users',
+            key: 'id'
+        }
+      }
+  });
+  Events.associate = (models) => {
+      Events.belongsTo(models.Centers, {
+          foreignKey: 'centerId'
+      });
+      Events.hasMany(models.Users, {
+          foreignKey: 'userId'
+      });
+  };
+  return Events;
+};
