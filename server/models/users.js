@@ -5,36 +5,27 @@
  */
 export default (sequelize, DataTypes) => {
   const Users = sequelize.define('Users', {
-      fname: {
-          type: DataTypes.STRING,
-          allowNull: false,
-      },
-      username: {
-          type: DataTypes.STRING,
-          unique: true,
-          allowNull: false
-      },
-      email: {
-          type: DataTypes.STRING,
-          unique: true,
-          allowNull: false
-      },
-      password: {
-          type: DataTypes.STRING,
-          allowNull: false
-      },
-      isAdmin: {
-        type: DataTypes.BOOLEAN,
-        allowNull: true
-    }
+    fullname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: false,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   });
   Users.associate = (models) => {
-      Users.hasMany(models.Centers, {
-          foreignKey: 'userId'
-      });
-      Users.hasMany(models.Events, {
-          foreignKey: 'userId'
-      });
+    Users.hasMany(models.Centers, {
+      foreignKey: 'userId',
+    });
+    Users.hasMany(models.Events, {
+      foreignKey: 'userId',
+    });
   };
   return Users;
 };
