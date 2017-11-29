@@ -7,14 +7,9 @@ module.exports = {
               primaryKey: true,
               type: Sequelize.INTEGER
           },
-          fname: {
+          fullname: {
               type: Sequelize.STRING,
               allowNull: false
-          },
-          username: {
-              type: Sequelize.STRING,
-              allowNull: false,
-              unique: true
           },
           email: {
               type: Sequelize.STRING,
