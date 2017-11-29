@@ -2,6 +2,7 @@
 import express from 'express';
 import userController from '../controllers/userController';
 import centerController from '../controllers/centerController';
+import authToken from '../middleware/authenticateToken';
 
 
 const router = express.Router();
@@ -13,11 +14,11 @@ router.route('/users/login')
   .post(userController.signin);
 
 router.route('/centers')
-  .post(centerController.postCenter)
-  .get(centerController.getAllCenters);
+  .post(authToken, centerController.postCenter)
+  .get(authToken, centerController.getAllCenters);
 
 router.route('/centers/:id')
-  .get(centerController.getSingleCenter);
+  .get(authToken, centerController.getSingleCenter);
 
 // Return router
 export default router;
