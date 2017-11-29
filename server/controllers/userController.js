@@ -1,9 +1,6 @@
 
 import models from '../models';
 
-const { Users } = models;
-
-env.config();
 
 /**
  * @class UsersApiController
