@@ -1,0 +1,11 @@
+# dependencies
+node_modules
+# folders
+coverage
+.nyc_output
+.coveralls.yml
+<<<<<<< HEAD
+.env
+=======
+config
+>>>>>>> develop

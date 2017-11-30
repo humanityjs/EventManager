@@ -3,9 +3,12 @@
 <head>
 <meta charset="utf-8">
 <title>Dashboard</title>
-<meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="css/bootstrap.css" type="text/css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 <body>
@@ -17,70 +20,51 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="admin_panel.html"><span class="nav-link-text">Dashboard</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="add_center.html"><span class="nav-link-text">add center</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#"><span class="nav-link-text">profile</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="signin.html"><span class="nav-link-text">logout</span></a>
-        </li>
+          <li class="nav-item">
+              <a class="nav-link" href="admin_panel.html"><span class="nav-link-text"><i class="fa fa-dashboard"></i> Dashboard</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="add_center.html"><span class="nav-link-text"><i class="fa fa-plus-square"></i> add center</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><span class="nav-link-text"><i class="fa fa-user-circle"></i> profile</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="index.html"><span class="nav-link-text">logout <i class="fa fa-sign-out"></i></span></a>
+            </li>
       </ul>      
     </div>
   </nav>
   <div class="inner-page">
    	<div class="container-fluid">
-      <div class="row">
-        <div class="form-outer text-center d-flex align-items-center">
+        <div class="row">
+         <div class="form-outer text-center d-flex align-items-center col-4">
+         <div class="inner-img">
           <div class="form-inner">
-            <div class="logo"><strong class="text-primary">list of functioning centers</strong></div>
-            <ul class="list">
-              <li class="item"><span onClick="show('center_info')">center 1</span><span class="trash">x</span></li>
-              <div style="display:none" id="center_info">
-              	<a href="view_center_event.html" class="edit">edit/view</a>      
-        		<p class="subtitle">Center Name</p>   
-        		<p class="subtitle">Center Location</p>
-        		<p class="subtitle">Facilities</p>
-        		<p class="subtitle">Description</p>    
-       		  </div>
-              <li class="item"><span onClick="show('center_info2')">center 2</span><span class="trash">x</span></li>
-              <div style="display:none" id="center_info2">
-                <a href="view_center_event.html" class="edit">edit/view</a>       
-        		<p class="subtitle">Center Name</p>   
-        		<p class="subtitle">Center Location</p>
-        		<p class="subtitle">Facilities</p>
-        		<p class="subtitle">Description</p>    
-       		  </div>
-              <li class="item"><span onClick="show('center_info3')">center 3</span><span class="trash">x</span></li>
-              <div style="display:none" id="center_info3">
-                <a href="view_center_event.html" class="edit">edit/view</a>     
-        		<p class="subtitle">Center Name</p>   
-        		<p class="subtitle">Center Location</p>
-        		<p class="subtitle">Facilities</p>
-        		<p class="subtitle">Description</p>    
-       		  </div>
-              <li class="item"><span onClick="show('center_info4')">center 4</span><span class="trash">x</span></li>
-              <div style="display:none" id="center_info4">
-                <a href="view_center_event.html" class="edit">edit/view</a>      
-        		<p class="subtitle">Center Name</p>   
-        		<p class="subtitle">Center Location</p>
-        		<p class="subtitle">Facilities</p>
-        		<p class="subtitle">Description</p>    
-       		  </div>
-              <li class="item"><span onClick="show('center_info5')">center 5</span><span class="trash">x</span></li>
-              <div style="display:none" id="center_info5">      
-                <a href="view_center_event.html" class="edit">edit/view</a>
-        		<p class="subtitle">Center Name</p>   
-        		<p class="subtitle">Center Location</p>
-        		<p class="subtitle">Facilities</p>
-        		<p class="subtitle">Description</p>    
-       		  </div>
-            </ul>
-            <nav class="text-center">
+            <img src="images/image2.jpg" class="img">
+			  <h3><a href="view_center_event.html">five points</a></h3>
+          </div>
+			 </div>
+        </div>
+        <div class="form-outer text-center d-flex align-items-center col-4">
+          <div class="inner-img">
+          <div class="form-inner">
+            <img src="images/image3.jpg" class="img">
+			  <h3><a href="view_center_event.html">Radisson blu</a></h3>
+          </div>
+			</div>
+        </div>
+        <div class="form-outer text-center d-flex align-items-center col-4">
+          <div class="inner-img">
+          <div class="form-inner">
+            <img src="images/image4.jpg" class="img">
+			  <h3><a href="view_center_event.html">five points</a></h3>
+          </div>
+			</div>
+        </div>
+        
+		</div>
+        <nav class="text-center">
    			  <ul class="pagination">
       		    <li><a href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
       			<li class="active"><a href="#">1</a></li>
@@ -91,10 +75,8 @@
 		        <li><a href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
     		  </ul>
   			</nav>
-          </div>
-        </div>
       </div>
-	</div>
+
 	<footer class="main-footer">
       <div class="container-fluid">
         <div class="row">

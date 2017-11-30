@@ -3,9 +3,12 @@
 <head>
 <meta charset="utf-8">
 <title>Center Information</title>
-<meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="css/bootstrap.css" type="text/css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 <body>
@@ -18,16 +21,16 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href="admin_panel.html"><span class="nav-link-text">Dashboard</span></a>
+          <a class="nav-link" href="admin_panel.html"><span class="nav-link-text"><i class="fa fa-dashboard"></i> Dashboard</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="add_center.html"><span class="nav-link-text">add center</span></a>
+          <a class="nav-link" href="add_center.html"><span class="nav-link-text"><i class="fa fa-plus-square"></i> add center</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"><span class="nav-link-text">profile</span></a>
+          <a class="nav-link" href="#"><span class="nav-link-text"><i class="fa fa-user-circle"></i> profile</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="signin.html"><span class="nav-link-text">logout</span></a>
+          <a class="nav-link" href="index.html"><span class="nav-link-text">logout <i class="fa fa-sign-out"></i></span></a>
         </li>
       </ul>      
     </div>
@@ -38,13 +41,13 @@
       
         <div class="form-outer text-center d-flex align-items-center">
           <div class="form-inner">
-            <div class="logo"><strong class="text-primary">center details</strong></div>
-            <h2>Center Name</h2>
+            <div class="logo"><strong class="text-primary">Balmoral</strong></div>
+            <p>ojota, lagos state</p>
             <h3>facilities</h3>
-            <p>facility 1, facility 2, facility 3, facility 4, facility 5</p>
-            <h3>center description</h3>
-			      <p>few words describing the center</p>
- 			      <span onClick="show('center_info')"><a href="#">edit</a></span> 
+            <p> ample car park space</p>
+            <h3>description</h3>
+			      <p>An event center with a first class feeling</p>
+ 			      <span onClick="show('center_info')"><a href="#"><i class="fa fa-pencil"></i>edit</a></span> 
             <div id="center_info" style="display:none">
               <form id="add-center-form">
  		            <div class="form-group">            
@@ -69,38 +72,38 @@
         <div class="form-outer text-center d-flex align-items-center">
           <div class="form-inner">
             <div class="logo"><strong class="text-primary">events scheduled</strong></div>
-            <ul class="list">
-              <li class="item"><span onClick="show('event_info')">event 1</span><span class="trash">x</span></li>
-              <div style="display:none" id="event_info">	     
-        		    <p class="subtitle">Event Name</p>   
-        		    <p class="subtitle">Description</p>
- 				        <p class="subtitle">User_name</p>   
-       		    </div>
-              <li class="item"><span onClick="show('event_info2')">event 2</span><span class="trash">x</span></li>
-              <div style="display:none" id="event_info2">
-                <p class="subtitle">Event Name</p>   
-        		    <p class="subtitle">Description</p>
- 				        <p class="subtitle">User_name</p>
-       		    </div>
-              <li class="item"><span onClick="show('event_info3')">event 3</span><span class="trash">x</span></li>
-              <div style="display:none" id="event_info3">
-                <p class="subtitle">Event Name</p>   
-        		    <p class="subtitle">Description</p>
- 				        <p class="subtitle">User_name</p>
-       		    </div>
-              <li class="item"><span onClick="show('event_info4')">event 4</span><span class="trash">x</span></li>
-              <div style="display:none" id="event_info4">
-                <p class="subtitle">Event Name</p>   
-        		    <p class="subtitle">Description</p>
- 				        <p class="subtitle">User_name</p>
-       		    </div>
-              <li class="item"><span onClick="show('event_info5')">event 5</span><span class="trash">x</span></li>
-              <div style="display:none" id="event_info5">      
-                <p class="subtitle">Event Name</p>   
-        		    <p class="subtitle">Description</p>
- 				        <p class="subtitle">User_name</p>
-       		    </div>
-            </ul>
+            <div class="earnings">
+			<table cellpadding="0" class="table table-responsive table-hover text-center">
+			<thead><tr>
+  <th>title</th>
+     <th>date</th>
+     <th>status</th>
+      <th>delete</th>
+			</tr>
+				</thead>
+			<tbody>
+				<tr>
+					<td><a href="event_status.html">wedding ceremony</a></td>
+					<td>12/12/2017</td>
+					<td>approved</td>
+					<td>delete</td>				
+				</tr>
+				<tr>
+					<td><a href="event_status.html">valedictory service</a></td>
+					<td>18/12/2017</td>
+					<td>approved</td>
+					<td>delete</td>				
+				</tr>
+				<tr>
+					<td><a href="event_status.html">conference</a></td>
+					<td>22/12/2017</td>
+					<td>pending</td>
+					<td>delete</td>				
+				</tr>
+			</tbody>
+			</table>
+		</div>
+
             <nav class="text-center">
    			      <ul class="pagination">
                 <li> <a href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span> </a> </li>
