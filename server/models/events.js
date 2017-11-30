@@ -5,39 +5,42 @@
  */
 export default (sequelize, DataTypes) => {
   const Events = sequelize.define('Events', {
-      title: {
-          type: DataTypes.STRING,
-          allowNull: false,
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    bookedDate: {
+      type: DataTypes.DATEONLY,
+      unique: true,
+      allowNull: false,
+    },
+    description: {
+      type: DataTypes.STRING,
+    },
+    centerId: {
+      type: DataTypes.INTEGER,
+      onDelete: 'CASCADE',
+      references: {
+        model: 'Centers',
+        key: 'id',
       },
-      bookedDate: {
-          type: DataTypes.DATE,
-          unique: true,
-          allowNull: false
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      onDelete: 'CASCADE',
+      references: {
+        model: 'Users',
+        key: 'id',
       },
-      centerId: {
-        type: DataTypes.INTEGER,
-        onDelete: "CASCADE",
-        references: {
-            model: 'Users',
-            key: 'id'
-        }
-      },
-      userId: {
-        type: DataTypes.INTEGER,
-        onDelete: "CASCADE",
-        references: {
-            model: 'Users',
-            key: 'id'
-        }
-      }
+    },
   });
   Events.associate = (models) => {
-      Events.belongsTo(models.Centers, {
-          foreignKey: 'centerId'
-      });
-      Events.belongsTo(models.Users, {
-          foreignKey: 'userId'
-      });
+    Events.belongsTo(models.Centers, {
+      foreignKey: 'centerId',
+    });
+    Events.belongsTo(models.Users, {
+      foreignKey: 'userId',
+    });
   };
   return Events;
 };

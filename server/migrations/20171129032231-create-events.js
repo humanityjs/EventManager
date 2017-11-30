@@ -12,25 +12,28 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      description: {
+        type: Sequelize.STRING,
+      },
       bookedDate: {
-        type: Sequelize.DATE,
-        allowNull: false
+        type: Sequelize.DATEONLY,
+        allowNull: false,
       },
       userId: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references: {
           model: 'Users',
-          key: 'id'
-        }
+          key: 'id',
+        },
       },
       centerId: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references: {
           model: 'Centers',
-          key: 'id'
-        }
+          key: 'id',
+        },
       },
       createdAt: {
         allowNull: false,
