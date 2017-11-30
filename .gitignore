@@ -4,8 +4,6 @@ node_modules
 coverage
 .nyc_output
 .coveralls.yml
-<<<<<<< HEAD
 .env
-=======
-config
->>>>>>> develop
+/node_modules
+
