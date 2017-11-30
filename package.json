@@ -8,7 +8,7 @@
     "test": "nyc --reporter=html --reporter=text mocha --require babel-register --require babel-polyfill --recursive server/test/test.js --exit",
     "coverage": "nyc report --reporter=text-icov | coveralls",
     "unmigrate": "sequelize db:migrate:undo:all",
-    "migrate":"sequelize db:migrate"
+    "migrate": "sequelize db:migrate"
   },
   "author": "Olayemi Lawal",
   "license": "ISC",
