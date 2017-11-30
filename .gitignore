@@ -6,4 +6,4 @@ coverage
 .coveralls.yml
 .env
 /node_modules
-npm-debug.log
+
