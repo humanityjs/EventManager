@@ -3,9 +3,12 @@
 <head>
 <meta charset="utf-8">
 <title>Dashboard</title>
-<meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="css/bootstrap.css" type="text/css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 <body>
@@ -27,92 +30,120 @@
           <a class="nav-link" href="#"><span class="nav-link-text">profile</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="signin.html"><span class="nav-link-text">logout</span></a>
+          <a class="nav-link" href="index.html"><span class="nav-link-text">logout</span></a>
         </li>
       </ul>      
     </div>
   </nav>
   <div class="inner-page">
-   	<div class="container-fluid">
-      <div class="row">
-        <div class="form-outer text-center d-flex align-items-center">
-          <div class="form-inner">
-            <div class="logo"><strong class="text-primary">list of events you have added</strong></div>
-            <ul class="list">
-              <li class="item"><span onClick="show('event_info')">event 1</span><span class="trash">x</span></li>
-              <div style="display:none" id="event_info">
-              	<a href="modify_event.html" class="edit">edit</a>      
-        		<p class="subtitle">Center Name</p>   
-        		<p class="subtitle">Center Location</p>
-        		<p class="subtitle">Facilities</p>
-        		<p class="subtitle">Description</p>    
-       		  </div>
-              <li class="item"><span onClick="show('event_info2')">event 2</span><span class="trash">x</span></li>
-              <div style="display:none" id="event_info2">
-                <a href="modify_event.html" class="edit">edit</a>       
-        		<p class="subtitle">Center Name</p>   
-        		<p class="subtitle">Center Location</p>
-        		<p class="subtitle">Facilities</p>
-        		<p class="subtitle">Description</p>    
-       		  </div>
-              <li class="item"><span onClick="show('event_info3')">event 3</span><span class="trash">x</span></li>
-              <div style="display:none" id="event_info3">
-                <a href="modify_event.html" class="edit">edit</a>     
-        		<p class="subtitle">Center Name</p>   
-        		<p class="subtitle">Center Location</p>
-        		<p class="subtitle">Facilities</p>
-        		<p class="subtitle">Description</p>    
-       		  </div>
-              <li class="item"><span onClick="show('event_info4')">event 4</span><span class="trash">x</span></li>
-              <div style="display:none" id="event_info4">
-                <a href="modify_event.html" class="edit">edit</a>      
-        		<p class="subtitle">Center Name</p>   
-        		<p class="subtitle">Center Location</p>
-        		<p class="subtitle">Facilities</p>
-        		<p class="subtitle">Description</p>    
-       		  </div>
-              <li class="item"><span onClick="show('event_info5')">event 5</span><span class="trash">x</span></li>
-              <div style="display:none" id="event_info5">      
-                <a href="modify_event.html" class="edit">edit</a>
-        		<p class="subtitle">Center Name</p>   
-        		<p class="subtitle">Center Location</p>
-        		<p class="subtitle">Facilities</p>
-        		<p class="subtitle">Description</p>    
-       		  </div>
-            </ul>
-            <nav class="text-center">
-   			  <ul class="pagination">
-      		    <li><a href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
-      			<li class="active"><a href="#">1</a></li>
-      			<li><a href="#">2</a></li>
-      			<li><a href="#">3</a></li>
-      			<li><a href="#">4</a></li>
-      			<li><a href="#">5</a></li>
-		        <li><a href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
-    		  </ul>
-  			</nav>
+    <div class="container-fluid">
+      
+       <div class="row">
+        <div class="form-outer text-center d-flex align-items-center col-4">
+        <div class="inner-img">
+         <div class="form-inner">
+           <img src="images/image2.jpg" class="img">
+       <h3><a href="#" data-toggle="modal" data-target="#myModal">Wedding Ceremony</a></h3>
+         </div>
+      </div>
+       </div>
+       <div class="form-outer text-center d-flex align-items-center col-4">
+         <div class="inner-img">
+         <div class="form-inner">
+           <img src="images/image3.jpg" class="img">
+       <h3><a href="#" data-toggle="modal" data-target="#myModal">Valedictory Service</a></h3>
+         </div>
+     </div>
+       </div>
+       <div class="form-outer text-center d-flex align-items-center col-4">
+         <div class="inner-img">
+         <div class="form-inner">
+           <img src="images/image4.jpg" class="img">
+       <h3><a href="#" data-toggle="modal" data-target="#myModal">Thanksgiving</a></h3>
+         </div>
+     </div>
+       </div>
+       
+   </div>
+       <nav class="text-center">
+          <ul class="pagination">
+             <li><a href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
+           <li class="active"><a href="#">1</a></li>
+           <li><a href="#">2</a></li>
+           <li><a href="#">3</a></li>
+           <li><a href="#">4</a></li>
+           <li><a href="#">5</a></li>
+           <li><a href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
+         </ul>
+       </nav>
+       <div class="modal fade" id="myModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+            
+                  <div class="form-outer text-center d-flex align-items-center">
+                          <div class="form-inner">
+                            <div class="logo">your <strong class="text-primary">event</strong> center booking</div>
+                            <hr>
+                            <form id="view-event-form">
+                              <p class="subtitle">preferred event center location</p>
+                                   <div class="form-group">            
+                                      <select id="location" class="form-control">
+                                        <option value="0">select your preferred event center location</option>
+                                          <option value="1">location 1</option>
+                                          <option value="2">location 2</option>
+                                        </select>
+                                  </div>
+                              <p class="subtitle">select facilities center should have</p>
+                              <div class="form-group checkbox">
+                                <input type="checkbox" name="facility" value="fac1" class="checkbox"><label>Facility 1</label>
+                                <input type="checkbox" name="facility" value="fac2" class="checkbox"><label>Facility 2</label>
+                                <input type="checkbox" name="facility" value="fac3" class="checkbox"><label>Facility 3</label>
+                                <input type="checkbox" name="facility" value="fac4" class="checkbox"><label>Facility 4</label>
+                              </div>
+                              <p class="subtitle">List of Centers with requested facilities</p>
+                                    <div class="form-group">            
+                                   <select id="center" class="form-control">
+                                      <option value="0">select your preferred center</option>
+                                        <option value="1">center 1</option>
+                                        <option value="2">center 2</option>
+                                    </select>
+                                    </div>
+                                <div class="form-group date">
+                                  <p class="subtitle">available dates</p>
+                                     <input id="date-open" type="text" value="">
+                                 </div>
+                                 <div id="err-date" class="err-date"></div>
+                              <div class="form-group">
+                                  <p class="subtitle">choose date</p>
+                                     <input id="date-select" type="date" value="">
+                                 </div>
+                              <div class="form-group">
+                                   <input id="event-title" type="text" placeholder="Give Your Event A Title">
+                                 </div>
+                                 <p class="subtitle">event description</p>
+                              <div class="form-group">
+                                   <textarea class="form-control"></textarea>
+                              </div> 
+                              <input id="add-event" type="submit" value="Apply Changes" class="btn btn-primary">
+                            </form>
+                          </div>
+                        </div>
+             
+            </div>
           </div>
         </div>
-      </div>
-      <div id="light">
- 	    <div class="container-fluid">
- 	  	  <div class="row">
-	        
-		</div>
-	  </div>
-      </div>  
- 	  <div id="fade" onClick="litebox_close();"></div>
-	  </div>
-	<footer class="main-footer">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12 text-center">
-            <p>eCenter 2017</p>
-          </div>
-        </div>
-      </div>
-    </footer>
-  </div>
+     </div>
+
+ <footer class="main-footer">
+     <div class="container-fluid">
+       <div class="row">
+         <div class="col-12 text-center">
+           <p>eCenter 2017</p>
+         </div>
+       </div>
+     </div>
+   </footer>
+ </div>
 </section>
 <script src="js/show_hidden_div.js"></script>
 <script src="js/jquery.min.js"></script>
