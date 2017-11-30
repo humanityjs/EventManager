@@ -2,6 +2,7 @@
 import express from 'express';
 import userController from '../controllers/userController';
 import centerController from '../controllers/centerController';
+import eventController from '../controllers/eventController';
 import authToken from '../middleware/authenticateToken';
 
 
@@ -18,7 +19,11 @@ router.route('/centers')
   .get(authToken, centerController.getAllCenters);
 
 router.route('/centers/:id')
-  .get(authToken, centerController.getSingleCenter);
+  .get(authToken, centerController.getSingleCenter)
+  .put(authToken, centerController.updateCenter);
+
+router.route('/events')
+  .post(authToken, eventController.postEvent);
 
 // Return router
 export default router;
