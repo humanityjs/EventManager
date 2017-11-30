@@ -7,8 +7,12 @@ const app = express();
 
 
 app.use(bodyParser.json());
+<<<<<<< HEAD
 app.use(bodyParser.urlencoded({ extended: false }));
 
+=======
+app.use(bodyParser.urlencoded({extended: true}));
+>>>>>>> develop
 
 app.get('/', (req, res) => {
   res.send('working');

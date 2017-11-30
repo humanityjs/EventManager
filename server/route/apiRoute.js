@@ -1,10 +1,17 @@
 // Dependencies
 import express from 'express';
+<<<<<<< HEAD
 import userController from '../controllers/userController';
 import centerController from '../controllers/centerController';
 import eventController from '../controllers/eventController';
 import authToken from '../middleware/authenticateToken';
 
+=======
+import centerController from '../controllers/centers';
+import eventController from '../controllers/events';
+import userController from '../controllers/userController';
+import Validate from '../middleware/validate';
+>>>>>>> develop
 
 const router = express.Router();
 // Routes
