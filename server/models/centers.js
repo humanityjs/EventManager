@@ -1,41 +1,34 @@
-const centers = [
-    {
-        id:1,
-        name:"Balmoral",
-        location: "Ojota",
-        facilities: "Projector, Stage lights",
-        description: "A world class event center with ample car park space",
+/** Define Centers database model with foreign associations
+ * @param  {obj} sequelize
+ * @param  {obj} DataTypes
+ * @returns {obj} Centers model
+ */
+export default (sequelize, DataTypes) => {
+  const Centers = sequelize.define('Centers', {
+    cname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
     },
-    {
-        id:2,
-        name:"Faith Plaza",
-        location: "Bariga",
-        facilities: "Stage lights, Large Dinning, Guest house",
-        description: "An event center for large occasions coupled with lodging space",
+    location: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
-    {
-        id:3,
-        name:"Ara Hall",
-        location: "Ibafo",
-        facilities: "Quality stage sound, Projector",
-        description: "An event center suited to your budget",
+    facilities: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
     },
-    {
-        id:4,
-        name:"Five Points",
-        location: "Lekki",
-        facilities: "Guest house, Dinning Area, Stage and Lights",
-        description: "A world class event center",
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
-    {
-        id:5,
-        name:"Radisson Blu",
-        location: "Ozumba",
-        facilities: "Dinning Area, Stage and Lights",
-        description: "An event center with style",
-    }
-    
-];
-
-export default centers;
-
+  });
+  Centers.associate = (models) => {
+    Centers.belongsTo(models.Users, {
+      foreignKey: 'userId',
+    });
+    Centers.hasMany(models.Events, {
+      foreignKey: 'centerId',
+    });
+  };
+  return Centers;
+};

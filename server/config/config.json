@@ -2,16 +2,30 @@
   "development": {
     "username": "postgres",
     "password": "profyem001",
+<<<<<<< HEAD
+    "database": "centerManager",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "port": 5432
+=======
     "database": "CenterManager",
     "host": "127.0.0.1",
     "dialect": "postgres"
+>>>>>>> develop
   },
   "test": {
     "username": "postgres",
     "password": "profyem001",
+<<<<<<< HEAD
+    "database": "centerManager",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "port": 5432
+=======
     "database": "CenterManager",
     "host": "127.0.0.1",
     "dialect": "postgres"
+>>>>>>> develop
   },
   "production": {
     "dialect": "postgres"
