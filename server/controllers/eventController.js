@@ -9,7 +9,7 @@ class EventController {
     } = req.body;
     const { id, isAdmin } = req.decoded;
 
-    // check if user is priviledged
+    // check if user is privileged
     if (!isAdmin) {
       // query db
       return Events.findOne({
