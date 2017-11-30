@@ -4,15 +4,16 @@ import userController from '../controllers/userController';
 import centerController from '../controllers/centerController';
 import eventController from '../controllers/eventController';
 import authToken from '../middleware/authenticateToken';
+import validate from '../middleware/validate';
 
 
 const router = express.Router();
 // Routes
 router.route('/users')
-  .post(userController.signup);
+  .post(validate.signup, userController.signup);
 
 router.route('/users/login')
-  .post(userController.signin);
+  .post(validate.signin, userController.signin);
 
 router.route('/centers')
   .post(authToken, centerController.postCenter)
