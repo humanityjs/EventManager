@@ -25,5 +25,7 @@ router.route('/centers/:id')
 router.route('/events')
   .post(authToken, eventController.postEvent);
 
+router.route('/events/:id')
+  .put(authToken, eventController.updateEvent);
 // Return router
 export default router;
