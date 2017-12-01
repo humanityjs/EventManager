@@ -30,14 +30,14 @@ export default class Validation {
     }
 
     if (!validator.isEmpty(fullname)) {
-      for (let i = 0; i < fullname.length; i += 1) {
-        if (validator.toInt(fullname[i])) {
-          errors.fullname = 'Fullname must not contain numbers';
-          break;
-        }
+      if (!validator.isLength(fullname, { min: 5, max: 20 })) {
+        errors.fullname = 'Fullname must be more than 5 characters but less than 20';
       }
     } else {
-      errors.fullname = 'Fullname is required';
+      errors.fullname = 'Fullname cannot be blank';
+    }
+    if (!/^[a-zA-Z0-9]+$/.test(fullname)) {
+      errors.fullname = 'Fullname can only contain numbers and letters';
     }
 
     if (!validator.isEmpty(email)) {

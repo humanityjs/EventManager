@@ -16,25 +16,25 @@ class CenterController {
     const { isAdmin } = req.decoded;
 
     // get centers
-    Centers.all().then((center) => {
+    Centers.all().then((centers) => {
       if (isAdmin) {
         // if centers are available
-        if (center) {
+        if (centers) {
           // show centers
-          return res.status(200).json({
-            center,
+          return res.status(200).send({
+            centers,
           });
         }
         // No center found
-        return res.status(404).json({
+        return res.status(404).send({
           message: 'There are no available Centers',
         });
       }
       // Unauthorised user
-      return res.status(403).json({
-        message: 'Your are not allowed to view this page',
+      return res.status(403).send({
+        message: 'You are not allowed to view this page',
       });
-    }).catch(error => res.status(500).json({
+    }).catch(error => res.status(500).send({
       message: error.message,
     }));
   }
@@ -55,18 +55,18 @@ class CenterController {
       .then((center) => {
         if (isAdmin) {
           if (center) {
-            return res.status(200).json({
+            return res.status(200).send({
               center,
             });
           }
-          return res.status(400).json({
+          return res.status(400).send({
             message: 'No Center Found',
           });
         }// Unauthorised user
-        return res.status(403).json({
-          message: 'Your are not allowed to view this page',
+        return res.status(403).send({
+          message: 'You are not allowed to view this page',
         });
-      }).catch(error => res.status(500).json({
+      }).catch(error => res.status(500).send({
         message: error.message,
       }));
   }
@@ -82,39 +82,39 @@ class CenterController {
    */
   static postCenter(req, res) {
     const {
-      cname, location, description, facilities,
+      centerName, location, description, facilities,
     } = req.body;
     const { id, isAdmin } = req.decoded;
 
     if (isAdmin) {
-      return Centers.findOne({ where: { cname } })
+      return Centers.findOne({ where: { centerName } })
         .then((foundCenter) => {
-          if (foundCenter && foundCenter.cname === cname) {
-            res.status(400).json({
-              message: `${cname} already exist`,
+          if (foundCenter) {
+            res.status(400).send({
+              message: `${centerName} already exist`,
             });
           }
-          const arr = facilities.split(',');
+          const facilityArray = facilities.split(',');
           Centers.create({
-            cname,
+            centerName,
             location,
             description,
-            facilities: arr,
+            facilities: facilityArray,
             userId: id,
-          }).then(center => res.status(201).json({
+          }).then(center => res.status(201).send({
             message: 'Successfully created a center',
             data: {
-              CenterName: center.cname,
+              CenterName: center.centerName,
             },
-          })).catch(error => res.status(500).json({
+          })).catch(error => res.status(500).send({
             message: error.message,
           }));
-        }).catch(error => res.status(500).json({
+        }).catch(error => res.status(500).send({
           message: error.message,
         }));
     }// Unauthorised user
-    return res.status(403).json({
-      message: 'Your are not allowed to view this page',
+    return res.status(403).send({
+      message: 'You are not allowed to view this page',
     });
   }
 
@@ -128,7 +128,7 @@ class CenterController {
      */
   static updateCenter(req, res) {
     const {
-      cname, location, description, facilities,
+      centerName, location, description, facilities,
     } = req.body;
     const { isAdmin } = req.decoded;
     const id = req.params.id;
@@ -137,7 +137,7 @@ class CenterController {
       if (isAdmin) {
         const facilityArray = facilities.split(',');
         return center.update({
-          cname: cname || center.cname,
+          centerName: centerName || center.centerName,
           location: location || center.location,
           description: description || center.description,
           facilities: facilityArray || center.facilities,
@@ -145,16 +145,16 @@ class CenterController {
           where: {
             id,
           },
-        }).then(() => res.status(201).json({
+        }).then(() => res.status(201).send({
           message: 'Successfully updated center',
-        })).catch(error => res.status(500).json({
+        })).catch(error => res.status(500).send({
           message: error.message,
         }));
       }
-      return res.status(403).json({
+      return res.status(403).send({
         message: 'You are not permitted to be here',
       });
-    }).catch(() => res.status(404).json({
+    }).catch(() => res.status(404).send({
       message: 'Center not found',
     }));
   }

@@ -4,29 +4,31 @@ import userController from '../controllers/userController';
 import centerController from '../controllers/centerController';
 import eventController from '../controllers/eventController';
 import authToken from '../middleware/authenticateToken';
-import validate from '../middleware/validate';
-
+import userValidate from '../middleware/userValidate';
+import centerValidate from '../middleware/centerValidate';
+import eventValidate from '../middleware/eventValidate';
 
 const router = express.Router();
 // Routes
 router.route('/users')
-  .post(validate.signup, userController.signup);
+  .post(userValidate.signup, userController.signup);
 
 router.route('/users/login')
-  .post(validate.signin, userController.signin);
+  .post(userValidate.signin, userController.signin);
 
 router.route('/centers')
-  .post(authToken, centerController.postCenter)
+  .post(authToken, centerValidate.postCenter, centerController.postCenter)
   .get(authToken, centerController.getAllCenters);
 
 router.route('/centers/:id')
   .get(authToken, centerController.getSingleCenter)
-  .put(authToken, centerController.updateCenter);
+  .put(authToken, centerValidate.updateCenter, centerController.updateCenter);
 
 router.route('/events')
-  .post(authToken, eventController.postEvent);
+  .post(authToken, eventValidate.postEvent, eventController.postEvent);
 
 router.route('/events/:id')
-  .put(authToken, eventController.updateEvent);
+  .put(authToken, eventValidate.updateEvent, eventController.updateEvent)
+  .delete(authToken, eventController.deleteEvent);
 // Return router
 export default router;
