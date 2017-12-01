@@ -20,7 +20,7 @@ export default class UserController {
      */
   static signup(req, res) {
     const {
-      fullname, email, password, isAdmin,
+      fullname, email, password,
     } = req.body;
 
     Users.findOne({
@@ -44,18 +44,26 @@ export default class UserController {
             fullname,
             email,
             password: hash,
-            isAdmin,
           }).then(() => {
-            const payload = { email, isAdmin };
-            const token = jwt.sign(payload, process.env.SECRET, {
-              expiresIn: 60 * 60 * 12,
-            });
-            req.body.token = token;
-            return res.status(200).send({
-              message: 'You are now Signed Up',
-              data: {
-                token,
+            Users.findOne({
+              where: {
+                email,
               },
+            }).then((users) => {
+              const payload = { email: users.email, isAdmin: users.isAdmin, id: users.id };
+              const token = jwt.sign(payload, process.env.SECRET, {
+                expiresIn: 60 * 60 * 12,
+              });
+              req.body.token = token;
+              return res.status(200).send({
+                message: 'You are now Signed Up',
+                data: {
+                  token,
+                  email: users.email, 
+                  isAdmin: users.isAdmin, 
+                  id: users.id,
+                },
+              });
             });
           }).catch(error => res.status(500).send({
             message: error.message,

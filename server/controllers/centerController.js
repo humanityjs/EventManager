@@ -141,10 +141,6 @@ class CenterController {
           location: location || center.location,
           description: description || center.description,
           facilities: facilityArray || center.facilities,
-        }, {
-          where: {
-            id,
-          },
         }).then(() => res.status(201).send({
           message: 'Successfully updated center',
         })).catch(error => res.status(500).send({

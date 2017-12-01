@@ -47,8 +47,8 @@ export default class Validation {
     } else { errors.email = 'Email is required'; }
 
     if (!validator.isEmpty(password)) {
-      if (!validator.isLength(password, { min: 8, max: 30 })) {
-        errors.password = 'Password length must be between 8 and 30';
+      if (!validator.isLength(password, { min: 5, max: 20 })) {
+        errors.password = 'Password length must be between 5 and 20';
       }
     } else { errors.password = 'Password is required'; }
 
