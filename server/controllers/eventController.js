@@ -46,55 +46,55 @@ class EventController {
     } = req.body;
     const { id } = req.decoded;
 
-    // query db
+    // check if date and center collides with input
     return Events.findOne({
       where: {
-        centerId, bookedDate,
+        bookedDate, centerId,
       },
-    }).then((event) => {
-      if (event) {
-        return res.status(400).send({
-          message: 'Center is not available for the date chosen',
+    }).then((events) => {
+      function com(message, condition) {
+        return condition.update({
+          eventTitle: eventTitle || condition.eventTitle,
+          bookedDate: bookedDate || condition.bookedDate,
+          description: description || condition.description,
+          centerId: centerId || condition.centerId,
+        }).then(() => {
+          res.status(200).send({
+            message,
+          });
         });
       }
-      return Events.update({
-        eventTitle: eventTitle || event.eventTitle,
-        bookedDate: bookedDate || event.bookedDate,
-        description: description || event.description,
-        centerId: centerId || event.centerId,
-        userId: id,
-      }, {
-        where: {
-          id: req.params.id,
-        },
-      }).then((modifiedEvent) => {
-        res.status(200).send({
-          message: 'Changes Applied',
-          modifiedEvent,
+      if (events) {
+        Events.findById(req.params.id).then((event) => {
+          if (event) {
+            com('Changes Applied', event);
+          }
         });
-      }).catch(error => res.status(500).send({
-        message: error.message,
-      }));
+        res.status(403).send({
+          message: 'choose day',
+        });
+      }
+      com('Changes2 Applied', events);
     }).catch(error => res.status(500).send({
       message: error.message,
     }));
   }
 
+
   static deleteEvent(req, res) {
     const eventId = req.params.id;
-    const { userId } = req.decoded;
+    const { id } = req.decoded;
 
     return Events.findById(eventId).then((event) => {
       if (event) {
-        if (event.userId === userId) {
-          return Events.destroy({
-            where: {
-              id: eventId,
-            },
-          }).then(() => res.status(200).send({
+        if (event.userId === id) {
+          return event.destroy().then(() => res.status(200).send({
             message: 'Event Deleted',
           }));
         }
+        return res.status(403).send({
+          message: 'You cannot delete an event not booked by you',
+        });
       }
       return res.status(400).send({
         message: 'Event does not exist',
