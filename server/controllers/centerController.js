@@ -1,6 +1,6 @@
 import models from '../models';
 
-const { Centers } = models;
+const { Centers, Events } = models;
 
 class CenterController {
   /**
@@ -51,7 +51,7 @@ class CenterController {
 
   static getSingleCenter(req, res) {
     const { isAdmin } = req.decoded;
-    Centers.findById(req.params.id)
+    Centers.findAll({ include: [Events] })
       .then((center) => {
         if (isAdmin) {
           if (center) {
@@ -131,7 +131,7 @@ class CenterController {
       centerName, location, description, facilities,
     } = req.body;
     const { isAdmin } = req.decoded;
-    const id = req.params.id;
+    const { id } = req.params;
 
     return Centers.findById(id).then((center) => {
       if (isAdmin) {

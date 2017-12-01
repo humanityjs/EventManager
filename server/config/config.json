@@ -16,6 +16,11 @@
     "port": 5432
   },
   "production": {
-    "dialect": "postgres"
+    "username": "postgres",
+    "password": "profyem001",
+    "database": "centerManager",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "port": 5432
   }
 }
