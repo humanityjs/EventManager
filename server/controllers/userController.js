@@ -19,7 +19,9 @@ export default class UserController {
      * @memberof UserController
      */
   static signup(req, res) {
-    const { fullname, email, password, isAdmin } = req.body;
+    const {
+      fullname, email, password, isAdmin,
+    } = req.body;
 
     Users.findOne({
       where: {
@@ -43,20 +45,27 @@ export default class UserController {
             email,
             password: hash,
             isAdmin,
-          }).then(user => res.status(201).send({
-            message: 'Successfully created account',
-            data: {
-              user,
-            },
+          }).then(() => {
+            const payload = { email, isAdmin };
+            const token = jwt.sign(payload, process.env.SECRET, {
+              expiresIn: 60 * 60 * 12,
+            });
+            req.body.token = token;
+            return res.status(200).send({
+              message: 'You are now Signed Up',
+              data: {
+                token,
+              },
+            });
+          }).catch(error => res.status(500).send({
+            message: error.message,
           }));
         });
       });
-    })
-      .catch(error => res.status(500).send({
-        message: error.message,
-      }));
+    }).catch(error => res.status(500).send({
+      message: error.message,
+    }));
   }
-
   /**
      * User details are captured and authenticated against persisted database data
      * @static
@@ -77,16 +86,16 @@ export default class UserController {
         const check = bcrypt.compareSync(password, user.password);
         if (check) {
           const payload = { email: user.email, isAdmin: user.isAdmin, id: user.id };
-          const userData = jwt.sign(payload, process.env.SECRET, {
-            expiresIn: 60 * 60 * 5,
+          const token = jwt.sign(payload, process.env.SECRET, {
+            expiresIn: 60 * 60 * 12,
           });
-          req.body.token = userData;
+          req.body.token = token;
           return res.status(200).send({
             message: 'You are now logged In',
             data: {
               user,
             },
-            userData,
+            token,
           });
         }
         return res.status(400).send({

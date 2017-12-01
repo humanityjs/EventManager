@@ -5,7 +5,7 @@
  */
 export default (sequelize, DataTypes) => {
   const Events = sequelize.define('Events', {
-    title: {
+    eventTitle: {
       type: DataTypes.STRING,
       allowNull: false,
     },
