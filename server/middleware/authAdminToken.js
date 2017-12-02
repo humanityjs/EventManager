@@ -16,20 +16,18 @@ const authAdminToken = (req, res, next) => {
   if (token) {
     jwt.verify(token, process.env.SECRET, (err, decoded) => {
       if (err) {
-        res.status(401);
-        res.send({
+        return res.status(401).send({
           message: 'Token is Invalid or Expired',
         });
-      } else {
-        req.decoded = decoded;
-        const { isAdmin } = req.decoded;
-        if (isAdmin) {
-          next();
-        }
-        return res.status(403).send({
-          message: 'You are not permitted to view this page',
-        });
       }
+      req.decoded = decoded;
+      const { isAdmin } = req.decoded;
+      if (isAdmin) {
+        return next();
+      }
+      return res.status(403).send({
+        message: 'You are not permitted to view this page',
+      });
     });
   } else {
     res.status(403);

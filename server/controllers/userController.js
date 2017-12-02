@@ -108,7 +108,7 @@ export default class UserController {
           });
         }
         return res.status(400).send({
-          message: 'Invalid username or password',
+          message: 'Invalid email or password',
         });
       }
       return res.status(404).send({

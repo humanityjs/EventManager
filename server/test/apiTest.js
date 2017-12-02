@@ -3,33 +3,13 @@
   */
 import supertest from 'supertest';
 import app from '../app';
-import models from '../models';
 
 const expect = require('chai').expect;
 
 const request = supertest(app);
-const { Users, Events, Centers } = models;
 
 let token;
 const invalidToken = 'invalidToken';
-
-Users.destroy({
-  cascade: true,
-  truncate: true,
-  restartIdentity: true
-});
-
-Events.destroy({
-  cascade: true,
-  truncate: true,
-  restartIdentity: true
-});
-
-Centers.destroy({
-  cascade: true,
-  truncate: true,
-  restartIdentity: true
-});
 
 describe('tests for application', () => {
   describe('Test case for loading application home page', () => {
@@ -89,12 +69,12 @@ describe('tests for application', () => {
 
   describe('tests for Signup processes', () => {
     describe('test for valid signup', () => {
-      it('should return a success message', (done) => {
+      it('should create a new user', (done) => {
         request.post('/api/v1/users')
           .set('Accept', 'application/json')
           .send({
             fullname: 'Olayemi Lawal',
-            email: 'ola@test.com',
+            email: `ola${Math.random()}@test.com`,
             password: 'good password',
           })
           .expect(200)
@@ -169,14 +149,14 @@ describe('tests for application', () => {
           .set('Accept', 'application/json')
           .send({
             fullname: 'Olayemi Lawal',
-            email: 'ola@test.com',
-            password: 'good password',
+            email: 'admin@test.com',
+            password: '1234567890',
           })
           .expect(400)
           .end((err, res) => {
             expect(res.body).to.have.property('message');
             expect(res.body.message).to.not.equal(null);
-            expect(res.body.message).deep.equal('ola@test.com already exist');
+            expect(res.body.message).deep.equal('admin@test.com already exist');
             if (err) done(err);
             done();
           });
@@ -258,14 +238,14 @@ describe('tests for application', () => {
         request.post('/api/v1/users/login')
           .set('Accept', 'application/json')
           .send({
-            email: 'ola@test.com',
+            email: 'admin@test.com',
             password: 'bad password',
           })
           .expect(400)
           .end((err, res) => {
             expect(res.body).to.have.property('message');
             expect(res.body.message).to.not.equal(null);
-            expect(res.body.message).deep.equal('Invalid username or password');
+            expect(res.body.message).deep.equal('Invalid email or password');
             done();
           });
       });
@@ -276,8 +256,8 @@ describe('tests for application', () => {
         request.post('/api/v1/users/login')
           .set('Accept', 'application/json')
           .send({
-            email: 'ola@test.com',
-            password: 'good password',
+            email: 'admin@test.com',
+            password: '1234567890',
           })
           .expect(200)
           .end((err, res) => {
@@ -355,7 +335,6 @@ describe('tests for application', () => {
               facilities: 'Center should have at least one facility',
               location: 'Center should have an Address',
             });
-            if (err) done(err);
             done();
           });
       });
@@ -377,30 +356,6 @@ describe('tests for application', () => {
               centerName: 'Center Name can only contain numbers and letters',
               description: 'description can not include symbols except comma and full stop',
               facilities: 'Facilities can not include symbols except comma which you should use to separate the faciities',
-            });
-            if (err) done(err);
-            done();
-          });
-      });
-
-      it('should create a center', (done) => {
-        request.post('/api/v1/centers')
-          .set('x-access-token', token)
-          .send({
-            centerName: 'Five Points',
-            description: 'A world class event center',
-            location: 'Lekki, Lagos',
-            facilities: 'Projector, Stage Lights, Sound',
-          })
-          .expect(200)
-          .end((err, res) => {
-            expect(res.body).to.have.property('message');
-            expect(res.body.message).to.not.equal(null);
-            expect(res.body).deep.equal({
-              message: 'Successfully created a center',
-              data: {
-                CenterName: 'Five Points',
-              },
             });
             done();
           });
