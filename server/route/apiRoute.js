@@ -30,5 +30,6 @@ router.route('/events')
 router.route('/events/:id')
   .put(authToken, eventValidate.updateEvent, eventController.updateEvent)
   .delete(authToken, eventController.deleteEvent);
+
 // Return router
 export default router;

@@ -15,12 +15,12 @@ export default class UserController {
      * @static
      * @param {object} req
      * @param {object} res
-     * @returns {object} Failure message or Success message with the persisted database data
+     * @returns {object} Failure message or Success message with the database data
      * @memberof UserController
      */
   static signup(req, res) {
     const {
-      fullname, email, password,
+      fullname, email, password, isAdmin,
     } = req.body;
 
     Users.findOne({
@@ -44,6 +44,7 @@ export default class UserController {
             fullname,
             email,
             password: hash,
+            isAdmin,
           }).then(() => {
             Users.findOne({
               where: {
@@ -75,11 +76,11 @@ export default class UserController {
     }));
   }
   /**
-     * User details are captured and authenticated against persisted database data
+     * User details are captured and authenticated against database data
      * @static
      * @param {object} req
      * @param {object} res
-     * @returns {object} Failure message or Success message with persisted database data
+     * @returns {object} Failure message or Success message with database data
      * @memberof UserController
      */
   static signin(req, res) {
@@ -111,7 +112,7 @@ export default class UserController {
         });
       }
       return res.status(404).send({
-        message: 'User not found',
+        message: 'User not found, Please sign up if you ar a new user',
       });
     }).catch(error => res.status(500).send({
       status: 'Failed',
