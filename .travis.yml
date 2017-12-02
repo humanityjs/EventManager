@@ -4,7 +4,7 @@ node_js:
   - stable 
 before_script: 
    - npm install
-   - psql -c 'create database eventmanager' -U postgres   
+   - psql -c 'create database eventManager' -U postgres   
 
 script: 
   - npm test 
