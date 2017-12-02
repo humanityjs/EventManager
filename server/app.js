@@ -7,22 +7,24 @@ const app = express();
 
 
 app.use(bodyParser.json());
-<<<<<<< HEAD
 app.use(bodyParser.urlencoded({ extended: false }));
 
-=======
-app.use(bodyParser.urlencoded({extended: true}));
->>>>>>> develop
 
 app.get('/', (req, res) => {
-  res.send('working');
+  res.send({
+    message: 'Event Manager Server now Running',
+  });
 });
 
 app.use('/api/v1/', userRoute);
 
 
-app.listen(8000, () => {
-  console.log('API is running on port 8000');
+app.all('*', (req, res) => res.status(404).send({ error: 'page not found' }));
+
+app.set('port', process.env.PORT || 3000);
+
+app.listen(app.get('port'), () => {
+  console.log(`App started on port ${app.get('port')}`);
 });
 
 export default app;
