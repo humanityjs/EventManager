@@ -11,7 +11,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 app.get('/', (req, res) => {
-  res.send('working');
+  res.send({
+    message: 'Event Manager Server now Running',
+  });
 });
 
 app.use('/api/v1/', userRoute);
