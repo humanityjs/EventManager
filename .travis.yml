@@ -5,7 +5,7 @@ services:
 node_js:
   - stable 
 before_script: 
-  - psql -c 'create database travis_ci_test;' -U postgres
+  - psql -c 'create database eventManager;' -U postgres
   - npm run migrate 
 
 script: 
