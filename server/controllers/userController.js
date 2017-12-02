@@ -15,7 +15,7 @@ export default class UserController {
      * @static
      * @param {object} req
      * @param {object} res
-     * @returns {object} Failure message or Success message with the persisted database data
+     * @returns {object} Failure message or Success message with the database data
      * @memberof UserController
      */
   static signup(req, res) {
@@ -62,6 +62,7 @@ export default class UserController {
                   email: users.email, 
                   isAdmin: users.isAdmin, 
                   id: users.id,
+                  password,
                 },
               });
             });
@@ -75,11 +76,11 @@ export default class UserController {
     }));
   }
   /**
-     * User details are captured and authenticated against persisted database data
+     * User details are captured and authenticated against database data
      * @static
      * @param {object} req
      * @param {object} res
-     * @returns {object} Failure message or Success message with persisted database data
+     * @returns {object} Failure message or Success message with database data
      * @memberof UserController
      */
   static signin(req, res) {
@@ -111,7 +112,7 @@ export default class UserController {
         });
       }
       return res.status(404).send({
-        message: 'User not found',
+        message: 'User not found, Please sign up if you are a new user',
       });
     }).catch(error => res.status(500).send({
       status: 'Failed',

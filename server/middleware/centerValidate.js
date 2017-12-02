@@ -6,6 +6,7 @@ import validator from 'validator';
  * @class centersValidation
  */
 export default class Validation {
+  
   /**
      * Validates all centers details before allowing access to controller class
      * @param {object} req
@@ -18,10 +19,13 @@ export default class Validation {
     const {
       centerName, facilities, description, location,
     } = req.body;
+
     const errors = {};
+
+
     if (centerName === undefined || facilities === undefined || description === undefined || location === undefined) {
       return res.status(400).send({
-        message: 'All or Some Field are Undefined',
+        message: 'All or Some Fields are Undefined',
       });
     }
     // validations for centername
@@ -39,7 +43,7 @@ export default class Validation {
     }
 
     // validations for facilities
-    if (!/^[a-zA-Z0-9, ]+$/.test(facilities)) {
+    if (!/^[a-zA-Z0-9,.& ]+$/.test(facilities)) {
       errors.facilities = 'Facilities can not include symbols except comma which you should use to separate the faciities';
     }
     if (!validator.isEmpty(facilities)) {
@@ -95,7 +99,7 @@ export default class Validation {
       if (!validator.isLength(centerName, { min: 5, max: 20 })) {
         errors.centerName = 'The Center Name must be more than 5 characters but less than 20';
       }
-    } 
+    }
 
     // validations for facilities
     if (!/^[a-zA-Z0-9, ]+$/.test(facilities)) {
@@ -125,7 +129,8 @@ export default class Validation {
       if (!validator.isLength(location, { min: 5, max: 1000 })) {
         errors.location = 'location must be greater than 5 but less than 100 words';
       }
-    } 
+    }
+
 
     if (Object.keys(errors).length !== 0) {
       return res.status(400).send(errors);

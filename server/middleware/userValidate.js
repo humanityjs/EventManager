@@ -36,7 +36,7 @@ export default class Validation {
     } else {
       errors.fullname = 'Fullname cannot be blank';
     }
-    if (!/^[a-zA-Z0-9]+$/.test(fullname)) {
+    if (!/^[a-zA-Z0-9 ]+$/.test(fullname)) {
       errors.fullname = 'Fullname can only contain numbers and letters';
     }
 
