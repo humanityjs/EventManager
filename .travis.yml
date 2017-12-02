@@ -3,9 +3,8 @@ language: node_js
 node_js:
   - stable 
 before_script: 
-   - npm install
-   - psql -c 'create database eventManager;' -U postgres  
-   - npm run migrate 
+  - psql -c 'create database travis_ci_test;' -U postgres
+  - npm run migrate 
 
 script: 
   - npm test 
