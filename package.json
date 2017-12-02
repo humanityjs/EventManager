@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --watch server --exec babel-node -- server/app.js",
-    "test": "nyc --reporter=html --reporter=text mocha --require babel-register --require babel-polyfill --recursive server/test/apiTest.js --exit",
+    "test": "set NODE_ENV=test&& babel-node ./server/setUpDb && nyc --reporter=html --reporter=text mocha --require babel-register --require babel-polyfill --recursive server/test/apiTest.js --exit",
     "coverage": "nyc report --reporter=text-icov | coveralls",
     "unmigrate": "sequelize db:migrate:undo:all",
     "migrate": "sequelize db:migrate"

@@ -3,8 +3,8 @@ require('dotenv').config();
 module.exports = {
   development: {
     username: 'postgres',
-    password: 'profyem001',
     database: 'eventManager',
+    password: 'profyem001',
     host: '127.0.0.1',
     dialect: 'postgres',
     port: 5432,
@@ -12,7 +12,7 @@ module.exports = {
   test: {
     username: 'postgres',
     password: 'profyem001',
-    database: 'eventManager',
+    database: 'travis_db',
     host: '127.0.0.1',
     dialect: 'postgres',
     port: 5432,
