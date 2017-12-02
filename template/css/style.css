@@ -125,7 +125,9 @@ nav.navbar .brand-text strong {
     color: #F97E04;
     font-style: normal;
 }
-
+br {
+  margin-bottom: 10px;
+}
 /* Footer */
 footer.main-footer {
   background: #222;

@@ -44,7 +44,6 @@ class EventController {
     const {
       eventTitle, description, bookedDate, centerId,
     } = req.body;
-    const { id } = req.decoded;
 
     // check if date and center collides with input
     return Events.findOne({
@@ -52,29 +51,37 @@ class EventController {
         bookedDate, centerId,
       },
     }).then((events) => {
-      function com(message, condition) {
-        return condition.update({
-          eventTitle: eventTitle || condition.eventTitle,
-          bookedDate: bookedDate || condition.bookedDate,
-          description: description || condition.description,
-          centerId: centerId || condition.centerId,
-        }).then(() => {
-          res.status(200).send({
-            message,
-          });
-        });
-      }
       if (events) {
-        Events.findById(req.params.id).then((event) => {
-          if (event) {
-            com('Changes Applied', event);
-          }
-        });
-        res.status(403).send({
-          message: 'choose day',
+        if (events.id === Number(req.params.id)) {
+          return events.update({
+            eventTitle: eventTitle || events.eventTitle,
+            bookedDate: bookedDate || events.bookedDate,
+            description: description || events.description,
+            centerId: centerId || events.centerId,
+          }).then(() => res.status(200).send({
+            message: 'Changes Applied',
+          })).catch(error => res.status(500).send({
+            message: error.message,
+          }));
+        }
+        return res.status(401).send({
+          message: 'The date you chose is not available, choose another day or center',
         });
       }
-      com('Changes2 Applied', events);
+      Events.update({
+        eventTitle: eventTitle || Events.eventTitle,
+        bookedDate: bookedDate || Events.bookedDate,
+        description: description || Events.description,
+        centerId: centerId || Events.centerId,
+      }, {
+        where: {
+          id: req.params.id,
+        },
+      }).then(() => res.status(200).send({
+        message: 'Changes Applied',
+      })).catch(error => res.status(500).send({
+        message: error.message,
+      }));
     }).catch(error => res.status(500).send({
       message: error.message,
     }));
