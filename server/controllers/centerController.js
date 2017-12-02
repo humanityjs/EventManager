@@ -95,9 +95,6 @@ class CenterController {
           userId: id,
         }).then(center => res.status(201).send({
           message: 'Successfully created a center',
-          data: {
-            CenterName: center.centerName,
-          },
         })).catch(error => res.status(500).send({
           message: error.message,
         }));

@@ -1,19 +1,17 @@
 /**
   * API Endpoint Tests for database
   */
-import chai from 'chai';
 import supertest from 'supertest';
 import app from '../app';
 import models from '../models';
 
-const should = chai.should();
 const expect = require('chai').expect;
 
 const request = supertest(app);
-const { users, Events, Centers } = models;
+const { Users, Events, Centers } = models;
 
 let token;
-let invalidToken = 'invalidToken';
+const invalidToken = 'invalidToken';
 
 Users.destroy({
   cascade: true,
@@ -42,9 +40,6 @@ describe('tests for application', () => {
         .end((err, res) => {
           expect(res.body).to.have.property('message');
           expect(res.body.message).to.not.equal(null);
-          //   expect(res.body).equal({
-          //     message: 'Event Manager Server now Running',
-          //   });
           if (err) done(err);
           done();
         });
@@ -100,7 +95,7 @@ describe('tests for application', () => {
           .send({
             fullname: 'Olayemi Lawal',
             email: 'ola@test.com',
-            password: 'verygood',
+            password: 'good password',
           })
           .expect(200)
           .end((err, res) => {
@@ -120,7 +115,7 @@ describe('tests for application', () => {
           .send({
             // fullname is missing
             email: 'ola@test.com',
-            password: 'verygood',
+            password: 'good password',
           })
           .expect(400)
           .end((err, res) => {
@@ -155,7 +150,6 @@ describe('tests for application', () => {
         request.post('/api/v1/users')
           .set('Accept', 'application/json')
           .send({
-            // password is empty
             fullname: 'Olayemi Lawal',
             email: 'ola#test.com',
             password: 'very good',
@@ -176,7 +170,7 @@ describe('tests for application', () => {
           .send({
             fullname: 'Olayemi Lawal',
             email: 'ola@test.com',
-            password: 'very good',
+            password: 'good password',
           })
           .expect(400)
           .end((err, res) => {
@@ -231,7 +225,6 @@ describe('tests for application', () => {
         request.post('/api/v1/users/login')
           .set('Accept', 'application/json')
           .send({
-            // password is empty
             email: 'ola#test.com',
             password: 'very good',
           })
@@ -256,7 +249,7 @@ describe('tests for application', () => {
           .end((err, res) => {
             expect(res.body).to.have.property('message');
             expect(res.body.message).to.not.equal(null);
-            expect(res.body.message).deep.equal('User not found, Please sign up if you ar a new user');
+            expect(res.body.message).deep.equal('User not found, Please sign up if you are a new user');
             done();
           });
       });
@@ -283,15 +276,15 @@ describe('tests for application', () => {
         request.post('/api/v1/users/login')
           .set('Accept', 'application/json')
           .send({
-            email: 'olayemiadmin@gmail.com',
-            password: '1234567890',
+            email: 'ola@test.com',
+            password: 'good password',
           })
           .expect(200)
           .end((err, res) => {
             token = res.body.token;
             expect(res.body).to.have.property('message');
             expect(res.body.message).to.not.equal(null);
-            expect(res.body.message).deep.equal('You are now logged In');
+            expect(res.body.message).equal('You are now logged In');
             if (err) done(err);
             done();
           });
@@ -409,26 +402,9 @@ describe('tests for application', () => {
                 CenterName: 'Five Points',
               },
             });
-            if (err) done(err);
             done();
           });
       });
-
-      // it('should return error message for incorrect email or password', (done) => {
-      //   request.post('/api/v1/users/login')
-      //     .set('Accept', 'application/json')
-      //     .send({
-      //       email: 'ola@test.com',
-      //       password: 'bad password',
-      //     })
-      //     .expect(400)
-      //     .end((err, res) => {
-      //       expect(res.body).to.have.property('message');
-      //       expect(res.body.message).to.not.equal(null);
-      //       expect(res.body.message).deep.equal('Invalid username or password');
-      //       done();
-      //     });
-      // });
     });
   });
 });

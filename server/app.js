@@ -19,9 +19,7 @@ app.get('/', (req, res) => {
 app.use('/api/v1/', userRoute);
 
 
-app.all('*', (req, res) => {
-  return res.status(404).send({ error: 'page not found' })
-});
+app.all('*', (req, res) => res.status(404).send({ error: 'page not found' }));
 
 app.set('port', process.env.PORT || 3000);
 

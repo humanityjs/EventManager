@@ -20,7 +20,7 @@ export default class UserController {
      */
   static signup(req, res) {
     const {
-      fullname, email, password, isAdmin,
+      fullname, email, password,
     } = req.body;
 
     Users.findOne({
@@ -44,7 +44,6 @@ export default class UserController {
             fullname,
             email,
             password: hash,
-            isAdmin,
           }).then(() => {
             Users.findOne({
               where: {
@@ -63,6 +62,7 @@ export default class UserController {
                   email: users.email, 
                   isAdmin: users.isAdmin, 
                   id: users.id,
+                  password,
                 },
               });
             });
@@ -112,7 +112,7 @@ export default class UserController {
         });
       }
       return res.status(404).send({
-        message: 'User not found, Please sign up if you ar a new user',
+        message: 'User not found, Please sign up if you are a new user',
       });
     }).catch(error => res.status(500).send({
       status: 'Failed',

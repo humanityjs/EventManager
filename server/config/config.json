@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": "profyem001",
-    "database": "centerManager",
+    "database": "eventManager",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "port": 5432
@@ -10,17 +10,18 @@
   "test": {
     "username": "postgres",
     "password": "profyem001",
-    "database": "centerManager",
+    "database": "eventManager",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "port": 5432
   },
   "production": {
-    "username": "postgres",
-    "password": "profyem001",
-    "database": "centerManager",
-    "host": "127.0.0.1",
-    "dialect": "postgres",
-    "port": 5432
+    "User": "byeepmngwaanwe",
+    "password": "306396bf5ac9eb2b077081096ac60e658dbd36fa602ab62d16fc035de22af999",
+    "database": "dcddbjug8j8dtf",
+    "host": "ec2-54-221-225-114.compute-1.amazonaws.com",
+    "URI": "postgres://byeepmngwaanwe:306396bf5ac9eb2b077081096ac60e658dbd36fa602ab62d16fc035de22af999@ec2-54-221-225-114.compute-1.amazonaws.com:5432/dcddbjug8j8dtf",
+    "port": 5432,
+    "Heroku Cli": "heroku pg:psql postgresql-horizontal-30477 --app nameless-shelf-71823",
   }
 }
