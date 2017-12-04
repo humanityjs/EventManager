@@ -10,13 +10,22 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
-app.get('/', (req, res) => {
-  res.send({
-    message: 'Event Manager Server now Running',
-  });
-});
+app.get('/', (req, res) => res.send({
+  message: 'Event Manager Server now Running',
+}));
 
-app.use('/api/v1/', userRoute);
+app.use('/api/v1/', (req, res, next) => {
+  let err = null;
+  try {
+    decodeURIComponent(req.path);
+  } catch (e) {
+    err = e;
+  }
+  if (err) {
+    return res.status(404).send({ error: 'page not found' });
+  }
+  next();
+}, userRoute);
 
 
 app.all('*', (req, res) => res.status(404).send({ error: 'page not found' }));
