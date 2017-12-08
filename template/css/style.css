@@ -4,6 +4,9 @@ body {
   font-weight: normal;
   line-height: 1.5;
   color: #212529;
+      background-image: url(../images/image5.png);
+  background-repeat: no-repeat;
+	background-size: cover;
 }
 
 a:focus, a:hover {
@@ -31,11 +34,12 @@ i {
 
 span {
   display: inline-block;
-  font-size: 1.1em;
+  font-size: 1.2em;
 }
 
 p {
  text-transform: capitalize;
+ padding: 0 15px;
 }
 
 h1,h2,h3 {
@@ -82,8 +86,9 @@ hr {
 
 /* Navigation bar */
 nav.navbar {
-  background: #393836;
+  background: #dbd9dc3d;
     padding: 0 20px;
+  border-bottom: 1px outset #dbd9dc;
 }
 
 nav.navbar .container-fluid {
@@ -116,14 +121,30 @@ nav.navbar .brand-text {
 nav.navbar .brand-text strong {
   font-size: 1.5em;
 }
+.navbar-dark .navbar-nav .nav-link {
+	color: #fffc;
+}
 .nav-link {
     text-transform: capitalize;
 }
-
+.navbar-form {
+	display: flex;
+}
+.navbar form input {
+	margin: 0;
+}
 
 .navbar-dark .navbar-nav .nav-link:focus, .navbar-dark .navbar-nav .nav-link:hover {
     color: #F97E04;
     font-style: normal;
+}
+.nav-item {
+	padding: 0 20px;
+}
+nav form input[type='text'] {
+	    border: 1px solid #97a1aa;
+    border-radius: 2em;
+    color: #fff;
 }
 br {
   margin-bottom: 10px;
@@ -140,8 +161,12 @@ footer.main-footer p {
   color: #777;
   margin: 0;
 }
-.home-inner-page footer.main-footer p {
+footer.main-footer p {
     color: #fff;
+}
+
+footer .row {
+	padding: 5px;
 }
 
 /* table */
@@ -158,16 +183,28 @@ text-transform: capitalize;
 
 
 /* Page and Form */
+.container {
+	padding: 50px 0;
+}
 .page {
   position: absolute;
   top: 0;
   right: 0;
   width: 100%;
 }
+.row {
+	padding: 30px 20px;
+}
+.form-group {
+    margin-bottom: 0.5rem;
+}
+
 .bg {
-    background-image: url(../images/landing3.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
+	background-color: #fff;
+	margin-bottom: 10px;
+}
+.topspace {
+	margin-top: 15px;
 }
 .home-inner-page {
     background: #000;
@@ -186,11 +223,18 @@ text-transform: capitalize;
   padding-top: 50px;
 }
 
-.home-inner-page .form-outer, .inner-page .form-outer {
-  min-height: 94vh;
-  max-width: 600px;
-  margin: 0 auto;
-  position: relative;
+.form-outer {
+    /* min-height: 60vh; */
+    max-width: 400px;
+    margin: 0 auto;
+    position: relative;
+    margin-top: 5px;
+    background: white;
+    opacity: 0.8;
+    padding: 0px;
+    border-radius: 5px;
+    border-bottom: 3px solid #ccc;
+    border-right: 2px solid #ccc;
 }
 
 .inner-img {
@@ -198,48 +242,46 @@ min-height: 0;
   margin: 50px auto;
 }
 
-.home-inner-page .form-inner{
-padding: 40px 30px;
-border: 1px solid #fff;
+.jumbotron {
+	background-color: transparent;
 }
-.home-inner-page .form-inner2{
-padding: 40px 30px;
+.jumbotron h1 {
+	font-size: 4.5rem;
+	color: #f97e04;
 }
-.home-inner-page .form-inner2 h1 {
-font-size: 4.5em;
+.jumbotron h2 {
+	color: #fff;
 }
- .inner-page .form-inner {
-  padding: 40px 30px;
-  background: #fff;
-  -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-.home-inner-page .logo, .inner-page .logo {
-  font-size: 2em;
-  font-weight: 500;
-  text-transform: capitalize;
+#centerspage .row {
+	background-color: #eaeaef;
+	margin-bottom: 10px;
+	opacity: 0.9;
 }
 
+.media-body {
+	padding: 0 20px;
+}
 .home-inner-page form, .inner-page form {
   margin: 0 auto 10px;
   
 }
-
-.home-inner-page form input, .inner-page form input {
+.form-outer .text-primary {
+	font-size: 2em;
+}
+form input, .inner-page form input {
   outline: none;
   border-radius: 0;
   margin-right: 10px;
-  padding: 6px 10px;
-  font-weight: 300;
+  padding: 3px 10px;
+  font-weight: 400;
   border: none;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #97a1aa;
   text-align: center;
   margin-top: 20px;
   font-size: 1.0em;
 }
-.home-inner-page form input {
-  color: #fff
+form input {
+  color: #494c4f;
 }
 
  form input[type='text'], form input[type='password'], form input[type='email'],
@@ -247,7 +289,9 @@ font-size: 4.5em;
   background: none;
   width: 100%;
 }
-
+.form-inner {
+  padding: 40px;	
+}
 .date form input {
     width: 100%;
 }
@@ -292,7 +336,7 @@ form input[type='submit'] {
   width: 200px;
   border-radius: 50px;
   text-transform: uppercase;
-  font-weight: 300;
+  font-weight: 600;
   cursor: pointer;
   font-size: 0.8em;
   margin-bottom: 0;
@@ -307,6 +351,11 @@ form input[type='submit'] {
 .home-inner-page small {
     color: #020c15;
 }
+.logo {
+	    font-size: 1.5em;
+    font-style: italic;
+    text-transform: capitalize;
+}
 
 .subtitle{
     font-style: italic;
@@ -315,7 +364,8 @@ form input[type='submit'] {
 }
 .trash, .edit {
     float: right;
-    font-size: 0.7em;
+    font-size: 0.5em;
+	color: red;
 }
 
 .img {
@@ -329,11 +379,11 @@ margin-bottom: 20px;
     padding: 0 50px;
   }
   
-.home-inner-page a.goto, .inner-page a.goto {
-    font-size: 0.8em;
+a.goto, .inner-page a.goto {
+    font-size: 0.9em;
   text-transform: capitalize;
   }
-.home-inner-page small, .inner-page small {
+small, .inner-page small {
     font-size: 0.8em;
   }
 }
@@ -342,14 +392,14 @@ margin-bottom: 20px;
       padding: 20px 10px;
     margin-top: 30px;
        }
-.home-inner-page .form-outer, .inner-page .form-outer {
+.form-outer, .inner-page .form-outer {
         padding-top: 20px;
     }
-    .container {
-        margin: 0;
-        padding: 0;
-    }
-    .home-inner-page .logo, .inner-page .logo { 
+.home-inner-page .form-inner2 h1 {
+font-size: 4.0em;
+}
+
+    .logo { 
    font-size: 1.5em;
     }
   .table th, .table td {
