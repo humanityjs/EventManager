@@ -108,7 +108,7 @@ class CenterController {
      * @static
      * @param {object} req
      * @param {object} res
-     * @returns {object} insertion error messages or success messages
+     * @returns {object} update error messages or success messages
      * @memberof CenterController
      */
   static updateCenter(req, res) {
@@ -131,6 +131,31 @@ class CenterController {
       }));
     }).catch(() => res.status(404).send({
       message: 'Center not found',
+    }));
+  }
+  /**
+ *
+ * Delete a Center
+ * @static
+ * @param {any} req
+ * @param {any} res
+ * @returns
+ * @memberof CenterController
+ */
+  static deleteCenter(req, res) {
+    const centerId = req.params.id;
+
+    return Events.findById(centerId).then((center) => {
+      if (center) {
+        return center.destroy().then(() => res.status(200).send({
+          message: 'Center Deleted',
+        }));
+      }
+      return res.status(400).send({
+        message: 'Center does not exist',
+      });
+    }).catch(error => res.status(500).send({
+      message: error.message,
     }));
   }
 }

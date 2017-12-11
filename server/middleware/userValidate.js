@@ -20,10 +20,11 @@ export default class Validation {
       fullname,
       email,
       password,
+      retypePassword,
     } = req.body;
 
     const errors = {};
-    if (fullname === undefined || email === undefined || password === undefined) {
+    if (fullname === undefined || email === undefined || password === undefined || retypePassword === undefined ) {
       return res.status(400).send({
         message: 'All or some fields are not defined',
       });
@@ -51,6 +52,12 @@ export default class Validation {
         errors.password = 'Password length must be between 5 and 20';
       }
     } else { errors.password = 'Password is required'; }
+
+    if (!validator.isEmpty(retypePassword)) {
+      if (retypePassword === password) {
+        errors.retypePassword = 'Password must match';
+      }
+    } else { errors.password = 'Type Password Again'; }
 
     if (Object.keys(errors).length !== 0) {
       return res.status(400)
