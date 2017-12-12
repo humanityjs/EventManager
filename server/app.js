@@ -32,8 +32,13 @@ app.all('*', (req, res) => res.status(404).send({ error: 'page not found' }));
 
 app.set('port', process.env.PORT || 3000);
 
+<<<<<<< HEAD
+app.listen(8000, () => {
+  console.log('API is running on port 8000');
+=======
 app.listen(app.get('port'), () => {
   console.log(`App started on port ${app.get('port')}`);
+>>>>>>> develop
 });
 
 export default app;
