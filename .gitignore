@@ -1,7 +1,7 @@
-# dependencies
-node_modules
-# folders
+/node_modules
 coverage
 .nyc_output
 .coveralls.yml
-config
+.env
+
+

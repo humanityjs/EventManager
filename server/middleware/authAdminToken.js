@@ -10,20 +10,24 @@ env.config();
  * @param {obj} next
  * @returns {obj} Error on
  */
-const authToken = (req, res, next) => {
+const authAdminToken = (req, res, next) => {
   const token = req.body.token || req.headers['x-access-token'];
 
   if (token) {
     jwt.verify(token, process.env.SECRET, (err, decoded) => {
       if (err) {
-        res.status(401);
-        res.send({
+        return res.status(401).send({
           message: 'Token is Invalid or Expired',
         });
-      } else {
-        req.decoded = decoded;
-        next();
       }
+      req.decoded = decoded;
+      const { isAdmin } = req.decoded;
+      if (isAdmin) {
+        return next();
+      }
+      return res.status(403).send({
+        message: 'You are not permitted to view this page',
+      });
     });
   } else {
     res.status(403);
@@ -33,4 +37,4 @@ const authToken = (req, res, next) => {
   }
 };
 
-export default authToken;
+export default authAdminToken;

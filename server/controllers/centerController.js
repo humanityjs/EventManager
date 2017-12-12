@@ -1,6 +1,6 @@
 import models from '../models';
 
-const { Centers } = models;
+const { Centers, Events } = models;
 
 class CenterController {
   /**
@@ -13,28 +13,20 @@ class CenterController {
    * @memberof CenterController
    */
   static getAllCenters(req, res) {
-    const { isAdmin } = req.decoded;
-
     // get centers
-    Centers.all().then((center) => {
-      if (isAdmin) {
-        // if centers are available
-        if (center) {
-          // show centers
-          return res.status(200).json({
-            center,
-          });
-        }
-        // No center found
-        return res.status(404).json({
-          message: 'There are no available Centers',
+    Centers.all().then((centers) => {
+      // if centers are available
+      if (centers) {
+        // show centers
+        return res.status(200).send({
+          centers,
         });
       }
-      // Unauthorised user
-      return res.status(403).json({
-        message: 'Your are not allowed to view this page',
+      // No center found
+      return res.status(404).send({
+        message: 'There are no available Centers',
       });
-    }).catch(error => res.status(500).json({
+    }).catch(error => res.status(500).send({
       message: error.message,
     }));
   }
@@ -50,23 +42,24 @@ class CenterController {
    */
 
   static getSingleCenter(req, res) {
-    const { isAdmin } = req.decoded;
-    Centers.findById(req.params.id)
+    Centers.findOne({
+      where: {
+        id: req.params.id,
+      },
+      include: [{
+        model: Events,
+      }],
+    })
       .then((center) => {
-        if (isAdmin) {
-          if (center) {
-            return res.status(200).json({
-              center,
-            });
-          }
-          return res.status(400).json({
-            message: 'No Center Found',
+        if (center) {
+          return res.status(200).send({
+            center,
           });
-        }// Unauthorised user
-        return res.status(403).json({
-          message: 'Your are not allowed to view this page',
+        }
+        return res.status(400).send({
+          message: 'No Center Found',
         });
-      }).catch(error => res.status(500).json({
+      }).catch(error => res.status(500).send({
         message: error.message,
       }));
   }
@@ -82,40 +75,32 @@ class CenterController {
    */
   static postCenter(req, res) {
     const {
-      cname, location, description, facilities,
+      centerName, location, description, facilities,
     } = req.body;
-    const { id, isAdmin } = req.decoded;
+    const { id } = req.decoded;
 
-    if (isAdmin) {
-      return Centers.findOne({ where: { cname } })
-        .then((foundCenter) => {
-          if (foundCenter && foundCenter.cname === cname) {
-            res.status(400).json({
-              message: `${cname} already exist`,
-            });
-          }
-          const arr = facilities.split(',');
-          Centers.create({
-            cname,
-            location,
-            description,
-            facilities: arr,
-            userId: id,
-          }).then(center => res.status(201).json({
-            message: 'Successfully created a center',
-            data: {
-              CenterName: center.cname,
-            },
-          })).catch(error => res.status(500).json({
-            message: error.message,
-          }));
-        }).catch(error => res.status(500).json({
+    return Centers.findOne({ where: { centerName } })
+      .then((foundCenter) => {
+        if (foundCenter) {
+          return res.status(400).send({
+            message: `${centerName} already exist`,
+          });
+        }
+        const facilityArray = facilities.split(',');
+        Centers.create({
+          centerName,
+          location,
+          description,
+          facilities: facilityArray,
+          userId: id,
+        }).then(center => res.status(201).send({
+          message: 'Successfully created a center',
+        })).catch(error => res.status(500).send({
           message: error.message,
         }));
-    }// Unauthorised user
-    return res.status(403).json({
-      message: 'Your are not allowed to view this page',
-    });
+      }).catch(error => res.status(500).send({
+        message: error.message,
+      }));
   }
 
   /**
@@ -128,33 +113,23 @@ class CenterController {
      */
   static updateCenter(req, res) {
     const {
-      cname, location, description, facilities,
+      centerName, location, description, facilities,
     } = req.body;
-    const { isAdmin } = req.decoded;
-    const id = req.params.id;
+    const { id } = req.params;
 
     return Centers.findById(id).then((center) => {
-      if (isAdmin) {
-        const facilityArray = facilities.split(',');
-        return center.update({
-          cname: cname || center.cname,
-          location: location || center.location,
-          description: description || center.description,
-          facilities: facilityArray || center.facilities,
-        }, {
-          where: {
-            id,
-          },
-        }).then(() => res.status(201).json({
-          message: 'Successfully updated center',
-        })).catch(error => res.status(500).json({
-          message: error.message,
-        }));
-      }
-      return res.status(403).json({
-        message: 'You are not permitted to be here',
-      });
-    }).catch(() => res.status(404).json({
+      const facilityArray = facilities.split(',');
+      return center.update({
+        centerName: centerName || center.centerName,
+        location: location || center.location,
+        description: description || center.description,
+        facilities: facilityArray || center.facilities,
+      }).then(() => res.status(201).send({
+        message: 'Successfully updated center',
+      })).catch(error => res.status(500).send({
+        message: error.message,
+      }));
+    }).catch(() => res.status(404).send({
       message: 'Center not found',
     }));
   }

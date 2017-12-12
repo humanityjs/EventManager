@@ -15,11 +15,13 @@ export default class UserController {
      * @static
      * @param {object} req
      * @param {object} res
-     * @returns {object} Failure message or Success message with the persisted database data
+     * @returns {object} Failure message or Success message with the database data
      * @memberof UserController
      */
   static signup(req, res) {
-    const { fullname, email, password, isAdmin } = req.body;
+    const {
+      fullname, email, password,
+    } = req.body;
 
     Users.findOne({
       where: {
@@ -31,7 +33,7 @@ export default class UserController {
         if (foundUser.email === email) {
           error = email;
         }
-        return res.status(400).json({
+        return res.status(400).send({
           message: `${error} already exist`,
         });
       }
@@ -42,29 +44,43 @@ export default class UserController {
             fullname,
             email,
             password: hash,
-            isAdmin,
-          }).then(user => res.status(201).json({
-            message: 'Successfully created account',
-            data: {
-              user,
-
-            },
+          }).then(() => {
+            Users.findOne({
+              where: {
+                email,
+              },
+            }).then((users) => {
+              const payload = { email: users.email, isAdmin: users.isAdmin, id: users.id };
+              const token = jwt.sign(payload, process.env.SECRET, {
+                expiresIn: 60 * 60 * 12,
+              });
+              req.body.token = token;
+              return res.status(200).send({
+                message: 'You are now Signed Up',
+                data: {
+                  token,
+                  email: users.email, 
+                  isAdmin: users.isAdmin, 
+                  id: users.id,
+                  password,
+                },
+              });
+            });
+          }).catch(error => res.status(500).send({
+            message: error.message,
           }));
         });
       });
-    })
-      .catch(error => res.status(500).json({
-        status: 'Failed',
-        message: error.message,
-      }));
+    }).catch(error => res.status(500).send({
+      message: error.message,
+    }));
   }
-
   /**
-     * User details are captured and authenticated against persisted database data
+     * User details are captured and authenticated against database data
      * @static
      * @param {object} req
      * @param {object} res
-     * @returns {object} Failure message or Success message with persisted database data
+     * @returns {object} Failure message or Success message with database data
      * @memberof UserController
      */
   static signin(req, res) {
@@ -79,26 +95,26 @@ export default class UserController {
         const check = bcrypt.compareSync(password, user.password);
         if (check) {
           const payload = { email: user.email, isAdmin: user.isAdmin, id: user.id };
-          const userData = jwt.sign(payload, process.env.SECRET, {
-            expiresIn: 60 * 60 * 5,
+          const token = jwt.sign(payload, process.env.SECRET, {
+            expiresIn: 60 * 60 * 12,
           });
-          req.body.token = userData;
-          return res.status(200).json({
+          req.body.token = token;
+          return res.status(200).send({
             message: 'You are now logged In',
             data: {
               user,
             },
-            userData,
+            token,
           });
         }
-        return res.status(400).json({
-          message: 'Invalid username or password',
+        return res.status(400).send({
+          message: 'Invalid email or password',
         });
       }
-      return res.status(404).json({
-        message: 'User not found',
+      return res.status(404).send({
+        message: 'User not found, Please sign up if you are a new user',
       });
-    }).catch(error => res.status(500).json({
+    }).catch(error => res.status(500).send({
       status: 'Failed',
       message: error.message,
     }));

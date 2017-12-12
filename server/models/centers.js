@@ -5,7 +5,7 @@
  */
 export default (sequelize, DataTypes) => {
   const Centers = sequelize.define('Centers', {
-    cname: {
+    centerName: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
