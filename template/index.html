@@ -20,36 +20,27 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" onClick="menuSwap('homepage', 'centerspage')" href="#"><span class="nav-link-text">Home</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" onClick="menuSwap('homepage', 'centerspage')" href="#"><span class="nav-link-text">centers</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" onClick="menuSwap('homepage', 'centerspage')" href="#"><span class="nav-link-text">about us</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" onClick="menuSwap('homepage', 'centerspage')" href="#"><span class="nav-link-text">contact</span></a>
-              </li>
+          <li class="nav-item">
+            <a href="index.html" class="nav-link"><span class="nav-link-text">Home</span></Link>
+          </li>
+          <li class="nav-item">
+            <a href="centers.html" class="nav-link"><span class="nav-link-text">centers</span></Link>
+          </li>
+          <li class="nav-item">
+            <a href="about.html" class="nav-link"><span class="nav-link-text">about us</span></Link>
+          </li>
         </ul>
-         <form class="navbar-form navbar-right" role="search">
-          <div class="form-group">
-            <input type="text" placeholder="Search"><i class="fa fa-search"></i>
-         </div>
-        </form>    
       </div>
     </nav>
     <div class="container">
-      <div id="homepage">
-        <div class="row">
+      <div class="row">
        <div class="col-lg-8">
-          <div class="jumbotron text-center">
-            <h1 >event center</h1>
-            <h2>...celebrate in style...</h2>
-      </div>
-     </div>
-     <div class="col-lg-4">
+        <div class="jumbotron text-center">
+          <h1 >event center</h1>
+          <h2>...celebrate in style...</h2>
+        </div>
+       </div>
+       <div class="col-lg-4">
          <div id="swap-one"> 
           <div class="form-outer text-center">
             <div class="form-inner">
@@ -68,83 +59,34 @@
               <a onClick="swapDiv('swap-one', 'swap-two')" href="#" class="goto">are you new here? Create An Account</a>
             </div>
           </div>
-       </div>
-       <div id="swap-two" style="display: none">
-        <div class="form-outer text-center"> 
-           <div class="form-inner">
-            <div class="logo text-uppercase"><strong class="text-primary">sign up</strong></div>
-        <h2><p>Please fill in your details to get started</p></h2>
-            <form id="signup-form">
-              <div class="form-group">
-                <input id="username" type="text" placeholder="Fullname" required>
+         </div>
+          <div id="swap-two" style="display: none">
+            <div class="form-outer text-center"> 
+            <div class="form-inner">
+              <div class="logo text-uppercase"><strong class="text-primary">sign up</strong></div>
+              <h2><p>Please fill in your details to get started</p></h2>
+              <form id="signup-form">
+                <div class="form-group">
+                  <input id="username" type="text" placeholder="Fullname" required>
+                </div>
+                <div class="form-group">
+                  <input id="signup-email" type="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                  <input id="signup-password" type="password" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                  <input id="signup-retypepass" type="password" placeholder="Retype Password" required>
+                </div>
+                <input id="signup" type="submit" value="Create Account" class="btn btn-primary">
+              </form>
+              <a onClick="swapDiv('swap-one', 'swap-two')" href="#" class="goto">already signed up? login to your account</a>
               </div>
-              <div class="form-group">
-                <input id="signup-email" type="email" placeholder="Email" required>
-              </div>
-              <div class="form-group">
-                <input id="signup-password" type="password" placeholder="Password" required>
-              </div>
-               <div class="form-group">
-                <input id="signup-retypepass" type="password" placeholder="Retype Password" required>
-              </div>
-              <input id="signup" type="submit" value="Create Account" class="btn btn-primary">
-            </form>
-            <a onClick="swapDiv('swap-one', 'swap-two')" href="#" class="goto">already signed up? login to your account</a>
+            </div>
           </div>
-      </div>
        </div>
-     </div>
-   
-    </div>
       </div>
-      <div id="centerspage"  style="display: none">
-         <div class="text-uppercase text-center"><strong class="text-primary"><h1 class="topspace">list of functional centers</h1></strong></div>
-        <div class="row">
-         <div class="col-lg-3">
-        <div class="media">
-          <img class="img" src="images/image2.jpg">
-        </div>
-      </div>
-       <div class="col-lg-9">
-       <div class="media-body">
-              <h2 class="media-heading">five points</h2>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, neque, in, accusamus optio architecto debitis dolor animi placeat ut ab corporis laboriosam itaque. Nobis, sapiente quo dolorum ut quod possimus doloremque suscipit ad doloribus quam dolor </div>
-       </div>
-        </div>
-        <div class="row">
-         <div class="col-lg-3">
-        <div class="media">
-          <img class="img" src="images/landing.jpg">
-        </div>
-      </div>
-       <div class="col-lg-9">
-       <div class="media-body">
-              <h2 class="media-heading">radisson</h2>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, neque, in, accusamus optio architecto debitis dolor animi placeat ut ab corporis laboriosam itaque. Nobis, sapiente quo dolorum ut quod possimus doloremque suscipit ad doloribus quam dolor </div>
-       </div>
-        </div>
-        <div class="row">
-         <div class="col-lg-3">
-        <div class="media">
-          <img class="img" src="images/landing3.jpg">
-        </div>
-      </div>
-       <div class="col-lg-9">
-       <div class="media-body">
-              <h2 class="media-heading">Balmoral</h2>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, neque, in, accusamus optio architecto debitis dolor animi placeat ut ab corporis laboriosam itaque. Nobis, sapiente quo dolorum ut quod possimus doloremque suscipit ad doloribus quam dolor </div>
-       </div>
-        </div>
-      </div>
-      <div id="aboutpage"  style="display: none">
-         <div class="text-uppercase text-center"><strong class="text-primary"><h1>list of functional centers</h1></strong></div>
-        <div class="row">
-       <div class="media-body">
-              <h2 class="media-heading">five points</h2>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, neque, in, accusamus optio architecto debitis dolor animi placeat ut ab corporis laboriosam itaque. Nobis, sapiente quo dolorum ut quod possimus doloremque suscipit ad doloribus quam dolor </div>
-        </div>	  
-      </div>	
-    </div>
+    </div>  
     <footer class="main-footer">
         <div class="container-fluid">
         <div class="container-fluid">
@@ -155,7 +97,7 @@
           </div>
         </div>
       </div>
-      </footer>
+    </footer>
   <script>
     function swapDiv(one, two){
       one = document.getElementById(one);
@@ -167,18 +109,6 @@
       } else {
         two.style.display = "none";
         one.style.display = "block";
-      }
-    }
-    function menuSwap(pageOne, pageTwo) {
-          pageOne = document.getElementById(pageOne);
-      pageTwo = document.getElementById(pageTwo);
-      
-      if(pageTwo.style.display == "none"){
-        pageOne.style.display = "none";
-        pageTwo.style.display = "block";
-      } else {
-        pageTwo.style.display = "none";
-        pageOne.style.display = "block";
       }
     }
   </script>
