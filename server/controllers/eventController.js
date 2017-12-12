@@ -3,6 +3,54 @@ import models from '../models';
 const { Events } = models;
 
 class EventController {
+  /**
+   *
+   *
+   * Get All Events
+   * @param {obj} req
+   * @param {obj} res
+   * @returns All the event in db
+   * @memberof CenterController
+   */
+  static getAllEvents(req, res) {
+    // get events
+    Events.all().then((events) => {
+      // if events are available
+      if (events) {
+        // show events
+        return res.status(200).send({
+          events,
+        });
+      }
+      // No Event found
+      return res.status(404).send({
+        message: 'There are no booked Events',
+      });
+    }).catch(error => res.status(500).send({
+      message: error.message,
+    }));
+  }
+
+  static getSingleEvent(req, res) {
+    Events.findOne({
+      where: {
+        id: req.params.id,
+      },
+    })
+      .then((event) => {
+        if (event) {
+          return res.status(200).send({
+            event,
+          });
+        }
+        return res.status(400).send({
+          message: 'No Event Found',
+        });
+      }).catch(error => res.status(500).send({
+        message: error.message,
+      }));
+  }
+
   static postEvent(req, res) {
     const {
       eventTitle, centerId, description, bookedDate,
@@ -44,47 +92,55 @@ class EventController {
     const {
       eventTitle, description, bookedDate, centerId,
     } = req.body;
+    const { id } = req.params;
 
-    // check if date and center collides with input
-    return Events.findOne({
-      where: {
-        bookedDate, centerId,
-      },
-    }).then((events) => {
-      if (events) {
-        if (events.id === Number(req.params.id)) {
-          return events.update({
-            eventTitle: eventTitle || events.eventTitle,
-            bookedDate: bookedDate || events.bookedDate,
-            description: description || events.description,
-            centerId: centerId || events.centerId,
+    // find th requested event
+    return Events.findById(id).then((event) => {
+      if (event) {
+        Events.findOne({
+          where: {
+            bookedDate, centerId,
+          },
+        }).then((events) => {
+          if (events) {
+            if (events.id === event.id) {
+              return events.update({
+                eventTitle: eventTitle || events.eventTitle,
+                bookedDate: bookedDate || events.bookedDate,
+                description: description || events.description,
+                centerId: centerId || events.centerId,
+              }).then(() => res.status(200).send({
+                message: 'Changes Applied',
+              })).catch(error => res.status(500).send({
+                message: error.message,
+              }));
+            }
+            return res.status(401).send({
+              message: 'The date you chose is not available, choose another day or center',
+            });
+          }
+          Events.update({
+            eventTitle: eventTitle || Events.eventTitle,
+            bookedDate: bookedDate || Events.bookedDate,
+            description: description || Events.description,
+            centerId: centerId || Events.centerId,
+          }, {
+            where: {
+              id,
+            },
           }).then(() => res.status(200).send({
             message: 'Changes Applied',
           })).catch(error => res.status(500).send({
             message: error.message,
           }));
-        }
-        return res.status(401).send({
-          message: 'The date you chose is not available, choose another day or center',
-        });
+        }).catch(error => res.status(500).send({
+          message: error.message,
+        }));
       }
-      Events.update({
-        eventTitle: eventTitle || Events.eventTitle,
-        bookedDate: bookedDate || Events.bookedDate,
-        description: description || Events.description,
-        centerId: centerId || Events.centerId,
-      }, {
-        where: {
-          id: req.params.id,
-        },
-      }).then(() => res.status(200).send({
-        message: 'Changes Applied',
-      })).catch(error => res.status(500).send({
-        message: error.message,
-      }));
-    }).catch(error => res.status(500).send({
-      message: error.message,
-    }));
+      return res.status(404).send({
+        message: 'Event does not exist',
+      });
+    });
   }
 
 

@@ -91,7 +91,7 @@ export default class Validation {
     } = req.body;
     const errors = {};
     // validations for centername
-    if (!/^[a-zA-Z0-9]+$/.test(centerName)) {
+    if (!/^[a-zA-Z0-9 ]+$/.test(centerName)) {
       errors.centerName = 'Center Name can only contain numbers and letters';
     }
 
