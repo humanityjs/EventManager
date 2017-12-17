@@ -1,8 +1,10 @@
 import React from 'react';
 
+
+
 export default class SignUpForm extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       signUpFullname: '',
       signUpEmail: '',
@@ -15,7 +17,7 @@ export default class SignUpForm extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    console.log(this.state);
+    this.props.userSignUpRequest(this.state);
   }
 
   onChange(e) {
@@ -52,4 +54,8 @@ export default class SignUpForm extends React.Component {
       </div>
     );
   }
+}
+
+SignUpForm.propTypes = {
+  userSignUpRequest: React.PropTypes.func.isRequired
 }

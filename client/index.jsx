@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, browserHistory, Switch} from 'react-router-dom';
-// import { createStore } from 'redux';
-// import Provider from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+ 
 // import AllReducers from ''
 
 import HomePage from './components/homepage.jsx';
@@ -11,11 +13,14 @@ import HomePage from './components/homepage.jsx';
 // import AdminPanel from './components/adminPanelPage.jsx';
 // import UserPanel from './components/userPanelPage.jsx';
 
-// const store = createStore(AllReducers);
+const store = createStore(
+  (state = {}) => state,
+  applyMiddleware(thunk)
+);
 
 //put component into html page
 ReactDOM.render(
-  // <Provider store = {store}>
+  <Provider store={store}>
     <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path="/" component={HomePage} />
@@ -25,7 +30,7 @@ ReactDOM.render(
         <Route path="/api/v1/user/user_panel" component={UserPanel} /> */}
       </Switch>
     </BrowserRouter>
-  // </Provider>
+  </Provider>
   ,
 document.getElementById('page-wrapper')
 );
