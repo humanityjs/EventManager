@@ -6,7 +6,7 @@ import validator from 'validator';
  * @class Validation
  */
 export default class Validation {
-  
+
   /**
      * Validates all User signup details before allowing access to controller class
      * @static
@@ -22,17 +22,13 @@ export default class Validation {
       email,
       password,
       retypePass,
-    } = req.body.user;
+    } = req.body;
 
     const errors = {};
-    if (fullname === undefined || email === undefined || password === undefined || retypePass === undefined ) {
+
+    if (fullname === undefined || email === undefined || password === undefined || retypePass === undefined) {
       return res.status(400).send({
         message: 'All or some fields are not defined',
-        fullname,
-        email,
-        password,
-        retypePass
-
       });
     }
 
@@ -65,10 +61,12 @@ export default class Validation {
       }
     } else { errors.password = 'Type Password Again'; }
 
-    if (Object.keys(errors).length !== 0) {
-      return res.status(400)
-        .json(errors);
+    const isValid = Object.keys(errors).length !== 0 ? 'false' : 'true';
+
+    if (!isValid) {
+      return res.status(400).send(errors);
     }
+
     next();
   }
 

@@ -4,7 +4,7 @@ import classnames from 'classnames';
 
 // import { browserHistory } from 'react-router-dom';
 
-import validateInput from '../../../shared/signup.js';
+
 
 class SignUpForm extends React.Component {
   constructor(props) {
@@ -28,7 +28,10 @@ class SignUpForm extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    this.props.userSignupRequest(this.state);
+    this.props.userSignupRequest(this.state).then(
+      () => {},
+      ({ data }) => this.setState({ errors: data })
+    );
   }
 
  
@@ -42,16 +45,16 @@ class SignUpForm extends React.Component {
           <h2>Please fill in your details to get started</h2>
           <form id="signup-form" onSubmit={this.onSubmit}>
             <div className="form-group">
-              <input id="fullname" type="text" placeholder="Fullname" onChange={this.onChange} value={this.state.fullname} required/>
+              <input id="fullname" type="text" placeholder="Fullname" onChange={this.onChange} value={this.state.fullname} />
             </div>
             <div className="form-group">
-              <input id="email" type="email" placeholder="Email" onChange={this.onChange} value={this.state.email} required/>
+              <input id="email" type="email" placeholder="Email" onChange={this.onChange} value={this.state.email} />
             </div>
             <div className="form-group">
-              <input id="password" type="password" placeholder="Password" onChange={this.onChange} value={this.state.password} required/>
+              <input id="password" type="password" placeholder="Password" onChange={this.onChange} value={this.state.password} />
             </div>
             <div className="form-group">
-              <input id="retypePass" type="password" placeholder="Retype Password" onChange={this.onChange} value={this.state.retypePass} required/>
+              <input id="retypePass" type="password" placeholder="Retype Password" onChange={this.onChange} value={this.state.retypePass} />
             </div>
             <input id="signup" type="submit" value="Create Account" className="btn btn-primary"/>
           </form>
