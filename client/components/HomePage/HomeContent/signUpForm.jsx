@@ -14,7 +14,7 @@ class SignUpForm extends React.Component {
       email: '',
       password: '',
       retypePass: '',
-      errors: {}
+      errors: {},
     }
     this.onChange =this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -28,10 +28,18 @@ class SignUpForm extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    this.props.userSignupRequest(this.state).then(
-      () => {},
-      ({ data }) => this.setState({ errors: data })
-    );
+    this.setState({ errors: {} });
+    this.props.userSignupRequest(this.state).then(() => {
+      // this.props.addFlashMessage({
+      //     type: 'Success',
+      //     text: 'Successfully Created Account.'
+      // });
+      // this.context.router.history.push('/dashboard');
+  })
+  .catch((error) => {
+    console.log(error.response.data);
+    this.setState({ errors: error.response.data})});
+ 
   }
 
  

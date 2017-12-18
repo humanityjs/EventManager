@@ -61,10 +61,10 @@ export default class Validation {
       }
     } else { errors.password = 'Type Password Again'; }
 
-    const isValid = Object.keys(errors).length !== 0 ? 'false' : 'true';
-
+    const isValid = Object.keys(errors).length !== 0 ? false : true;
+    
     if (!isValid) {
-      return res.status(400).send(errors);
+      return res.status(400).json(errors);
     }
 
     next();
