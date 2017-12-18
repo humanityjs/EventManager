@@ -1,21 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { userSignUpRequest } from '../../actions/signUpActions.jsx'
+import { userSignUpRequest } from '../../actions/signUpActions.jsx';
+import { addFlashMessage } from '../../actions/flashMessages.jsx';
+import PropTypes from 'prop-types';
 
 import Welcome from './HomeContent/welcome.jsx';
-import SignIn from './HomeContent/signInForm.jsx';
-import SignUp from  './HomeContent/signUpForm.jsx';
+import SignInForm from './HomeContent/signInForm.jsx';
+import SignUpForm from  './HomeContent/signUpForm.jsx';
 
 class HomeContent extends React.Component {
 
   render() {
-    const { userSignUpRequest } = this.props;
+    const { userSignUpRequest, addFlashMessage } = this.props;
     return (
       <div className="container">
         <div className="row">
           <Welcome />
-          <SignIn />
-          <SignUp userSignUpRequest = {userSignUpRequest}/>
+          <SignInForm />
+          <SignUpForm userSignUpRequest = {userSignUpRequest} addFlashMessage={addFlashMessage}/>
         </div>
       </div>
     );
@@ -23,7 +25,8 @@ class HomeContent extends React.Component {
 }
 
 SignUpForm.propTypes = {
-  userSignUpRequest: React.PropTypes.func.isRequired
+  userSignUpRequest: PropTypes.func.isRequired,
+  addFlashMessage: PropTypes.func.isRequired
 }
 
-export default connect(null,{ userSignUpRequest })(HomeContent);
+export default connect(null,{ userSignUpRequest, addFlashMessage })(HomeContent);

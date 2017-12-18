@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, browserHistory, Switch} from 'react-router-dom';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import allReducers from './reducers/reducersIndex.jsx';
  
-// import AllReducers from ''
+// import allReducers from ''
 
 import HomePage from './components/homepage.jsx';
 // import CentersPage from './components/centersPage.jsx';
@@ -14,8 +15,11 @@ import HomePage from './components/homepage.jsx';
 // import UserPanel from './components/userPanelPage.jsx';
 
 const store = createStore(
-  (state = {}) => state,
-  applyMiddleware(thunk)
+  allReducers,
+  compose (
+    applyMiddleware(thunk),
+    window.ddevToolsExtension ? window.devToolsExtension() : f => f
+  )
 );
 
 //put component into html page

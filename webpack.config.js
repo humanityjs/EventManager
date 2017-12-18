@@ -12,7 +12,10 @@ module.exports = {
       {
         test: /\.(jsx)$/,
         loader: 'babel-loader',
-        include: path.resolve(__dirname, 'client'),
+        include: [
+          path.join(__dirname, 'client'),
+          path.join(__dirname, 'server/shared'),
+        ],
         query: {
           presets: ['react', 'env'],
         },
