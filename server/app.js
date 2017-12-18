@@ -20,7 +20,7 @@ app.use(webpackMiddleware(compiler, {
   stats: { colors: true },
   noInfo: true,
 }));
-
+app.use(express.static(path.join(__dirname, '../template/Public')));
 app.use(webpackHotMiddleware(compiler));
 
 app.use(bodyParser.json());
