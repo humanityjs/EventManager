@@ -6,15 +6,8 @@ import Footer from './footer.jsx';
 
 export default class Homepage extends React.Component {
   render() {
-    const {pathname} = this.props.location;
     return (
-      <div>
-        <div className="page-wrapper">
-          <Navbar path={pathname}/>
-          <Content />
-          <Footer />
-        </div>
-      </div>
+      <h1>Hello from react</h1>
     );
   }
 }

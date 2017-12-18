@@ -1,29 +1,28 @@
 const path = require('path');
 
 module.exports = {
+  devtool: 'eval-source-map',
   entry: path.join(__dirname, '/client/index.jsx'),
   output: {
-    path: path.join(__dirname, 'dist/app/'),
-    publicPath: '/app/',
+    path: '/',
+    publicPath: '/',
     filename: 'bundle.js',
   },
   module: {
     loaders: [
       {
-        test: /\.(jsx)$/,
-        loader: 'babel-loader',
-        include: [
-          path.join(__dirname, 'client'),
-          path.join(__dirname, 'server/shared'),
-        ],
-        query: {
-          presets: ['react', 'env'],
-        },
+        test: /\.(js?x)$/,
+        loaders: ['react-hot-loader/webpack', 'babel-loader'],
+        include: path.join(__dirname, 'client'),
+        exclude: /(node_modules|server|.vscode)/,
       },
       {
         test: /\.(css)$/,
-        loader: 'style-loader!css-loader!sass-loader',
+        loaders: 'style-loader!css-loader!sass-loader',
       },
     ],
+  },
+  resolve: {
+    extensions: ['.jsx', '.js'],
   },
 };

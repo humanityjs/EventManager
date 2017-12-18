@@ -1,5 +1,5 @@
 import shortid from 'shortid';
-import { ADD_FLASH_MESSAGE } from '../actions/types';
+import { ADD_FLASH_MESSAGE } from '../actions/types.js';
 
 
 export default (state = [], action = {}) => {
