@@ -59,7 +59,7 @@ export default class Validation {
       if (retypePass !== password) {
         errors.retypePass = 'Password must match';
       }
-    } else { errors.password = 'Type Password Again'; }
+    } else { errors.retypePass = 'Type Password Again'; }
 
     const isValid = Object.keys(errors).length !== 0 ? false : true;
     

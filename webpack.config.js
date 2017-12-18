@@ -19,7 +19,10 @@ module.exports = {
       {
         test: /\.(js?x)$/,
         loaders: ['react-hot-loader/webpack', 'babel-loader'],
-        include: path.join(__dirname, 'client'),
+        include: [
+          path.join(__dirname, 'client'),
+          path.join(__dirname, 'server/middleware')
+        ],
         exclude: /(node_modules|server|.vscode)/,
       },
       {

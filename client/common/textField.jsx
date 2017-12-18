@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 const TextField = ({ field, id, type, placeholder, value, onChange, error}) => {
@@ -16,12 +17,12 @@ const TextField = ({ field, id, type, placeholder, value, onChange, error}) => {
 }
 
 TextField.propTypes = {
-  id: React.PropTypes.string.isRequired;
-  type: React.PropTypes.string.isRequired;
-  placeholder: React.PropTypes.string.isRequired;
-  value: React.PropTypes.string.isRequired;
-  onChange: React.PropTypes.func.isRequired; 
-  error: React.PropTypes.string;
+  id: PropTypes.string.isRequired;
+  type: PropTypes.string.isRequired;
+  placeholder: PropTypes.string.isRequired;
+  value: PropTypes.string.isRequired;
+  onChange: PropTypes.func.isRequired; 
+  error: PropTypes.string;
 }
 
 TextField.defaultProps = {
