@@ -10,7 +10,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import allReducers from './reducers/reducersIndex'
 import HomePage from './components/homepage.jsx';
 // import CentersPage from './components/centersPage.jsx';
-// import AboutPage from './components/aboutPage.jsx';
+import AboutPage from './components/aboutPage.jsx';
 import Dashboard from './components/dashboard';
 // import UserPanel from './components/userPanelPage.jsx';
 
@@ -29,8 +29,8 @@ ReactDOM.render(
     <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path="/" component={HomePage} />
-        {/* <Route path="/api/v1/centers" component={CentersPage} />
-        <Route path="/api/v1/about" component={AboutPage} /> */}
+        {/* <Route path="/api/v1/centers" component={CentersPage} /> */}
+        <Route path="/about" component={AboutPage} /> 
         <Route path="/dashboard" component={Dashboard} />
         {/*<Route path="/api/v1/user/user_panel" component={UserPanel} /> */}
       </Switch>
