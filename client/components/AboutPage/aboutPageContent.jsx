@@ -7,17 +7,8 @@ export default class AboutPageContent extends React.Component {
         <div className="row">
           <div className="media-body bg">	<br/>
             <h2 className="media-heading text-center">ABOUT US</h2>
-            <h3>What Rovan Does</h3>
-            <p>Rovan is a Lagos based online on-demand laundry service that aims at providing  high quality laundry services coupled with customized experience and express delivery. 
-              “We use Latest technology machines and internationally standardized chemicals for quality 
-              cleaning. With an added feature of online ordering and free pick-up and delivery within 24 
-              hours, we expect to reach every household in our vicinity”
-              Our staff consists of experts who have huge experience and knowledge of different types of 
-              fabrics and garments and know how to treat them.
-              We ensure that we find a smile on your face with every service that we provide. <br/>Alternatively ROVAN offers Laundry and Dry cleaning equipments to lower costs, zero 
-              down time and increase output. We sell and install these equipments to corporate organisations
-              who may be in need of them. ROVAN is backed up in this one by some of the worlds best
-              brands in laundry and dry cleaning equipment manufacturing in Italy.
+            <h3>What Ecenter Does</h3>
+            <p>Imo State is a southeastern Nigerian State and, being an oil producing State, is also counted among the Niger Delta States. Its Capital city is Owerri. The State has an estimated population of about 4 million people and Igbo is the predominant tribe. Looking to book luxury event centes or affordable event centers in Imo? You can book them on Spacebook.ng. Be sure to compare event center prices in Imo and read reviews on the site to help you take advantage of discounted event center rates and other special offers available when you book using Spacebook.ng
             </p>
             <h3>Why Rovan</h3>  
         	 	<p>Today, Many people are hesitant to take their clothes to local Laundromats because 

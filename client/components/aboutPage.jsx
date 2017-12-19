@@ -11,7 +11,7 @@ export default class AboutPage extends React.Component {
     return (
       <div>
         <div className="page-wrapper">
-        <aboutStyle />
+          <aboutStyle />
           <Navbar path={pathname}/>
           <Content />
           <Footer />
