@@ -43,7 +43,7 @@ class SignUpForm extends React.Component {
   onSubmit(e) {
     e.preventDefault();
     
-    if (isValid()) {
+    if (this.isValid()) {
       
       this.setState({ errors: {}, isLoading: true });
       this.props.userSignupRequest(this.state).then(() => {
