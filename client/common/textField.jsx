@@ -17,12 +17,12 @@ const TextField = ({ field, id, type, placeholder, value, onChange, error}) => {
 }
 
 TextField.propTypes = {
-  id: PropTypes.string.isRequired;
-  type: PropTypes.string.isRequired;
-  placeholder: PropTypes.string.isRequired;
-  value: PropTypes.string.isRequired;
-  onChange: PropTypes.func.isRequired; 
-  error: PropTypes.string;
+  id: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired, 
+  error: PropTypes.string,
 }
 
 TextField.defaultProps = {

@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
+import { browserHistory } from 'react-router-dom';
 
 import validation from '../../../shared/userValidation';
+import TextField from '../../../common/textField'
 
 // import { browserHistory } from 'react-router-dom';
 
@@ -41,14 +42,16 @@ class SignUpForm extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    if (this.isValid()) {
+    
+    if (isValid()) {
+      
       this.setState({ errors: {}, isLoading: true });
       this.props.userSignupRequest(this.state).then(() => {
-        // this.props.addFlashMessage({
-        //     type: 'Success',
-        //     text: 'Successfully Created Account.'
-        // });
-        // this.context.router.history.push('/dashboard');
+        this.props.addFlashMessage({
+            type: 'Success',
+            text: 'Successfully Created Account.'
+        });
+        browserHistory.push('/admin_panel')
       })
       .catch((error) => {
         this.setState({ errors: error.response.data, isLoading: false})
@@ -74,27 +77,38 @@ class SignUpForm extends React.Component {
             <span className="logo text-uppercase"><strong className="text-primary">sign up</strong></span>
             <h2>Please fill in your details to get started</h2>
             <form id="signup-form" onSubmit={this.onSubmit}>
-              <TextFieldGroup
+              <TextField
                 id='fullname'
                 value={this.state.fullname}
-                placeholder='Type your fullname'
+                placeholder='fullname'
                 type='text'
                 error={errors.fullname} 
                 onChange={this.onChange} />
-                <TextFieldGroup
+                
+                <TextField
                 id='email'
                 value={this.state.email}
-                placeholder='Type your email address'
+                placeholder='email address'
                 type='email'
                 error={errors.email} 
                 onChange={this.onChange} />
-                <TextFieldGroup
+                
+                <TextField
                 id='password'
-                value={this.state.fullname}
-                placeholder='Type your fullname'
-                type='text'
-                error={errors.fullName} 
+                value={this.state.password}
+                placeholder='password'
+                type='password'
+                error={errors.password} 
                 onChange={this.onChange} />
+                
+                <TextField
+                id='retypePass'
+                value={this.state.retypePass}
+                placeholder='Type password again'
+                type='password'
+                error={errors.retypePass} 
+                onChange={this.onChange} />
+
               <input id="signup" type="submit" value="Create Account" className="btn btn-primary" disabled={this.state.isLoading}/>
             </form>
             <a href="#" className="goto">already signed up? login to your account</a>
@@ -106,7 +120,8 @@ class SignUpForm extends React.Component {
 }
 
 SignUpForm.propTypes = {
-  userSignupRequest: PropTypes.func.isRequired
+  userSignupRequest: PropTypes.func.isRequired,
+  addFlashMessage: PropTypes.func.isRequired
 }
 
 export default SignUpForm;

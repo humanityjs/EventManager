@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Navbar from './navbar.jsx';
-import Content from './Homepage/homeContent.jsx';
-import Footer from './footer.jsx';
+import Content from './Homepage/homeContent';
+import Footer from './footer';
 
 export default class Homepage extends React.Component {
   render() {
