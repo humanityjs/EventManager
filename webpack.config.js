@@ -1,26 +1,47 @@
-const path = require('path');
+import path from 'path';
+import webpack from 'webpack';
+
 
 module.exports = {
-  entry: path.join(__dirname, '/client/index.jsx'),
+  devtool: 'cheap-module-source-map',
+  entry: [
+    'webpack/hot/dev-server',
+    'webpack-hot-middleware/client?reload=true',
+    path.join(__dirname, '/client/index.jsx'),
+  ],
   output: {
-    path: path.join(__dirname, 'dist/app/'),
-    publicPath: '/app/',
+    path: '/',
+    publicPath: '/',
     filename: 'bundle.js',
   },
   module: {
     loaders: [
       {
-        test: /\.(jsx)$/,
-        loader: 'babel-loader',
-        include: path.resolve(__dirname, 'client'),
-        query: {
-          presets: ['react', 'env'],
-        },
+        test: /\.(js?x)$/,
+        loaders: ['react-hot-loader/webpack', 'babel-loader'],
+        include: [
+          path.join(__dirname, 'client'),
+          path.join(__dirname, 'server/middleware')
+        ],
+        exclude: /(node_modules|server|.vscode)/,
       },
       {
         test: /\.(css)$/,
-        loader: 'style-loader!css-loader!sass-loader',
+        loaders: 'style-loader!css-loader!sass-loader',
       },
     ],
+  },
+  plugins: [
+    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(), // enable HMR globally
+    new webpack.NamedModulesPlugin(), // prints more readable module names in the browser console on HMR updates
+  ],
+  node: {
+    dns: 'empty',
+    net: 'empty',
+  },
+  resolve: {
+    extensions: ['.jsx', '.js'],
   },
 };
