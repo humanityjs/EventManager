@@ -286,7 +286,7 @@ form input, .inner-page form input {
 }
 form input {
   color: #494c4f;
-  text-transform: capitalize;
+  text-transform: sentence-case;
 }
 
  form input[type='text'], form input[type='password'], form input[type='email'],

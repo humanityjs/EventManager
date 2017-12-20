@@ -16,7 +16,6 @@ export default class AdminPanelPage extends React.Component {
           <FlashMessageList />
           {/* <Content path={pathname}/>
           <DeleteModal /> */}
-          <Footer />
         </div>
       </div>
     );

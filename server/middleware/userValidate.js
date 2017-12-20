@@ -101,10 +101,10 @@ export default class Validation {
       errors.password = 'Password is required';
     }
 
-
-    if (Object.keys(errors).length !== 0) {
-      return res.status(400)
-        .json(errors);
+    const isValid = Object.keys(errors).length !== 0 ? false : true;
+    
+    if (!isValid) {
+      return res.status(400).json(errors);
     }
     next();
   }
