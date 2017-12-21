@@ -8,14 +8,15 @@ import jwt from 'jsonwebtoken';
 
 
 
-import allReducers from './reducers/reducersIndex'
+import allReducers from './reducers/reducersIndex';
 import HomePage from './components/homepage.jsx';
-// import CentersPage from './components/centersPage.jsx';
+import CentersPage from './components/centersPage.jsx';
 import AboutPage from './components/aboutPage.jsx';
 import Dashboard from './components/dashboard';
+import AddEvent from './components/eventPage';
 // import UserPanel from './components/userPanelPage.jsx';
 import setAuthToken from './utils/setAuthorizationToken';
-import { setCurrentUser } from '../actions/signInActions'
+import { setCurrentUser } from './actions/signInActions';
 
 
 const store = createStore(
@@ -37,10 +38,10 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Switch>
         <Route exact path="/" component={HomePage} />
-        {/* <Route path="/api/v1/centers" component={CentersPage} /> */}
+        <Route path="/centers" component={CentersPage} />
         <Route exact path="/about" component={AboutPage} /> 
         <Route exact path="/dashboard" component={Dashboard} />
-        {/*<Route path="/api/v1/user/user_panel" component={UserPanel} /> */}
+        <Route path="/add-event" component={AddEvent} />
       </Switch>
     </Router>
   </Provider>

@@ -45,7 +45,7 @@ class SignInForm extends React.Component {
             type: 'Success',
             text: 'Successfully Signed In.'
         });
-        this.context.router.history.push('/')
+        this.context.router.history.push('/dashboard')
       })
       .catch((error) => {
         this.setState({ serverError: error.response.data.message });

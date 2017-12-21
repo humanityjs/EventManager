@@ -58,12 +58,12 @@ export default class UserController {
               return res.status(200).send({
                 message: 'You are now Signed Up',
                 data: {
-                  token,
                   email: users.email, 
                   isAdmin: users.isAdmin, 
                   id: users.id,
                   password,
                 },
+                token,
               });
             });
           }).catch(error => res.status(500).send({

@@ -21,13 +21,13 @@ module.exports = {
         loaders: ['react-hot-loader/webpack', 'babel-loader'],
         include: [
           path.join(__dirname, 'client'),
-          path.join(__dirname, 'server/middleware')
+          path.join(__dirname, 'server/middleware'),
         ],
         exclude: /(node_modules|server|.vscode)/,
       },
       {
         test: /\.(css)$/,
-        loaders: 'style-loader!css-loader!sass-loader',
+        loaders: ['style-loader', 'css-loader', 'sass-loader'],
       },
     ],
   },

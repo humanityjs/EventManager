@@ -1,9 +1,15 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { logout } from '../actions/signInActions';
 
 //create components
-export default class NavBar extends React.Component {
-  
+class NavBar extends React.Component {
+  logout(e) {
+    e.preventDefault();
+    this.props.logout();
+  }
 
   renderLinks() {
     const { path } = this.props;
@@ -134,6 +140,7 @@ export default class NavBar extends React.Component {
   }
 
   render() {
+    const { isAuth } = this.props.auth;
     return (
       <nav className="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
         <Link to="/" className="navbar-brand"><h1>event <strong className="text-primary">center </strong></h1></Link>
@@ -145,3 +152,16 @@ export default class NavBar extends React.Component {
     );
   }
 }
+
+NavBar.propTypes = {
+  auth: PropTypes.object.isRequired,
+  logout: PropTypes.func.isRequired
+}
+
+function mapStateToProps(state) {
+  return {
+    auth: state.auth
+  }
+}
+
+export default connect(mapStateToProps, { logout })(NavBar);

@@ -12,13 +12,13 @@ import SignUpForm from  './HomeContent/signUpForm.jsx';
 class HomeContent extends React.Component {
 
   render() {
-    const  { userSignInRequest, addFlashMessage } = this.props;
+    const  { userSignupRequest, addFlashMessage } = this.props;
     return (
       <div className="container">
         <div className="row">
           <Welcome />
-          {/* <SignUpForm userSignupRequest={userSignupRequest} addFlashMessage={addFlashMessage}/> */}
-          <SignInForm userSignInRequest={userSignInRequest} addFlashMessage={addFlashMessage} />
+          <SignUpForm userSignupRequest={userSignupRequest} addFlashMessage={addFlashMessage}/> 
+          {/* <SignInForm userSignupRequest={userSignInRequest} addFlashMessage={addFlashMessage} /> */}
         </div>
       </div>
     );
@@ -26,9 +26,9 @@ class HomeContent extends React.Component {
 }
 
 HomeContent.propTypes = {
-  // userSignupRequest: PropTypes.func.isRequired,
+  userSignupRequest: PropTypes.func.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
-  userSignInRequest: PropTypes.func.isRequired
+  // userSignInRequest: PropTypes.func.isRequired
 }
 
-export default connect(null, { userSignInRequest, addFlashMessage })(HomeContent);
+export default connect(null, { userSignupRequest, addFlashMessage })(HomeContent);
