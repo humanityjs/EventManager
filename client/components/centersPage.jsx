@@ -11,6 +11,7 @@ export default class CentersPage extends React.Component {
     return (
       <div>
         <div className="page-wrapper">
+          <Navbar />
           <CenterContent />
           <CenterFooter />
         </div>

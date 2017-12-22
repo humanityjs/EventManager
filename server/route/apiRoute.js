@@ -19,14 +19,15 @@ router.route('/users/login')
 
 router.route('/centers')
   .post(authAdminToken, centerValidate.postCenter, centerController.postCenter)
-  .get(authToken, centerController.getAllCenters);
+  .get(centerController.getAllCenters);
 
 router.route('/centers/:id')
   .get(authToken, centerController.getSingleCenter)
   .put(authAdminToken, centerValidate.updateCenter, centerController.updateCenter);
 
 router.route('/events')
-  .post(authToken, eventValidate.postEvent, eventController.postEvent);
+  .post(authToken, eventValidate.postEvent, eventController.postEvent)
+  .get(eventController.getAllEvents);
 
 router.route('/events/:id')
   .put(authToken, eventValidate.updateEvent, eventController.updateEvent)

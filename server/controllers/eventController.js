@@ -1,6 +1,6 @@
 import models from '../models';
 
-const { Events } = models;
+const { Events, Centers } = models;
 
 class EventController {
   /**
@@ -14,7 +14,11 @@ class EventController {
    */
   static getAllEvents(req, res) {
     // get events
-    Events.all().then((events) => {
+    Events.all({
+      include: [{
+        model: Centers,
+      }],
+    }).then((events) => {
       // if events are available
       if (events) {
         // show events

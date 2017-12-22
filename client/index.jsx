@@ -14,6 +14,7 @@ import CentersPage from './components/centersPage.jsx';
 import AboutPage from './components/aboutPage.jsx';
 import Dashboard from './components/dashboard';
 import AddEvent from './components/eventPage';
+import ViewCenter from './components/viewCenterPage';
 // import UserPanel from './components/userPanelPage.jsx';
 import setAuthToken from './utils/setAuthorizationToken';
 import { setCurrentUser } from './actions/signInActions';
@@ -30,6 +31,7 @@ const store = createStore(
 if (localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);
   store.dispatch(setCurrentUser(jwt.decode(localStorage.jwtToken)));
+
 }
 
 //put component into html page
@@ -42,6 +44,7 @@ ReactDOM.render(
         <Route exact path="/about" component={AboutPage} /> 
         <Route exact path="/dashboard" component={Dashboard} />
         <Route path="/add-event" component={AddEvent} />
+        <Route path="/view-center-event" component={ViewCenter} />
       </Switch>
     </Router>
   </Provider>

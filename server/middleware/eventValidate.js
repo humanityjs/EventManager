@@ -52,6 +52,7 @@ export default class Validation {
     if (!/^[a-zA-Z0-9,. ]+$/.test(description)) {
       errors.description = 'description can not include symbols except comma and full stop';
     }
+    console.log(description);
     if (!validator.isEmpty(description)) {
       if (!validator.isLength(description, { min: 5, max: 1000 })) {
         errors.description = 'description must be greater than 5 but less than 1000 words';

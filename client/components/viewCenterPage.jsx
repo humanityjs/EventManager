@@ -4,7 +4,7 @@ import Navbar from './navbar.jsx';
 import Content from './Homepage/homeContent';
 import Footer from './footer';
 
-export default class Homepage extends React.Component {
+export default class ViewCenterDetails extends React.Component {
   render() {
     return (
       <div className="page-wrapper">
