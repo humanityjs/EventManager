@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Navbar from './navbar.jsx';
-import Content from './Homepage/homeContent';
+import Content from './centerDetails/centerDetailsContent';
 import Footer from './footer';
 
 export default class ViewCenterDetails extends React.Component {

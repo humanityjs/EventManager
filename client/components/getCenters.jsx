@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import _ from 'lodash';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import './center.css';
 
 
 
-class displayCenters extends React.Component {
+
+class DisplayCenters extends React.Component {
   constructor() {
     super();
     this.state = {}
@@ -15,13 +17,15 @@ class displayCenters extends React.Component {
 
   componentWillMount() {
     axios.get('api/v1/centers').then((response) => {
-      this.setState({
+      this.setState ({
         centers: response.data.centers
-      })
+      });
     });
+    
   }
 
   render() {
+
     const adminCenterPage = _.map(this.state.centers, (center) => {
       return (
         <div className="row" id={center.id} key={center.id}>
@@ -85,10 +89,14 @@ class displayCenters extends React.Component {
   }
 }
 
+// DisplayCenters.propTypes = {
+//   getCenters: PropTypes.func.isRequired,
+// }
+
 function mapStateToProps(state) {
   return {
-    auth: state.auth
+    auth: state.auth,
   }
 }
 
-export default connect(mapStateToProps, null)(displayCenters);
+export default connect(mapStateToProps, null)(DisplayCenters);
