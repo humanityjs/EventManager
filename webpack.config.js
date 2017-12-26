@@ -26,7 +26,7 @@ module.exports = {
         exclude: /(node_modules|server|.vscode)/,
       },
       {
-        test: /\.(css)$/,
+        test:  /\.(sass|scss|css)$/,
         loaders: ['style-loader', 'css-loader', 'sass-loader'],
       },
     ],

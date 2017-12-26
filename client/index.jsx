@@ -18,6 +18,7 @@ import ViewCenter from './components/viewCenterPage';
 // import UserPanel from './components/userPanelPage.jsx';
 import setAuthToken from './utils/setAuthorizationToken';
 import { setCurrentUser } from './actions/signInActions';
+import style from './sass/style.scss';
 
 
 const store = createStore(
@@ -40,7 +41,7 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route path="/centers" component={CentersPage} />
+        <Route path="/view-centers" component={CentersPage} />
         <Route exact path="/about" component={AboutPage} /> 
         <Route exact path="/dashboard" component={Dashboard} />
         <Route path="/add-event" component={AddEvent} />

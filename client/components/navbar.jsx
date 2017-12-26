@@ -17,10 +17,10 @@ class NavBar extends React.Component {
           <Link to="/" className="nav-link"><span className="nav-link-text">Home</span></Link>
         </li>
         <li className="nav-item">
-          <Link to="/centers" className="nav-link"><span className="nav-link-text">centers</span></Link>
+          <Link to="/view-centers" className="nav-link"><span className="nav-link-text">centers</span></Link>
         </li>
         <li className="nav-item">
-          <Link to="/dashboard" className="nav-link"><span className="nav-link-text">about us</span></Link>
+          <Link to="/about" className="nav-link"><span className="nav-link-text">about us</span></Link>
         </li>
       </ul>
     );

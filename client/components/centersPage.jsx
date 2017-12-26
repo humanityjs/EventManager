@@ -3,27 +3,27 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Navbar from './navbar.jsx';
-import CenterContent from './getCenters.jsx';
-import CenterFooter from './footer.jsx';
+import Content from './getCenters.jsx';
+import Footer from './footer.jsx';
 import { getCenters } from '../actions/centerActions';
 
-class CentersPage extends React.Component {
+class CenterPage extends React.Component {
   render() {
     const { getCenters } = this.props;
     return (
-      <div>
-        <div className="page-wrapper">
+      <div className="page-wrapper">
+        <div id="center-page">
           <Navbar />
-          <CenterContent getCenters = {getCenters}/>
-          <CenterFooter />
+          <Content getCenters = {getCenters}/>
+          <Footer />
         </div>
       </div>
     );
   }
 }
 
-CenterContent.propTypes = {
+CenterPage.propTypes = {
   getCenters: PropTypes.func.isRequired
  }
 
-export default connect(null, {getCenters})(CenterContent);
+export default connect(null, {getCenters})(CenterPage);
