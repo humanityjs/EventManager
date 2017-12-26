@@ -35,6 +35,33 @@ class EventController {
     }));
   }
 
+  static getUserEvents(req, res) {
+    const { id } = req.decoded;
+    // get events
+    Events.all({
+      where: {
+        userId: id,
+      },
+      include: [{
+        model: Centers,
+      }],
+    }).then((events) => {
+      // if events are available
+      if (events) {
+        // show events
+        return res.status(200).send({
+          events,
+        });
+      }
+      // No Event found
+      return res.status(404).send({
+        message: 'There are no booked Events',
+      });
+    }).catch(error => res.status(500).send({
+      message: error.message,
+    }));
+  }
+
   static getSingleEvent(req, res) {
     Events.findOne({
       where: {

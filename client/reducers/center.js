@@ -1,15 +1,22 @@
 
-import { VIEW_CENTER_SELECTED } from '../actions/types';
+import { GET_ALL_CENTERS, VIEW_CENTER_SELECTED } from '../actions/types';
 
-const initialState = {
-  center: {},
-};
-export default (state = initialState, action = {}) => {
+export default (state = {}, action) => {
   switch (action.type) {
+    case GET_ALL_CENTERS:
+      return [
+        ...state,
+        {
+          centers: action.centers,
+        },
+      ];
     case VIEW_CENTER_SELECTED:
-      return {
-        center: action.center,
-      };
+      return [
+        ...state,
+        {
+          center: action.center,
+        },
+      ];
     default: return state;
   }
 };

@@ -1,22 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import axios from 'axios';
 import './center.css';
 
 
-
-class displayevents extends React.Component {
+class DisplayEvents extends React.Component {
   constructor() {
     super();
     this.state = {}
   }
 
   componentWillMount() {
-    axios.get('api/v1/events').then((response) => {
+    this.props.getUserEvents().then((response) => {
       this.setState({
-        events: response.data.events
-      })
+        events: response.data.events,
+      });
     });
   }
 
@@ -45,4 +46,14 @@ class displayevents extends React.Component {
   }
 }
 
-export default displayevents;
+DisplayEvents.propTypes = {
+  getUserEvents: PropTypes.func.isRequired,
+}
+
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  }
+}
+
+export default DisplayEvents;

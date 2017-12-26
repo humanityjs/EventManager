@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -8,27 +7,32 @@ import './center.css';
 
 
 
-
 class DisplayCenters extends React.Component {
   constructor() {
     super();
     this.state = {}
+    this.onClick = this.onClick.bind(this);
   }
 
   componentWillMount() {
-    axios.get('api/v1/centers').then((response) => {
-      this.setState ({
-        centers: response.data.centers
+    this.props.getCenters().then((response) => {
+      this.setState({
+        centers: response.data.centers,
       });
     });
-    
+  }
+
+  
+
+  onClick(e) {
+    // centerSelected: this.props.centerSelected(e.target.id);
+    // // this.context.router.history.push('/view-center-event');
   }
 
   render() {
-
     const adminCenterPage = _.map(this.state.centers, (center) => {
       return (
-        <div className="row" id={center.id} key={center.id}>
+        <div className="row" key={center.id}>
           <div className="col-lg-3">
             <div className="media">
               <img className="img" src="images/image2.jpg"/>
@@ -37,7 +41,7 @@ class DisplayCenters extends React.Component {
           <div className="col-lg-9">
             <div className="media-body">
               <h2 className="media-heading">
-                <Link to="/view-center-event">{center.centerName} </Link>
+                <span onClick={this.onClick} id={center.id}>{center.centerName} </span>
               </h2>
               <div className="col-lg-9">
                 <h3><span>Location: </span> {center.location}</h3>
@@ -89,9 +93,10 @@ class DisplayCenters extends React.Component {
   }
 }
 
-// DisplayCenters.propTypes = {
-//   getCenters: PropTypes.func.isRequired,
-// }
+DisplayCenters.propTypes = {
+  getCenters: PropTypes.func.isRequired,
+  centerSelected: PropTypes.func.isRequired,
+ }
 
 function mapStateToProps(state) {
   return {
@@ -99,4 +104,14 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, null)(DisplayCenters);
+// function mapDispatchToProps(dispatch) {
+//   return dispatch({
+//     centerSelected
+//   });
+// }
+
+DisplayCenters.contextTypes = {
+  router: PropTypes.object.isRequired
+};
+
+export default connect(mapStateToProps)(DisplayCenters);

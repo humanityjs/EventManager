@@ -3,35 +3,44 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import GetCenters from './getCenters';
 import GetEvents from './getEvents';
-// import { getCenters } from '../actions/adminActions'
-
+import { getCenters, centerSelected } from '../actions/centerActions';
+import { getUserEvents } from '../actions/eventActions'
 
 class UserPanelContent extends React.Component {
 
-  // User() {
-  //   const { getCenters } = this.props;
-  //   if (this.props.auth.user.isAdmin) {
-  //     return <GetCenters getCenters={getCenters}/>
-  //   }
-  //   return <GetEvents />
-  // }
+  User() {
+    const { getCenters, getUserEvents } = this.props;
+    if (this.props.auth.user.isAdmin) {
+      return <GetCenters getCenters = {getCenters} centerSelected={centerSelected}/>
+    }
+    return <GetEvents getUserEvents={getUserEvents}/>
+  }
 
   render() {
-    // const { getCenters } = this.props;
     return (
-      <GetCenters />
+      this.User()
     );
   }
 }
 
+UserPanelContent.propTypes = {
+  getCenters: PropTypes.func.isRequired,
+//  centerSelected: PropTypes.func.isRequired
+  getUserEvents: PropTypes.func.isRequired,
+}
+
 function mapStateToProps(state) {
   return {
-    auth: state.auth
+    auth: state.auth,
   }
 }
 
-// UserPanelContent.propTypes = {
-//   getCenters: PropTypes.func.isRequired,
+// function mapDispatchToProps(dispatch) {
+//   return ({
+//     centerSelected: () => {
+//       dispatch(centerSelected());
+//     }
+//   });
 // }
 
-export default connect(mapStateToProps, null)(UserPanelContent);
+export default connect(mapStateToProps, {getCenters, getUserEvents})(UserPanelContent);

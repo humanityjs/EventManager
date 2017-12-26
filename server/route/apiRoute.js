@@ -29,6 +29,9 @@ router.route('/events')
   .post(authToken, eventValidate.postEvent, eventController.postEvent)
   .get(eventController.getAllEvents);
 
+router.route('/userEvents')
+  .get(authToken, eventController.getUserEvents);
+
 router.route('/events/:id')
   .put(authToken, eventValidate.updateEvent, eventController.updateEvent)
   .delete(authToken, eventController.deleteEvent);
