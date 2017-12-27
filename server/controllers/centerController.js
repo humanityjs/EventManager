@@ -79,7 +79,7 @@ class CenterController {
     } = req.body;
     const { id } = req.decoded;
 
-    return Centers.findOne({ where: { centerName } })
+    Centers.findOne({ where: { centerName } })
       .then((foundCenter) => {
         if (foundCenter) {
           return res.status(400).send({
@@ -93,7 +93,7 @@ class CenterController {
           description,
           facilities: facilityArray,
           userId: id,
-        }).then(center => res.status(201).send({
+        }).then(() => res.status(201).send({
           message: 'Successfully created a center',
         })).catch(error => res.status(500).send({
           message: error.message,

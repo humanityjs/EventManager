@@ -3,11 +3,11 @@ require('dotenv').config();
 module.exports = {
   development: {
     username: 'postgres',
-    database: 'eventManager',
+    database: 'centermanager',
     password: 'profyem001',
     host: '127.0.0.1',
     dialect: 'postgres',
-    port: 5432,
+    port: 8080,
   },
   test: {
     username: 'postgres',

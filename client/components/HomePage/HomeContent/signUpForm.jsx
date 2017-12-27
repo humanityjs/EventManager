@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { browserHistory } from 'react-router-dom';
 
 import validation from '../../../shared/userValidation';
 import TextField from '../../../common/textField'
@@ -18,13 +17,14 @@ class SignUpForm extends React.Component {
       password: '',
       retypePass: '',
       errors: {},
-      isLoading: ''
+      isLoading: '',
+      serverError: ''
     }
     this.onChange =this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.isValid = this.isValid.bind(this);
   }
-
+  
   onChange(e) {
     this.setState({
       [e.target.id]: e.target.value
@@ -42,8 +42,7 @@ class SignUpForm extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    
-    if (isValid()) {
+    if (this.isValid()) {
       
       this.setState({ errors: {}, isLoading: true });
       this.props.userSignupRequest(this.state).then(() => {
@@ -51,9 +50,10 @@ class SignUpForm extends React.Component {
             type: 'Success',
             text: 'Successfully Created Account.'
         });
-        browserHistory.push('/admin_panel')
+        this.context.router.history.push('/dashboard')
       })
       .catch((error) => {
+        this.setState({ serverError: error.response.data.message });
         this.setState({ errors: error.response.data, isLoading: false})
       });
     }
@@ -69,6 +69,7 @@ class SignUpForm extends React.Component {
       password,
       retypePass,
       errors,
+      serverError
     } = this.state;
     return (
       <div className="col-lg-4">
@@ -90,7 +91,7 @@ class SignUpForm extends React.Component {
                 value={this.state.email}
                 placeholder='email address'
                 type='email'
-                error={errors.email} 
+                error={errors.email, serverError}
                 onChange={this.onChange} />
                 
                 <TextField
@@ -123,5 +124,9 @@ SignUpForm.propTypes = {
   userSignupRequest: PropTypes.func.isRequired,
   addFlashMessage: PropTypes.func.isRequired
 }
+
+SignUpForm.contextTypes = {
+  router: PropTypes.object.isRequired
+};
 
 export default SignUpForm;
