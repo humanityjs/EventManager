@@ -2,12 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, browserHistory, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
-import { createStore, applyMiddleware, compose } from 'redux';
 import jwt from 'jsonwebtoken';
 
 
-
+import reduxStore from './store';
 import allReducers from './reducers/reducersIndex';
 import HomePage from './components/homepage.jsx';
 import CentersPage from './components/centersPage.jsx';
@@ -20,14 +18,7 @@ import setAuthToken from './utils/setAuthorizationToken';
 import { setCurrentUser } from './actions/signInActions';
 import style from './sass/style.scss';
 
-
-const store = createStore(
-  allReducers,
-  compose(
-    applyMiddleware(thunk),
-    window.devToolsExtension ? window.devToolsExtension() : f => f
-  )
-);
+const store = reduxStore();
 
 if (localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);

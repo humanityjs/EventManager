@@ -1,22 +1,29 @@
 
-import { GET_ALL_CENTERS, VIEW_CENTER_SELECTED } from '../actions/types';
+import { GET_CENTERS, GET_CENTERS_BEGIN, GET_CENTERS_ERROR } from '../actions/types';
 
-export default (state = {}, action) => {
+const initialState = {
+  fetching: false,
+  fetched: false,
+  centers: {},
+  errors: null,
+};
+export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_ALL_CENTERS:
-      return [
+
+    case GET_CENTERS_BEGIN:
+      return {
         ...state,
-        {
-          centers: action.centers,
-        },
-      ];
-    case VIEW_CENTER_SELECTED:
-      return [
-        ...state,
-        {
-          center: action.center,
-        },
-      ];
+        fetching: true,
+      };
+    case GET_CENTERS:
+      return {
+        fetched: true,
+        centers: action.centers,
+      };
+    case GET_CENTERS_ERROR:
+      return {
+        errors: action.error,
+      };
     default: return state;
   }
 };

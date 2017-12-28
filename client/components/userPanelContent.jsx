@@ -9,7 +9,7 @@ import { getUserEvents } from '../actions/eventActions'
 class UserPanelContent extends React.Component {
 
   User() {
-    const { getCenters, getUserEvents } = this.props;
+    const { getCenters, getUserEvents, centerSelected } = this.props;
     if (this.props.auth.user.isAdmin) {
       return <GetCenters getCenters = {getCenters} centerSelected={centerSelected}/>
     }
@@ -25,7 +25,7 @@ class UserPanelContent extends React.Component {
 
 UserPanelContent.propTypes = {
   getCenters: PropTypes.func.isRequired,
-//  centerSelected: PropTypes.func.isRequired
+  centerSelected: PropTypes.func.isRequired,
   getUserEvents: PropTypes.func.isRequired,
 }
 
@@ -43,4 +43,4 @@ function mapStateToProps(state) {
 //   });
 // }
 
-export default connect(mapStateToProps, {getCenters, getUserEvents})(UserPanelContent);
+export default connect(mapStateToProps, {getCenters, getUserEvents, centerSelected})(UserPanelContent);

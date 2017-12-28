@@ -17,11 +17,13 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.(js?x)$/,
-        loaders: ['react-hot-loader/webpack', 'babel-loader'],
+        test: /\.jsx?$/,
+        loaders: 'babel-loader',
+        query: {
+          presets: ['react', 'env', 'stage-0'],
+        },
         include: [
-          path.join(__dirname, 'client'),
-          path.join(__dirname, 'server/middleware'),
+          path.join(__dirname, 'client')
         ],
         exclude: /(node_modules|server|.vscode)/,
       },
@@ -42,6 +44,6 @@ module.exports = {
     net: 'empty',
   },
   resolve: {
-    extensions: ['.jsx', '.js'],
+    extensions: ['','.jsx', '.js']
   },
 };

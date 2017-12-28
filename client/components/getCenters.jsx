@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import reduxStore from '../store';
+import { getCenters } from '../actions/centerActions'
 
-
+const store = reduxStore();
 
 class DisplayCenters extends React.Component {
   constructor() {
@@ -14,18 +16,14 @@ class DisplayCenters extends React.Component {
   }
 
   componentWillMount() {
-    this.props.getCenters().then((response) => {
-      this.setState({
-        centers: response.data.centers,
-      });
-    });
+    this.props.dispatch(getCenters())
   }
 
   
 
   onClick(e) {
     // centerSelected: this.props.centerSelected(e.target.id);
-    // // this.context.router.history.push('/view-center-event');
+    this.context.router.history.push('/view-center-event');
   }
 
   render() {
