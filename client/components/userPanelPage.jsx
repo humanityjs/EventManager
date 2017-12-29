@@ -3,30 +3,30 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import { Redirect } from 'react-router-dom';
 
-import { getCenters } from '../actions/centerActions';
+import { getEvents } from '../actions/eventActions';
 import Navbar from './navbar.jsx';
 import Footer from './footer.jsx';
 
 @connect((store) => {
   return {
-    centers: store.center.centers,
-    user: store.auth.user
+    user: store.auth.user,
+    events: store.event.events,
   };
 })
 
-class AdminPanelPage extends React.Component {
+export default class EventPage extends React.Component {
 
   componentWillMount() {
-    this.props.dispatch(getCenters());
+    this.props.dispatch(getEvents());
   }
   
   render() {
-    if (!this.props.user.isAdmin) {
-      return (<Redirect to="/user-dashboard" />);
+    if (!this.props.user.isAuth) {
+      <Redirect to="/" />
     }
-    const adminCenterPage = _.map(this.props.centers, (center) => {
+    const content = _.map(this.props.events, (event) => {
       return (
-        <div className="row" key={center.id}>
+        <div className="row" key={event.id}>
           <div className="col-lg-3">
             <div className="media">
               <img className="img" src="images/image2.jpg"/>
@@ -35,16 +35,16 @@ class AdminPanelPage extends React.Component {
           <div className="col-lg-9">
             <div className="media-body">
               <h2 className="media-heading">
-                <span onClick={this.onClick} id={center.id}>{center.centerName} </span>
+                <span onClick={this.onClick} id={event.id}>{event.eventName} </span>
               </h2>
               <div className="col-lg-9">
-                <h3><span>Location: </span> {center.location}</h3>
+                <h3><span>Location: </span> {event.location}</h3>
               </div>
               <div className="col-lg-9">
-                <h3><span>facilities: </span> {center.facilities}</h3>
+                <h3><span>facilities: </span> {event.facilities}</h3>
               </div>
               <div className="col-lg-9">
-                <h3><span>description: </span> {center.description}</h3>
+                <h3><span>description: </span> {event.description}</h3>
               </div>
             </div>
             <span className="trash"><i className="fa fa-user-circle"></i></span>
@@ -53,13 +53,12 @@ class AdminPanelPage extends React.Component {
       )
     });
     return (
-        <div id="centerpage">
+        <div id="eventpage">
           <Navbar />
-          {adminCenterPage}
+          {content}
           <Footer />
         </div>
     );
   }
 }
 
-export default AdminPanelPage;

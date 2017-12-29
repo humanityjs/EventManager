@@ -3,12 +3,16 @@ import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import reduxStore from '../store';
-import { getCenters } from '../actions/centerActions'
+import { getCenters } from '../actions/centerActions';
 
-const store = reduxStore();
+// const store = reduxStore();
+@connect((store) => {
+  return {
+    centers: store.centers
+  };
+})
 
-class DisplayCenters extends React.Component {
+export default class DisplayCenters extends React.Component {
   constructor() {
     super();
     this.state = {}
@@ -90,16 +94,16 @@ class DisplayCenters extends React.Component {
   }
 }
 
-DisplayCenters.propTypes = {
-  getCenters: PropTypes.func.isRequired,
-  centerSelected: PropTypes.func.isRequired,
- }
+// DisplayCenters.propTypes = {
+//   getCenters: PropTypes.func.isRequired,
+//   centerSelected: PropTypes.func.isRequired,
+//  }
 
-function mapStateToProps(state) {
-  return {
-    auth: state.auth,
-  }
-}
+// function mapStateToProps(state) {
+//   return {
+//     auth: state.auth,
+//   }
+// }
 
 // function mapDispatchToProps(dispatch) {
 //   return dispatch({
@@ -111,4 +115,3 @@ DisplayCenters.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
-export default connect(mapStateToProps)(DisplayCenters);

@@ -18,9 +18,10 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx?$/,
-        loader: 'babel-loader',
+        loaders: 'babel-loader',
         query: {
           presets: ['react', 'env', 'stage-0'],
+          plugins: ['react-html-attrs', 'transform-class-properties', 'transform-decorators-legacy']
         },
         include: [
           path.join(__dirname, 'client')
@@ -44,6 +45,6 @@ module.exports = {
     net: 'empty',
   },
   resolve: {
-    extensions: ['','.jsx', '.js']
+    extensions: ['.jsx', '.js']
   },
 };

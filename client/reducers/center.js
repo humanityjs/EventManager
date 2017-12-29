@@ -1,29 +1,37 @@
 
-import { GET_CENTERS, GET_CENTERS_BEGIN, GET_CENTERS_ERROR } from '../actions/types';
+//import { GET_CENTERS, GET_CENTERS_BEGIN, GET_CENTERS_ERROR } from '../actions/types';
 
 const initialState = {
   fetching: false,
   fetched: false,
-  centers: {},
-  errors: null,
+  centers: [],
+  error: null,
 };
 export default (state = initialState, action) => {
   switch (action.type) {
 
-    case GET_CENTERS_BEGIN:
+    case 'GET_CENTERS': {
       return {
         ...state,
         fetching: true,
       };
-    case GET_CENTERS:
+    }
+    case 'GET_CENTERS_FAILS': {
+      const { error } = action.payload;
       return {
+        error,
+      };
+    }
+    case 'GET_CENTERS_SUCCESS': {
+      const { centers } = action.payload;
+      return {
+        ...state,
+        fetching: false,
         fetched: true,
-        centers: action.centers,
+        centers,
       };
-    case GET_CENTERS_ERROR:
-      return {
-        errors: action.error,
-      };
-    default: return state;
+    }
+    default:
+      return state;
   }
 };

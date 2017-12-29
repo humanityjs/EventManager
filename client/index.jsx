@@ -5,20 +5,19 @@ import { Provider } from 'react-redux';
 import jwt from 'jsonwebtoken';
 
 
-import reduxStore from './store';
+import store from './store';
 import allReducers from './reducers/reducersIndex';
 import HomePage from './components/homepage.jsx';
 import CentersPage from './components/centersPage.jsx';
 import AboutPage from './components/aboutPage.jsx';
-import Dashboard from './components/dashboard';
+import AdminPanelPage from './components/adminPanelPage.jsx';
 import AddEvent from './components/eventPage';
 import ViewCenter from './components/viewCenterPage';
-// import UserPanel from './components/userPanelPage.jsx';
+import UserPanel from './components/userPanelPage.jsx';
 import setAuthToken from './utils/setAuthorizationToken';
 import { setCurrentUser } from './actions/signInActions';
 import style from './sass/style.scss';
 
-const store = reduxStore();
 
 if (localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);
@@ -34,7 +33,8 @@ ReactDOM.render(
         <Route exact path="/" component={HomePage} />
         <Route path="/view-centers" component={CentersPage} />
         <Route exact path="/about" component={AboutPage} /> 
-        <Route exact path="/dashboard" component={Dashboard} />
+        <Route exact path="/admin-centers" component={AdminPanelPage} />
+        <Route exact path="/dashboard" component={UserPanel} />
         <Route path="/add-event" component={AddEvent} />
         <Route path="/view-center-event" component={ViewCenter} />
       </Switch>
