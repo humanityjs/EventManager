@@ -11,6 +11,7 @@ import HomePage from './components/homepage.jsx';
 import CentersPage from './components/centersPage.jsx';
 import AboutPage from './components/aboutPage.jsx';
 import AdminPanelPage from './components/adminPanelPage.jsx';
+import AddCenterPage from './components/addCenterPage';
 import AddEvent from './components/eventPage';
 import ViewCenter from './components/viewCenterPage';
 import UserPanel from './components/userPanelPage.jsx';
@@ -31,12 +32,13 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route path="/view-centers" component={CentersPage} />
+        <Route exact path="/view-centers" component={CentersPage} />
+        <Route exact path="/add-center" component={AddCenterPage} />
         <Route exact path="/about" component={AboutPage} /> 
         <Route exact path="/admin-centers" component={AdminPanelPage} />
         <Route exact path="/dashboard" component={UserPanel} />
-        <Route path="/add-event" component={AddEvent} />
-        <Route path="/view-center-event" component={ViewCenter} />
+        <Route exact path="/add-event" component={AddEvent} />
+        <Route exact path="/view-center-event" component={ViewCenter} />
       </Switch>
     </Router>
   </Provider>

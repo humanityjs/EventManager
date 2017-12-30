@@ -110,7 +110,7 @@ class SignUpForm extends React.Component {
                 error={errors.retypePass} 
                 onChange={this.onChange} />
 
-              <input id="signup" type="submit" value="Create Account" className="btn btn-primary" disabled={this.state.isLoading}/>
+              <input id="signup" type="submit" value="Create Account" className="btn btn-primary"/>
             </form>
             <a href="#" className="goto">already signed up? login to your account</a>
           </div>

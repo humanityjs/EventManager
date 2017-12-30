@@ -2,10 +2,12 @@
 //import { GET_CENTERS, GET_CENTERS_BEGIN, GET_CENTERS_ERROR } from '../actions/types';
 
 const initialState = {
-  fetching: false,
-  fetched: false,
+  loading: false,
+  loaded: false,
   centers: [],
-  error: null,
+  getCenterError: null,
+  addCenterError: null,
+
 };
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -13,23 +15,42 @@ export default (state = initialState, action) => {
     case 'GET_CENTERS': {
       return {
         ...state,
-        fetching: true,
+        loading: true,
       };
     }
     case 'GET_CENTERS_FAILS': {
       const { error } = action.payload;
       return {
-        error,
+        getCenterError: error,
       };
     }
     case 'GET_CENTERS_SUCCESS': {
       const { centers } = action.payload;
       return {
         ...state,
-        fetching: false,
-        fetched: true,
+        loading: false,
+        loaded: true,
         centers,
       };
+    }
+    case 'ADD_CENTER': {
+      return {
+        ...state,
+        loading: true,
+      }
+    }
+    case 'ADD_CENTER_FAILS': {
+      return {
+        ...state,
+        addCenterError: action.payload, 
+      }
+    }
+    case 'ADD_CENTER_SUCCESS': {
+      return {
+        ...state,
+        loading: false,
+        loaded: true, 
+      }
     }
     default:
       return state;

@@ -35,13 +35,13 @@ export default class EventPage extends React.Component {
           <div className="col-lg-9">
             <div className="media-body">
               <h2 className="media-heading">
-                <span onClick={this.onClick} id={event.id}>{event.eventName} </span>
+                <span onClick={this.onClick} id={event.id}>{event.eventTitle} </span>
               </h2>
               <div className="col-lg-9">
-                <h3><span>Location: </span> {event.location}</h3>
+                <h3><span>Location: </span> {event.Center.location}</h3>
               </div>
               <div className="col-lg-9">
-                <h3><span>facilities: </span> {event.facilities}</h3>
+                <h3><span>facilities: </span> {event.Center.facilities}</h3>
               </div>
               <div className="col-lg-9">
                 <h3><span>description: </span> {event.description}</h3>
@@ -53,7 +53,7 @@ export default class EventPage extends React.Component {
       )
     });
     return (
-        <div id="eventpage">
+        <div id="event-page">
           <Navbar />
           {content}
           <Footer />

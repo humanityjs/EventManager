@@ -53,7 +53,7 @@ class AdminPanelPage extends React.Component {
       )
     });
     return (
-        <div id="centerpage">
+        <div id="center-page">
           <Navbar />
           {adminCenterPage}
           <Footer />
