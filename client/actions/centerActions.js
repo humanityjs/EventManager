@@ -24,8 +24,18 @@ export function addCenter(data) {
 }
 
 export function centerSelected(center) {
-  return {
-    type: VIEW_CENTER_SELECTED,
-    center,
+  return (dispatch) => {
+    dispatch({ type: 'CENTER_SELECTED', payload: center });
+  };
+}
+
+export function getCenterSelected(id) {
+  return (dispatch) => {
+    dispatch({ type: 'GET_CENTER' });
+    axios.get(`api/v1/centers/${id}`).then((response) => {
+      dispatch({ type: 'GET_CENTER_SUCCESS', payload: response.data });
+    }).catch((err) => {
+      dispatch({ type: 'GET_CENTER_FAILS', payload: err.response.data.message });
+    });
   };
 }

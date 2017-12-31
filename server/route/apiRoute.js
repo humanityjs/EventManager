@@ -33,6 +33,7 @@ router.route('/userEvents')
   .get(authToken, eventController.getUserEvents);
 
 router.route('/events/:id')
+  .get(eventController.getSingleEvent)
   .put(authToken, eventValidate.updateEvent, eventController.updateEvent)
   .delete(authToken, eventController.deleteEvent);
 

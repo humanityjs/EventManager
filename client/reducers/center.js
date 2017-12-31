@@ -7,7 +7,8 @@ const initialState = {
   centers: [],
   getCenterError: null,
   addCenterError: null,
-
+  centerSelected: '',
+  center:{},
 };
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -51,6 +52,33 @@ export default (state = initialState, action) => {
         loading: false,
         loaded: true, 
       }
+    }
+    case 'CENTER_SELECTED': {
+      return {
+        ...state,
+        centerSelected: action.payload,
+      }
+    }
+    case 'GET_CENTER': {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+    case 'GET_CENTER_FAILS': {
+      const { error } = action.payload;
+      return {
+        getCenterError: error,
+      };
+    }
+    case 'GET_CENTER_SUCCESS': {
+      const { center } = action.payload;
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        center,
+      };
     }
     default:
       return state;

@@ -114,11 +114,11 @@ export default class Validation {
     }
 
     // validations for centerId
-    if (!validator.isEmpty(centerId)) {
-      if (!validator.isInt(centerId)) {
-        errors.centerId = 'centerId must be a number';
-      }
-    }
+    // if (!validator.isEmpty(centerId)) {
+    //   // if (!validator.isInt(centerId)) {
+    //     errors.centerId = 'centerId must be a number';
+    //   // }
+    // }
 
     if (Object.keys(errors).length !== 0) {
       return res.status(400).send(errors);

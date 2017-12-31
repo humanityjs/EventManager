@@ -15,6 +15,10 @@ module.exports = {
       description: {
         type: Sequelize.STRING,
       },
+      isApproved: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
       bookedDate: {
         type: Sequelize.DATEONLY,
         allowNull: false,

@@ -17,6 +17,10 @@ export default (sequelize, DataTypes) => {
     description: {
       type: DataTypes.STRING,
     },
+    isApproved: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
     centerId: {
       type: DataTypes.INTEGER,
       onDelete: 'CASCADE',

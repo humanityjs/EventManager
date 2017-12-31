@@ -121,12 +121,12 @@ class EventController {
 
   static updateEvent(req, res) {
     const {
-      eventTitle, description, bookedDate, centerId,
+      eventTitle, description, bookedDate, centerId, isApproved,
     } = req.body;
     const { id } = req.params;
-
-    // find th requested event
-    return Events.findById(id).then((event) => {
+    console.log(isApproved)
+    // find the requested event
+    Events.findById(id).then((event) => {
       if (event) {
         Events.findOne({
           where: {
@@ -140,6 +140,7 @@ class EventController {
                 bookedDate: bookedDate || events.bookedDate,
                 description: description || events.description,
                 centerId: centerId || events.centerId,
+                isApproved: isApproved || events.isApproved,
               }).then(() => res.status(200).send({
                 message: 'Changes Applied',
               })).catch(error => res.status(500).send({
@@ -167,11 +168,12 @@ class EventController {
         }).catch(error => res.status(500).send({
           message: error.message,
         }));
+      } else {
+        return res.status(404).send({
+          message: 'Event does not exist',
+        });
       }
-      return res.status(404).send({
-        message: 'Event does not exist',
-      });
-    });
+    })
   }
 
 
