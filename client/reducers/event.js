@@ -6,7 +6,9 @@ const initialState = {
   loaded: false,
   events: [],
   error: null,
-  event: {},
+  event: {
+    eventTitle: '',
+  },
   eventSelected: '',
 };
 export default (state = initialState, action) => {

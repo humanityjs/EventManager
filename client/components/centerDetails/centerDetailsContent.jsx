@@ -1,13 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getCenterSelected } from '../../actions/centerActions';
-import { getEventSelected, modifyEvent } from '../../actions/eventActions';
+import { getEventSelected, modifyEvent, deleteEvent } from '../../actions/eventActions';
 
 @connect((store) => {
   return {
     center: store.center,
     user: store.auth.user,
     event: store.event.event,
+    events: store.center.centerEvents,
   };
 })
 export default class CenterDetailsContent extends React.Component {
@@ -30,17 +31,19 @@ export default class CenterDetailsContent extends React.Component {
     this.props.dispatch(getEventSelected(e.target.id));
   }
 
-
   onAttend(e) {
-    const data = {
-      eventTitle: this.props.event.eventTitle,
-      description: this.props.event.description,
-      centerId: this.props.event.centerId,
-      bookedDate: this.props.event.bookedDate,
-      isApproved: 'TRUE',
-    }
-    this.props.dispatch(modifyEvent(this.props.event.id, data));
-    e.preventDefault();
+    if (e.target.id === "approve") {
+      const data = {
+        eventTitle: this.props.event.eventTitle,
+        description: this.props.event.description,
+        centerId: this.props.event.centerId,
+        bookedDate: this.props.event.bookedDate,
+        isApproved: 'TRUE',
+      }
+      this.props.dispatch(modifyEvent(this.props.event.id, data));
+    } else {
+      this.props.dispatch(deleteEvent(this.props.event.id,));
+    } 
   }
 
   show() {
@@ -51,26 +54,32 @@ export default class CenterDetailsContent extends React.Component {
 
   center() {
     const { center } = this.props.center;
-    const events = _.map(this.props.center.center.Events, (event) => {
+    const events = _.map(this.props.events, (event) => {
+      let eStatus;
+      if (event.isApproved == true) {
+        eStatus = <span onClick={this.onClick} data-toggle="modal" data-target="#eventStatus"><i id={event.id} className="fa fa-thumbs-up"></i></span>
+        } else {
+          eStatus = <span onClick={this.onClick} data-toggle="modal" data-target="#eventStatus"><i id={event.id} className="fa fa-spinner"></i></span>;
+        }
       return (
       <tr id={event.id} key={event.id}>
-        <td><span id={event.id} onClick={this.onClick} data-toggle="modal" data-target="#myModal">{event.eventTitle}</span></td>
+        <td><span id={event.id} onClick={this.onClick} data-toggle="modal" data-target="#eventStatus">{event.eventTitle}</span></td>
         <td>{event.bookedDate}</td>
-        <td><i class="fa fa-check-square-o"></i></td>
-        <td><i class="fa fa-trash"></i></td>				
+        <td>{eStatus}</td>
+        <td><span onClick={this.onClick} data-toggle="modal" data-target="#deleteModal"><i id={event.id} className="fa fa-trash"></i></span></td>				
       </tr>
       )
     });
     return (
-      <div class="container">
-        <div class="row">
-  	 	    <div class="col-lg-5">
-            <div class="form-outer text-center">
-              <div class="form-inner">
+      <div className="container">
+        <div className="row">
+  	 	    <div className="col-lg-5">
+            <div className="form-outer text-center">
+              <div className="form-inner">
                 <div className="media">
                   <img className="img" src="images/image2.jpg"/>
                 </div>
-                <strong class="logo text-primary">{center.centerName}</strong>
+                <strong className="logo text-primary">{center.centerName}</strong>
                 <p>{center.location}</p>
                 <h3>facilities</h3>
                 <p>{center.facilities}</p>
@@ -79,12 +88,12 @@ export default class CenterDetailsContent extends React.Component {
               </div>
             </div>
           </div>
-          <div class="col-lg-7">
-	 	        <div class="form-outer text-center d-flex align-items-center">
-              <div class="form-inner">
-                <strong class="logo text-primary">events scheduled</strong>
-                <div class="earnings">
-                  <table cellPadding="0" class="table table-responsive table-hover text-center">
+          <div className="col-lg-7">
+	 	        <div className="form-outer text-center d-flex align-items-center">
+              <div className="form-inner">
+                <strong className="logo text-primary">events scheduled</strong>
+                <div>
+                  <table cellPadding="0" className="table table-responsive table-hover text-center">
                     <thead>
                       <tr>
                         <th>title</th>
@@ -95,26 +104,58 @@ export default class CenterDetailsContent extends React.Component {
                     </thead>
                     <tbody>
                       {events}
+                      <tr>
+                        <td>
+                          <i className="fa fa-spinner"></i><br/>
+                          <span>Pending</span>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                          <i className="fa fa-thumbs-up"></i><br/>
+                          <span>Approved</span>
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
           </div>
-          <div class="modal fade" id="myModal">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="form-inner text-center">
-                  <div class="form-inner">
-                    <p>{this.props.event.eventTitle}</p>
-                    <i class="fa fa-thumbs-up"><span onClick={this.onAttend}><br/>Approve</span></i>
-                    <i class="fa fa-thumbs-down"><span onClick={this.show}><br/>Disapprove</span></i>
+          <div className="modal fade" id="eventStatus">
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="form-inner text-center">
+                  <div className="form-inner">
+                    <p className="text-primary">{this.props.event.eventTitle}</p>
+                    <i id="approve" className="fa fa-thumbs-up green" onClick={this.onAttend}></i>
+                    <i id="disapprove" className="fa fa-thumbs-down red" onClick={this.show}></i>
+                    <br/>
+                    <span><br/>Approve</span>
+                    <span><br/>Disapprove</span>
                     <div id="disapprove" hidden>
-                      <span className="help-block">Click this! <i class="fa fa-thumbs-down"><span id="false" onClick={this.onAttend}><br/>Disapprove</span></i> if you are sure you want to disapprove event</span>
+                      <span className="help-block">Click this! <i className="fa fa-thumbs-down"><span id="false" onClick={this.onAttend}><br/>Disapprove</span></i> Disapproved event will be deleted. Are you sure you want to disapprove event?</span>
                       <br/>
-                      <button class="btn btn-success" onClick={this.show}>cancel</button>
+                      <button className="btn btn-success" onClick={this.show}>cancel</button>
                     </div>
-
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="modal fade" id="deleteModal">
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="form-inner text-center">
+                  <div className="form-inner">
+                    <p className="text-primary">{this.props.event.eventTitle}</p>
+                    <span className="help-block">Are sure you want to delete event?</span>
+                    <br/>
+                    <a href="#"><i className="fa fa-trash red"  id="disapprove" onClick={this.onAttend}></i></a>
+                    <i className="fa fa-save green" onClick={this.onAttend}></i>
+                    <br/>
+                    <span><br/>Yes</span>
+                    <span><br/>No</span>
                   </div>
                 </div>
               </div>
@@ -136,7 +177,7 @@ export default class CenterDetailsContent extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="center-event">
       { this.center() }
       </div>
     )

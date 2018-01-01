@@ -12,11 +12,11 @@ export function getEvents() {
   };
 }
 
-export function eventSelected(event) {
-  return (dispatch) => {
-    dispatch({ type: 'EVENT_SELECTED', payload: event });
-  };
-}
+// export function eventSelected(event) {
+//   return (dispatch) => {
+//     dispatch({ type: 'EVENT_SELECTED', payload: event });
+//   };
+// }
 
 export function getEventSelected(id) {
   return (dispatch) => {
@@ -36,6 +36,17 @@ export function modifyEvent(id, data) {
       dispatch({ type: 'MODIFY_EVENT_SUCCESS', payload: response.data });
     }).catch((err) => {
       dispatch({ type: 'MODIFY_EVENT_FAILS', payload: err.response.data.message });
+    });
+  };
+}
+
+export function deleteEvent(id) {
+  return (dispatch) => {
+    dispatch({ type: 'DELETE_EVENT' });
+    axios.delete(`api/v1/events/${id}`).then((response) => {
+      dispatch({ type: 'DELETE_EVENT_SUCCESS', payload: response.data });
+    }).catch((err) => {
+      dispatch({ type: 'DELETE_EVENT_FAILS', payload: err.response.data.message });
     });
   };
 }

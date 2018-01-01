@@ -9,6 +9,7 @@ const initialState = {
   addCenterError: null,
   centerSelected: '',
   center:{},
+  centerEvents:{},
 };
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -78,6 +79,7 @@ export default (state = initialState, action) => {
         loading: false,
         loaded: true,
         center,
+        centerEvents: center.Events,
       };
     }
     default:

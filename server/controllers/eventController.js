@@ -124,7 +124,6 @@ class EventController {
       eventTitle, description, bookedDate, centerId, isApproved,
     } = req.body;
     const { id } = req.params;
-    console.log(isApproved)
     // find the requested event
     Events.findById(id).then((event) => {
       if (event) {
@@ -143,6 +142,7 @@ class EventController {
                 isApproved: isApproved || events.isApproved,
               }).then(() => res.status(200).send({
                 message: 'Changes Applied',
+                event,
               })).catch(error => res.status(500).send({
                 message: error.message,
               }));
@@ -156,12 +156,14 @@ class EventController {
             bookedDate: bookedDate || Events.bookedDate,
             description: description || Events.description,
             centerId: centerId || Events.centerId,
+            isApproved: isApproved || events.isApproved,
           }, {
             where: {
               id,
             },
           }).then(() => res.status(200).send({
             message: 'Changes Applied',
+            event,
           })).catch(error => res.status(500).send({
             message: error.message,
           }));

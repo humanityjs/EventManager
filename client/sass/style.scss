@@ -79,3 +79,35 @@
     max-width: 100%;
   }
 }
+
+#center-event {
+  .fa {
+    cursor: pointer;
+  }
+  #deleteModal, #eventStatus {
+    .fa {
+      padding: 0 35px;
+      font-size: 32px;
+      padding-top: 25px;
+      cursor: pointer;
+    }
+    .green {
+      color: rgb(35, 235, 62)
+    }
+    .red {
+      color: rgb(245, 6, 6)
+    }
+    .help-block {
+      font-size: 1.3em;
+      color: #495057;
+    }
+    span {
+      font-size: 0.8em;
+      padding: 0 38px;
+      margin-top: -20px;
+    }
+    .text-primary {
+      font-size: 24px;
+    }
+  }
+}
