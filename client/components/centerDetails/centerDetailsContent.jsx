@@ -1,14 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getCenterSelected } from '../../actions/centerActions';
-import { getEventSelected, modifyEvent, deleteEvent } from '../../actions/eventActions';
+import { getEventSelected, modifyCenterEvent, deleteCenterEvent, getCenterEvents } from '../../actions/eventActions';
+import ModalContent from '../modalContent';
 
 @connect((store) => {
   return {
     center: store.center,
     user: store.auth.user,
     event: store.event.event,
-    events: store.center.centerEvents,
+    // events: store.center.centerEvents,
+    events: store.event.events,
+    message: store.event.message,
   };
 })
 export default class CenterDetailsContent extends React.Component {
@@ -24,7 +27,7 @@ export default class CenterDetailsContent extends React.Component {
     }
     this.onClick = this.onClick.bind(this);
     this.onAttend = this.onAttend.bind(this);
-    this.show = this.show.bind(this);
+    this.showHiddenDiv = this.showHiddenDiv.bind(this);
   }
 
   onClick(e) {
@@ -32,6 +35,7 @@ export default class CenterDetailsContent extends React.Component {
   }
 
   onAttend(e) {
+    const centerId = this.props.center.centerSelected;
     if (e.target.id === "approve") {
       const data = {
         eventTitle: this.props.event.eventTitle,
@@ -40,17 +44,20 @@ export default class CenterDetailsContent extends React.Component {
         bookedDate: this.props.event.bookedDate,
         isApproved: 'TRUE',
       }
-      this.props.dispatch(modifyEvent(this.props.event.id, data));
+      this.props.dispatch(modifyCenterEvent(this.props.event.id, data, centerId));
     } else {
-      this.props.dispatch(deleteEvent(this.props.event.id,));
+      this.props.dispatch(deleteCenterEvent(this.props.event.id, centerId));
     } 
   }
 
-  show() {
-    if(!disapprove) return;
-    const div = document.getElementById('disapprove');
+  showHiddenDiv(e) {
+    
+    let id = e.target.dataset.toggleId;
+    if(!id) return;
+    const div = document.getElementById(id);
     div.hidden = !div.hidden;
   }
+
 
   center() {
     const { center } = this.props.center;
@@ -129,14 +136,19 @@ export default class CenterDetailsContent extends React.Component {
                   <div className="form-inner">
                     <p className="text-primary">{this.props.event.eventTitle}</p>
                     <i id="approve" className="fa fa-thumbs-up green" onClick={this.onAttend}></i>
-                    <i id="disapprove" className="fa fa-thumbs-down red" onClick={this.show}></i>
+                    <i data-toggle-id="disapprove" className="fa fa-thumbs-down red" onClick={this.showHiddenDiv}></i>
                     <br/>
                     <span><br/>Approve</span>
                     <span><br/>Disapprove</span>
                     <div id="disapprove" hidden>
-                      <span className="help-block">Click this! <i className="fa fa-thumbs-down"><span id="false" onClick={this.onAttend}><br/>Disapprove</span></i> Disapproved event will be deleted. Are you sure you want to disapprove event?</span>
+                  
+                      <p> Disapproved event will be deleted. Are you sure you want to disapprove event?</p>
+                      <i id="disapprove" className="fa fa-trash red" onClick={this.onAttend}></i>
+                      <i data-toggle-id="disapprove" className="fa fa-close" onClick={this.showHiddenDiv}></i>
                       <br/>
-                      <button className="btn btn-success" onClick={this.show}>cancel</button>
+                      <span><br/>delete</span>
+                      <span><br/>cancel</span>
+                     
                     </div>
                   </div>
                 </div>
@@ -152,7 +164,7 @@ export default class CenterDetailsContent extends React.Component {
                     <span className="help-block">Are sure you want to delete event?</span>
                     <br/>
                     <a href="#"><i className="fa fa-trash red"  id="disapprove" onClick={this.onAttend}></i></a>
-                    <i className="fa fa-save green" onClick={this.onAttend}></i>
+                    <i className="fa fa-save green"></i>
                     <br/>
                     <span><br/>Yes</span>
                     <span><br/>No</span>
@@ -173,6 +185,7 @@ export default class CenterDetailsContent extends React.Component {
     }
     const id = this.props.center.centerSelected;
     this.props.dispatch(getCenterSelected(id));
+    this.props.dispatch(getCenterEvents(id));
   }
 
   render() {

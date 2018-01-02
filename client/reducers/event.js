@@ -35,6 +35,28 @@ export default (state = initialState, action) => {
         events,
       };
     }
+    case 'GET_CENTER_EVENTS': {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+    case 'GET_CENTER_EVENTS_FAILS': {
+      const { error } = action.payload;
+      return {
+        error,
+      };
+    }
+    case 'GET_CENTER_EVENTS_SUCCESS': {
+      const { events, message } = action.payload;
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        events,
+        message,
+      };
+    }
     case 'EVENT_SELECTED': {
       return {
         ...state,
@@ -75,12 +97,48 @@ export default (state = initialState, action) => {
       };
     }
     case 'MODIFY_EVENT_SUCCESS': {
-      const { event } = action.payload;
       return {
         ...state,
         loading: false,
         loaded: true,
-        event,
+      };
+    }
+    case 'MODIFY_CENTER_EVENT': {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+    case 'MODIFY_CENTER_EVENT_FAILS': {
+      const { error } = action.payload;
+      return {
+        getEventError: error,
+      };
+    }
+    case 'MODIFY_CENTER_EVENT_SUCCESS': {
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+      };
+    }
+    case 'DELETE_CENTER_EVENT': {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+    case 'DELETE_CENTER_EVENT_FAILS': {
+      const { error } = action.payload;
+      return {
+        getEventError: error,
+      };
+    }
+    case 'DELETE_CENTER_EVENT_SUCCESS': {
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
       };
     }
     default:

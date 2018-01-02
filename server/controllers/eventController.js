@@ -35,6 +35,33 @@ class EventController {
     }));
   }
 
+  static getCenterEvents(req, res) {
+    // get events
+    Events.all({
+      where: {
+        centerId: req.params.id,
+      },
+      order: [
+        ['bookedDate', 'DESC'],
+      ],
+    }).then((events) => {
+      // if events are available
+      if (events) {
+        // show events
+        return res.status(200).send({
+          message: 'Changes Applied',
+          events,
+        });
+      }
+      // No Event found
+      return res.status(404).send({
+        message: 'There are no booked Events',
+      });
+    }).catch(error => res.status(500).send({
+      message: error.message,
+    }));
+  }
+
   static getUserEvents(req, res) {
     const { id } = req.decoded;
     // get events
@@ -175,7 +202,7 @@ class EventController {
           message: 'Event does not exist',
         });
       }
-    })
+    });
   }
 
 
