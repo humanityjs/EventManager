@@ -3,16 +3,17 @@ import { connect } from 'react-redux';
 import { getCenters, getCenterSelected } from '../actions/centerActions';
 import Navbar from './navbar.jsx';
 import Footer from './footer.jsx';
-import AddEventForm from './addEventPage/addEventForm';
+import AddEventForm from './eventPage/addEventForm';
 
 @connect((store) => {
   return {
     centers: store.center.centers,
     center: store.center.center,
+    events: store.event.events,
   }
 })
 
-export default class AddEvent extends React.Component {
+export default class ModifyEvent extends React.Component {
   
 
   componentWillMount() {

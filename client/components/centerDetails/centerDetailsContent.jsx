@@ -11,7 +11,6 @@ import DeleteModal from '../deleteModal';
     center: store.center,
     user: store.auth.user,
     event: store.event.event,
-    // events: store.center.centerEvents,
     events: store.event.events,
     message: store.event.message,
   };

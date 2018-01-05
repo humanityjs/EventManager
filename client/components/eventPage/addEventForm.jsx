@@ -21,8 +21,6 @@ export default class AddEventForm extends React.Component {
       errors: {},
       isLoading: false,
       centerId: '',
-      location: '',
-      facilities: '',
     }
 
     this.onChange = this.onChange.bind(this);
@@ -46,7 +44,8 @@ export default class AddEventForm extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    this.props.createEvent(this.state);
+    console.log(this.state)
+    // this.props.createEvent(this.state);
   }
 
   render() {
@@ -65,6 +64,10 @@ export default class AddEventForm extends React.Component {
             <option value="">Select Center</option>
             {showCenters}
           </select>
+        </div>
+        <div className="input-group date" data-provide="datepicker-inline">
+          <input type="text" class="form-control"/>
+          <i className="fa fa-calendar"></i>
         </div>
         <TextField
         id='date'

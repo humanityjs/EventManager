@@ -57,6 +57,22 @@ export function modifyCenterEvent(id, data, centerId) {
   };
 }
 
+export function modifyEvent(id, data) {
+  return (dispatch) => {
+    dispatch({ type: 'MODIFY_CENTER_EVENT' });
+    axios.put(`api/v1/events/${id}`, data).then(() => {
+      dispatch({ type: 'MODIFY_EVENT_SUCCESS' });
+      axios.get('api/v1/userEvents').then((response) => {
+        dispatch({ type: 'GET_EVENTS_SUCCESS', payload: response.data });
+      }).catch((err) => {
+        dispatch({ type: 'GET_EVENTS_FAILS', error: err });
+      });
+    }).catch((err) => {
+      dispatch({ type: 'MODIFY_EVENT_FAILS', payload: err.response.data.message });
+    });
+  };
+}
+
 export function deleteCenterEvent(id, centerId) {
   return (dispatch) => {
     dispatch({ type: 'DELETE_CENTER_EVENT' });

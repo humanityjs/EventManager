@@ -121,7 +121,7 @@ export default class CenterForm extends React.Component {
           type='text'
           error={errors.location} 
           onChange={this.onChange} />
-        <p class="subtitle">separate facilities with spaces</p>
+        <p class="subtitle">separate facilities with commas. Do not include spaces</p>
         <TextField
           id='facilities'
           value={this.state.facilities}

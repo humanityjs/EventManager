@@ -52,7 +52,7 @@ export default class Validation {
     if (!/^[a-zA-Z0-9,. ]+$/.test(description)) {
       errors.description = 'description can not include symbols except comma and full stop';
     }
-    console.log(description);
+
     if (!validator.isEmpty(description)) {
       if (!validator.isLength(description, { min: 5, max: 1000 })) {
         errors.description = 'description must be greater than 5 but less than 1000 words';
@@ -93,7 +93,7 @@ export default class Validation {
       }
     }
 
-    // // validations for bookedDate
+    // validations for bookedDate
     // if (!/^[a-zA-Z0-9, ]+$/.test(facilities)) {
     //   errors.facilities = 'Facilities can not include symbols except comma which you should use to separate the faciities';
     // }
