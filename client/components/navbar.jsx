@@ -34,10 +34,13 @@ class NavBar extends React.Component {
             <Link to="/dashboard" className="nav-link"><span className="nav-link-text"><i className="fa fa-dashboard"></i> Dashboard</span></Link>
           </li>
           <li className="nav-item">
-            <Link to="/admin-centers" className="nav-link"><span className="nav-link-text"><i className="fa fa-dashboard"></i> centers</span></Link>
+            <Link to="/admin-centers" className="nav-link"><span className="nav-link-text"><i className="fa fa-home"></i> centers</span></Link>
           </li>
           <li className="nav-item">
             <Link to="/add-center" className="nav-link"><span className="nav-link-text"><i className="fa fa-plus-square"></i> add center</span></Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/add-event" className="nav-link"><span className="nav-link-text"><i className="fa fa-plus-square"></i> add event</span></Link>
           </li>
           <li className="nav-item">
             <Link to="/user/profile" className="nav-link"><span className="nav-link-text"><i className="fa fa-user-circle"></i> profile</span></Link>

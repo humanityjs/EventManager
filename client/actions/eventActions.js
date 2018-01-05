@@ -73,3 +73,19 @@ export function deleteCenterEvent(id, centerId) {
   };
 }
 
+export function deleteEvent(id) {
+  return (dispatch) => {
+    dispatch({ type: 'DELETE_EVENT' });
+    axios.delete(`api/v1/events/${id}`).then(() => {
+      dispatch({ type: 'DELETE_EVENT_SUCCESS'});
+      axios.get('api/v1/userEvents').then((response) => {
+        dispatch({ type: 'GET_EVENTS_SUCCESS', payload: response.data });
+      }).catch((err) => {
+        dispatch({ type: 'GET_EVENTS_FAILS', error: err });
+      });
+    }).catch((err) => {
+      dispatch({ type: 'DELETE_EVENT_FAILS', payload: err.response.data.message });
+    });
+  };
+}
+

@@ -208,11 +208,11 @@ class EventController {
 
   static deleteEvent(req, res) {
     const eventId = req.params.id;
-    const { id } = req.decoded;
+    const { id, isAdmin } = req.decoded;
 
     return Events.findById(eventId).then((event) => {
       if (event) {
-        if (event.userId === id) {
+        if (event.userId === id || isAdmin) {
           return event.destroy().then(() => res.status(200).send({
             message: 'Event Deleted',
           }));

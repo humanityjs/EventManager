@@ -84,35 +84,42 @@
   .fa {
     cursor: pointer;
   }
-  #deleteModal, #eventStatus {
-    .fa {
-      padding: 0 35px;
-      font-size: 32px;
-      padding-top: 25px;
-      cursor: pointer;
-    }
-    .green {
-      color: rgb(35, 235, 62)
-    }
-    .red {
-      color: rgb(245, 6, 6)
-    }
-    .help-block {
-      font-size: 1.3em;
-      color: #495057;
-    }
-    #disapprove {
-      padding: 25px;
-      background-color: #e9ecef;
-      margin-top: 20px;
-    }
-    span {
-      font-size: 0.8em;
-      padding: 0 38px;
-      margin-top: -20px;
-    }
-    .text-primary {
-      font-size: 24px;
-    }
+  .form-outer {
+    padding-bottom: 20px;
+  }
+  .form-inner {
+    padding-bottom: 10px;
+  }
+}
+
+#deleteModal, #eventStatus {
+  .fa {
+    padding: 0 35px;
+    font-size: 32px;
+    padding-top: 25px;
+    cursor: pointer;
+  }
+  .green {
+    color: rgb(35, 235, 62)
+  }
+  .red {
+    color: rgb(245, 6, 6)
+  }
+  .help-block {
+    font-size: 1.3em;
+    color: #495057;
+  }
+  #disapprove {
+    padding: 25px;
+    background-color: #e9ecef;
+    margin-top: 20px;
+  }
+  span {
+    font-size: 0.8em;
+    padding: 0 38px;
+    margin-top: -20px;
+  }
+  .text-primary {
+    font-size: 24px;
   }
 }

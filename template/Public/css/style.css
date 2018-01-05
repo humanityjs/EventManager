@@ -207,6 +207,9 @@ text-transform: capitalize;
 	background-color: #fff;
 	margin-bottom: 10px;
 }
+.main-color {
+  color: #f97e04;
+}
 .topspace {
 	margin-top: 15px;
 }
@@ -371,6 +374,9 @@ form input[type='submit'] {
     float: right;
     font-size: 0.5em;
 	  color: red;
+}
+.edit {
+  float: left;
 }
 
 .img {

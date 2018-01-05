@@ -12,7 +12,7 @@ import CentersPage from './components/centersPage.jsx';
 import AboutPage from './components/aboutPage.jsx';
 import AdminPanelPage from './components/adminPanelPage.jsx';
 import AddCenterPage from './components/addCenterPage';
-import AddEvent from './components/eventPage';
+import AddEvent from './components/addEvent';
 import ViewCenter from './components/viewCenterPage';
 import UserPanel from './components/userPanelPage.jsx';
 import setAuthToken from './utils/setAuthorizationToken';

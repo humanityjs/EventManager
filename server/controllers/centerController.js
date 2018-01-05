@@ -13,8 +13,46 @@ class CenterController {
    * @memberof CenterController
    */
   static getAllCenters(req, res) {
+    let location = req.query.location;
+    let facilities = req.query.facilities;
+    let query;
+    
+    if (location || facilities !== undefined) {
+      if (location === '' && facilities !== undefined) {
+
+        query = Centers.findAll({
+          where: {
+            facilities: {
+              $contains: [facilities],
+            },
+          }
+        })
+      } else if (location !== undefined && facilities === '') {
+        query = Centers.findAll({
+          where: {
+            location: {
+              $ilike: '%' + location + '%',
+            }
+          },
+        })
+      } else if (location && facilities !== undefined) {
+        query = Centers.findAll({
+          where: {
+            location: {
+              $ilike: '%' + location + '%',
+            },
+            facilities: {
+              $contains: [facilities],
+            },
+          },
+        })
+      } 
+    } else if ((location && facilities) === undefined || (location && facilities) === '') {
+      console.log(facilities, location)
+      query = Centers.all()
+    } 
     // get centers
-    Centers.all().then((centers) => {
+    query.then((centers) => {
       // if centers are available
       if (centers) {
         // show centers

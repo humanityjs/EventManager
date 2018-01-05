@@ -1,7 +1,7 @@
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose } from 'redux';
 import logger from 'redux-logger';
-import allReducers from './reducers/reducersIndex';
+import allReducers from './reducers/reducersIndex.jsx';
 
 
 // export default function reduxStore() {
@@ -15,9 +15,9 @@ import allReducers from './reducers/reducersIndex';
 // }
 
 const middleware = compose(
-         applyMiddleware(thunk, logger),
-        window.devToolsExtension ? window.devToolsExtension() : f => f,
-      );
+  applyMiddleware(thunk, logger),
+  window.devToolsExtension ? window.devToolsExtension() : f => f,
+);
 
 export default createStore(allReducers, middleware);
 

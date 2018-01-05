@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { getCenterSelected } from '../../actions/centerActions';
 import { getEventSelected, modifyCenterEvent, deleteCenterEvent, getCenterEvents } from '../../actions/eventActions';
 import ModalContent from '../modalContent';
+import CenterForm from '../addCenterForm';
+import DeleteModal from '../deleteModal';
 
 @connect((store) => {
   return {
@@ -28,6 +30,15 @@ export default class CenterDetailsContent extends React.Component {
     this.onClick = this.onClick.bind(this);
     this.onAttend = this.onAttend.bind(this);
     this.showHiddenDiv = this.showHiddenDiv.bind(this);
+  }
+
+  componentWillMount() {
+    if (!this.props.user.isAdmin) {
+      return (<Redirect to="/dashboard" />);
+    }
+    const id = this.props.center.centerSelected;
+    this.props.dispatch(getCenterSelected(id));
+    this.props.dispatch(getCenterEvents(id));
   }
 
   onClick(e) {
@@ -56,10 +67,17 @@ export default class CenterDetailsContent extends React.Component {
     if(!id) return;
     const div = document.getElementById(id);
     div.hidden = !div.hidden;
-  }
+    if (id === 'editCenterDetails') {
+      const div2 = document.getElementById('centerDetails');
+      if (!div.hidden) {
+        return div2.style.display="none";
+      }
+      return div2.style.display="";
+    } 
+  }  
+  
 
-
-  center() {
+  render() {
     const { center } = this.props.center;
     const events = _.map(this.props.events, (event) => {
       let eStatus;
@@ -78,20 +96,32 @@ export default class CenterDetailsContent extends React.Component {
       )
     });
     return (
+      <div id="center-event">
       <div className="container">
         <div className="row">
   	 	    <div className="col-lg-5">
-            <div className="form-outer text-center">
-              <div className="form-inner">
-                <div className="media">
-                  <img className="img" src="images/image2.jpg"/>
+            <div id="centerDetails">          
+              <div className="form-outer text-center">
+                <div className="form-inner">
+                  <div className="media">
+                    <img className="img" src="images/image2.jpg"/>
+                  </div>
+                  <strong className="logo text-primary">{center.centerName}</strong>
+                  <p>{center.location}</p>
+                  <h3>facilities</h3>
+                  <p>{center.facilities}</p>
+                  <h3>description</h3>
+                  <p>{center.description}</p>	
                 </div>
-                <strong className="logo text-primary">{center.centerName}</strong>
-                <p>{center.location}</p>
-                <h3>facilities</h3>
-                <p>{center.facilities}</p>
-                <h3>description</h3>
-			          <p>{center.description}</p>	
+                ... <i data-toggle-id="editCenterDetails" className="fa fa-pencil main-color" onClick={this.showHiddenDiv}> edit</i>
+              </div>
+            </div>
+            <div id="editCenterDetails" hidden>
+              <div class="form-outer text-center">
+                <div class="form-inner">
+                  <CenterForm path={this.props.path} center={center}/>
+                </div>
+                <i data-toggle-id="editCenterDetails" className="fa fa-home main-color" onClick={this.showHiddenDiv}> home</i>
               </div>
             </div>
           </div>
@@ -155,43 +185,9 @@ export default class CenterDetailsContent extends React.Component {
               </div>
             </div>
           </div>
-          <div className="modal fade" id="deleteModal">
-            <div className="modal-dialog">
-              <div className="modal-content">
-                <div className="form-inner text-center">
-                  <div className="form-inner">
-                    <p className="text-primary">{this.props.event.eventTitle}</p>
-                    <span className="help-block">Are sure you want to delete event?</span>
-                    <br/>
-                    <a href="#"><i className="fa fa-trash red"  id="disapprove" onClick={this.onAttend}></i></a>
-                    <i className="fa fa-save green"></i>
-                    <br/>
-                    <span><br/>Yes</span>
-                    <span><br/>No</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <DeleteModal />
         </div>
       </div>
-      
-    );
-  }
-  
-  componentWillMount() {
-    if (!this.props.user.isAdmin) {
-      return (<Redirect to="/dashboard" />);
-    }
-    const id = this.props.center.centerSelected;
-    this.props.dispatch(getCenterSelected(id));
-    this.props.dispatch(getCenterEvents(id));
-  }
-
-  render() {
-    return (
-      <div id="center-event">
-      { this.center() }
       </div>
     )
   }

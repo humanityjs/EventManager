@@ -8,8 +8,7 @@ const initialState = {
   getCenterError: null,
   addCenterError: null,
   centerSelected: '',
-  center:{},
-  centerEvents:{},
+  center: {},
 };
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -79,7 +78,25 @@ export default (state = initialState, action) => {
         loading: false,
         loaded: true,
         center,
-        centerEvents: center.Events,
+      };
+    }
+    case 'MODIFY_CENTER': {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+    case 'MODIFY_CENTER_FAILS': {
+      const { error } = action.payload;
+      return {
+        getCENTERError: error,
+      };
+    }
+    case 'MODIFY_CENTER_SUCCESS': {
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
       };
     }
     default:
