@@ -2,36 +2,24 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import { getCenters } from '../actions/centerActions';
 
 // const store = reduxStore();
 @connect((store) => {
   return {
-    centers: store.centers
+    centers: store.center.centers,
+    auth: store.auth,
   };
 })
 
 export default class DisplayCenters extends React.Component {
-  constructor() {
-    super();
-    this.state = {}
-    this.onClick = this.onClick.bind(this);
-  }
 
   componentWillMount() {
     this.props.dispatch(getCenters())
   }
 
-  
-
-  onClick(e) {
-    // centerSelected: this.props.centerSelected(e.target.id);
-    this.context.router.history.push('/view-center-event');
-  }
-
   render() {
-    const adminCenterPage = _.map(this.state.centers, (center) => {
+    const adminCenterPage = _.map(this.props.centers, (center) => {
       return (
         <div className="row" key={center.id}>
           <div className="col-lg-3">
@@ -42,7 +30,7 @@ export default class DisplayCenters extends React.Component {
           <div className="col-lg-9">
             <div className="media-body">
               <h2 className="media-heading">
-                <span onClick={this.onClick} id={center.id}>{center.centerName} </span>
+                <Link to="/view-center-event"><span id={center.id}>{center.centerName}</span></Link>
               </h2>
               <div className="col-lg-9">
                 <h3><span>Location: </span> {center.location}</h3>
@@ -60,7 +48,7 @@ export default class DisplayCenters extends React.Component {
       )
     }); 
     
-    const guestCenterPage = _.map(this.state.centers, (center) => {
+    const guestCenterPage = _.map(this.props.centers, (center) => {
       return (
         <div className="row" id={center.id} key={center.id}>
           <div className="col-lg-3">
@@ -94,24 +82,4 @@ export default class DisplayCenters extends React.Component {
   }
 }
 
-// DisplayCenters.propTypes = {
-//   getCenters: PropTypes.func.isRequired,
-//   centerSelected: PropTypes.func.isRequired,
-//  }
-
-// function mapStateToProps(state) {
-//   return {
-//     auth: state.auth,
-//   }
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return dispatch({
-//     centerSelected
-//   });
-// }
-
-DisplayCenters.contextTypes = {
-  router: PropTypes.object.isRequired
-};
 

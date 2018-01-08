@@ -5,8 +5,7 @@ const initialState = {
   loading: false,
   loaded: false,
   centers: [],
-  getCenterError: null,
-  addCenterError: null,
+  error: '',
   centerSelected: '',
   center: {},
 };
@@ -20,9 +19,10 @@ export default (state = initialState, action) => {
       };
     }
     case 'GET_CENTERS_FAILS': {
-      const { error } = action.payload;
+      const { error, message } = action.payload;
       return {
-        getCenterError: error,
+        error,
+        message,
       };
     }
     case 'GET_CENTERS_SUCCESS': {
@@ -41,10 +41,11 @@ export default (state = initialState, action) => {
       }
     }
     case 'ADD_CENTER_FAILS': {
+      const { error, message } = action.payload;
       return {
-        ...state,
-        addCenterError: action.payload, 
-      }
+        error,
+        message,
+      };
     }
     case 'ADD_CENTER_SUCCESS': {
       return {
@@ -66,9 +67,10 @@ export default (state = initialState, action) => {
       };
     }
     case 'GET_CENTER_FAILS': {
-      const { error } = action.payload;
+      const { error, message } = action.payload;
       return {
-        getCenterError: error,
+        error,
+        message,
       };
     }
     case 'GET_CENTER_SUCCESS': {
@@ -87,9 +89,10 @@ export default (state = initialState, action) => {
       };
     }
     case 'MODIFY_CENTER_FAILS': {
-      const { error } = action.payload;
+      const { error, message } = action.payload;
       return {
-        getCENTERError: error,
+        error,
+        message,
       };
     }
     case 'MODIFY_CENTER_SUCCESS': {

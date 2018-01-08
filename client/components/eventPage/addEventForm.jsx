@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 import { getCenters, getCenterSelected } from '../../actions/centerActions';
 import { createEvent, getCenterEvents } from '../../actions/eventActions';
 import TextField from '../../common/textField';
-import CenterSearch from '../../components/centerSearch';
+import CenterSearch from '../centerSearch';
+import DatePicker from '../datePicker';
 
 @connect((store) => {
   return {
     centers: store.center.centers,
+    center: store.center.center,
   }
 })
 
@@ -28,7 +30,38 @@ export default class AddEventForm extends React.Component {
     this.search = this.search.bind(this);
   }
 
+  componentWillUpdate() {
+//     console.log(this.state.date);
+//   <script>
+//   $(document).ready( function() {
+//     $('#date').datepicker({
+//       format:'yyyy-mm-dd',
+//       autoclose:true,
+//       startDate: '2018-01-01',
+//       datesDisabled: this.state.date,
+//     })
+//   });
+// </script>
+  }
+  onClick(e) {
+    e.preventDefault();
+    console.log("me")
+    return <DatePicker />
+    
+  //   const disableD= ['2018-01-10'];
+  //   <script>
+  //   $(document).ready( function() {
+  //     $('#date').datepicker({
+  //       format:'yyyy-mm-dd',
+  //       autoclose:true,
+  //       startDate: '2018-01-01',
+  //       datesDisabled: this.state.date,
+  //     })
+  //   });
+  // </script>
+  }
   onChange(e) {
+    
     this.setState({
       [e.target.id]: e.target.value
     });
@@ -36,8 +69,19 @@ export default class AddEventForm extends React.Component {
       this.props.dispatch(getCenterSelected(e.target.value));
       this.props.dispatch(getCenterEvents(e.target.value));
     }
+
   }
 
+  onFocus(e) {
+    let disableDates = _.map(this.props.center.Events, (event) => {
+      return (
+        event.bookedDate
+      );
+    });
+    this.setState({
+      date: disableDates,
+    })
+  }
   search() {
     this.props.dispatch(getCenters(this.state));
   }
@@ -49,15 +93,19 @@ export default class AddEventForm extends React.Component {
   }
 
   render() {
+
     const { title, date, description, errors, isLoading, centerId } = this.state;
     const showCenters = _.map(this.props.centers, (center) => {
       return (
         <option key={center.id} value={center.id}>{center.centerName}</option>
       )
     });
+    
     return (
+      <div>
       <form id="add-event-form" onSubmit={this.onSubmit}>
         <CenterSearch />
+        <DatePicker />
         <p className="subtitle">select your preferred event center location</p>
         <div className="form-group">
           <select className="form-control" defaultValue={this.state.centerId} id="centerId" onChange={this.onChange}>            
@@ -65,17 +113,17 @@ export default class AddEventForm extends React.Component {
             {showCenters}
           </select>
         </div>
-        <div className="input-group date" data-provide="datepicker-inline">
-          <input type="text" class="form-control"/>
-          <i className="fa fa-calendar"></i>
+        <div class="form-group">
+          <button onClick={this.onClick.bind(this)}>Click Me</button>    
         </div>
-        <TextField
+
+        {/* <TextField
         id='date'
         value={this.state.date}
         placeholder='choose date'
         type='date'
         error={errors.date}
-        onChange={this.onChange} />
+        onChange={this.onChange} /> */}
         <TextField
         id='title'
         value={this.state.title}
@@ -90,6 +138,9 @@ export default class AddEventForm extends React.Component {
         </div> 
         <input id="add-event" type="submit" value="Add Event" className="btn btn-primary"/>
       </form>
+      
+      </div>
+     
     )
   }
 }

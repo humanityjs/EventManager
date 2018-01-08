@@ -17,7 +17,8 @@ export default class AboutPageContent extends React.Component {
               changing prices is another pain. Everyone has a penchant for expensive clothes, with 
               exquisite designs and fabric, that makes them stand apart. Why should you then settle 
               even for the second best when it comes to laundering them?
-            </p>  
+            </p> 
+             
           </div>       
         </div>
       </div>

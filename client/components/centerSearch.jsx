@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getCenters } from '../actions/centerActions';
-import TextField from '../common/textField';
 
 @connect((store) => {
   return {
@@ -33,26 +32,35 @@ export default class SearchForm extends React.Component {
   render() {
     const { location, facilities } = this.state;
     return (
-      <div className="row">
-        <div className="col-lg-6">
-          <TextField
-            id='location'
-            value={this.state.location}
-            placeholder='location'
+      <div className="row search">
+        <p class="subtitle"><i className="fa fa-filter green"></i> filter by</p>
+        <div className="col-lg-5">
+          <div className="form-group">
+            <input
+              id='location'
+              value={this.state.location}
+              placeholder='location'
+              type='text'
+              onChange={this.onChange}
+              className="form-control"
+            />
+          </div>
+        </div>
+        <div className="col-lg-5">
+          <div className="form-group">
+            <input
+            id='facilities'
+            value={this.state.facilities}
+            placeholder='facilities'
             type='text'
             onChange={this.onChange}
-          />
+            className="form-control" 
+            />
+          </div>
         </div>
-        <div className="col-lg-6">
-          <TextField
-          id='facilities'
-          value={this.state.facilities}
-          placeholder='facilities'
-          type='text'
-          onChange={this.onChange} 
-          />
+        <div className="col-lg-2">
+          <button className="btn btn-success"><i className="fa fa-search" onClick={this.search}> Search</i></button>
         </div>
-        <i className="fa fa-search green" onClick={this.search}> Search</i>
       </div>
     )
   }

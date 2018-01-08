@@ -21,9 +21,10 @@ export default (state = initialState, action) => {
       };
     }
     case 'GET_EVENTS_FAILS': {
-      const { error } = action.payload;
+      const { error, message } = action.payload;
       return {
         error,
+        message,
       };
     }
     case 'GET_EVENTS_SUCCESS': {
@@ -42,19 +43,27 @@ export default (state = initialState, action) => {
       };
     }
     case 'GET_CENTER_EVENTS_FAILS': {
-      const { error } = action.payload;
+      const { error, message } = action.payload;
       return {
         error,
+        message,
       };
     }
     case 'GET_CENTER_EVENTS_SUCCESS': {
       const { events, message } = action.payload;
+      let disableDates = _.map(events, (event) => {
+        return (
+          event.bookedDate
+        );
+      });
       return {
         ...state,
         loading: false,
         loaded: true,
         events,
         message,
+        disableDates,
+
       };
     }
     case 'EVENT_SELECTED': {
@@ -70,9 +79,10 @@ export default (state = initialState, action) => {
       };
     }
     case 'GET_EVENT_FAILS': {
-      const { error } = action.payload;
+      const { error, message } = action.payload;
       return {
         getEventError: error,
+        message,
       };
     }
     case 'GET_EVENT_SUCCESS': {
@@ -91,9 +101,10 @@ export default (state = initialState, action) => {
       };
     }
     case 'MODIFY_EVENT_FAILS': {
-      const { error } = action.payload;
+      const { error, message } = action.payload;
       return {
         getEventError: error,
+        message,
       };
     }
     case 'MODIFY_EVENT_SUCCESS': {
@@ -110,9 +121,10 @@ export default (state = initialState, action) => {
       };
     }
     case 'MODIFY_CENTER_EVENT_FAILS': {
-      const { error } = action.payload;
+      const { error, message } = action.payload;
       return {
         getEventError: error,
+        message,
       };
     }
     case 'MODIFY_CENTER_EVENT_SUCCESS': {
@@ -129,9 +141,10 @@ export default (state = initialState, action) => {
       };
     }
     case 'DELETE_CENTER_EVENT_FAILS': {
-      const { error } = action.payload;
+      const { error, message } = action.payload;
       return {
         getEventError: error,
+        message,
       };
     }
     case 'DELETE_CENTER_EVENT_SUCCESS': {

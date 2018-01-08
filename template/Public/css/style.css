@@ -170,7 +170,7 @@ footer.main-footer p {
 }
 
 footer .row {
-	padding: 5px;
+  padding: 5px;
 }
 
 /* table */
@@ -296,6 +296,7 @@ form input {
  form input[type=date] {
   background: none;
   width: 100%;
+  text-transform: capitalize;
 }
 .form-inner {
   padding: 40px;	
@@ -369,6 +370,10 @@ form input[type='submit'] {
     font-style: italic;
     color:rgba(0, 121, 203, 1);
     font-size: 0.8em;
+    width: 100%;
+}
+.search {
+  padding: 10px 20px 30px 20px;
 }
 .trash, .edit {
     float: right;
@@ -391,18 +396,28 @@ margin-bottom: 20px;
   color: red;
 }
 
-
+.goto {
+  font-size: 0.9em;
+  text-transform: capitalize;
+  display: inline-block;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  color: #F97E04;
+  text-decoration: none;
+  cursor: pointer;
+}
 @media (min-width: 768px) {
     .container-fluid {
     padding: 0 50px;
   }
-  
-a.goto, .inner-page a.goto {
-    font-size: 0.9em;
-  text-transform: capitalize;
-  }
+
 small, .inner-page small {
     font-size: 0.8em;
+  }
+}
+@media (max-width: 576px) {
+  .btn-success {
+    float: right;
   }
 }
 @media (max-width: 420px) {
@@ -426,6 +441,7 @@ font-size: 4.0em;
   .img {
     max-width: 240px;
   }
+  
 }
 
 /* Button */

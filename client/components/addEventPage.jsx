@@ -1,12 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { getCenters, getCenterSelected } from '../actions/centerActions';
 import Navbar from './navbar.jsx';
 import Footer from './footer.jsx';
-import AddEventForm from './eventPage/addEventForm';
+import AddEventForm from './eventPage/addEventForm.jsx';
 
 @connect((store) => {
   return {
+    auth: store.auth,
     centers: store.center.centers,
     center: store.center.center,
   }
@@ -24,6 +26,10 @@ export default class AddEvent extends React.Component {
   }
 
   render() {
+     //Check if user is logged in
+     if (!this.props.auth.isAuth) {
+      return (<Redirect to="/" />);
+    }
     const center = this.props.center;
     return (
       <div>

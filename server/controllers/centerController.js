@@ -18,12 +18,13 @@ class CenterController {
     let query;
     
     if (location || facilities !== undefined) {
+      let facility = facilities.toLowerCase();
       if (location === '' && facilities !== undefined) {
 
         query = Centers.findAll({
           where: {
             facilities: {
-              $contains: [facilities],
+              $contains: [facility],
             },
           }
         })
@@ -42,13 +43,12 @@ class CenterController {
               $ilike: '%' + location + '%',
             },
             facilities: {
-              $contains: [facilities],
+              $contains: [facility],
             },
           },
         })
       } 
     } else if ((location && facilities) === undefined || (location && facilities) === '') {
-      console.log(facilities, location)
       query = Centers.all()
     } 
     // get centers

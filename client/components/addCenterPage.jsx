@@ -24,6 +24,13 @@ export default class AddCenterPage extends React.Component {
   // }
   
   render() {
+     //Check if user is logged in and is also an Admin
+     if (!this.props.user.isAuth) {
+      return (<Redirect to="/" />);
+    } else if (!this.props.user.isAdmin) {
+      return (<Redirect to="/dashboard" />);
+    }
+    
     const { pathname } = this.props.location
     // console.log(this.props.logout);
     // if (this.props.center.addCenterError === 'Token is Invalid or Expired') {

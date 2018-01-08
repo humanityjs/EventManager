@@ -10,7 +10,7 @@
   }
   .bg {
     padding: 10px;
-    opacity: .8;
+    opacity: .9;
   }
   body {
     position: relative;
@@ -32,7 +32,13 @@
   .row {
     background: #fff;
     margin-bottom: 10px;
-    opacity: .8;
+    opacity: .9;
+  }
+
+  footer .row {
+    background: none;
+    margin-bottom: 0;
+      /* opacity: .9; */
   }
 
   body {

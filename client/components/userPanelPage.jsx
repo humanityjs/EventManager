@@ -12,7 +12,7 @@ import DeleteModal from './deleteModal';
 
 @connect((store) => {
   return {
-    user: store.auth.user,
+    auth: store.auth,
     events: store.event.events,
   };
 })
@@ -21,6 +21,7 @@ export default class EventPage extends React.Component {
 
   componentWillMount() {
     this.props.dispatch(getEvents());
+    
   }
 
   onClick(e) {
@@ -44,7 +45,7 @@ export default class EventPage extends React.Component {
    
   render() {
     let eventId, editEventId;
-    if (!this.props.user.isAuth) {
+    if (!this.props.auth.isAuth) {
       <Redirect to="/" />
     }
     const { pathname } = this.props.location;

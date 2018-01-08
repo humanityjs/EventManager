@@ -80,25 +80,25 @@ export default class Validation {
      * @memberof UserValidations
      */
   static signin(req, res, next) {
-    const { email, password } = req.body;
+    const { login_email, login_password } = req.body;
 
     const errors = {};
-    if (email === undefined || password === undefined) {
+    if (login_email === undefined || login_password === undefined) {
       return res.status(400).send({
         message: 'Email or Password is undefined',
       });
     }
 
-    if (validator.isEmpty(email)) {
-      errors.email = 'email is required';
+    if (validator.isEmpty(login_email)) {
+      errors.login_email = 'email is required';
     }
 
-    if (!validator.isEmail(email)) {
-      errors.email = 'Type a valid email';
+    if (!validator.isEmail(login_email)) {
+      errors.login_email = 'Type a valid email';
     }
 
-    if (validator.isEmpty(password)) {
-      errors.password = 'Password is required';
+    if (validator.isEmpty(login_password)) {
+      errors.login_password = 'Password is required';
     }
 
     const isValid = Object.keys(errors).length !== 0 ? false : true;

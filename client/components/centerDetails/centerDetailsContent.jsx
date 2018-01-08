@@ -61,7 +61,7 @@ export default class CenterDetailsContent extends React.Component {
   }
 
   showHiddenDiv(e) {
-    
+     
     let id = e.target.dataset.toggleId;
     if(!id) return;
     const div = document.getElementById(id);
