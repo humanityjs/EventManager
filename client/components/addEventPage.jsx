@@ -5,6 +5,7 @@ import { getCenters, getCenterSelected } from '../actions/centerActions';
 import Navbar from './navbar.jsx';
 import Footer from './footer.jsx';
 import AddEventForm from './eventPage/addEventForm.jsx';
+import isEmpty from 'lodash/isEmpty';
 
 @connect((store) => {
   return {
@@ -31,34 +32,53 @@ export default class AddEvent extends React.Component {
       return (<Redirect to="/" />);
     }
     const center = this.props.center;
+    let centerInfo;
+    if (isEmpty(center)) {
+      centerInfo = (
+        <div className="form-inner">
+          <div className="media largeIcon">
+            <i className="fa fa-home"><h3>Select a center</h3></i>
+          </div>
+        </div>
+      )
+    } else {
+      centerInfo = (
+        <div className="form-inner">
+          <div className="media">
+            <img className="img" src="images/image2.jpg"/>
+          </div>
+          <div className="media-body">
+            <h2 className="media-heading">
+              <span>{center.centerName}</span>
+            </h2>
+            <h3>Location</h3>
+            <p>{center.location}</p>
+            <h3>Facilities</h3>
+            <p>{center.facilities}</p>
+            <h3>Description</h3>
+            <p>{center.description}</p>
+          </div>
+        </div>
+      )
+    }
     return (
       <div>
         <Navbar />
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-3">
-              <div className="form-outer text-center">
-                <div className="form-inner">
-                  <div className="media">
-                    <img className="img" src="images/image2.jpg"/>
-                  </div>
-                  <div className="media-body">
-                    <h2 className="media-heading">
-                      <span></span>
-                    </h2>
-                    <h3><span>Location: </span>{center.location}</h3>
-                    <h3><span>facilities: </span>{center.facilities}</h3>
-                    <h3><span>description: </span>{center.description}</h3>
-                  </div>
+        <div id="event-form">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-4">
+                <div className="form-outer text-center">
+                  {centerInfo}
                 </div>
               </div>
-            </div>
-            <div className="col-lg-8">
-              <div className="form-outer text-center">
-                <div className="form-inner">
-                  <div className="logo">lets make your <strong className="text-primary">event</strong> a memorable one</div>
-                  <hr/>
-                  <AddEventForm />
+              <div className="col-lg-8">
+                <div className="form-outer text-center">
+                  <div className="form-inner">
+                    <div className="logo">lets make your <strong className="text-primary">event</strong> a memorable one</div>
+                    <hr/>
+                    <AddEventForm />
+                  </div>
                 </div>
               </div>
             </div>

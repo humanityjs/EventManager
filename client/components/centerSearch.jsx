@@ -33,7 +33,7 @@ export default class SearchForm extends React.Component {
     const { location, facilities } = this.state;
     return (
       <div className="row search">
-        <p class="subtitle"><i className="fa fa-filter green"></i> filter by</p>
+        <p class="subtitle"><i className="fa fa-filter green"></i> filter centers by</p>
         <div className="col-lg-5">
           <div className="form-group">
             <input

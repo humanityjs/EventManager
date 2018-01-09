@@ -1,6 +1,16 @@
 import axios from 'axios';
-import { getCenterSelected } from './centerActions';
 // import { GET_EVENTS_BEGIN, GET_EVENTS_ERROR, GET_EVENTS } from './types';
+
+export function createEvent(data) {
+  return (dispatch) => {
+    dispatch({ type: 'ADD_EVENT' });
+    axios.post('api/v1/events',data).then((response) => {
+      dispatch({ type: 'ADD_EVENT_SUCCESS', payload: response.data });
+    }).catch((err) => {
+      dispatch({ type: 'ADD_EVENT_FAILS', payload: err.response.data.message });
+    });
+  };
+}
 
 export function getEvents() {
   return (dispatch) => {

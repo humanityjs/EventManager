@@ -154,6 +154,25 @@ export default (state = initialState, action) => {
         loaded: true,
       };
     }
+    case 'ADD_EVENT': {
+      return {
+        ...state,
+        loading: true,
+      }
+    }
+    case 'ADD_EVENT_FAILS': {
+      return {
+        error: action.payload,
+
+      };
+    }
+    case 'ADD_EVENT_SUCCESS': {
+      return {
+        ...state,
+        loading: false,
+        loaded: true, 
+      }
+    }
     default:
       return state;
   }

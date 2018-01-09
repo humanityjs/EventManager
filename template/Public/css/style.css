@@ -215,7 +215,7 @@ text-transform: capitalize;
 }
 .home-inner-page {
     background: #000;
-    opacity: 0.7;
+    opacity: 0.9;
     min-height: auto;
     padding-bottom: 0;
 }
@@ -232,12 +232,11 @@ text-transform: capitalize;
 
 .form-outer {
     /* min-height: 60vh; */
-    max-width: 400px;
     margin: 0 auto;
     position: relative;
     margin-top: 5px;
     background: white;
-    opacity: 0.8;
+    opacity: 0.9;
     padding: 0px;
     border-radius: 5px;
     border-bottom: 3px solid #ccc;
@@ -304,7 +303,11 @@ form input {
 .date form input {
     width: 100%;
 }
+.largeIcon {
+  font-size: 16rem;
+  color: #c0c0c0;
 
+}
 .list {
     text-align: left;
     padding: 0 20px;

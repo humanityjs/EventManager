@@ -39,3 +39,62 @@ export function modifyEventValidation(data) {
 
   return { errors, isValid: isEmpty(errors) };
 }
+
+export function addEventValidation(data) {
+  const {
+    eventTitle, bookedDate, description, centerId,
+  } = data;
+  const errors = {};
+  if (eventTitle === undefined || bookedDate === undefined || description === undefined
+      || centerId === undefined) {
+    return res.status(400).send({
+      message: 'All or Some Field are Undefined',
+    });
+  }
+  // validations for eventTitle
+
+  if (!/^[a-zA-Z0-9 ]+$/.test(eventTitle)) {
+    errors.eventTitle = 'Event Name can only contain numbers and letters';
+  }
+
+  if (!validator.isEmpty(eventTitle)) {
+    if (!validator.isLength(eventTitle, { min: 5, max: 20 })) {
+      errors.eventTitle = 'The event Name must be more than 5 characters but less than 20';
+    }
+  } else {
+    errors.eventTitle = 'event Name cannot be blank';
+  }
+
+  // validations for bookedDate
+  if (!validator.isEmpty(bookedDate)) {
+    if (!validator.toDate(bookedDate)) {
+      errors.bookedDate = bookedDate;
+    }
+  } else {
+    errors.facilities = 'event should have at least one facility';
+  }
+
+  // validations for description
+  if (!/^[a-zA-Z0-9,. ]+$/.test(description)) {
+    errors.description = 'description can not include symbols except comma and full stop';
+  }
+
+  if (!validator.isEmpty(description)) {
+    if (!validator.isLength(description, { min: 5, max: 1000 })) {
+      errors.description = 'description must be greater than 5 but less than 1000 words';
+    }
+  } else {
+    errors.description = 'Event should have a description';
+  }
+
+  // validations for centerId
+  if (!validator.isEmpty(centerId)) {
+    if (!validator.isInt(centerId)) {
+      errors.centerId = 'centerId must be a number';
+    }
+  } else {
+    errors.centerId = 'Please select a Center';
+  }
+
+  return { errors, isValid: isEmpty(errors) };
+}
