@@ -9,7 +9,6 @@ import DeleteModal from '../deleteModal';
 @connect((store) => {
   return {
     center: store.center,
-    user: store.auth.user,
     event: store.event.event,
     events: store.event.events,
     message: store.event.message,
@@ -32,9 +31,6 @@ export default class CenterDetailsContent extends React.Component {
   }
 
   componentWillMount() {
-    if (!this.props.user.isAdmin) {
-      return (<Redirect to="/dashboard" />);
-    }
     const id = this.props.center.centerSelected;
     this.props.dispatch(getCenterSelected(id));
     this.props.dispatch(getCenterEvents(id));

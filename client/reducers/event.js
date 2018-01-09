@@ -43,10 +43,8 @@ export default (state = initialState, action) => {
       };
     }
     case 'GET_CENTER_EVENTS_FAILS': {
-      const { error, message } = action.payload;
       return {
-        error,
-        message,
+        error: action.payload,
       };
     }
     case 'GET_CENTER_EVENTS_SUCCESS': {

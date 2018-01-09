@@ -12,7 +12,7 @@ import Footer from './footer.jsx';
 
 @connect((store) => {
   return {
-    user: store.auth.user,
+    user: store.auth,
     center: store.center,
   }
 })
@@ -27,7 +27,7 @@ export default class AddCenterPage extends React.Component {
      //Check if user is logged in and is also an Admin
      if (!this.props.user.isAuth) {
       return (<Redirect to="/" />);
-    } else if (!this.props.user.isAdmin) {
+    } else if (!this.props.user.user.isAdmin) {
       return (<Redirect to="/dashboard" />);
     }
     
@@ -36,9 +36,6 @@ export default class AddCenterPage extends React.Component {
     // if (this.props.center.addCenterError === 'Token is Invalid or Expired') {
     //   {this.logout.bind(this)}
     // }
-    if (!this.props.user.isAdmin) {
-      return (<Redirect to="/dashboard" />);
-    };
     return (
       
       <div id="add-center">

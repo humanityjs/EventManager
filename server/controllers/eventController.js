@@ -49,7 +49,6 @@ class EventController {
       if (events) {
         // show events
         return res.status(200).send({
-          message: 'Changes Applied',
           events,
         });
       }
