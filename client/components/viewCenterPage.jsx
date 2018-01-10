@@ -6,6 +6,7 @@ import Navbar from './navbar.jsx';
 import Content from './centerDetails/centerDetailsContent';
 import Footer from './footer';
 
+
 @connect((store) => {
   return {
     user: store.auth,
@@ -13,6 +14,7 @@ import Footer from './footer';
 })
 
 export default class ViewCenterDetails extends React.Component {
+
   render() {
      //Check if user is logged in and is also an Admin
      if (!this.props.user.isAuth) {
@@ -20,6 +22,7 @@ export default class ViewCenterDetails extends React.Component {
     } else if (!this.props.user.user.isAdmin) {
       return (<Redirect to="/dashboard" />);
     }
+
     
     const { pathname } = this.props.location
     return (

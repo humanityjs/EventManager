@@ -27,13 +27,12 @@ export default class Validation {
     }
     // validations for eventTitle
 
-    if (!/^[a-zA-Z0-9 ]+$/.test(eventTitle)) {
-      errors.eventTitle = 'Event Name can only contain numbers and letters';
-    }
-
     if (!validator.isEmpty(eventTitle)) {
       if (!validator.isLength(eventTitle, { min: 5, max: 20 })) {
         errors.eventTitle = 'The event Name must be more than 5 characters but less than 20';
+      }
+      if (!/^[a-zA-Z0-9 ]+$/.test(eventTitle)) {
+        errors.eventTitle = 'Event Name can only contain numbers and letters';
       }
     } else {
       errors.eventTitle = 'event Name cannot be blank';
@@ -49,13 +48,12 @@ export default class Validation {
     }
 
     // validations for description
-    if (!/^[a-zA-Z0-9,. ]+$/.test(description)) {
-      errors.description = 'description can not include symbols except comma and full stop';
-    }
-
     if (!validator.isEmpty(description)) {
       if (!validator.isLength(description, { min: 5, max: 1000 })) {
         errors.description = 'description must be greater than 5 but less than 1000 words';
+      }
+      if (!/^[a-zA-Z0-9,. ]+$/.test(description)) {
+        errors.description = 'description can not include symbols except comma and full stop';
       }
     } else {
       errors.description = 'Event should have a description';
@@ -83,13 +81,12 @@ export default class Validation {
     } = req.body;
     const errors = {};
     // validations for eventTitle
-    if (!/^[a-zA-Z0-9 ]+$/.test(eventTitle)) {
-      errors.eventTitle = 'Event Name can only contain numbers and letters';
-    }
-
     if (!validator.isEmpty(eventTitle)) {
       if (!validator.isLength(eventTitle, { min: 5, max: 20 })) {
         errors.eventTitle = 'The event Name must be more than 5 characters but less than 20';
+      }
+      if (!/^[a-zA-Z0-9 ]+$/.test(eventTitle)) {
+        errors.eventTitle = 'Event Name can only contain numbers and letters';
       }
     }
 
@@ -104,12 +101,12 @@ export default class Validation {
     // }
 
     // validations for description
-    if (!/^[a-zA-Z0-9,. ]+$/.test(description)) {
-      errors.description = 'description can not include symbols except comma and full stop';
-    }
     if (!validator.isEmpty(description)) {
       if (!validator.isLength(description, { min: 5, max: 1000 })) {
         errors.description = 'description must be greater than 5 but less than 1000 words';
+      }
+      if (!/^[a-zA-Z0-9,. ]+$/.test(description)) {
+        errors.description = 'description can not include symbols except comma and full stop';
       }
     }
 

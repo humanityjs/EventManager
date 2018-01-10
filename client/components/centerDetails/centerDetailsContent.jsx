@@ -57,7 +57,6 @@ export default class CenterDetailsContent extends React.Component {
   }
 
   showHiddenDiv(e) {
-     
     let id = e.target.dataset.toggleId;
     if(!id) return;
     const div = document.getElementById(id);
@@ -69,6 +68,7 @@ export default class CenterDetailsContent extends React.Component {
       }
       return div2.style.display="";
     } 
+    
   }  
   
 
@@ -94,7 +94,7 @@ export default class CenterDetailsContent extends React.Component {
       <div id="center-event">
       <div className="container">
         <div className="row">
-  	 	    <div className="col-lg-5">
+  	 	    <div className="col-lg-6">
             <div id="centerDetails">          
               <div className="form-outer text-center">
                 <div className="form-inner">
@@ -120,7 +120,7 @@ export default class CenterDetailsContent extends React.Component {
               </div>
             </div>
           </div>
-          <div className="col-lg-7">
+          <div className="col-lg-5">
 	 	        <div className="form-outer text-center d-flex align-items-center">
               <div className="form-inner">
                 <strong className="logo text-primary">events scheduled</strong>

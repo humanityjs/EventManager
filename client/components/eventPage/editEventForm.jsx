@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import isEmpty from 'lodash/isEmpty';
 
 import { modifyEvent } from '../../actions/eventActions';
 import { modifyEventValidation } from '../../shared/eventValidations';
@@ -19,8 +20,7 @@ export default class EventForm extends React.Component {
     super();
     this.state = {
       description:'',
-      title:'',
-      bookedDate: '',
+      eventTitle:'',
       errors: {},
     };
     
@@ -37,10 +37,19 @@ export default class EventForm extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    if (this.isValid()) {
-        this.props.dispatch(modifyEvent(this.state, this.props.center.centerSelected));
-    }
-    
+    this.state = {
+      eventTitle: this.state.eventTitle,
+      description: this.state.description,
+      bookedDate: this.props.date,
+      centerId: this.props.center,
+      isApproved: this.props.isApproved,
+    };
+    console.log(this.state)
+    if (!isEmpty(this.state.description) || !isEmpty(this.state.eventTitle)) {
+        if (this.isValid()) {
+          this.props.dispatch(modifyEvent(this.props.id, this.state));
+        }
+      }
   }
 
   isValid() {
@@ -53,8 +62,7 @@ export default class EventForm extends React.Component {
 
   render() {
     const {
-      title,
-      bookedDate,
+      eventTitle,
       description,
       errors,
       serverError,
@@ -62,30 +70,18 @@ export default class EventForm extends React.Component {
 
     return ( 
       
-      <form id="add-center-form" onSubmit={this.onSubmit}>
+      <form id="edit-center-form" onSubmit={this.onSubmit}>
         <span className="help-block">{this.props.event}</span>
-        <TextField
-          id='centerName'
-          value={this.state.eventTitle}
-          placeholder='center name'
-          type='text'
-          error={errors.eventTitle} 
-          onChange={this.onChange} />
-
-        <TextField
-          id='location'
-          value={this.state.bookedDate}
-          placeholder='location'
-          type='text'
-          error={errors.bookedDate} 
-          onChange={this.onChange} />
-
+        <div class="form-group">  
+          <span className="help-block">{errors.eventTitle}</span>  
+          <input type="text" id="eventTitle" onChange={this.onChange} class="form-control" value={this.state.eventTitle} placeholder={this.props.title}/>
+        </div>
         <p class="subtitle">describe the event in few words</p>
-          <span className="help-block">{errors.description}</span>
-          <div class="form-group">
-            <textarea class="form-control" id="description" onChange={this.onChange} defaultValue={this.state.description}></textarea>
-          </div> 
-          <input id="modify-event" type="submit" value="Save" class="btn btn-primary"/>
+        <span className="help-block">{errors.description}</span>
+        <div class="form-group">
+          <textarea class="form-control" id="description" onChange={this.onChange} placeholder={this.props.description}></textarea>
+        </div> 
+        <input id="modify-event" type="submit" value="Save" class="btn btn-primary"/>
       </form>
     );
   }

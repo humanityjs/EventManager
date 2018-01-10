@@ -20,8 +20,7 @@ import DeleteModal from './deleteModal';
 export default class EventPage extends React.Component {
 
   componentWillMount() {
-    this.props.dispatch(getEvents());
-    
+    this.props.dispatch(getEvents()); 
   }
 
   onClick(e) {
@@ -42,63 +41,59 @@ export default class EventPage extends React.Component {
       return div2.style.display="";
     } 
   }
+  
    
   render() {
-    let eventId, editEventId;
     if (!this.props.auth.isAuth) {
       <Redirect to="/" />
     }
+
+    let eventId, editEventId, eventBody, form;
     const { pathname } = this.props.location;
     const content = _.map(this.props.events, (event) => {
+      eventBody = `event-body${event.id}`;
       eventId = `eventDetails${event.id}`;
       editEventId = `editEventDetails${event.id}`;
+      form = `form${event.id}`;
+      let dateBooked = `date${event.id}`;
       return (
         <div>
-          <div id={eventId}>
-            <div className="row" key={event.id}>
-              <div className="col-lg-3">
-                <div className="media">
+          <div id={eventId} key={eventId}>
+            
+            <div class="form-outer text-center">
+              <div class="form-inner">
+                <div id="event-head">
                   <img className="img" src="images/image2.jpg"/>
-                </div>
-              </div>
-              <div className="col-lg-9">
-                <div className="media-body">
-                  <h2 className="media-heading">
-                    <span id={event.id}>{event.eventTitle} 
-                      <i id={eventId} data-toggle-id={editEventId} className="fa fa-pencil main-color" onClick={this.showHiddenDiv}></i>
+                  <h2>
+                    <span className="media-heading" data-toggle-id={eventBody} onClick={this.showHiddenDiv}>
+                      {event.eventTitle} 
                     </span>
                   </h2>
-                  <div className="col-lg-9">
-                    <h3><span>Date: </span> {event.bookedDate}
-                      <i id={eventId} data-toggle-id={editEventId} className="fa fa-pencil main-color" onClick={this.showHiddenDiv}></i>
-                    </h3>
-                  </div>
-                  <div className="col-lg-9">
-                    <h3><span>Center: </span> {event.Center.centerName}
-                      <Link to="/modify-event"><i className="fa fa-pencil main-color"></i></Link>
-                    </h3>
-                    
-                  </div>
-                  <div className="col-lg-9">
-                    <h3><span>Location: </span> {event.Center.location}</h3>
-                  </div>
-                  <div className="col-lg-9">
-                    <h3><span>facilities: </span> {event.Center.facilities}</h3>
-                  </div>
-                  <div className="col-lg-9">
-                    <h3><span>Event description: </span> {event.description}
-                      <i id={eventId} data-toggle-id={editEventId} className="fa fa-pencil main-color" onClick={this.showHiddenDiv}></i>
-                    </h3>
+                  <Link to="/modify-event"><i className="fa fa-list-alt main-color"></i>edit</Link>
+                </div>
+                <div id={eventBody} hidden>
+                  <div className="media-body">
+                      <h3><span>Date: </span> {event.bookedDate}</h3>
+                      <h3><span>Center: </span> {event.Center.centerName}</h3>
+                      <h3><span>Location: </span> {event.Center.location}</h3>
+                      <h3><span>facilities: </span> {event.Center.facilities}</h3>
+                      <h3><span>Event description: </span> {event.description}</h3>
                   </div>
                 </div>
+                <i id={eventId} data-toggle-id={editEventId} className="fa fa-pencil main-color edit" onClick={this.showHiddenDiv}></i>
                 <span onClick={this.onClick.bind(this)} className="trash" data-toggle="modal" data-target="#deleteModal"><i id={event.id} className="fa fa-trash trash"></i></span>
               </div>
             </div>
+           
           </div>
-          <div id={editEventId} hidden>
+          <div id={editEventId} key={form} hidden>
             <div class="form-outer text-center">
               <div class="form-inner">
-                <EventForm /> 
+                <i className="fa fa-list-alt main-color"></i><br/>
+                <span className="media-heading" data-toggle-id={eventBody} onClick={this.showHiddenDiv}>
+                  {event.eventTitle} 
+                </span>
+                <EventForm id={event.id} title={event.eventTitle} description={event.description} isApproved={event.isApproved} date={event.bookedDate} center={event.Center.id}/> 
               </div>
               <i id={eventId} data-toggle-id={editEventId} className="fa fa-home main-color" onClick={this.showHiddenDiv}> home</i>
             </div>
@@ -109,8 +104,12 @@ export default class EventPage extends React.Component {
     return (
         <div id="event-page">
           <Navbar />
-          {content}
-          <DeleteModal path={pathname}/>
+          <div className="container">
+            <div className="row">
+              {content}
+              <DeleteModal path={pathname}/>
+            </div>
+          </div>
           <Footer />
         </div>
     );

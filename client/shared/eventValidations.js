@@ -5,15 +5,15 @@ export function modifyEventValidation(data) {
   const {
     eventTitle, bookedDate, description, centerId,
   } = data;
+
   const errors = {};
   // validations for eventTitle
-  if (!/^[a-zA-Z0-9 ]+$/.test(eventTitle)) {
-    errors.eventTitle = 'Event Name can only contain numbers and letters';
-  }
-
   if (!validator.isEmpty(eventTitle)) {
     if (!validator.isLength(eventTitle, { min: 5, max: 20 })) {
       errors.eventTitle = 'The event Name must be more than 5 characters but less than 20';
+    }
+    if (!/^[a-zA-Z0-9 ]+$/.test(eventTitle)) {
+      errors.eventTitle = 'Event Name can only contain numbers and letters';
     }
   }
 
@@ -28,12 +28,12 @@ export function modifyEventValidation(data) {
   // }
 
   // validations for description
-  if (!/^[a-zA-Z0-9,. ]+$/.test(description)) {
-    errors.description = 'description can not include symbols except comma and full stop';
-  }
   if (!validator.isEmpty(description)) {
     if (!validator.isLength(description, { min: 5, max: 1000 })) {
       errors.description = 'description must be greater than 5 but less than 1000 words';
+    }
+    if (!/^[a-zA-Z0-9,. ]+$/.test(description)) {
+      errors.description = 'description can not include symbols except comma and full stop';
     }
   }
 

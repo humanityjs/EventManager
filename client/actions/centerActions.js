@@ -62,7 +62,7 @@ export function getCenterSelected(id) {
     axios.get(`api/v1/centers/${id}`).then((response) => {
       dispatch({ type: 'GET_CENTER_SUCCESS', payload: response.data });
     }).catch((err) => {
-      dispatch({ type: 'GET_CENTER_FAILS', payload: err.response.data.message });
+      dispatch({ type: 'GET_CENTER_FAILS', payload: err.response.data });
     });
   };
 }

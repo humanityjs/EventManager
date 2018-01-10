@@ -67,9 +67,8 @@ export default (state = initialState, action) => {
       };
     }
     case 'GET_CENTER_FAILS': {
-      const { error, message } = action.payload;
+      const { message } = action.payload;
       return {
-        error,
         message,
       };
     }

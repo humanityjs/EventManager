@@ -188,7 +188,8 @@ text-transform: capitalize;
 
 /* Page and Form */
 .container {
-	padding: 50px 0;
+  padding: 50px 0;
+  margin-top: 30px;
 }
 .page {
   position: absolute;
@@ -265,7 +266,7 @@ min-height: 0;
 }
 
 .media-body {
-	padding: 0 20px;
+	padding: 0 10px;
 }
 .home-inner-page form, .inner-page form {
   margin: 0 auto 10px;
@@ -298,7 +299,7 @@ form input {
   text-transform: capitalize;
 }
 .form-inner {
-  padding: 40px;	
+  padding: 20px;	
 }
 .date form input {
     width: 100%;
@@ -385,10 +386,11 @@ form input[type='submit'] {
 }
 .edit {
   float: left;
+  color: #020c15;
 }
 
 .img {
-max-width: 320px;
+max-width: 280px;
 margin-bottom: 20px;
 }
 

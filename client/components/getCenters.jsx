@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, browserHistory } from 'react-router-dom';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import { getCenters, getCenterSelected } from '../actions/centerActions';
+import { getCenters, centerSelected } from '../actions/centerActions';
 
 // const store = reduxStore();
 @connect((store) => {
@@ -19,9 +19,7 @@ export default class DisplayCenters extends React.Component {
   }
 
   onClick(e) {
-    this.props.dispatch(getCenterSelected(e.target.id)).then(() => {
-      <Redirect to="/view-center-event" />
-    })
+    this.props.dispatch(centerSelected(e.target.id));
   }
 
   render() {
@@ -36,7 +34,7 @@ export default class DisplayCenters extends React.Component {
           <div className="col-lg-9">
             <div className="media-body">
               <h2 className="media-heading">
-                <span onClick={this.onClick.bind(this)} id={center.id}>{center.centerName}</span>
+                <Link to="/view-center-event"><span onClick={this.onClick.bind(this)} id={center.id}>{center.centerName}</span></Link>
               </h2>
               <div className="col-lg-9">
                 <h3><span>Location: </span> {center.location}</h3>
