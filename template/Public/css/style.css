@@ -272,8 +272,11 @@ min-height: 0;
   margin: 0 auto 10px;
   
 }
+.col-lg-6 {
+  margin: 0 auto;
+}
 .form-outer .text-primary {
-	font-size: 2em;
+	font-size: 1.5em;
 }
 form input, .inner-page form input {
   outline: none;

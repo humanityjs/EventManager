@@ -113,7 +113,7 @@ class CenterController {
    */
   static postCenter(req, res) {
     const {
-      centerName, location, description, facilities,
+      centerName, location, description, facilities, capacity,
     } = req.body;
     const { id } = req.decoded;
 
@@ -130,6 +130,7 @@ class CenterController {
           location,
           description,
           facilities: facilityArray,
+          capacity,
           userId: id,
         }).then(() => res.status(201).send({
           message: 'Successfully created a center',
@@ -151,17 +152,21 @@ class CenterController {
      */
   static updateCenter(req, res) {
     const {
-      centerName, location, description, facilities,
+      centerName, location, description, facilities, capacity,
     } = req.body;
     const { id } = req.params;
 
     return Centers.findById(id).then((center) => {
-      const facilityArray = facilities.split(',');
+      let facilityArray;
+      if (facilities !== '') {
+        facilityArray = facilities.split(',');
+      }
       return center.update({
         centerName: centerName || center.centerName,
         location: location || center.location,
         description: description || center.description,
         facilities: facilityArray || center.facilities,
+        capacity: capacity || center.capacity,
       }).then(() => res.status(201).send({
         message: 'Successfully updated center',
       })).catch(error => res.status(500).send({

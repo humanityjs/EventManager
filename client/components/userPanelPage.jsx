@@ -85,6 +85,7 @@ export default class EventPage extends React.Component {
                   <div className="media-body">
                       <h3><span>Date: </span> {event.bookedDate}</h3>
                       <h3><span>Center: </span> {event.Center.centerName}</h3>
+                      <h3><span>Capacity: </span> {event.Center.capacity}</h3>
                       <h3><span>Location: </span> {event.Center.location}</h3>
                       <h3><span>facilities: </span> {event.Center.facilities}</h3>
                       <h3><span>Event description: </span> {event.description}</h3>

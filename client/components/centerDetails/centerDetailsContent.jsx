@@ -22,6 +22,7 @@ export default class CenterDetailsContent extends React.Component {
       location:'',
       facilities:'',
       description:'',
+      capacity: '',
       errors: {},
       event:{},
     }
@@ -103,6 +104,8 @@ export default class CenterDetailsContent extends React.Component {
                   </div>
                   <strong className="logo text-primary">{center.centerName}</strong>
                   <p>{center.location}</p>
+                  <h3>capacity</h3>
+                  <p>{center.capacity}</p>
                   <h3>facilities</h3>
                   <p>{center.facilities}</p>
                   <h3>description</h3>

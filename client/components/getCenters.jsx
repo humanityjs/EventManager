@@ -40,6 +40,9 @@ export default class DisplayCenters extends React.Component {
                 <h3><span>Location: </span> {center.location}</h3>
               </div>
               <div className="col-lg-9">
+                <h3><span>capacity: </span> {center.capacity}</h3>
+              </div>
+              <div className="col-lg-9">
                 <h3><span>facilities: </span> {center.facilities}</h3>
               </div>
               <div className="col-lg-9">
@@ -65,6 +68,9 @@ export default class DisplayCenters extends React.Component {
               <h2 className="media-heading">{center.centerName}</h2>
               <div className="col-lg-9">
                 <h3><span>Location: </span> {center.location}</h3>
+              </div>
+              <div className="col-lg-9">
+                <h3><span>capacity: </span> {center.capacity}</h3>
               </div>
               <div className="col-lg-9">
                 <h3><span>facilities: </span> {center.facilities}</h3>
