@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import { Redirect, Link } from 'react-router-dom';
 
 import { getEvents, eventSelected } from '../actions/eventActions';
@@ -10,11 +11,13 @@ import Footer from './footer.jsx';
 import FlashMessageList from './flash/flashMessagesList';
 import DeleteModal from './deleteModal';
 import { centerSelected } from '../actions/centerActions';
+import Modal from './flash/modal';
 
 @connect((store) => {
   return {
     auth: store.auth,
     events: store.event.userEvents,
+    event: store.event,
   };
 })
 
@@ -31,10 +34,21 @@ export default class EventPage extends React.Component {
     this.getCenter(parent.id);
   }
 
+  getId(e) {
+    this.props.dispatch(eventSelected(e.target.id));
+  }
+
   getCenter(id) {
-    
     this.props.dispatch(centerSelected(id));
-    console.log(id)
+  }
+
+  componentDidUpdate() {
+    if (this.props.event.status === 200) {
+      $(document).ready( function(){
+        $('#deleteModal').modal('hide');
+        $('#event').modal('show');
+      });
+    }
   }
 
   showHiddenDiv(e) {
@@ -59,7 +73,16 @@ export default class EventPage extends React.Component {
     if (!this.props.auth.isAuth) {
       <Redirect to="/" />
     }
-
+    if (isEmpty(this.props.event)) {
+      const content = (
+        <div className="form-inner">
+          <div className="media largeIcon">
+            <img src="images/image2.jpg" className="img" />
+          </div>
+        </div>
+      );
+    }
+    const message = this.props.event.message;
     let eventId, editEventId, eventBody, form;
     const { pathname } = this.props.location;
     const content = _.map(this.props.events, (event) => {
@@ -94,7 +117,7 @@ export default class EventPage extends React.Component {
                     </div>
                   </div>
                   <i id={eventId} data-toggle-id={editEventId} className="fa fa-pencil main-color edit" onClick={this.showHiddenDiv}></i>
-                  <span onClick={this.onClick.bind(this)} className="trash" data-toggle="modal" data-target="#deleteModal"><i id={event.id} className="fa fa-trash trash"></i></span>
+                  <span onClick={this.getId.bind(this)} className="trash" data-toggle="modal" data-target="#deleteModal"><i id={event.id} className="fa fa-trash trash"></i></span>
                 </div>
               </div>
             </div>
@@ -121,6 +144,7 @@ export default class EventPage extends React.Component {
             <div className="row">
               {content}
               <DeleteModal path={pathname}/>
+              <Modal message={message}/>
             </div>
           </div>
           <Footer />

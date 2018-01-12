@@ -66,3 +66,19 @@ export function getCenterSelected(id) {
     });
   };
 }
+
+export function deleteCenter(id) {
+  return (dispatch) => {
+    dispatch({ type: 'DELETE_CENTER' });
+    axios.delete(`api/v1/centers/${id}`).then(() => {
+      dispatch({ type: 'DELETE_CENTER_SUCCESS' });
+      axios.get('api/v1/centers').then((response) => {
+        dispatch({ type: 'GET_CENTERS_SUCCESS', payload: response.data });
+      }).catch((err) => {
+        dispatch({ type: 'GET_CENTERS_FAILS', payload: err.response.data });
+      });
+    }).catch((err) => {
+      dispatch({ type: 'DELETE_CENTER_FAILS', payload: err.response.data });
+    });
+  };
+}

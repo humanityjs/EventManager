@@ -172,11 +172,39 @@ export default (state = initialState, action) => {
       };
     }
     case 'ADD_EVENT_SUCCESS': {
+      const { message } = action.payload.data;
+      const { status } = action.payload;
       return {
         ...state,
         loading: false,
-        loaded: true, 
+        loaded: true,
+        message,
+        status, 
       }
+    }
+    case 'DELETE_EVENT': {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+    case 'DELETE_EVENT_FAILS': {
+      const { message } = action.payload;
+      return {
+        ...state,
+        error: message,
+      };
+    }
+    case 'DELETE_EVENT_SUCCESS': {
+      const { message } = action.payload.data;
+      const { status } = action.payload;
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        message,
+        status,
+      };
     }
     default:
       return state;

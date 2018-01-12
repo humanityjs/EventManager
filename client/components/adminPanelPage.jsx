@@ -20,13 +20,14 @@ export default class AdminPanelPage extends React.Component {
     } else if (!this.props.user.user.isAdmin) {
       return (<Redirect to="/dashboard" />);
     }
+    const { pathname } = this.props.location;
     
     return (
         <div id="center-page">
           <Navbar />
           <div className="container">
             <Search />
-            <Centers />
+            <Centers path={pathname}/>
           </div>
           <Footer />
         </div>

@@ -188,7 +188,7 @@ class CenterController {
   static deleteCenter(req, res) {
     const centerId = req.params.id;
 
-    return Events.findById(centerId).then((center) => {
+    return Centers.findById(centerId).then((center) => {
       if (center) {
         return center.destroy().then(() => res.status(200).send({
           message: 'Center Deleted',

@@ -5,7 +5,7 @@ export function createEvent(data) {
   return (dispatch) => {
     dispatch({ type: 'ADD_EVENT' });
     axios.post('api/v1/events',data).then((response) => {
-      dispatch({ type: 'ADD_EVENT_SUCCESS', payload: response.data });
+      dispatch({ type: 'ADD_EVENT_SUCCESS', payload: response });
     }).catch((err) => {
       dispatch({ type: 'ADD_EVENT_FAILS', payload: err.response.data });
     });
@@ -97,8 +97,8 @@ export function deleteCenterEvent(id, centerId) {
 export function deleteEvent(id) {
   return (dispatch) => {
     dispatch({ type: 'DELETE_EVENT' });
-    axios.delete(`api/v1/events/${id}`).then(() => {
-      dispatch({ type: 'DELETE_EVENT_SUCCESS'});
+    axios.delete(`api/v1/events/${id}`).then((res) => {
+      dispatch({ type: 'DELETE_EVENT_SUCCESS', payload: res });
       axios.get('api/v1/userEvents').then((response) => {
         dispatch({ type: 'GET_EVENTS_SUCCESS', payload: response.data });
       }).catch((err) => {

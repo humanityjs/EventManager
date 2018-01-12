@@ -66,7 +66,7 @@ export default class AddEventForm extends React.Component {
         centerId: e.target.value
       });
       this.props.dispatch(getCenterSelected(e.target.value));
-      this.props.dispatch(getCenterEvents(e.target.value));
+  
     }
 
   }
@@ -83,6 +83,7 @@ export default class AddEventForm extends React.Component {
       if (!isValid) {
         this.setState({ errors });
       }
+      
       return isValid;
     }
   }
@@ -93,9 +94,9 @@ export default class AddEventForm extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
+    
     let id = document.getElementById('bookedDate');
     this.state.bookedDate = id.value;
-    
     if (this.props.path === '/modify-event') {
       const { event } = this.props.event;
       if (isEmpty(this.state.bookedDate)) {
@@ -159,7 +160,8 @@ export default class AddEventForm extends React.Component {
               {showCenters}
             </select>
           </div>
-     
+
+          <span className="help-block">{errors.bookedDate}</span>
           <div class="form-group">
             <div class="input-group">
               <span class="input-group-addon">
@@ -169,6 +171,7 @@ export default class AddEventForm extends React.Component {
             </div>
           </div>
 
+          <span className="help-block">{errors.eventTitle}</span>
           <div class="form-group">   
             <div class="input-group">
               <span class="input-group-addon">
@@ -177,9 +180,10 @@ export default class AddEventForm extends React.Component {
               <input type="text" id="eventTitle" onChange={this.onChange} class="form-control" value={this.state.eventTitle} placeholder={titleHolder}/>
             </div>
           </div>
+          <span className="help-block">{errors.description}</span>
           <p className="subtitle">describe your event in few words</p>
           <div className="form-group">
-            <textarea className="form-control" id="description" error={errors.title}
+            <textarea className="form-control" id="description"
           onChange={this.onChange} placeholder={descriptionHolder}></textarea>
           </div> 
           <input id="add-event" type="submit" value={buttonValue} className="btn btn-primary"/>
