@@ -177,12 +177,13 @@ class EventController {
               message: 'The date you chose is not available, choose another day or center',
             });
           }
+          
           Events.update({
             eventTitle: eventTitle || Events.eventTitle,
             bookedDate: bookedDate || Events.bookedDate,
             description: description || Events.description,
             centerId: centerId || Events.centerId,
-            isApproved: isApproved || events.isApproved,
+            isApproved: isApproved || Events.isApproved,
           }, {
             where: {
               id,

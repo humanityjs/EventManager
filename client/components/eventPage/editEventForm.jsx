@@ -44,7 +44,6 @@ export default class EventForm extends React.Component {
       centerId: this.props.center,
       isApproved: this.props.isApproved,
     };
-    console.log(this.state)
     if (!isEmpty(this.state.description) || !isEmpty(this.state.eventTitle)) {
         if (this.isValid()) {
           this.props.dispatch(modifyEvent(this.props.id, this.state));

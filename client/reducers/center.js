@@ -19,10 +19,10 @@ export default (state = initialState, action) => {
       };
     }
     case 'GET_CENTERS_FAILS': {
-      const { error, message } = action.payload;
+      const { message } = action.payload;
       return {
-        error,
-        message,
+        ...state,
+        error: message,
       };
     }
     case 'GET_CENTERS_SUCCESS': {
@@ -41,10 +41,10 @@ export default (state = initialState, action) => {
       }
     }
     case 'ADD_CENTER_FAILS': {
-      const { error, message } = action.payload;
+      const { message } = action.payload;
       return {
-        error,
-        message,
+        ...state,
+        error: message,
       };
     }
     case 'ADD_CENTER_SUCCESS': {
@@ -69,7 +69,8 @@ export default (state = initialState, action) => {
     case 'GET_CENTER_FAILS': {
       const { message } = action.payload;
       return {
-        message,
+        ...state,
+        error: message,
       };
     }
     case 'GET_CENTER_SUCCESS': {
@@ -88,10 +89,10 @@ export default (state = initialState, action) => {
       };
     }
     case 'MODIFY_CENTER_FAILS': {
-      const { error, message } = action.payload;
+      const { message } = action.payload;
       return {
-        error,
-        message,
+        ...state,
+        error: message,
       };
     }
     case 'MODIFY_CENTER_SUCCESS': {

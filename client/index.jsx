@@ -13,6 +13,7 @@ import AboutPage from './components/aboutPage.jsx';
 import AdminPanelPage from './components/adminPanelPage.jsx';
 import AddCenterPage from './components/addCenterPage';
 import AddEvent from './components/addEventPage';
+import ModifyEvent from './components/modifyEventPage';
 import ViewCenter from './components/viewCenterPage';
 import UserPanel from './components/userPanelPage.jsx';
 import setAuthToken from './utils/setAuthorizationToken';
@@ -38,6 +39,7 @@ ReactDOM.render(
         <Route exact path="/admin-centers" component={AdminPanelPage} />
         <Route exact path="/dashboard" component={UserPanel} />
         <Route exact path="/add-event" component={AddEvent} />
+        <Route exact path="/modify-event" component={ModifyEvent} />
         <Route exact path="/view-center-event" component={ViewCenter} />
       </Switch>
     </Router>

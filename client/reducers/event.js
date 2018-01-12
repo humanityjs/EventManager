@@ -21,10 +21,10 @@ export default (state = initialState, action) => {
       };
     }
     case 'GET_EVENTS_FAILS': {
-      const { error, message } = action.payload;
+      const { message } = action.payload;
       return {
-        error,
-        message,
+        ...state,
+        error: message,
       };
     }
     case 'GET_EVENTS_SUCCESS': {
@@ -43,8 +43,10 @@ export default (state = initialState, action) => {
       };
     }
     case 'GET_CENTER_EVENTS_FAILS': {
+      const { message } = action.payload;
       return {
-        error: action.payload,
+        ...state,
+        error: message,
       };
     }
     case 'GET_CENTER_EVENTS_SUCCESS': {
@@ -77,10 +79,10 @@ export default (state = initialState, action) => {
       };
     }
     case 'GET_EVENT_FAILS': {
-      const { error, message } = action.payload;
+      const { message } = action.payload;
       return {
-        getEventError: error,
-        message,
+        ...state,
+        error: message,
       };
     }
     case 'GET_EVENT_SUCCESS': {
@@ -99,17 +101,21 @@ export default (state = initialState, action) => {
       };
     }
     case 'MODIFY_EVENT_FAILS': {
-      const { error, message } = action.payload;
+      const { message } = action.payload;
       return {
-        getEventError: error,
-        message,
+        ...state,
+        error: message,
       };
     }
     case 'MODIFY_EVENT_SUCCESS': {
+      const { message } = action.payload.data;
+      const { status } = action.payload;
       return {
         ...state,
         loading: false,
         loaded: true,
+        message,
+        status,
       };
     }
     case 'MODIFY_CENTER_EVENT': {
@@ -119,10 +125,10 @@ export default (state = initialState, action) => {
       };
     }
     case 'MODIFY_CENTER_EVENT_FAILS': {
-      const { error, message } = action.payload;
+      const { message } = action.payload;
       return {
-        getEventError: error,
-        message,
+        ...state,
+        error: message,
       };
     }
     case 'MODIFY_CENTER_EVENT_SUCCESS': {
@@ -139,10 +145,10 @@ export default (state = initialState, action) => {
       };
     }
     case 'DELETE_CENTER_EVENT_FAILS': {
-      const { error, message } = action.payload;
+      const { message } = action.payload;
       return {
-        getEventError: error,
-        message,
+        ...state,
+        error: message,
       };
     }
     case 'DELETE_CENTER_EVENT_SUCCESS': {
@@ -159,9 +165,10 @@ export default (state = initialState, action) => {
       }
     }
     case 'ADD_EVENT_FAILS': {
+      const { message } = action.payload;
       return {
-        error: action.payload,
-
+        ...state,
+        error: message,
       };
     }
     case 'ADD_EVENT_SUCCESS': {

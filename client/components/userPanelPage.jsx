@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import { Redirect, Link } from 'react-router-dom';
 
-import { getEvents, getEventSelected } from '../actions/eventActions';
+import { getEvents, eventSelected } from '../actions/eventActions';
 import EventForm from '../components/eventPage/editEventForm';
 import Navbar from './navbar.jsx';
 import Footer from './footer.jsx';
 import FlashMessageList from './flash/flashMessagesList';
 import DeleteModal from './deleteModal';
+import { centerSelected } from '../actions/centerActions';
 
 @connect((store) => {
   return {
@@ -24,7 +25,16 @@ export default class EventPage extends React.Component {
   }
 
   onClick(e) {
-    this.props.dispatch(getEventSelected(e.target.id));
+    let child = document.getElementById(e.target.id);
+    let parent = child.parentNode;
+    this.props.dispatch(eventSelected(e.target.id));
+    this.getCenter(parent.id);
+  }
+
+  getCenter(id) {
+    
+    this.props.dispatch(centerSelected(id));
+    console.log(id)
   }
 
   showHiddenDiv(e) {
@@ -62,14 +72,14 @@ export default class EventPage extends React.Component {
             
             <div class="form-outer text-center">
               <div class="form-inner">
-                <div id="event-head">
+                <div id={event.centerId}>
                   <img className="img" src="images/image2.jpg"/>
                   <h2>
                     <span className="media-heading" data-toggle-id={eventBody} onClick={this.showHiddenDiv}>
                       {event.eventTitle} 
                     </span>
                   </h2>
-                  <Link to="/modify-event"><i className="fa fa-list-alt main-color"></i>edit</Link>
+                  <Link to="/modify-event" id={event.centerId}><span onClick={this.onClick.bind(this)} id={event.id}>edit</span></Link>
                 </div>
                 <div id={eventBody} hidden>
                   <div className="media-body">

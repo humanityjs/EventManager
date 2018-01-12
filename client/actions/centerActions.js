@@ -29,7 +29,7 @@ export function addCenter(data) {
     axios.post('api/v1/centers',data).then((response) => {
       dispatch({ type: 'ADD_CENTER_SUCCESS', payload: response.data });
     }).catch((err) => {
-      dispatch({ type: 'ADD_CENTER_FAILS', payload: err.response.data.message });
+      dispatch({ type: 'ADD_CENTER_FAILS', payload: err.response.data });
     });
   };
 }
@@ -45,7 +45,7 @@ export function modifyCenter(data, centerId) {
         dispatch({ type: 'GET_CENTER_FAILS', payload: err });
       });
     }).catch((err) => {
-      dispatch({ type: 'MODIFY_CENTER_FAILS', payload: err.response.data.message });
+      dispatch({ type: 'MODIFY_CENTER_FAILS', payload: err.response.data });
     });
   };
 }

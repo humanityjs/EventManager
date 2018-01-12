@@ -101,7 +101,7 @@
   }
 
   h3, span {
-    font-size: 1rem,
+    font-size: .8rem,
   }
   .media-heading {
     font-size: 1.3rem;
@@ -118,11 +118,23 @@
   .col-lg-2 {
     padding-top: 20px;
   }
-  h3 {
+  h2 {
     font-weight: 700;
     font-size: 3rem;
     font-style: normal;
     color: #c0c0c0;
+  }
+  .media-heading {
+    font-size: 1.3rem;
+    color: #000;
+  }
+  form input {
+    text-align: left;
+    text-transform: lowercase;
+  }
+  .btn {
+    text-align: center;
+    text-transform: capitalize;
   }
 }
 

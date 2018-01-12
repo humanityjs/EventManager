@@ -18,14 +18,11 @@ export function modifyEventValidation(data) {
   }
 
   // validations for bookedDate
-  // if (!/^[a-zA-Z0-9, ]+$/.test(facilities)) {
-  //   errors.facilities = 'Facilities can not include symbols except comma which you should use to separate the faciities';
-  // }
-  // if (!validator.isEmpty(facilities)) {
-  //   if (!validator.isLength(facilities, { min: 5, max: 1000 })) {
-  //     errors.facilities = 'facilities must be greater than 5 but less than 1000 words';
-  //   }
-  // }
+  if (!validator.isEmpty(bookedDate)) {
+    if (!validator.toDate(bookedDate)) {
+      errors.bookedDate = bookedDate;
+    }
+  }
 
   // validations for description
   if (!validator.isEmpty(description)) {
@@ -53,13 +50,12 @@ export function addEventValidation(data) {
   }
   // validations for eventTitle
 
-  if (!/^[a-zA-Z0-9 ]+$/.test(eventTitle)) {
-    errors.eventTitle = 'Event Name can only contain numbers and letters';
-  }
-
   if (!validator.isEmpty(eventTitle)) {
     if (!validator.isLength(eventTitle, { min: 5, max: 20 })) {
       errors.eventTitle = 'The event Name must be more than 5 characters but less than 20';
+    }
+    if (!/^[a-zA-Z0-9 ]+$/.test(eventTitle)) {
+      errors.eventTitle = 'Event Name can only contain numbers and letters';
     }
   } else {
     errors.eventTitle = 'event Name cannot be blank';
@@ -71,17 +67,16 @@ export function addEventValidation(data) {
       errors.bookedDate = bookedDate;
     }
   } else {
-    errors.facilities = 'event should have at least one facility';
+    errors.bookedDate = 'please select a date for your event';
   }
 
   // validations for description
-  if (!/^[a-zA-Z0-9,. ]+$/.test(description)) {
-    errors.description = 'description can not include symbols except comma and full stop';
-  }
-
   if (!validator.isEmpty(description)) {
     if (!validator.isLength(description, { min: 5, max: 1000 })) {
       errors.description = 'description must be greater than 5 but less than 1000 words';
+    }
+    if (!/^[a-zA-Z0-9,. ]+$/.test(description)) {
+      errors.description = 'description can not include symbols except comma and full stop';
     }
   } else {
     errors.description = 'Event should have a description';
@@ -90,7 +85,7 @@ export function addEventValidation(data) {
   // validations for centerId
   if (!validator.isEmpty(centerId)) {
     if (!validator.isInt(centerId)) {
-      errors.centerId = 'centerId must be a number';
+      errors.centerId = 'center must be a number';
     }
   } else {
     errors.centerId = 'Please select a Center';
