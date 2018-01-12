@@ -86,7 +86,7 @@
            	  <div id="err-date" class="err-date"></div>
               <div class="form-group">
               	<p class="subtitle">choose date</p>
-           		<input id="date-select" type="date" value="">
+           		<input id="datepicker" type="date" value="">
            	  </div>
               <div class="form-group">
            	    <input id="event-title" type="text" placeholder="Give Your Event A Title">
@@ -110,5 +110,13 @@
         </div>
       </div>
     </footer>
+    <script>
+      $(".datepicker").datetimepicker({
+        format: 'YYYY/MM/DD hh:ii',
+        startDate: '2018/01/01 00:00',
+        datesDisabled:['2018/01/02'],
+        autoclose:true,
+      });
+    </script>
 </body>
 </html>

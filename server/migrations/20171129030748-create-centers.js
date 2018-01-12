@@ -18,6 +18,10 @@ module.exports = {
     facilities: {
       type: Sequelize.ARRAY(Sequelize.STRING),
     },
+    capacity: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
     description: {
       type: Sequelize.STRING,
       allowNull: false,

@@ -1,35 +1,29 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect, browserHistory } from 'react-router-dom';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { getCenters, centerSelected } from '../actions/centerActions';
 
+// const store = reduxStore();
+@connect((store) => {
+  return {
+    centers: store.center.centers,
+    auth: store.auth,
+  };
+})
 
-
-class DisplayCenters extends React.Component {
-  constructor() {
-    super();
-    this.state = {}
-    this.onClick = this.onClick.bind(this);
-  }
+export default class DisplayCenters extends React.Component {
 
   componentWillMount() {
-    this.props.getCenters().then((response) => {
-      this.setState({
-        centers: response.data.centers,
-      });
-    });
+    this.props.dispatch(getCenters());
   }
 
-  
-
   onClick(e) {
-    // centerSelected: this.props.centerSelected(e.target.id);
-    // // this.context.router.history.push('/view-center-event');
+    this.props.dispatch(centerSelected(e.target.id));
   }
 
   render() {
-    const adminCenterPage = _.map(this.state.centers, (center) => {
+    const adminCenterPage = _.map(this.props.centers, (center) => {
       return (
         <div className="row" key={center.id}>
           <div className="col-lg-3">
@@ -40,10 +34,13 @@ class DisplayCenters extends React.Component {
           <div className="col-lg-9">
             <div className="media-body">
               <h2 className="media-heading">
-                <span onClick={this.onClick} id={center.id}>{center.centerName} </span>
+                <Link to="/view-center-event"><span onClick={this.onClick.bind(this)} id={center.id}>{center.centerName}</span></Link>
               </h2>
               <div className="col-lg-9">
                 <h3><span>Location: </span> {center.location}</h3>
+              </div>
+              <div className="col-lg-9">
+                <h3><span>capacity: </span> {center.capacity}</h3>
               </div>
               <div className="col-lg-9">
                 <h3><span>facilities: </span> {center.facilities}</h3>
@@ -54,11 +51,14 @@ class DisplayCenters extends React.Component {
             </div>
             <span className="trash"><i className="fa fa-user-circle"></i></span>
           </div>
+          <Link to="/view-center-event"><i onClick={this.onClick.bind(this)} id={center.id} className="fa fa-pencil main-color edit"></i></Link>
+          <span onClick={this.onClick.bind(this)} className="trash" data-toggle="modal" data-target="#deleteModal"><i id={event.id} className="fa fa-trash trash"></i></span>
+                
         </div>
       )
     }); 
     
-    const guestCenterPage = _.map(this.state.centers, (center) => {
+    const guestCenterPage = _.map(this.props.centers, (center) => {
       return (
         <div className="row" id={center.id} key={center.id}>
           <div className="col-lg-3">
@@ -71,6 +71,9 @@ class DisplayCenters extends React.Component {
               <h2 className="media-heading">{center.centerName}</h2>
               <div className="col-lg-9">
                 <h3><span>Location: </span> {center.location}</h3>
+              </div>
+              <div className="col-lg-9">
+                <h3><span>capacity: </span> {center.capacity}</h3>
               </div>
               <div className="col-lg-9">
                 <h3><span>facilities: </span> {center.facilities}</h3>
@@ -92,25 +95,4 @@ class DisplayCenters extends React.Component {
   }
 }
 
-DisplayCenters.propTypes = {
-  getCenters: PropTypes.func.isRequired,
-  centerSelected: PropTypes.func.isRequired,
- }
 
-function mapStateToProps(state) {
-  return {
-    auth: state.auth,
-  }
-}
-
-// function mapDispatchToProps(dispatch) {
-//   return dispatch({
-//     centerSelected
-//   });
-// }
-
-DisplayCenters.contextTypes = {
-  router: PropTypes.object.isRequired
-};
-
-export default connect(mapStateToProps)(DisplayCenters);

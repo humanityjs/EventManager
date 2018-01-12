@@ -1,22 +1,36 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import Centers from './getCenters';
+import Search from './centerSearch';
+import Navbar from './navbar';
+import Footer from './footer';
 
-import Navbar from './navbar.jsx';
-// import Content from './getAllCenters.jsx';
-// import DeleteModal from './deleteModal.jsx';
-import Footer from './footer.jsx';
+@connect((store) => {
+  return {
+    user: store.auth,
+  };
+})
 
 export default class AdminPanelPage extends React.Component {
+  
   render() {
-
+     //Check if user is logged in and is also an Admin
+     if (!this.props.user.isAuth) {
+      return (<Redirect to="/" />);
+    } else if (!this.props.user.user.isAdmin) {
+      return (<Redirect to="/dashboard" />);
+    }
+    
     return (
-      <div>
-        <div className="page-wrapper">
+        <div id="center-page">
           <Navbar />
-          {/* <Content path={pathname}/>
-          <DeleteModal /> */}
+          <div className="container">
+            <Search />
+            <Centers />
+          </div>
           <Footer />
         </div>
-      </div>
     );
   }
 }
+

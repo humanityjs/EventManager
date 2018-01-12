@@ -1,22 +1,108 @@
 
-import { GET_ALL_CENTERS, VIEW_CENTER_SELECTED } from '../actions/types';
+//import { GET_CENTERS, GET_CENTERS_BEGIN, GET_CENTERS_ERROR } from '../actions/types';
 
-export default (state = {}, action) => {
+const initialState = {
+  loading: false,
+  loaded: false,
+  centers: [],
+  error: '',
+  centerSelected: '',
+  center: {},
+};
+export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_ALL_CENTERS:
-      return [
+
+    case 'GET_CENTERS': {
+      return {
         ...state,
-        {
-          centers: action.centers,
-        },
-      ];
-    case VIEW_CENTER_SELECTED:
-      return [
+        loading: true,
+      };
+    }
+    case 'GET_CENTERS_FAILS': {
+      const { message } = action.payload;
+      return {
         ...state,
-        {
-          center: action.center,
-        },
-      ];
-    default: return state;
+        error: message,
+      };
+    }
+    case 'GET_CENTERS_SUCCESS': {
+      const { centers } = action.payload;
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        centers,
+      };
+    }
+    case 'ADD_CENTER': {
+      return {
+        ...state,
+        loading: true,
+      }
+    }
+    case 'ADD_CENTER_FAILS': {
+      const { message } = action.payload;
+      return {
+        ...state,
+        error: message,
+      };
+    }
+    case 'ADD_CENTER_SUCCESS': {
+      return {
+        ...state,
+        loading: false,
+        loaded: true, 
+      }
+    }
+    case 'CENTER_SELECTED': {
+      return {
+        ...state,
+        centerSelected: action.payload,
+      }
+    }
+    case 'GET_CENTER': {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+    case 'GET_CENTER_FAILS': {
+      const { message } = action.payload;
+      return {
+        ...state,
+        error: message,
+      };
+    }
+    case 'GET_CENTER_SUCCESS': {
+      const { center } = action.payload;
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        center,
+      };
+    }
+    case 'MODIFY_CENTER': {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+    case 'MODIFY_CENTER_FAILS': {
+      const { message } = action.payload;
+      return {
+        ...state,
+        error: message,
+      };
+    }
+    case 'MODIFY_CENTER_SUCCESS': {
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+      };
+    }
+    default:
+      return state;
   }
 };

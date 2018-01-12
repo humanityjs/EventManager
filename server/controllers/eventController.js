@@ -35,6 +35,32 @@ class EventController {
     }));
   }
 
+  static getCenterEvents(req, res) {
+    // get events
+    Events.all({
+      where: {
+        centerId: req.params.id,
+      },
+      order: [
+        ['bookedDate', 'DESC'],
+      ],
+    }).then((events) => {
+      // if events are available
+      if (events) {
+        // show events
+        return res.status(200).send({
+          events,
+        });
+      }
+      // No Event found
+      return res.status(404).send({
+        message: 'There are no booked Events',
+      });
+    }).catch(error => res.status(500).send({
+      message: error.message,
+    }));
+  }
+
   static getUserEvents(req, res) {
     const { id } = req.decoded;
     // get events
@@ -121,12 +147,11 @@ class EventController {
 
   static updateEvent(req, res) {
     const {
-      eventTitle, description, bookedDate, centerId,
+      eventTitle, description, bookedDate, centerId, isApproved,
     } = req.body;
     const { id } = req.params;
-
-    // find th requested event
-    return Events.findById(id).then((event) => {
+    // find the requested event
+    Events.findById(id).then((event) => {
       if (event) {
         Events.findOne({
           where: {
@@ -140,8 +165,10 @@ class EventController {
                 bookedDate: bookedDate || events.bookedDate,
                 description: description || events.description,
                 centerId: centerId || events.centerId,
+                isApproved: isApproved || events.isApproved,
               }).then(() => res.status(200).send({
                 message: 'Changes Applied',
+                event,
               })).catch(error => res.status(500).send({
                 message: error.message,
               }));
@@ -150,38 +177,42 @@ class EventController {
               message: 'The date you chose is not available, choose another day or center',
             });
           }
+          
           Events.update({
             eventTitle: eventTitle || Events.eventTitle,
             bookedDate: bookedDate || Events.bookedDate,
             description: description || Events.description,
             centerId: centerId || Events.centerId,
+            isApproved: isApproved || Events.isApproved,
           }, {
             where: {
               id,
             },
           }).then(() => res.status(200).send({
             message: 'Changes Applied',
+            event,
           })).catch(error => res.status(500).send({
             message: error.message,
           }));
         }).catch(error => res.status(500).send({
           message: error.message,
         }));
+      } else {
+        return res.status(404).send({
+          message: 'Event does not exist',
+        });
       }
-      return res.status(404).send({
-        message: 'Event does not exist',
-      });
     });
   }
 
 
   static deleteEvent(req, res) {
     const eventId = req.params.id;
-    const { id } = req.decoded;
+    const { id, isAdmin } = req.decoded;
 
     return Events.findById(eventId).then((event) => {
       if (event) {
-        if (event.userId === id) {
+        if (event.userId === id || isAdmin) {
           return event.destroy().then(() => res.status(200).send({
             message: 'Event Deleted',
           }));

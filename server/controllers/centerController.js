@@ -13,8 +13,46 @@ class CenterController {
    * @memberof CenterController
    */
   static getAllCenters(req, res) {
+    let location = req.query.location;
+    let facilities = req.query.facilities;
+    let query;
+    
+    if (location || facilities !== undefined) {
+      let facility = facilities.toLowerCase();
+      if (location === '' && facilities !== undefined) {
+
+        query = Centers.findAll({
+          where: {
+            facilities: {
+              $contains: [facility],
+            },
+          }
+        })
+      } else if (location !== undefined && facilities === '') {
+        query = Centers.findAll({
+          where: {
+            location: {
+              $ilike: '%' + location + '%',
+            }
+          },
+        })
+      } else if (location && facilities !== undefined) {
+        query = Centers.findAll({
+          where: {
+            location: {
+              $ilike: '%' + location + '%',
+            },
+            facilities: {
+              $contains: [facility],
+            },
+          },
+        })
+      } 
+    } else if ((location && facilities) === undefined || (location && facilities) === '') {
+      query = Centers.all()
+    } 
     // get centers
-    Centers.all().then((centers) => {
+    query.then((centers) => {
       // if centers are available
       if (centers) {
         // show centers
@@ -75,7 +113,7 @@ class CenterController {
    */
   static postCenter(req, res) {
     const {
-      centerName, location, description, facilities,
+      centerName, location, description, facilities, capacity,
     } = req.body;
     const { id } = req.decoded;
 
@@ -92,6 +130,7 @@ class CenterController {
           location,
           description,
           facilities: facilityArray,
+          capacity,
           userId: id,
         }).then(() => res.status(201).send({
           message: 'Successfully created a center',
@@ -113,17 +152,21 @@ class CenterController {
      */
   static updateCenter(req, res) {
     const {
-      centerName, location, description, facilities,
+      centerName, location, description, facilities, capacity,
     } = req.body;
     const { id } = req.params;
 
     return Centers.findById(id).then((center) => {
-      const facilityArray = facilities.split(',');
+      let facilityArray;
+      if (facilities !== '') {
+        facilityArray = facilities.split(',');
+      }
       return center.update({
         centerName: centerName || center.centerName,
         location: location || center.location,
         description: description || center.description,
         facilities: facilityArray || center.facilities,
+        capacity: capacity || center.capacity,
       }).then(() => res.status(201).send({
         message: 'Successfully updated center',
       })).catch(error => res.status(500).send({

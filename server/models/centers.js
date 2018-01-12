@@ -14,6 +14,10 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    capacity: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     facilities: {
       type: DataTypes.ARRAY(DataTypes.STRING),
     },

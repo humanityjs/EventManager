@@ -84,15 +84,15 @@ export default class UserController {
      * @memberof UserController
      */
   static signin(req, res) {
-    const { email, password } = req.body;
+    const { login_email, login_password } = req.body;
 
     Users.findOne({
       where: {
-        email,
+        email: login_email,
       },
     }).then((user) => {
-      if (user && user.email.toLowerCase === email.toLowerCase) {
-        const check = bcrypt.compareSync(password, user.password);
+      if (user && user.email.toLowerCase === login_email.toLowerCase) {
+        const check = bcrypt.compareSync(login_password, user.password);
         if (check) {
           const payload = { email: user.email, isAdmin: user.isAdmin, id: user.id };
           const token = jwt.sign(payload, process.env.SECRET, {

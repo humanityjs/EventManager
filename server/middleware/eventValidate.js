@@ -27,13 +27,12 @@ export default class Validation {
     }
     // validations for eventTitle
 
-    if (!/^[a-zA-Z0-9 ]+$/.test(eventTitle)) {
-      errors.eventTitle = 'Event Name can only contain numbers and letters';
-    }
-
     if (!validator.isEmpty(eventTitle)) {
       if (!validator.isLength(eventTitle, { min: 5, max: 20 })) {
         errors.eventTitle = 'The event Name must be more than 5 characters but less than 20';
+      }
+      if (!/^[a-zA-Z0-9 ]+$/.test(eventTitle)) {
+        errors.eventTitle = 'Event Name can only contain numbers and letters';
       }
     } else {
       errors.eventTitle = 'event Name cannot be blank';
@@ -49,13 +48,12 @@ export default class Validation {
     }
 
     // validations for description
-    if (!/^[a-zA-Z0-9,. ]+$/.test(description)) {
-      errors.description = 'description can not include symbols except comma and full stop';
-    }
-    console.log(description);
     if (!validator.isEmpty(description)) {
       if (!validator.isLength(description, { min: 5, max: 1000 })) {
         errors.description = 'description must be greater than 5 but less than 1000 words';
+      }
+      if (!/^[a-zA-Z0-9,. ]+$/.test(description)) {
+        errors.description = 'description can not include symbols except comma and full stop';
       }
     } else {
       errors.description = 'Event should have a description';
@@ -83,17 +81,16 @@ export default class Validation {
     } = req.body;
     const errors = {};
     // validations for eventTitle
-    if (!/^[a-zA-Z0-9 ]+$/.test(eventTitle)) {
-      errors.eventTitle = 'Event Name can only contain numbers and letters';
-    }
-
     if (!validator.isEmpty(eventTitle)) {
       if (!validator.isLength(eventTitle, { min: 5, max: 20 })) {
         errors.eventTitle = 'The event Name must be more than 5 characters but less than 20';
       }
+      if (!/^[a-zA-Z0-9 ]+$/.test(eventTitle)) {
+        errors.eventTitle = 'Event Name can only contain numbers and letters';
+      }
     }
 
-    // // validations for bookedDate
+    // validations for bookedDate
     // if (!/^[a-zA-Z0-9, ]+$/.test(facilities)) {
     //   errors.facilities = 'Facilities can not include symbols except comma which you should use to separate the faciities';
     // }
@@ -104,21 +101,21 @@ export default class Validation {
     // }
 
     // validations for description
-    if (!/^[a-zA-Z0-9,. ]+$/.test(description)) {
-      errors.description = 'description can not include symbols except comma and full stop';
-    }
     if (!validator.isEmpty(description)) {
       if (!validator.isLength(description, { min: 5, max: 1000 })) {
         errors.description = 'description must be greater than 5 but less than 1000 words';
       }
+      if (!/^[a-zA-Z0-9,. ]+$/.test(description)) {
+        errors.description = 'description can not include symbols except comma and full stop';
+      }
     }
 
     // validations for centerId
-    if (!validator.isEmpty(centerId)) {
-      if (!validator.isInt(centerId)) {
-        errors.centerId = 'centerId must be a number';
-      }
-    }
+    // if (!validator.isEmpty(centerId)) {
+    //   // if (!validator.isInt(centerId)) {
+    //     errors.centerId = 'centerId must be a number';
+    //   // }
+    // }
 
     if (Object.keys(errors).length !== 0) {
       return res.status(400).send(errors);

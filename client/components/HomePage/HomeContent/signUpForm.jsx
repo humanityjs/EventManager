@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import validation from '../../../shared/userValidation';
 import TextField from '../../../common/textField'
 
-// import { browserHistory } from 'react-router-dom';
 
 
 
@@ -18,7 +17,7 @@ class SignUpForm extends React.Component {
       retypePass: '',
       errors: {},
       isLoading: '',
-      serverError: ''
+      serverError: '',
     }
     this.onChange =this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -40,6 +39,7 @@ class SignUpForm extends React.Component {
     return isValid;
   }
 
+
   onSubmit(e) {
     e.preventDefault();
     if (this.isValid()) {
@@ -59,7 +59,7 @@ class SignUpForm extends React.Component {
     }
   
   }
-
+ 
  
 
   render() {
@@ -72,49 +72,44 @@ class SignUpForm extends React.Component {
       serverError
     } = this.state;
     return (
-      <div className="col-lg-4">
-        <div className="form-outer text-center"> 
-          <div className="form-inner">
-            <span className="logo text-uppercase"><strong className="text-primary">sign up</strong></span>
-            <h2>Please fill in your details to get started</h2>
-            <form id="signup-form" onSubmit={this.onSubmit}>
-              <TextField
-                id='fullname'
-                value={this.state.fullname}
-                placeholder='fullname'
-                type='text'
-                error={errors.fullname} 
-                onChange={this.onChange} />
-                
-                <TextField
-                id='email'
-                value={this.state.email}
-                placeholder='email address'
-                type='email'
-                error={errors.email, serverError}
-                onChange={this.onChange} />
-                
-                <TextField
-                id='password'
-                value={this.state.password}
-                placeholder='password'
-                type='password'
-                error={errors.password} 
-                onChange={this.onChange} />
-                
-                <TextField
-                id='retypePass'
-                value={this.state.retypePass}
-                placeholder='Type password again'
-                type='password'
-                error={errors.retypePass} 
-                onChange={this.onChange} />
+      <div>
+        <div className="logo text-uppercase"><strong className="text-primary">Sign Up</strong></div>          
+        <h2>Please fill in your details to get started</h2>
+        <form id="signup-form" onSubmit={this.onSubmit}>
+          <TextField
+            id='fullname'
+            value={this.state.fullname}
+            placeholder='fullname'
+            type='text'
+            error={errors.fullname} 
+            onChange={this.onChange} />
+            
+            <TextField
+            id='email'
+            value={this.state.email}
+            placeholder='email address'
+            type='email'
+            error={errors.email, serverError}
+            onChange={this.onChange} />
+            
+            <TextField
+            id='password'
+            value={this.state.password}
+            placeholder='password'
+            type='password'
+            error={errors.password} 
+            onChange={this.onChange} />
+            
+            <TextField
+            id='retypePass'
+            value={this.state.retypePass}
+            placeholder='Re-type password'
+            type='password'
+            error={errors.retypePass} 
+            onChange={this.onChange} />
 
-              <input id="signup" type="submit" value="Create Account" className="btn btn-primary" disabled={this.state.isLoading}/>
-            </form>
-            <a href="#" className="goto">already signed up? login to your account</a>
-          </div>
-        </div>
+          <input id="signup" type="submit" value="Create Account" className="btn btn-primary"/>
+        </form>     
       </div>
     )
   }
