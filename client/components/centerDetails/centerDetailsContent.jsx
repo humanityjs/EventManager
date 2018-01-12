@@ -10,7 +10,7 @@ import DeleteModal from '../deleteModal';
   return {
     center: store.center,
     event: store.event.event,
-    events: store.event.events,
+    events: store.event.centerEvents,
     message: store.event.message,
   };
 })

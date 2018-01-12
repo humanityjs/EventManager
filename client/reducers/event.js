@@ -33,7 +33,7 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
         loaded: true,
-        events,
+        userEvents: events,
       };
     }
     case 'GET_CENTER_EVENTS': {
@@ -60,7 +60,7 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
         loaded: true,
-        events,
+        centerEvents: events,
         message,
         disableDates,
 

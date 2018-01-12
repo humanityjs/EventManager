@@ -14,7 +14,7 @@ import { centerSelected } from '../actions/centerActions';
 @connect((store) => {
   return {
     auth: store.auth,
-    events: store.event.events,
+    events: store.event.userEvents,
   };
 })
 
@@ -43,8 +43,10 @@ export default class EventPage extends React.Component {
     if(!id) return;
     const div = document.getElementById(id);
     div.hidden = !div.hidden;
+
     if (id) {
       const div2 = document.getElementById(id2);
+      console.log(id, div, id2, div2)
       if (!div.hidden) {
         return div2.style.display="none";
       }
@@ -67,35 +69,35 @@ export default class EventPage extends React.Component {
       form = `form${event.id}`;
       let dateBooked = `date${event.id}`;
       return (
-        <div>
+        <div className="center">
           <div id={eventId} key={eventId}>
-            
-            <div class="form-outer text-center">
-              <div class="form-inner">
-                <div id={event.centerId}>
-                  <img className="img" src="images/image2.jpg"/>
-                  <h2>
-                    <span className="media-heading" data-toggle-id={eventBody} onClick={this.showHiddenDiv}>
-                      {event.eventTitle} 
-                    </span>
-                  </h2>
-                  <Link to="/modify-event" id={event.centerId}><span onClick={this.onClick.bind(this)} id={event.id}>edit</span></Link>
-                </div>
-                <div id={eventBody} hidden>
-                  <div className="media-body">
-                      <h3><span>Date: </span> {event.bookedDate}</h3>
-                      <h3><span>Center: </span> {event.Center.centerName}</h3>
-                      <h3><span>Capacity: </span> {event.Center.capacity}</h3>
-                      <h3><span>Location: </span> {event.Center.location}</h3>
-                      <h3><span>facilities: </span> {event.Center.facilities}</h3>
-                      <h3><span>Event description: </span> {event.description}</h3>
+            <div className="col-lg-4">
+              <div class="form-outer text-center">
+                <div class="form-inner">
+                  <div id={event.centerId}>
+                    <img className="img" src="images/image2.jpg"/>
+                    <h2>
+                      <span className="media-heading" data-toggle-id={eventBody} onClick={this.showHiddenDiv}>
+                        {event.eventTitle} 
+                      </span>
+                    </h2>
+                    <Link to="/modify-event" id={event.centerId}><span onClick={this.onClick.bind(this)} id={event.id}>edit</span></Link>
                   </div>
+                  <div id={eventBody} hidden>
+                    <div className="media-body">
+                        <h3><span>Date: </span> {event.bookedDate}</h3>
+                        <h3><span>Center: </span> {event.Center.centerName}</h3>
+                        <h3><span>Capacity: </span> {event.Center.capacity}</h3>
+                        <h3><span>Location: </span> {event.Center.location}</h3>
+                        <h3><span>facilities: </span> {event.Center.facilities}</h3>
+                        <h3><span>Event description: </span> {event.description}</h3>
+                    </div>
+                  </div>
+                  <i id={eventId} data-toggle-id={editEventId} className="fa fa-pencil main-color edit" onClick={this.showHiddenDiv}></i>
+                  <span onClick={this.onClick.bind(this)} className="trash" data-toggle="modal" data-target="#deleteModal"><i id={event.id} className="fa fa-trash trash"></i></span>
                 </div>
-                <i id={eventId} data-toggle-id={editEventId} className="fa fa-pencil main-color edit" onClick={this.showHiddenDiv}></i>
-                <span onClick={this.onClick.bind(this)} className="trash" data-toggle="modal" data-target="#deleteModal"><i id={event.id} className="fa fa-trash trash"></i></span>
               </div>
             </div>
-           
           </div>
           <div id={editEventId} key={form} hidden>
             <div class="form-outer text-center">

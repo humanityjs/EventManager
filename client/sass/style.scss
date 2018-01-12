@@ -87,7 +87,7 @@
     max-width: 100%;
   }
   .col-lg-4 {
-    max-width: 100%;
+    padding: 0;
   }
 }
 #event-page {
@@ -100,11 +100,18 @@
     margin-top: 0;
   }
 
-  h3, span {
-    font-size: .8rem,
+  h3 {
+    font-size: 1rem,
+  }
+  span {
+    font-size: .9em,
+  }
+  .center {
+    margin: 0 auto;
   }
   .media-heading {
     font-size: 1.3rem;
+    cursor: pointer;
   }
 }
 
@@ -185,5 +192,6 @@
   .nav-link-text {
     font-style: normal;
     color: #fff;
+    font-size: 1.2em;
   }
 }
