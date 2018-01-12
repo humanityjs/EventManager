@@ -146,7 +146,7 @@ nav.navbar .brand-text strong {
 	margin: 0;
 }
 
-.navbar-dark .navbar-nav .nav-link:focus, .navbar-dark .navbar-nav .nav-link-text {
+.navbar-dark .navbar-nav .nav-link:focus, .navbar-dark .navbar-nav .nav-link-text:hover {
     color: #F97E04;
     font-style: normal;
 }

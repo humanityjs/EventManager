@@ -3,6 +3,7 @@ import { Link, Redirect, browserHistory } from 'react-router-dom';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import { getCenters, centerSelected } from '../actions/centerActions';
+import DeleteModal from './deleteModal';
 
 // const store = reduxStore();
 @connect((store) => {
@@ -19,10 +20,12 @@ export default class DisplayCenters extends React.Component {
   }
 
   onClick(e) {
+    console.log(e.target.id, e.target)
     this.props.dispatch(centerSelected(e.target.id));
   }
 
   render() {
+    const path = this.props.path;
     const adminCenterPage = _.map(this.props.centers, (center) => {
       return (
         <div className="row" key={center.id}>
@@ -51,9 +54,7 @@ export default class DisplayCenters extends React.Component {
             </div>
             <span className="trash"><i className="fa fa-user-circle"></i></span>
           </div>
-          <Link to="/view-center-event"><i onClick={this.onClick.bind(this)} id={center.id} className="fa fa-pencil main-color edit"></i></Link>
-          <span onClick={this.onClick.bind(this)} className="trash" data-toggle="modal" data-target="#deleteModal"><i id={event.id} className="fa fa-trash trash"></i></span>
-                
+          <span onClick={this.onClick.bind(this)} className="trash" data-toggle="modal" data-target="#deleteModal"><i id={center.id} className="fa fa-trash trash"></i></span>      
         </div>
       )
     }); 
@@ -90,6 +91,7 @@ export default class DisplayCenters extends React.Component {
     return (
       <div className="container">
         { this.props.auth.user.isAdmin ? adminCenterPage : guestCenterPage }
+        <DeleteModal path={path}/>
       </div>
     );
   }

@@ -102,6 +102,26 @@ export default (state = initialState, action) => {
         loaded: true,
       };
     }
+    case 'DELETE_CENTER': {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+    case 'DELETE_CENTER_FAILS': {
+      const { message } = action.payload;
+      return {
+        ...state,
+        error: message,
+      };
+    }
+    case 'DELETE_CENTER_SUCCESS': {
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+      };
+    }
     default:
       return state;
   }

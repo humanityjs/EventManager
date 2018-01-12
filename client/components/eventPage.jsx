@@ -20,20 +20,29 @@ export default class Event extends React.Component {
   
   
   componentWillMount() {
-    const id = this.props.event.eventSelected;
-    this.props.dispatch(getEventSelected(id));
     this.props.dispatch(getCenters());
     this.props.dispatch(getCenterSelected(this.props.center.centerSelected));
+    if (this.props.path == '/modify-event') {
+      const id = this.props.event.eventSelected;
+      this.props.dispatch(getEventSelected(id));
+    }
   }
 
   componentDidUpdate() {
-
     if (this.props.event.status === 200) {
-      console.log(this.props.event)
+      $(document).ready( function(){
+        $('#event').modal('show');
+      });
+      setTimeout(
+        $(document).ready( function(){
+          $('#event').modal('hide');
+        }),
+      3000);
     }
   }
 
   render() {
+    const message = this.props.event.message;
     const { path } = this.props;
     const center = this.props.center.center;
     let centerInfo;
@@ -85,7 +94,7 @@ export default class Event extends React.Component {
                 </div>
               </div>
               <span data-toggle="modal" data-target="#event">Modal</span>
-              <Modal />
+              <Modal message={message}/>
             </div>
           </div>
         </div>

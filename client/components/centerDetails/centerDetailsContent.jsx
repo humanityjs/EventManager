@@ -171,6 +171,9 @@ export default class CenterDetailsContent extends React.Component {
                     <div id="disapprove" hidden>
                   
                       <p> Disapproved event will be deleted. Are you sure you want to disapprove event?</p>
+                      <div class="form-group">
+                        <textarea class="form-control" id="comment" onChange={this.onChange} placeholder="Give reasons for disapproving this event" value={this.state.comment}></textarea>
+                      </div>
                       <i id="disapprove" className="fa fa-trash red" onClick={this.onAttend}></i>
                       <i data-toggle-id="disapprove" className="fa fa-close" onClick={this.showHiddenDiv}></i>
                       <br/>

@@ -23,7 +23,8 @@ router.route('/centers')
 
 router.route('/centers/:id')
   .get(authToken, centerController.getSingleCenter)
-  .put(authAdminToken, centerValidate.updateCenter, centerController.updateCenter);
+  .put(authAdminToken, centerValidate.updateCenter, centerController.updateCenter)
+  .delete(authAdminToken, centerController.deleteCenter);
 
 router.route('/events')
   .post(authToken, eventValidate.postEvent, eventController.postEvent)
