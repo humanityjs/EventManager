@@ -44,13 +44,16 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        status: '',
       };
     }
     case 'GET_CENTER_FAILS': {
-      const { message } = action.payload;
+      const { message } = action.payload.data;
+      const { status } = action.payload;
       return {
         ...state,
         error: message,
+        status,
       };
     }
     case 'GET_CENTER_SUCCESS': {

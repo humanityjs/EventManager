@@ -23,13 +23,14 @@ export default (state = initialState, action) => {
         message: '',
         status: '',
         error: '',
+        userEvents: '',
       };
     }
     case 'GET_EVENTS_FAILS': {
-      const { message } = action.payload;
+      const { status } = action.payload;
       return {
         ...state,
-        error: message,
+        status,
       };
     }
     case 'GET_EVENTS_SUCCESS': {
@@ -90,7 +91,7 @@ export default (state = initialState, action) => {
       const { message } = action.payload;
       return {
         ...state,
-        error: message,
+        message,
       };
     }
     case 'GET_EVENT_SUCCESS': {

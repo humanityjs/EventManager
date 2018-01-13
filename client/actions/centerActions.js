@@ -40,7 +40,7 @@ export function getCenters(data) {
     query.then((response) => {
       dispatch({ type: 'GET_CENTERS_SUCCESS', payload: response.data });
     }).catch((err) => {
-      dispatch({ type: 'GET_CENTERS_FAILS', payload: err });
+      dispatch({ type: 'GET_CENTERS_FAILS', payload: err.response });
     });
   };
 }

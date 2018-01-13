@@ -65,7 +65,7 @@ class NavBar extends React.Component {
             <Link to="/user/profile" className="nav-link"><span className="nav-link-text"><i className="fa fa-user-circle"></i> profile</span></Link>
           </li>
           <li className="nav-item">
-            <Link to="/" onClick={this.logout.bind(this)} className="nav-link"><span className="nav-link-text">logout <i className="fa fa-sign-out"></i></span></Link>
+            <Link to="/" onClick={this.logout.bind(this)} className="nav-link"><span className="nav-link-text"><i className="fa fa-sign-out"> logout</i></span></Link>
           </li>
         </ul>
       );
@@ -103,7 +103,7 @@ class NavBar extends React.Component {
             <Link to="/user/profile" className="nav-link"><span className="nav-link-text"><i className="fa fa-user-circle"></i> profile</span></Link>
           </li>
           <li className="nav-item">
-            <Link to="/" onClick={this.logout.bind(this)} className="nav-link"><span className="nav-link-text">logout <i className="fa fa-sign-out"></i></span></Link>
+            <Link to="/" onClick={this.logout.bind(this)} className="nav-link"><span className="nav-link-text"><i className="fa fa-sign-out"> logout</i></span></Link>
           </li>
         </ul>
       );

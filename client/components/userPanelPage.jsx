@@ -12,6 +12,7 @@ import FlashMessageList from './flash/flashMessagesList';
 import DeleteModal from './deleteModal';
 import { centerSelected } from '../actions/centerActions';
 import Modal from './flash/modal';
+import { logout } from '../actions/signInActions';
 
 @connect((store) => {
   return {
@@ -21,12 +22,12 @@ import Modal from './flash/modal';
   };
 })
 
-export default class EventPage extends React.Component {
+export default class Dashboard extends React.Component {
 
   componentWillMount() {
     this.props.dispatch(getEvents()); 
   }
-
+  
   onClick(e) {
     let child = document.getElementById(e.target.id);
     let parent = child.parentNode;
@@ -69,12 +70,20 @@ export default class EventPage extends React.Component {
       return div2.style.display="";
     } 
   }
+
+  logout(e) {
+    this.props.dispatch(logout());
+  }
   
    
   render() {
     if (!this.props.auth.isAuth) {
-      <Redirect to="/" />
+      return <Redirect to="/" />;
     }
+    if (this.props.event.status === 401) {
+      this.logout();
+    }
+    
     if (isEmpty(this.props.event)) {
       const content = (
         <div className="form-inner">
