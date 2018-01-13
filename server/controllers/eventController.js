@@ -1,3 +1,5 @@
+const nodemailer = require('nodemailer');
+const email = require('mailer');
 import models from '../models';
 
 const { Events, Centers } = models;
@@ -131,7 +133,7 @@ class EventController {
         centerId,
         userId: id,
       }).then((bookedEvent) => {
-        res.status(200).send({
+        res.status(201).send({
           message: 'Event booked Successfully',
           bookedEvent,
         });
@@ -166,7 +168,7 @@ class EventController {
                 description: description || events.description,
                 centerId: centerId || events.centerId,
                 isApproved: isApproved || events.isApproved,
-              }).then(() => res.status(200).send({
+              }).then(() => res.status(201).send({
                 message: 'Changes Applied',
                 event,
               })).catch(error => res.status(500).send({
@@ -177,7 +179,7 @@ class EventController {
               message: 'The date you chose is not available, choose another day or center',
             });
           }
-          
+
           Events.update({
             eventTitle: eventTitle || Events.eventTitle,
             bookedDate: bookedDate || Events.bookedDate,
@@ -213,6 +215,49 @@ class EventController {
     return Events.findById(eventId).then((event) => {
       if (event) {
         if (event.userId === id || isAdmin) {
+
+        //   email.send({
+        //     host: "smtp.gmail.com",
+        //     port : "465",
+        //     ssl : true,
+        //     domain : "ecenter.com",
+        //     to : "olalaw001@gmail.com",
+        //     from : "admin@ecenter.com",
+        //     subject : "Mailer library Mail node.js",
+        //     text: "Mail by Mailer library",
+        //     html: "<span> Hello World Mail sent from  mailer library" ,
+        //     authentication : "login",        // auth login is supported; anything else $
+        //     username : 'daminomics@gmail.com',
+        //     password : 'profyem001'
+        //     },
+        //     function(err, result){
+        //       if(err){ console.log(err); res.send("error occured"); }
+        //       else { console.log('hurray! Email Sent'); 
+        //       res.send("Email Sent")}
+        // });
+
+          // const transporter = nodemailer.createTransport({
+          //   service: 'yahoo',
+          //   auth: {
+          //     user: 'donwillydmagnificient001@yahoo.com', 
+          //     pass: 'profyem001', // Your password
+          //   },
+          // });
+          // const mailOptions = {
+          //   from: 'donwillydmagnificient001@yahoo.com', // sender address
+          //   to: 'olalaw001@gmail.com', // This can also contain an array of emails
+          //   subject: 'Thanks for registering with <your site name>',
+          //   // text: 'Hello world ?', // plaintext body
+          //   html: '<b>Some HTML here....</b>', // html body
+          // };
+
+          // // send mail with defined transport object
+          // transporter.sendMail(mailOptions, (error, info) => {
+          //   if (error) {
+          //     return console.log(error, info);
+          //   }
+          //   console.log(`Message sent: ${info.response}`);
+          // });
           return event.destroy().then(() => res.status(200).send({
             message: 'Event Deleted',
           }));

@@ -34,26 +34,6 @@ export default (state = initialState, action) => {
         centers,
       };
     }
-    case 'ADD_CENTER': {
-      return {
-        ...state,
-        loading: true,
-      }
-    }
-    case 'ADD_CENTER_FAILS': {
-      const { message } = action.payload;
-      return {
-        ...state,
-        error: message,
-      };
-    }
-    case 'ADD_CENTER_SUCCESS': {
-      return {
-        ...state,
-        loading: false,
-        loaded: true, 
-      }
-    }
     case 'CENTER_SELECTED': {
       return {
         ...state,
@@ -86,6 +66,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        message: '',
       };
     }
     case 'MODIFY_CENTER_FAILS': {
@@ -96,10 +77,14 @@ export default (state = initialState, action) => {
       };
     }
     case 'MODIFY_CENTER_SUCCESS': {
+      const { message } = action.payload.data;
+      const { status } = action.payload;
       return {
         ...state,
         loading: false,
         loaded: true,
+        message,
+        status,
       };
     }
     case 'DELETE_CENTER': {
@@ -121,6 +106,55 @@ export default (state = initialState, action) => {
         loading: false,
         loaded: true,
       };
+    }
+    case 'ADD_CENTER': {
+      return {
+        ...state,
+        loading: true,
+      }
+    }
+    case 'ADD_CENTER_FAILS': {
+      const { message } = action.payload;
+      return {
+        ...state,
+        error: message,
+      };
+    }
+    case 'ADD_CENTER_SUCCESS': {
+      const { status } = action.payload;
+      const { center } = action.payload.data;
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        status,
+        center,
+      }
+    }
+    case 'ADD_IMAGE': {
+      return {
+        ...state,
+        loading: true,
+        status: '',
+      }
+    }
+    case 'ADD_IMAGE_FAILS': {
+      const { message } = action.payload;
+      return {
+        ...state,
+        error: message,
+      };
+    }
+    case 'ADD_IMAGE_SUCCESS': {
+      const { status } = action.payload;
+      const { center } = action.payload.data;
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        status,
+        center,
+      }
     }
     default:
       return state;

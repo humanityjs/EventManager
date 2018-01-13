@@ -13,12 +13,12 @@ class CenterController {
    * @memberof CenterController
    */
   static getAllCenters(req, res) {
-    let location = req.query.location;
-    let facilities = req.query.facilities;
+    const location = req.query.location;
+    const facilities = req.query.facilities;
     let query;
-    
+
     if (location || facilities !== undefined) {
-      let facility = facilities.toLowerCase();
+      const facility = facilities.toLowerCase();
       if (location === '' && facilities !== undefined) {
 
         query = Centers.findAll({
@@ -26,31 +26,31 @@ class CenterController {
             facilities: {
               $contains: [facility],
             },
-          }
-        })
+          },
+        });
       } else if (location !== undefined && facilities === '') {
         query = Centers.findAll({
           where: {
             location: {
-              $ilike: '%' + location + '%',
-            }
+              $ilike: `%${  location  }%`,
+            },
           },
-        })
+        });
       } else if (location && facilities !== undefined) {
         query = Centers.findAll({
           where: {
             location: {
-              $ilike: '%' + location + '%',
+              $ilike: `%${  location  }%`,
             },
             facilities: {
               $contains: [facility],
             },
           },
-        })
-      } 
+        });
+      }
     } else if ((location && facilities) === undefined || (location && facilities) === '') {
-      query = Centers.all()
-    } 
+      query = Centers.all();
+    }
     // get centers
     query.then((centers) => {
       // if centers are available
@@ -132,7 +132,8 @@ class CenterController {
           facilities: facilityArray,
           capacity,
           userId: id,
-        }).then(() => res.status(201).send({
+        }).then(center => res.status(201).send({
+          center,
           message: 'Successfully created a center',
         })).catch(error => res.status(500).send({
           message: error.message,
@@ -152,7 +153,7 @@ class CenterController {
      */
   static updateCenter(req, res) {
     const {
-      centerName, location, description, facilities, capacity,
+      centerName, location, description, facilities, capacity, image_url,
     } = req.body;
     const { id } = req.params;
 
@@ -167,6 +168,7 @@ class CenterController {
         description: description || center.description,
         facilities: facilityArray || center.facilities,
         capacity: capacity || center.capacity,
+        image_url: image_url || center.image_url,
       }).then(() => res.status(201).send({
         message: 'Successfully updated center',
       })).catch(error => res.status(500).send({

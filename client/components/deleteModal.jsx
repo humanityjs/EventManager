@@ -21,7 +21,7 @@ export default class DeleteModal extends React.Component {
       this.props.dispatch(deleteCenter(centerId));
     } else {
       const centerId = this.props.center.centerSelected;
-      this.props.dispatch(deleteCenterEvent(this.props.event.id, centerId));
+      this.props.dispatch(deleteCenterEvent(this.props.event.event.id, centerId));
     }
   }
   onCancel() {
@@ -32,7 +32,7 @@ export default class DeleteModal extends React.Component {
   render() {
 
     return (
-      <div className="modal fade" id="deleteModal">
+      <div className="modal hide" id="deleteModal">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="form-inner text-center">
@@ -40,7 +40,7 @@ export default class DeleteModal extends React.Component {
                 <p className="text-primary">{this.props.event.event.eventTitle}</p>
                 <span className="help-block">Are sure you want to delete event?</span>
                 <br/>
-                <i className="fa fa-trash red"  id="disapprove" onClick={this.onAttend.bind(this)}></i>
+                <i className="fa fa-trash trash"  id="disapprove" onClick={this.onAttend.bind(this)}></i>
                 <i className="fa fa-save green" onClick={this.onCancel.bind(this)}></i>
                 <br/>
                 <span><br/>Yes</span>

@@ -52,6 +52,7 @@
     "istanbul-coveralls": "^1.0.3",
     "jsonwebtoken": "^8.1.0",
     "lodash": "^4.17.4",
+    "mailer": "^0.6.7",
     "mocha": "^4.0.1",
     "morgan": "^1.9.0",
     "nodemailer": "^4.4.1",

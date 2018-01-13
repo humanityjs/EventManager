@@ -48,6 +48,9 @@ export default class EventPage extends React.Component {
         $('#deleteModal').modal('hide');
         $('#event').modal('show');
       });
+      setTimeout(() => {
+        $('#event').modal('hide');
+      },3000)
     }
   }
 
@@ -60,7 +63,6 @@ export default class EventPage extends React.Component {
 
     if (id) {
       const div2 = document.getElementById(id2);
-      console.log(id, div, id2, div2)
       if (!div.hidden) {
         return div2.style.display="none";
       }

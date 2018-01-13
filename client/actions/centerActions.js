@@ -1,6 +1,28 @@
 import axios from 'axios';
 // import { GET_CENTERS_BEGIN, GET_CENTERS_ERROR, GET_CENTERS } from './types';
-
+export function uploadImage(id, data) {
+  return (dispatch) => {
+    dispatch({ type: 'ADD_IMAGE' });
+    axios({
+      url: 'https://api.cloudinary.com/v1_1/kalel/upload',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      data,
+    }).then((response) => {
+      dispatch({ type: 'ADD_IMAGE_SUCCESS', payload: response.data });
+      dispatch({ type: 'MODIFY_CENTER' });
+      axios.put(`api/v1/centers/${id}`, response.data).then(() => {
+        dispatch({ type: 'MODIFY_CENTER_SUCCESS'});
+      }).catch((err) => {
+        dispatch({ type: 'MODIFY_CENTER_FAILS', payload: err.response.data });
+      });
+    }).catch((err) => {
+      dispatch({ type: 'ADD_IMAGE_FAILS', payload: err.response });
+    });
+  };
+}
 export function getCenters(data) {
   return (dispatch) => {
     dispatch({ type: 'GET_CENTERS' });
@@ -27,7 +49,7 @@ export function addCenter(data) {
   return (dispatch) => {
     dispatch({ type: 'ADD_CENTER' });
     axios.post('api/v1/centers',data).then((response) => {
-      dispatch({ type: 'ADD_CENTER_SUCCESS', payload: response.data });
+      dispatch({ type: 'ADD_CENTER_SUCCESS', payload: response });
     }).catch((err) => {
       dispatch({ type: 'ADD_CENTER_FAILS', payload: err.response.data });
     });
@@ -37,8 +59,8 @@ export function addCenter(data) {
 export function modifyCenter(data, centerId) {
   return (dispatch) => {
     dispatch({ type: 'MODIFY_CENTER' });
-    axios.put(`api/v1/centers/${centerId}`,data).then(() => {
-      dispatch({ type: 'MODIFY_CENTER_SUCCESS'});
+    axios.put(`api/v1/centers/${centerId}`,data).then((res) => {
+      dispatch({ type: 'MODIFY_CENTER_SUCCESS', payload: res });
       axios.get(`api/v1/centers/${centerId}`).then((response) => {
         dispatch({ type: 'GET_CENTER_SUCCESS', payload: response.data });
       }).catch((err) => {

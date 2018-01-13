@@ -110,7 +110,6 @@
     margin: 0 auto;
   }
   .media-heading {
-    font-size: 1.3rem;
     cursor: pointer;
   }
 }
@@ -132,7 +131,6 @@
     color: #c0c0c0;
   }
   .media-heading {
-    font-size: 1.3rem;
     color: #000;
   }
   form input {
@@ -148,12 +146,10 @@
 #center-event {
   .fa {
     cursor: pointer;
+    float: none;
   }
   .form-outer {
     padding-bottom: 20px;
-  }
-  .form-inner {
-    padding-bottom: 10px;
   }
 }
 
@@ -163,12 +159,6 @@
     font-size: 32px;
     padding-top: 25px;
     cursor: pointer;
-  }
-  .green {
-    color: rgb(35, 235, 62)
-  }
-  .red {
-    color: rgb(245, 6, 6)
   }
   .help-block {
     font-size: 1.3em;

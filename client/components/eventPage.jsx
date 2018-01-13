@@ -29,19 +29,15 @@ export default class Event extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.props.event.status === 200) {
-      $(document).ready( function(){
-        $('#event').modal('show');
-      });
-      setTimeout(
-        $(document).ready( function(){
-          $('#event').modal('hide');
-        }),
-      3000);
+    if (this.props.event.status === 201) {
+      alert(this.props.event.message);
     }
   }
 
   render() {
+    if (this.props.event.status === 201) {
+      return (<Redirect to="/dashboard" />);
+    }
     const message = this.props.event.message;
     const { path } = this.props;
     const center = this.props.center.center;
