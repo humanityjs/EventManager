@@ -6,17 +6,14 @@ export function uploadImage(id, data) {
     axios({
       url: 'https://api.cloudinary.com/v1_1/kalel/upload',
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
       data,
     }).then((response) => {
-      dispatch({ type: 'ADD_IMAGE_SUCCESS', payload: response.data });
+      dispatch({ type: 'ADD_IMAGE_SUCCESS', payload: response });
       dispatch({ type: 'MODIFY_CENTER' });
       axios.put(`api/v1/centers/${id}`, response.data).then(() => {
         dispatch({ type: 'MODIFY_CENTER_SUCCESS'});
       }).catch((err) => {
-        dispatch({ type: 'MODIFY_CENTER_FAILS', payload: err.response.data });
+        dispatch({ type: 'MODIFY_CENTER_FAILS', payload: err });
       });
     }).catch((err) => {
       dispatch({ type: 'ADD_IMAGE_FAILS', payload: err.response });

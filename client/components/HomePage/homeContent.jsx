@@ -55,16 +55,14 @@ class HomeContent extends React.Component {
        
     }
     return (
-      <div className="container">
+      <div className="container" id="homepage">
         <div className="row">
-          <div id="homepage">
           <div className="col-lg-8">
             <Welcome />
           </div>        
           <div className="col-lg-4">
             {form}
           </div>
-        </div>
         </div>
       </div>
     );

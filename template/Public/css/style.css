@@ -310,7 +310,7 @@ form input {
  form input[type=date] {
   background: none;
   width: 100%;
-  text-transform: capitalize;
+  text-transform: lowercase;
 }
 .form-inner {
   padding: 20px;	

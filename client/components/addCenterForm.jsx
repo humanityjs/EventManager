@@ -92,9 +92,6 @@ export default class CenterForm extends React.Component {
   }
 
   render() {
-    // if (this.props.center.message === "Token is Invalid or Expired") {
-    //   return this.logout;
-    // }
     
     const { center } = this.props.center;
     const {
@@ -158,8 +155,8 @@ export default class CenterForm extends React.Component {
           error={errors.capacity} 
           onChange={this.onChange} />
 
-          <p class="subtitle">describe the center in few words</p>
           <span className="help-block">{errors.description}</span>
+          <p class="subtitle">describe the center in few words</p>
           <div class="form-group">
             <textarea class="form-control" id="description" onChange={this.onChange} placeholder={descHolder} value={this.state.description}></textarea>
           </div> 

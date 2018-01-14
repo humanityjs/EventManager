@@ -67,7 +67,7 @@ class SignInForm extends React.Component {
           <TextField
               id='login_email'
               value={this.state.login_email}
-              placeholder='email address'
+              placeholder='Email Address'
               type='email'
               error={errors.login_email}
               onChange={this.onChange} />
@@ -75,7 +75,7 @@ class SignInForm extends React.Component {
             <TextField
               id='login_password'
               value={this.state.login_password}
-              placeholder='password'
+              placeholder='Password'
               type='password'
               error={errors.login_password} 
               onChange={this.onChange} />

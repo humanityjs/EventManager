@@ -19,10 +19,6 @@ import UploadImage from './imageUpload';
 })
 
 export default class AddCenterPage extends React.Component {
-
-  // logout(e) {
-  //   this.props.logout();
-  // }
   
   render() {
      //Check if user is logged in and is also an Admin
@@ -34,10 +30,7 @@ export default class AddCenterPage extends React.Component {
     let content;
     const { center, status, message } = this.props.center;
     const { pathname } = this.props.location
-    // console.log(this.props.logout);
-    // if (this.props.center.addCenterError === 'Token is Invalid or Expired') {
-    //   {this.logout.bind(this)}
-    // }
+
     if (status === 201) {
       content = (
         <div>
