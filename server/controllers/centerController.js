@@ -13,46 +13,61 @@ class CenterController {
    * @memberof CenterController
    */
   static getAllCenters(req, res) {
-    const location = req.query.location;
-    const facilities = req.query.facilities;
-    let query;
-
-    if (location || facilities !== undefined) {
-      const facility = facilities.toLowerCase();
-      if (location === '' && facilities !== undefined) {
-
-        query = Centers.findAll({
-          where: {
-            facilities: {
-              $contains: [facility],
-            },
-          },
-        });
-      } else if (location !== undefined && facilities === '') {
-        query = Centers.findAll({
-          where: {
-            location: {
-              $ilike: `%${  location  }%`,
-            },
-          },
-        });
-      } else if (location && facilities !== undefined) {
-        query = Centers.findAll({
-          where: {
-            location: {
-              $ilike: `%${  location  }%`,
-            },
-            facilities: {
-              $contains: [facility],
-            },
-          },
-        });
+    const { location, facilities, capacity, capacityType, btwValue } = req.query;
+    let locationSearch;
+    let facilitySearch;
+    let capacitySearch;
+    if (location) {
+      locationSearch = {
+        $ilike: `%${location}%`,
       }
-    } else if ((location && facilities) === undefined || (location && facilities) === '') {
-      query = Centers.all();
+    } else {
+      locationSearch = {
+        $ne: null,
+      } 
     }
+    if (facilities) {
+      let facility = facilities.toLowerCase();
+      facilitySearch = {
+        $contains: [facility],
+      }
+    } else {
+      facilitySearch = {
+        $ne: null,
+      }
+    }
+    if (capacity) {
+      if (capacityType === 'greater') {
+        capacitySearch = {
+          $gt: capacity,
+        }
+      } else if (capacityType === 'lesser') {
+        capacitySearch = {
+          $lt: capacity,
+        }
+      } else if (capacityType === 'equal') {
+        capacitySearch = {
+          $eq: capacity,
+        }
+      } else if (capacityType === 'between') {
+        capacitySearch = {
+          $between: [capacity, btwValue],
+        }
+      }
+    } else {
+      capacitySearch = {
+        $ne: null,
+      }
+    }
+      
     // get centers
-    query.then((centers) => {
+    Centers.findAll({
+      where: {
+        location: locationSearch,
+        facilities: facilitySearch,
+        capacity: capacitySearch,
+      },
+    }).then((centers) => {
       // if centers are available
       if (centers) {
         // show centers

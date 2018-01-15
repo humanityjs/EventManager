@@ -16,13 +16,17 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        status: '',
+        error: '',
       };
     }
     case 'GET_CENTERS_FAILS': {
-      const { message } = action.payload;
+      const { message } = action.payload.data;
+      const { status } = action.payload;
       return {
         ...state,
         error: message,
+        status,
       };
     }
     case 'GET_CENTERS_SUCCESS': {
@@ -45,6 +49,7 @@ export default (state = initialState, action) => {
         ...state,
         loading: true,
         status: '',
+        error: '',
       };
     }
     case 'GET_CENTER_FAILS': {

@@ -29,8 +29,11 @@ export function getCenters(data) {
         params: {
           location: data.location,
           facilities: data.facilities,
+          capacity: data.capacity,
+          capacityType: data.capacityType,
+          btwValue: data.btwValue,
         }
-      })
+      });
     } else {
       query = axios.get('api/v1/centers')
     }

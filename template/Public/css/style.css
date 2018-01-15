@@ -300,15 +300,16 @@ form input, .inner-page form input {
   border-bottom: 1px solid #97a1aa;
   margin-top: 20px;
   font-size: 1.0em;
+
 }
 form input {
   color: #494c4f;
-  text-transform: sentence-case;
+  text-transform: lowercase
 }
 
  form input[type='text'], form input[type='password'], form input[type='email'],
  form input[type=date] {
-  background: none;
+  
   width: 100%;
   text-transform: lowercase;
 }

@@ -18,9 +18,9 @@ export default class CenterPage extends React.Component {
       <div id="center-page">
         <Navbar />
         <div className="container">
-            <Search />
-            <Centers />
-          </div>
+          <Search />
+          <Centers />
+        </div>
         <Footer />
       </div>
     );

@@ -142,7 +142,20 @@
     text-transform: capitalize;
   }
 }
-
+#center-search {
+  select {
+    border: 0;
+    background: 0;
+    padding: 0;
+    padding-left: 20px;
+  }
+  select:focus {
+    outline: none;
+  }
+  .input-group-addon {
+    padding: 0;
+  }
+}
 #center-event {
   .fa {
     cursor: pointer;
