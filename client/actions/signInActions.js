@@ -1,5 +1,6 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
+import shortid from 'shortid';
 import setAuthToken from '../utils/setAuthorizationToken';
 import { SET_CURRENT_USER } from './types';
 
@@ -26,4 +27,28 @@ export function userSignInRequest(user) {
     setAuthToken(token);
     dispatch(setCurrentUser(jwt.decode(token)));
   });
+}
+
+export function confirmEmail(data) {
+  return (dispatch) => {
+    dispatch({ type: 'VERIFY_EMAIL' });
+    axios.post('api/v1/passrecovery', data).then((response) => {
+      dispatch({ type: 'VERIFY_EMAIL_SUCCESS', payload: response });
+    }).catch((err) => {
+      dispatch({ type: 'VERIFY_EMAIL_FAIL', payload: err.response.data });
+    });
+  };
+}
+
+export function generateCode() {
+  return (dispatch) => {
+    const shortCode = shortid.generate();
+    dispatch({ type: 'GENERATE_CODE', payload: shortCode });
+  }
+}
+
+export function modifyPassword() {
+  return (dispatch) => {
+    dispatch({ type: 'MODIFY_PASSWORD' });
+  }
 }

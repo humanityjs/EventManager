@@ -203,3 +203,24 @@
     text-align: center;
   }
 }
+
+#recover-password {
+  .form-outer {
+    min-height: 60vh;
+    border-radius: 0;
+    border-bottom-color: #f97e04;
+    border-right: none;
+  }
+  .col-lg-4 {
+    margin: 0 auto;
+  }
+  form input[type='text'], form-input {
+    text-transform: none;
+    text-align: center;
+  }
+  form-input:focus, input:hover {
+    border-bottom: 2px solid red;
+    transition: 1s all;
+  }
+  
+}

@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import env from 'dotenv';
 import models from '../models';
+import { error } from 'util';
 
 const { Users } = models;
 
@@ -58,8 +59,8 @@ export default class UserController {
               return res.status(200).send({
                 message: 'You are now Signed Up',
                 data: {
-                  email: users.email, 
-                  isAdmin: users.isAdmin, 
+                  email: users.email,
+                  isAdmin: users.isAdmin,
                   id: users.id,
                   password,
                 },
@@ -117,6 +118,64 @@ export default class UserController {
     }).catch(error => res.status(500).send({
       status: 'Failed',
       message: error.message,
+    }));
+  }
+  /* /**
+ *
+ *
+ * @static
+ * @param {any} req
+ * @param {any} res
+ * @memberof UserController
+ */
+  static recoverPassword(req, res) {
+    const { email } = req.body;
+
+    Users.findOne({
+      where: {
+        email,
+      },
+    }).then((user) => {
+      if (user) {
+        return res.status(200).send({
+          message: 'User found!',
+        });
+      }
+      return res.status(404).send({
+        message: 'Email is incorrect or not registered',
+      });
+    }).catch(error => res.status(500).send({
+      message: error.message,
+    }));
+
+  }
+
+  static updateUser(req, res) {
+    const { email, password, fullname } = req.body;
+
+    Users.findOne({
+      where: {
+        email,
+      },
+    }).then((user) => {
+      if (user) {
+        const saltRounds = 10;
+        bcrypt.genSalt(saltRounds, (err, salt) => {
+          bcrypt.hash(password, salt, (err, hash) => user.update({
+            fullname: fullname || user.fullname,
+            password: hash || user.password,
+          }).then(() => res.status(200).send({
+            message: 'Changes Applied Successfully',
+          })).catch(err => res.status(500).send({
+            message: err.message,
+          })));
+        });
+      }
+      return res.status(400).send({
+        message: 'Email not found',
+      });
+    }).catch(err => res.status(500).send({
+      message: err.message,
     }));
   }
 }

@@ -17,6 +17,10 @@ router.route('/users')
 router.route('/users/login')
   .post(userValidate.signin, userController.signin);
 
+router.route('/passrecovery')
+  .post(userValidate.recoverPassword, userController.recoverPassword)
+  .put()
+
 router.route('/centers')
   .post(authAdminToken, centerValidate.postCenter, centerController.postCenter)
   .get(centerController.getAllCenters);

@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import TextField from '../../../common/textField';
-import validation from '../../../shared/userSignInValidation';
+import { validateSigninInput } from '../../../shared/userValidation';
 
 class SignInForm extends React.Component {
   constructor() {
@@ -22,7 +23,7 @@ class SignInForm extends React.Component {
   }
 
   isValid() {
-    const { errors, isValid } = validation(this.state);
+    const { errors, isValid } = validateSigninInput(this.state);
     if (!isValid) {
       this.setState({ errors });
     }
@@ -82,7 +83,7 @@ class SignInForm extends React.Component {
 
           <input id="login" type="submit" value="login" className="btn btn-primary" disabled={this.state.isLoading}/>
         </form>
-        <a href="#" className="goto">Forgot Password? Click Here</a><br/>
+        <Link to="/recover-password">Forgot Password? Click Here</Link>
       </div>
              
     );

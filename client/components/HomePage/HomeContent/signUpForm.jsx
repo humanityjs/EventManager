@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import validation from '../../../shared/userValidation';
+import { validateSignupInput } from '../../../shared/userValidation';
 import TextField from '../../../common/textField'
 
 
@@ -31,7 +31,7 @@ class SignUpForm extends React.Component {
   }
 
   isValid() {
-    const { errors, isValid } = validation(this.state);
+    const { errors, isValid } = validateSignupInput(this.state);
     if (!isValid) {
       this.setState({ errors });
     }
