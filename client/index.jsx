@@ -20,6 +20,7 @@ import setAuthToken from './utils/setAuthorizationToken';
 import PasswordRecovery from './components/passwordRecoveryPage';
 import { setCurrentUser } from './actions/signInActions';
 import style from './sass/style.scss';
+import Image from './components/imageUpload';
 
 
 if (localStorage.jwtToken) {
@@ -34,6 +35,7 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Switch>
         <Route exact path="/" component={HomePage} />
+        <Route exact path="/imageupload" component={Image} />
         <Route exact path="/view-centers" component={CentersPage} />
         <Route exact path="/add-center" component={AddCenterPage} />
         <Route exact path="/about" component={AboutPage} /> 

@@ -3,21 +3,21 @@ import axios from 'axios';
 export function uploadImage(id, data) {
   return (dispatch) => {
     dispatch({ type: 'ADD_IMAGE' });
-    axios({
-      url: 'https://api.cloudinary.com/v1_1/kalel/upload',
-      method: 'POST',
-      data,
-    }).then((response) => {
-      dispatch({ type: 'ADD_IMAGE_SUCCESS', payload: response });
-      dispatch({ type: 'MODIFY_CENTER' });
-      axios.put(`api/v1/centers/${id}`, response.data).then(() => {
-        dispatch({ type: 'MODIFY_CENTER_SUCCESS'});
+    axios.post('https://api.cloudinary.com/v1_1/kalel/image/upload', data)
+      .then((response) => {
+        dispatch({ type: 'ADD_IMAGE_SUCCESS', payload: response.data });
+        dispatch({ type: 'MODIFY_CENTER' });
+        const imageData = {
+          image_url: response.data.secure_url,
+        }
+        axios.put(`api/v1/centers/${id}`, imageData).then((res) => {
+          dispatch({ type: 'MODIFY_CENTER_SUCCESS', payload: res });
+        }).catch((err) => {
+          dispatch({ type: 'MODIFY_CENTER_FAILS', payload: err });
+        });
       }).catch((err) => {
-        dispatch({ type: 'MODIFY_CENTER_FAILS', payload: err });
+        dispatch({ type: 'ADD_IMAGE_FAILS', payload: err.response });
       });
-    }).catch((err) => {
-      dispatch({ type: 'ADD_IMAGE_FAILS', payload: err.response });
-    });
   };
 }
 export function getCenters(data) {
@@ -32,10 +32,10 @@ export function getCenters(data) {
           capacity: data.capacity,
           capacityType: data.capacityType,
           btwValue: data.btwValue,
-        }
+        },
       });
     } else {
-      query = axios.get('api/v1/centers')
+      query = axios.get('api/v1/centers');
     }
     query.then((response) => {
       dispatch({ type: 'GET_CENTERS_SUCCESS', payload: response.data });
@@ -48,7 +48,7 @@ export function getCenters(data) {
 export function addCenter(data) {
   return (dispatch) => {
     dispatch({ type: 'ADD_CENTER' });
-    axios.post('api/v1/centers',data).then((response) => {
+    axios.post('api/v1/centers', data).then((response) => {
       dispatch({ type: 'ADD_CENTER_SUCCESS', payload: response });
     }).catch((err) => {
       dispatch({ type: 'ADD_CENTER_FAILS', payload: err.response.data });
@@ -59,7 +59,7 @@ export function addCenter(data) {
 export function modifyCenter(data, centerId) {
   return (dispatch) => {
     dispatch({ type: 'MODIFY_CENTER' });
-    axios.put(`api/v1/centers/${centerId}`,data).then((res) => {
+    axios.put(`api/v1/centers/${centerId}`, data).then((res) => {
       dispatch({ type: 'MODIFY_CENTER_SUCCESS', payload: res });
       axios.get(`api/v1/centers/${centerId}`).then((response) => {
         dispatch({ type: 'GET_CENTER_SUCCESS', payload: response.data });
