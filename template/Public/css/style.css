@@ -18,7 +18,9 @@ a:focus, a:hover {
   font-size: 80%;
 }
 
-
+::placeholder {
+  opacity: 1;
+}
 a {
   display: inline-block;
   -webkit-transition: all 0.3s;
@@ -38,7 +40,7 @@ i {
 
 span {
   display: inline-block;
-  font-size: 1.2em;
+  font-size: 1em;
 }
 
 p {
@@ -276,6 +278,10 @@ min-height: 0;
 .media-body {
 	padding: 0 10px;
 }
+.media-heading {
+  font-size: 1.3rem;
+  cursor: pointer;
+}
 .home-inner-page form, .inner-page form {
   margin: 0 auto 10px;
   
@@ -294,20 +300,20 @@ form input, .inner-page form input {
   font-weight: 400;
   border: none;
   border-bottom: 1px solid #97a1aa;
-  text-align: center;
   margin-top: 20px;
   font-size: 1.0em;
+
 }
 form input {
   color: #494c4f;
-  text-transform: sentence-case;
+  text-transform: lowercase
 }
 
  form input[type='text'], form input[type='password'], form input[type='email'],
  form input[type=date] {
-  background: none;
+  
   width: 100%;
-  text-transform: capitalize;
+  text-transform: lowercase;
 }
 .form-inner {
   padding: 20px;	
@@ -402,6 +408,9 @@ form input[type='submit'] {
   float: left;
   color: #020c15;
 }
+.green {
+  color: rgb(35, 235, 62)
+}
 
 .img {
 max-width: 280px;
@@ -475,4 +484,8 @@ font-size: 4.0em;
   border-color: #767676;
   color: #F97E04;
   font-weight:400;
+}
+.basic {
+  background-color: #007bff;
+  border-color: #007bff;
 }

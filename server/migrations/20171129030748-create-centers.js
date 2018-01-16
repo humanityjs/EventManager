@@ -15,12 +15,16 @@ module.exports = {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    facilities: {
-      type: Sequelize.ARRAY(Sequelize.STRING),
-    },
     capacity: {
       type: Sequelize.STRING,
       allowNull: false,
+    },
+    facilities: {
+      type: Sequelize.ARRAY(Sequelize.STRING),
+    },
+    image_url: {
+      type: Sequelize.STRING,
+      allowNull: true,
     },
     description: {
       type: Sequelize.STRING,

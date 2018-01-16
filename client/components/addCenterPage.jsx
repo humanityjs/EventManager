@@ -9,6 +9,7 @@ import CenterForm from './addCenterForm';
 import TextField from '../common/textField';
 import Navbar from './navbar.jsx';
 import Footer from './footer.jsx';
+import UploadImage from './imageUpload';
 
 @connect((store) => {
   return {
@@ -18,10 +19,6 @@ import Footer from './footer.jsx';
 })
 
 export default class AddCenterPage extends React.Component {
-
-  // logout(e) {
-  //   this.props.logout();
-  // }
   
   render() {
      //Check if user is logged in and is also an Admin
@@ -30,12 +27,30 @@ export default class AddCenterPage extends React.Component {
     } else if (!this.props.user.user.isAdmin) {
       return (<Redirect to="/dashboard" />);
     }
-    
+    let content;
+    const { center, status, message } = this.props.center;
     const { pathname } = this.props.location
-    // console.log(this.props.logout);
-    // if (this.props.center.addCenterError === 'Token is Invalid or Expired') {
-    //   {this.logout.bind(this)}
-    // }
+
+    if (status === 201) {
+      content = (
+        <div>
+          <span class="logo"><strong class="text-primary">add a new center</strong></span>
+          <hr/>
+          <UploadImage />
+      </div>
+      )
+    } else {
+      content = (
+        <div>
+          <span class="logo"><strong class="text-primary">add a new center</strong></span>
+          <hr/>
+          <CenterForm path={pathname}/>
+        </div>
+      )
+    }
+    if ( message === 'Successfully updated center') {
+      return (<Redirect to="/admin-centers" />);
+    }
     return (
       
       <div id="add-center">
@@ -45,9 +60,7 @@ export default class AddCenterPage extends React.Component {
             <div className="col-lg-6">
               <div class="form-outer text-center">
                 <div class="form-inner">
-                  <div class="logo"><strong class="text-primary">add a new center</strong></div>
-                  <hr/>
-                  <CenterForm path={pathname}/>
+                  {content}
                 </div>
               </div>
             </div>

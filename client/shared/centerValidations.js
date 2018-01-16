@@ -6,7 +6,6 @@ export function modifyCenterValidation(data) {
   const {
     centerName, facilities, description, location, capacity,
   } = data;
-
   const errors = {};
 
   // validations for capacity
@@ -126,6 +125,44 @@ export function addCenterValidation(data) {
   } else {
     errors.location = 'Center should have an Address';
   }
+
+  return { errors, isValid: isEmpty(errors) };
+}
+
+export function searchValidation(data) {
+  const {
+    facilities, location, capacity, btwValue,
+  } = data;
+  const errors = {};
+  Object.entries(data).forEach((entry) => {
+
+    if (isEmpty(entry[1])) {
+      entry[1] = null;
+    }
+    if (entry[0] === 'location') {
+      if (entry[1] !== null) {
+        if (!/^[a-zA-Z0-9, ]+$/.test(location)) {
+          errors.location = 'location can not include symbols except comma';
+        }
+      }
+    }
+    if (entry[0] === 'capacity' || entry[0] === 'btwValue') {
+      if (entry[1] !== null) {
+        if (!/^[0-9]+$/.test(capacity)) {
+          errors.capacity = 'Center capacity can only contain numbers';
+        }
+      }
+    }
+    if (entry[0] === 'facilities') {
+      if (entry[1] !== null) {
+        if (!/^[a-zA-Z0-9,.& ]+$/.test(facilities)) {
+          errors.facilities = 'Facilities can not include symbols except comma which you should use to separate the faciities';
+        }
+      }
+    }
+
+    return errors;
+  });
 
   return { errors, isValid: isEmpty(errors) };
 }

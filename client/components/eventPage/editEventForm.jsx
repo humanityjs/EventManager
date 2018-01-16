@@ -71,12 +71,13 @@ export default class EventForm extends React.Component {
       
       <form id="edit-center-form" onSubmit={this.onSubmit}>
         <span className="help-block">{this.props.event}</span>
-        <div class="form-group">  
-          <span className="help-block">{errors.eventTitle}</span>  
+        <span className="help-block">{errors.eventTitle}</span> 
+        <p class="subtitle">Event Title</p>
+        <div class="form-group">   
           <input type="text" id="eventTitle" onChange={this.onChange} class="form-control" value={this.state.eventTitle} placeholder={this.props.title}/>
         </div>
-        <p class="subtitle">describe the event in few words</p>
         <span className="help-block">{errors.description}</span>
+        <p class="subtitle">describe the event in few words</p>
         <div class="form-group">
           <textarea class="form-control" id="description" onChange={this.onChange} placeholder={this.props.description}></textarea>
         </div> 

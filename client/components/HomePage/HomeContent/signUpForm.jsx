@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import validation from '../../../shared/userValidation';
+import { validateSignupInput } from '../../../shared/userValidation';
 import TextField from '../../../common/textField'
 
 
@@ -31,7 +31,7 @@ class SignUpForm extends React.Component {
   }
 
   isValid() {
-    const { errors, isValid } = validation(this.state);
+    const { errors, isValid } = validateSignupInput(this.state);
     if (!isValid) {
       this.setState({ errors });
     }
@@ -79,7 +79,7 @@ class SignUpForm extends React.Component {
           <TextField
             id='fullname'
             value={this.state.fullname}
-            placeholder='fullname'
+            placeholder='Fullname'
             type='text'
             error={errors.fullname} 
             onChange={this.onChange} />
@@ -87,7 +87,7 @@ class SignUpForm extends React.Component {
             <TextField
             id='email'
             value={this.state.email}
-            placeholder='email address'
+            placeholder='Email Address'
             type='email'
             error={errors.email, serverError}
             onChange={this.onChange} />
@@ -95,7 +95,7 @@ class SignUpForm extends React.Component {
             <TextField
             id='password'
             value={this.state.password}
-            placeholder='password'
+            placeholder='Password'
             type='password'
             error={errors.password} 
             onChange={this.onChange} />
@@ -103,7 +103,7 @@ class SignUpForm extends React.Component {
             <TextField
             id='retypePass'
             value={this.state.retypePass}
-            placeholder='Re-type password'
+            placeholder='Re-type Password'
             type='password'
             error={errors.retypePass} 
             onChange={this.onChange} />

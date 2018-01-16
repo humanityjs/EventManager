@@ -104,7 +104,27 @@ export default class Validation {
     const isValid = Object.keys(errors).length !== 0 ? false : true;
     
     if (!isValid) {
-      return res.status(400).json(errors);
+      return res.status(400).send(errors);
+    }
+    next();
+  }
+
+  static recoverPassword(req, res, next) {
+    const { email } = req.body;
+    const error= {};
+
+    if (email === undefined || validator.isEmpty(email)) {
+      error.email = 'email is required';
+    }
+
+    if (!validator.isEmail(email)) {
+      error.email = 'Type a valid email';
+    }
+
+    const isValid = Object.keys(error).length !== 0 ? false : true;
+
+    if (!isValid) {
+      return res.status(400).send(error);
     }
     next();
   }

@@ -55,7 +55,7 @@ class HomeContent extends React.Component {
        
     }
     return (
-      <div className="container">
+      <div className="container" id="homepage">
         <div className="row">
           <div className="col-lg-8">
             <Welcome />
