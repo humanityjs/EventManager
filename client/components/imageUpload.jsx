@@ -1,55 +1,57 @@
 import React from 'react';
+import Dropzone from 'react-dropzone';
 import { connect } from 'react-redux';
 import { uploadImage } from '../actions/centerActions';
 
 @connect((store) => {
   return {
-    center: store.center,
+    center: store.center.center,
   }
 })
-export default class UploadImage extends React.Component {
 
-  componentDidMount() {
-    let imgup = document.getElementById("upload");
-    $(document).ready(() => {
-      imgup.addEventListener("click", () => {
-        cloudinary.openUploadWidget({ cloud_name: 'kalel', upload_preset: 'u8asaoka'}, 
-        (error, result) => { 
-          console.log(error, result) 
-        })
-      }, false)
-    })
-  }
-  submit(e) {
-    // let imgup = document.getElementById(e.target.id);
-    // imgup.addEventListener("click", function() {
-    //   console.log('done');
-    //   cloudinary.openUploadWidget({ cloud_name: 'kalel', 
-    //   upload_preset: 'u8asaoka'}, 
-    //     function(error, result) { console.log(error, result) });
-    // }, false);
+export default class ImageUpload extends React.Component {
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      uploadedImage: ''
+    };
   }
-  fileUpload(e) {
-    const image = e.target.files[0];
+  onImageDrop(files) {
+    this.setState({
+      uploadedFile: files[0]
+    });
+    this.sendFile(files[0]);
+  }
+
+  sendFile(file) {
     const formData = new FormData();
-    formData.append('image', image);
-    formData.append('upload_preset', 'u8asaoka');
-    this.props.dispatch(uploadImage(e.target.id, formData));
+    formData.append("file", file);
+    formData.append("upload_preset", "u8asaoka");
+    this.props.dispatch(uploadImage(this.props.center.id, formData));
   }
-  render () {
-    const { center } = this.props.center;
-    return(
-      <div class="form-outer text-center">
-        <div class="form-inner">
-          <img className="img" src={center.image_url}/>
-            <label className="btn btn-primary basic">
-              Browse <input type="file" id="upload" hidden/>
-            </label>
-            
+  
+    render() {
+      return (
+        <div>
+        <div className="FileUpload">
+        <Dropzone
+          multiple={false}
+          accept="image/*"
+          onDrop={this.onImageDrop.bind(this)}>
+          <p>Drop an image or click to select a file to upload.</p>
+        </Dropzone>
         </div>
-      </div>
-          
-    )
+  
+        <div>
+          {this.state.uploadedImage === '' ? null :
+          <div>
+            <p>{this.state.uploadedFile.name}</p>
+            <img src={this.state.uploadedImage} />
+          </div>}
+        </div>
+        </div>
+      )
+      
+    }
   }
-}

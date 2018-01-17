@@ -61,12 +61,6 @@ export default class CenterForm extends React.Component {
         console.log(this.state)
         this.props.dispatch(modifyCenter(this.state, this.props.center.centerSelected));
       }
-      
-  
-      // this.context.router.history.push('/admin-center')
-      // if (this.props.center.addCenterError === 'Token is Invalid or Expired') {
-      //   console.log(this.props);
-      // }
     }
     
   }

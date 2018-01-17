@@ -47,8 +47,13 @@ export function generateCode() {
   }
 }
 
-export function modifyPassword() {
+export function updateUserDetails(data) {
   return (dispatch) => {
-    dispatch({ type: 'MODIFY_PASSWORD' });
+    dispatch({ type: 'UPDATE_USER' });
+    axios.put('api/v1/users', data).then((response) => {
+      dispatch({ type: 'UPDATE_USER_SUCCESS', payload: response });
+    }).catch((err) => {
+      dispatch({ type: 'UPDATE_USER_FAILS', payload: err.response.data })
+    });
   }
 }

@@ -4,7 +4,9 @@ import isEmpty from 'lodash/isEmpty';
 export function validateSignupInput(data) {
   const errors = {};
 
-  const { fullname, email, password, retypePass } = data;
+  const {
+ fullname, email, password, retypePass 
+} = data;
 
   if (!validator.isEmpty(fullname)) {
     if (!validator.isLength(fullname, { min: 5, max: 20 })) {
@@ -61,7 +63,7 @@ export function validateSigninInput(data) {
 export function recoverPassword(data) {
   const { email } = data;
   const error = {};
-  
+
 
   if (email === undefined || validator.isEmpty(email)) {
     error.email = 'email is required';
@@ -70,5 +72,61 @@ export function recoverPassword(data) {
   if (!validator.isEmail(email)) {
     error.email = 'Type a valid email';
   }
-  return { error, isValid: isEmpty(error) }
+  return { error, isValid: isEmpty(error) };
+}
+
+export function updateUser(data) {
+  const {
+    fullname,
+    email,
+    password,
+    retypePass,
+  } = data;
+
+  const error = {};
+
+  Object.entries(data).forEach((entry) => {
+
+    if (isEmpty(entry[1])) {
+      entry[1] = null;
+    }
+
+    if (entry[0] === 'fullname') {
+      if (entry[1] !== null) {
+        if (!/^[a-zA-Z0-9 ]+$/.test(fullname)) {
+          error.fullname = 'Fullname can only contain numbers and letters';
+        }
+        if (!validator.isLength(fullname, { min: 5, max: 20 })) {
+          error.fullname = 'Fullname must be more than 5 characters but less than 20';
+        }
+      }
+    }
+
+    if (entry[0] === 'email') {
+      if (entry[1] !== null) {
+        if (!validator.isEmail(email)) {
+          error.email = 'Email is invalid';
+        }
+      }
+    }
+
+    if (entry[0] === 'password') {
+      if (entry[1] !== null) {
+        if (!validator.isLength(password, { min: 5, max: 20 })) {
+          error.password = 'Password length must be between 5 and 20';
+        }
+      }
+    }
+
+    if (entry[0] === 'retypePass') {
+      if (entry[1] !== null) {
+        if (retypePass !== password) {
+          error.retypePass = 'Password must match';
+        }
+      }
+    }
+    return error;
+  });
+
+  return { error, isValid: isEmpty(error) };
 }

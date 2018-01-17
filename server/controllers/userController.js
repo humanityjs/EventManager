@@ -161,19 +161,22 @@ export default class UserController {
       if (user) {
         const saltRounds = 10;
         bcrypt.genSalt(saltRounds, (err, salt) => {
-          bcrypt.hash(password, salt, (err, hash) => user.update({
-            fullname: fullname || user.fullname,
-            password: hash || user.password,
-          }).then(() => res.status(200).send({
-            message: 'Changes Applied Successfully',
-          })).catch(err => res.status(500).send({
-            message: err.message,
-          })));
+          bcrypt.hash(password, salt, (err, hash) => {
+            return user.update({
+              fullname: fullname || user.fullname,
+              password: hash || user.password,
+            }).then(() => res.status(200).send({
+              message: 'Changes Applied Successfully',
+            })).catch(err => res.status(500).send({
+              message: err.message,
+            }))
+          });
+        });
+      } else {
+        return res.status(400).send({
+          message: 'Email not found',
         });
       }
-      return res.status(400).send({
-        message: 'Email not found',
-      });
     }).catch(err => res.status(500).send({
       message: err.message,
     }));

@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { confirmEmail, generateCode, modifyPassword } from '../../actions/signInActions';
-import { recoverPassword } from '../../shared/userValidation';
+import { confirmEmail, generateCode, updateUserDetails } from '../../actions/signInActions';
+import { recoverPassword, updateUser } from '../../shared/userValidation';
 import TextField from '../../common/textField';
 
 @connect((store) => {
@@ -18,109 +18,124 @@ export default class RecoveryForm extends React.Component {
       error: '',
       code: '',
       password: '',
-      passwordRetype: '',
+      retypePass: '',
     }
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.isValid = this.isValid.bind(this);
-    this.onSubmitCode = this.onSubmitCode.bind(this);
   }
   onChange(e) {
     this.setState({
       [e.target.id]: e.target.value,
     });
   }
-  isValid() {
-    const { error, isValid } = recoverPassword(this.state);
-    if (!isValid) {
-      this.setState({ error });
+  isValid(id) {
+    if (id === 'verifyEmail') {
+      const { error, isValid } = recoverPassword(this.state);
+      if (!isValid) {
+        this.setState({ error });
+      }
+      return isValid;
+    } else if (id === 'newPassword') {
+      const { error, isValid } = updateUser(this.state);
+      if (!isValid) {
+        this.setState({ error });
+      }
+      return isValid;
     }
-    return isValid;
   }
   onSubmit(e) {
     e.preventDefault();
-    if (this.isValid()) {
-      this.props.dispatch(confirmEmail(this.state));
+    if (e.target.id === 'verifyEmail') {
+      if (this.isValid(e.target.id)) {
+        this.props.dispatch(confirmEmail(this.state));
+      }
+    } else if (e.target.id === 'verifyCode') {
+      if (this.state.code === this.props.auth.code) {
+        this.showDiv('verifyCode', 'newPassword');
+      }
+    } else if (e.target.id === 'newPassword') {
+      if (this.isValid(e.target.id)) {
+        this.props.dispatch(updateUserDetails(this.state));
+      }
     }
-     
   }
-  showDiv() {
-    this.props.dispatch(generateCode());
-    document.getElementById("verifyEmail").hidden = true;
-    document.getElementById("verifyCode").hidden =  false;
+  showDiv(id1, id2) {
+    document.getElementById(id1).hidden = true;
+    document.getElementById(id2).hidden =  false;
   }
   componentDidUpdate() {
     if (this.props.auth.status === 200) {
-      this.showDiv();
-    }
-  }
-  onSubmitCode(e) {
-    e.preventDefault();
-    if (this.state.code === this.props.auth.code) {
-      document.getElementById("verifyCode").hidden = true;
-      document.getElementById("newPassword").hidden = false;
-    }
-  }
-  onSubmitPassword(e) {
-    e.preventDefault();
-    if (this.state.password === this.state.passwordRetype) {
-      this.props.dispatch(modifyPassword(this.state));
+      this.props.dispatch(generateCode());
+      this.showDiv('verifyEmail', 'verifyCode');
     }
   }
 
   render() {
     let form;
-    const { email, error, code, password, passwordRetype } = this.state;
+    const { email, error, code, password, retypePass } = this.state;
     
     return (
     <div>
       <div id="newPassword" hidden>
-        <form onSubmit={this.onSubmitPassword}>
+        <form id="newPassword" onSubmit={this.onSubmit}>
           <span className="help-block">{this.props.auth.message}</span>
-          <TextField
-          id='password'
-          value={this.state.password}
-          placeholder="Password"
-          type='text'
-          onChange={this.onChange}
-          error={error.password} 
-          />
-          <TextField
-          id='passwordRetype'
-          value={this.state.passwordRetype}
-          placeholder='Type password again'
-          type='text'
-          onChange={this.onChange}
-          error={error.passwordRetype} 
-          />
+          <div id="input text-center">
+            <input
+            id='password'
+            value={this.state.password}
+            placeholder="Password"
+            type='text'
+            onChange={this.onChange}
+            error={error.password} 
+            />
+            <border></border>
+          </div>
+          <div id="input text-center">
+            <input
+            id='retypePass'
+            value={this.state.retypePass}
+            placeholder='Type password again'
+            type='text'
+            onChange={this.onChange}
+            error={error.retypePass} 
+            />
+            <border></border>
+          </div>
           <input type="submit" value="Submit" className="btn btn-primary basic"/>
         </form>
       </div>
       <div id="verifyCode" hidden>
-        <form onSubmit={this.onSubmitCode}>
+        <form id="verifyCode" onSubmit={this.onSubmit}>
           <span className="help-block">{this.props.auth.message}</span>
-          <TextField
-          id='code'
-          value={this.state.code}
-          placeholder='------'
-          type='text'
-          onChange={this.onChange}
-          error={error.code} 
-          />
+          <div id="input text-center">
+            <input
+            id='code'
+            value={this.state.code}
+            placeholder='---------'
+            type='text'
+            onChange={this.onChange}
+            error={error.code} 
+            />
+            <border></border>
+          </div>
           <input type="submit" value="Submit" className="btn btn-primary"/>
         </form>
       </div>
       <div id="verifyEmail">
-        <form onSubmit={this.onSubmit}>
+        <form id="verifyEmail" onSubmit={this.onSubmit}>
           <span className="help-block">{this.props.auth.message}</span>
-          <TextField
+          <div id="input text-center">
+          <input
           id='email'
           value={this.state.email}
           placeholder='Email address'
-          type='text'
+          type='email'
           onChange={this.onChange}
           error={error.email} 
           />
+          <border></border>
+          </div>
           <input type="submit" value="Submit" className="btn btn-primary"/>
         </form>
       </div>

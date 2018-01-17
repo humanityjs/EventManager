@@ -22,16 +22,17 @@ export default (state = initialState, action = {}) => {
     case 'VERIFY_EMAIL': {
       return {
         ...state,
-        loading: 'true',
+        loading: true,
         status: '',
+        message:'',
       }
     }
     case 'VERIFY_EMAIL_SUCCESS': {
       const { status } = action.payload;
       return {
         ...state,
-        loading: 'false',
-        loaded: 'true',
+        loading: false,
+        loaded: true,
         status,
       }
     }
@@ -39,8 +40,8 @@ export default (state = initialState, action = {}) => {
       const { message } = action.payload;
       return {
         ...state,
-        loading: 'false',
-        loaded: 'true',
+        loading: false,
+        loaded: true,
         message,
       }
     }
@@ -49,6 +50,35 @@ export default (state = initialState, action = {}) => {
         ...state,
         status: '',
         code: action.payload,
+      }
+    }
+    case 'UPDATE_USER': {
+      return {
+        ...state,
+        status: '',
+        message: '',
+        code: '',
+        loading: true,
+        loaded: false,
+      }
+    }
+    case 'UPDATE_USER_SUCCESS': {
+      const { status } = action.payload;
+      const { message } = action.payload.data;
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        message,
+      }
+    }
+    case 'UPDATE_USER_FAILS': {
+      const { message } = action.payload;
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        message,
       }
     }
     default: return state;

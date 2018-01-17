@@ -20,3 +20,4 @@ export default function validateInput(data) {
 
   return { errors, isValid: isEmpty(errors) };
 }
+
