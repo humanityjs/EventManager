@@ -12,14 +12,14 @@ import eventValidate from '../middleware/eventValidate';
 const router = express.Router();
 // Routes
 router.route('/users')
-  .post(userValidate.signup, userController.signup);
+  .post(userValidate.signup, userController.signup)
+  .put(userValidate.updateUser, userController.updateUser);
 
 router.route('/users/login')
   .post(userValidate.signin, userController.signin);
 
 router.route('/passrecovery')
-  .post(userValidate.recoverPassword, userController.recoverPassword)
-  .put()
+  .post(userValidate.recoverPassword, userController.recoverPassword);
 
 router.route('/centers')
   .post(authAdminToken, centerValidate.postCenter, centerController.postCenter)
