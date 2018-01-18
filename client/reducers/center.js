@@ -48,7 +48,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: true,
-        status: '',
         error: '',
       };
     }
@@ -99,6 +98,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        status: '',
       };
     }
     case 'DELETE_CENTER_FAILS': {
@@ -109,10 +109,12 @@ export default (state = initialState, action) => {
       };
     }
     case 'DELETE_CENTER_SUCCESS': {
+      const { status } = action.payload;
       return {
         ...state,
         loading: false,
         loaded: true,
+        status,
       };
     }
     case 'ADD_CENTER': {

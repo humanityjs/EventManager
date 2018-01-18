@@ -93,7 +93,7 @@ export default class Dashboard extends React.Component {
         </div>
       );
     }
-    const message = this.props.event.message;
+    const { message } = this.props.event;
     let eventId, editEventId, eventBody, form;
     const { pathname } = this.props.location;
     const content = _.map(this.props.events, (event) => {

@@ -409,7 +409,10 @@ form input[type='submit'] {
   color: #020c15;
 }
 .green {
-  color: rgb(35, 235, 62)
+  color: rgb(35, 235, 62);
+}
+.red {
+  color: red;
 }
 
 .img {

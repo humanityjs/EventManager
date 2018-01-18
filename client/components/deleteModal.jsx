@@ -40,7 +40,7 @@ export default class DeleteModal extends React.Component {
                 <p className="text-primary">{this.props.event.event.eventTitle}</p>
                 <span className="help-block">Are sure you want to delete event?</span>
                 <br/>
-                <i className="fa fa-trash trash"  id="disapprove" onClick={this.onAttend.bind(this)}></i>
+                <i className="fa fa-trash red"  id="disapprove" onClick={this.onAttend.bind(this)}></i>
                 <i className="fa fa-save green" onClick={this.onCancel.bind(this)}></i>
                 <br/>
                 <span><br/>Yes</span>

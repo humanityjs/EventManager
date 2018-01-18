@@ -8,7 +8,7 @@ import DeleteModal from './deleteModal';
 // const store = reduxStore();
 @connect((store) => {
   return {
-    centers: store.center.centers,
+    center: store.center,
     auth: store.auth,
   };
 })
@@ -20,13 +20,21 @@ export default class DisplayCenters extends React.Component {
   }
 
   onClick(e) {
-    console.log(e.target.id, e.target)
     this.props.dispatch(centerSelected(e.target.id));
+  }
+
+  componentDidUpdate() {
+    if (this.props.center.status === 200) {
+      $(document).ready( function(){
+        $('#deleteModal').modal('hide');
+      });
+    }
   }
 
   render() {
     const path = this.props.path;
-    const adminCenterPage = _.map(this.props.centers, (center) => {
+    const { centers } = this.props.center;
+    const adminCenterPage = _.map(centers, (center) => {
       return (
         <div className="row" key={center.id}>
           <div className="col-lg-3">
@@ -52,7 +60,6 @@ export default class DisplayCenters extends React.Component {
                 <h3><span>description: </span> {center.description}</h3>
               </div>
             </div>
-            <span className="trash"><i className="fa fa-user-circle"></i></span>
           </div>
           <span onClick={this.onClick.bind(this)} className="trash" data-toggle="modal" data-target="#deleteModal"><i id={center.id} className="fa fa-trash trash"></i></span>      
         </div>
