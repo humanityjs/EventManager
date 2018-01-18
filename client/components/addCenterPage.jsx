@@ -19,6 +19,11 @@ import UploadImage from './imageUpload';
 })
 
 export default class AddCenterPage extends React.Component {
+  componentDidUpdate() {
+    if ( status === 200) {
+      return (<Redirect to="/admin-centers" />);
+    }
+  }
   
   render() {
      //Check if user is logged in and is also an Admin
@@ -48,9 +53,7 @@ export default class AddCenterPage extends React.Component {
         </div>
       )
     }
-    if ( message === 'Successfully updated center') {
-      return (<Redirect to="/admin-centers" />);
-    }
+    
     return (
       
       <div id="add-center">

@@ -17,6 +17,7 @@ export default (state = initialState, action = {}) => {
       return {
         isAuth: !isEmpty(action.user),
         user: action.user,
+        userToken: action.userToken,
       };
 
     case 'VERIFY_EMAIL': {
@@ -49,6 +50,7 @@ export default (state = initialState, action = {}) => {
       return {
         ...state,
         status: '',
+        message: 'Code sent. It expires in 5 minutes',
         code: action.payload,
       }
     }
@@ -63,7 +65,6 @@ export default (state = initialState, action = {}) => {
       }
     }
     case 'UPDATE_USER_SUCCESS': {
-      const { status } = action.payload;
       const { message } = action.payload.data;
       return {
         ...state,

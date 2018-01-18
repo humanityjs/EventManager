@@ -4,10 +4,11 @@ import shortid from 'shortid';
 import setAuthToken from '../utils/setAuthorizationToken';
 import { SET_CURRENT_USER } from './types';
 
-export function setCurrentUser(user) {
+export function setCurrentUser(user, token) {
   return {
     type: SET_CURRENT_USER,
     user,
+    userToken: token,
   };
 }
 
@@ -25,7 +26,7 @@ export function userSignInRequest(user) {
     const { token } = response.data;
     localStorage.setItem('jwtToken', token);
     setAuthToken(token);
-    dispatch(setCurrentUser(jwt.decode(token)));
+    dispatch(setCurrentUser(jwt.decode(token), token));
   });
 }
 

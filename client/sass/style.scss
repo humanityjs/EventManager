@@ -221,7 +221,7 @@
     text-transform: none;
     text-align: center;
   }
-  form-input:focus, input:hover {
+  form-input:focus, input:focus {
     border-bottom: none;
     transition: 1s all;
   }
@@ -240,6 +240,16 @@
     width: 300px;
     margin-left: -150px;
   }
-  
+  .fa {
+    font-size: 4rem;
+  }
+  .text-primary {
+    font-style: normal;
+  }
+  p {
+    color: #494c4f;
+    font-style: italic;
+    margin-top: 0.5rem;
+  }
 
 }

@@ -184,7 +184,7 @@ class CenterController {
         facilities: facilityArray || center.facilities,
         capacity: capacity || center.capacity,
         image_url: image_url || center.image_url,
-      }).then(() => res.status(201).send({
+      }).then(() => res.status(200).send({
         message: 'Successfully updated center',
       })).catch(error => res.status(500).send({
         message: error.message,

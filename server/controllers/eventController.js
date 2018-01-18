@@ -168,7 +168,7 @@ class EventController {
                 description: description || events.description,
                 centerId: centerId || events.centerId,
                 isApproved: isApproved || events.isApproved,
-              }).then(() => res.status(201).send({
+              }).then(() => res.status(200).send({
                 message: 'Changes Applied',
                 event,
               })).catch(error => res.status(500).send({

@@ -119,13 +119,14 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        status: '',
       }
     }
     case 'ADD_CENTER_FAILS': {
-      const { message } = action.payload;
+      const { status } = action.payload;
       return {
         ...state,
-        error: message,
+        status,
       };
     }
     case 'ADD_CENTER_SUCCESS': {
@@ -154,14 +155,12 @@ export default (state = initialState, action) => {
       };
     }
     case 'ADD_IMAGE_SUCCESS': {
-      const { status } = action.payload;
-      const { center } = action.payload.data;
+      const url = action.payload;
       return {
         ...state,
         loading: false,
         loaded: true,
-        status,
-        center,
+        url,
       }
     }
     default:

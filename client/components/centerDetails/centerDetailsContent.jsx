@@ -39,7 +39,7 @@ export default class CenterDetailsContent extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.props.event.status === 201 || this.props.event.status === 200 || this.props.center.status === 201) {
+    if (this.props.event.status === 201 || this.props.event.status === 200 || this.props.center.status === 200) {
       $(document).ready( function(){
         $('#eventStatus').modal('hide');
         $('#deleteModal').modal('hide');
@@ -112,7 +112,7 @@ export default class CenterDetailsContent extends React.Component {
       message = "Approved";
     } else if (this.props.event.status === 200) {
       message = this.props.event.message;
-    } else if (this.props.center.status === 201) {
+    } else if (this.props.center.status === 200) {
       message = this.props.center.message;
     }
     return (

@@ -54,6 +54,12 @@ export default class RecoveryForm extends React.Component {
       if (this.state.code === this.props.auth.code) {
         this.showDiv('verifyCode', 'newPassword');
       }
+    } else if (e.target.id === 'resendCode') {
+      this.props.dispatch(generateCode());
+      if (this.props.auth.message === 'code sent') { // 201 means if code was sent successfully
+        this.showDiv('resendCode', 'verifyCode');
+        this.countDown();
+      }
     } else if (e.target.id === 'newPassword') {
       if (this.isValid(e.target.id)) {
         this.props.dispatch(updateUserDetails(this.state));
@@ -68,15 +74,30 @@ export default class RecoveryForm extends React.Component {
     if (this.props.auth.status === 200) {
       this.props.dispatch(generateCode());
       this.showDiv('verifyEmail', 'verifyCode');
+      this.countDown();
     }
+    if (this.props.auth.message === 'Changes Applied Successfully') {
+      this.showDiv('newPassword', 'passChanged');
+    }
+  }
+  countDown() {
+    setTimeout(() => {
+      this.showDiv('verifyCode', 'resendCode');
+    }, 20000);
   }
 
   render() {
     let form;
     const { email, error, code, password, retypePass } = this.state;
-    
+    const heading = (
+      <span><strong class="text-primary">lets help you get back into your account</strong></span>
+    )
     return (
     <div>
+      <div id="passChanged" hidden>
+        <h1>Password Changed</h1>
+        <i className="fa fa-check-circle largeIcon"></i>
+      </div>
       <div id="newPassword" hidden>
         <form id="newPassword" onSubmit={this.onSubmit}>
           <span className="help-block">{this.props.auth.message}</span>
@@ -105,9 +126,29 @@ export default class RecoveryForm extends React.Component {
           <input type="submit" value="Submit" className="btn btn-primary basic"/>
         </form>
       </div>
+      <div id="resendCode" hidden>
+        <form id="resendCode" onSubmit={this.onSubmit}>
+          {heading}
+          <span className="help-block">{this.props.auth.message}</span>
+          <p>Code has expired. Click the button below to get another </p>
+          <div id="input text-center">
+            <input
+            id='code'
+            value={this.state.code}
+            placeholder='---------'
+            type='text'
+            onChange={this.onChange}
+            error={error.code} 
+            disabled/>
+          </div>
+          <input type="submit" id="resendCode" value="Resend Code" className="btn btn-primary"/>
+        </form>
+      </div>
       <div id="verifyCode" hidden>
         <form id="verifyCode" onSubmit={this.onSubmit}>
+          {heading}
           <span className="help-block">{this.props.auth.message}</span>
+          <p>Please type the code you received below </p>
           <div id="input text-center">
             <input
             id='code'
@@ -119,13 +160,16 @@ export default class RecoveryForm extends React.Component {
             />
             <border></border>
           </div>
-          <input type="submit" value="Submit" className="btn btn-primary"/>
+          <input type="submit" id="submitCode" value="Submit" className="btn btn-primary"/>
         </form>
       </div>
       <div id="verifyEmail">
         <form id="verifyEmail" onSubmit={this.onSubmit}>
-          <span className="help-block">{this.props.auth.message}</span>
+          {heading}
+          <p>Provide us with the email address used upon registration
+            and a code will be sent to the email address </p>
           <div id="input text-center">
+          <span className="help-block">{this.props.auth.message}</span>
           <input
           id='email'
           value={this.state.email}

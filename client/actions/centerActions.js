@@ -1,11 +1,14 @@
 import axios from 'axios';
+import store from '../store';
 // import { GET_CENTERS_BEGIN, GET_CENTERS_ERROR, GET_CENTERS } from './types';
 export function uploadImage(id, data) {
   return (dispatch) => {
     dispatch({ type: 'ADD_IMAGE' });
+    delete axios.defaults.headers.common["x-access-token"];
     axios.post('https://api.cloudinary.com/v1_1/kalel/image/upload', data)
       .then((response) => {
         dispatch({ type: 'ADD_IMAGE_SUCCESS', payload: response.data });
+        axios.defaults.headers.common['x-access-token'] = store.getState().auth.userToken;
         dispatch({ type: 'MODIFY_CENTER' });
         const imageData = {
           image_url: response.data.secure_url,
@@ -24,6 +27,7 @@ export function getCenters(data) {
   return (dispatch) => {
     dispatch({ type: 'GET_CENTERS' });
     let query;
+    
     if (data) {
       query = axios.get('api/v1/centers', {
         params: {
@@ -51,7 +55,7 @@ export function addCenter(data) {
     axios.post('api/v1/centers', data).then((response) => {
       dispatch({ type: 'ADD_CENTER_SUCCESS', payload: response });
     }).catch((err) => {
-      dispatch({ type: 'ADD_CENTER_FAILS', payload: err.response.data });
+      dispatch({ type: 'ADD_CENTER_FAILS', payload: err.response });
     });
   };
 }
