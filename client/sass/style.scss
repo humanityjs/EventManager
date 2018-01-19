@@ -34,6 +34,9 @@
     margin-bottom: 10px;
     opacity: .9;
   }
+  .img {
+    max-width: 380px;
+  }
 }
 #center-page, #event-page {  
 
@@ -135,7 +138,6 @@
   }
   form input {
     text-align: left;
-    text-transform: lowercase;
   }
   .btn {
     text-align: center;
@@ -163,6 +165,9 @@
   }
   .form-outer {
     padding-bottom: 20px;
+  }
+  .img {
+    max-width: 380px;
   }
 }
 
@@ -202,6 +207,10 @@
   form input {
     text-align: center;
   }
+  form-input:focus, input:focus {
+    border-bottom: none;
+    transition: 1s all;
+  }
 }
 
 #recover-password {
@@ -221,21 +230,6 @@
   form-input:focus, input:focus {
     border-bottom: none;
     transition: 1s all;
-  }
-
-  border {
-    position: absolute;
-      left: 50%;
-    content: '';
-    height: 40px;
-    height: 2px;
-      background: #F97E04;
-      transition: all 0.5s linear;
-      width: 0; 
-  }
-  input:focus ~ border {
-    width: 300px;
-    margin-left: -150px;
   }
   .fa {
     font-size: 4rem;

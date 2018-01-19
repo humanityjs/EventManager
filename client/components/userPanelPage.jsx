@@ -109,7 +109,7 @@ export default class Dashboard extends React.Component {
               <div class="form-outer text-center">
                 <div class="form-inner">
                   <div id={event.centerId}>
-                    <img className="img" src="images/image2.jpg"/>
+                    <img className="img" src={event.Center.image_url}/>
                     <h2>
                       <span className="media-heading" data-toggle-id={eventBody} onClick={this.showHiddenDiv}>
                         {event.eventTitle} 

@@ -74,12 +74,8 @@ export function uploadImage(id, data) {
     delete axios.defaults.headers.common["x-access-token"];
     axios.post('https://api.cloudinary.com/v1_1/kalel/image/upload', data)
       .then((response) => {
-        dispatch({ type: 'ADD_IMAGE_SUCCESS', payload: response.data });
+        dispatch({ type: 'ADD_IMAGE_SUCCESS', payload: response.data.secure_url });
         axios.defaults.headers.common['x-access-token'] = store.getState().auth.userToken;
-        const imageData = {
-          image_url: response.data.secure_url,
-        }
-        dispatch(modifyCenter(imageData, id));
       }).catch((err) => {
         dispatch({ type: 'ADD_IMAGE_FAILS', payload: err.response });
       });

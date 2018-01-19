@@ -249,9 +249,7 @@ text-transform: capitalize;
     background: white;
     opacity: 0.9;
     padding: 0px;
-    border-radius: 5px;
-    border-bottom: 3px solid #ccc;
-    border-right: 2px solid #ccc;
+    border-bottom: 3px solid #f97404;
 }
 
 .inner-img {
@@ -306,17 +304,16 @@ form input, .inner-page form input {
 }
 form input {
   color: #494c4f;
-  text-transform: lowercase
 }
 
  form input[type='text'], form input[type='password'], form input[type='email'],
  form input[type=date] {
   
   width: 100%;
-  text-transform: lowercase;
 }
 .form-inner {
-  padding: 20px;	
+  padding: 20px;
+  margin: 0 auto;	
 }
 .date form input {
     width: 100%;
@@ -420,6 +417,20 @@ max-width: 280px;
 margin-bottom: 20px;
 }
 
+border {
+  position: absolute;
+    left: 50%;
+  content: '';
+  height: 40px;
+  height: 2px;
+    background: #F97E04;
+    transition: all 0.5s linear;
+    width: 0; 
+}
+input:focus ~ border {
+  width: 300px;
+  margin-left: -150px;
+}
 .help-block {
   display: inline-block;
   font-size: 0.8em;

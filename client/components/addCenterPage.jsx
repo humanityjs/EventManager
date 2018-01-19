@@ -9,7 +9,6 @@ import CenterForm from './addCenterForm';
 import TextField from '../common/textField';
 import Navbar from './navbar.jsx';
 import Footer from './footer.jsx';
-import UploadImage from './imageUpload';
 
 @connect((store) => {
   return {
@@ -35,27 +34,8 @@ export default class AddCenterPage extends React.Component {
     let content;
     const { center, status, message } = this.props.center;
     const { pathname } = this.props.location
-
-    if (status === 201) {
-      content = (
-        <div>
-          <span class="logo"><strong class="text-primary">add a new center</strong></span>
-          <hr/>
-          <UploadImage />
-      </div>
-      )
-    } else {
-      content = (
-        <div>
-          <span class="logo"><strong class="text-primary">add a new center</strong></span>
-          <hr/>
-          <CenterForm path={pathname}/>
-        </div>
-      )
-    }
     
     return (
-      
       <div id="add-center">
         <Navbar />
         <div class="container">
@@ -63,7 +43,7 @@ export default class AddCenterPage extends React.Component {
             <div className="col-lg-6">
               <div class="form-outer text-center">
                 <div class="form-inner">
-                  {content}
+                  <CenterForm path={pathname}/>
                 </div>
               </div>
             </div>

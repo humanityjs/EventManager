@@ -2,11 +2,11 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
-
 import { addCenter, modifyCenter } from '../actions/centerActions';
 import { addCenterValidation, modifyCenterValidation } from '../shared/centerValidations';
 import TextField from '../common/textField2';
 import { logout } from '../actions/signInActions';
+import UploadImage from './imageUpload';
 
 @connect((store) => {
   return {
@@ -26,25 +26,13 @@ export default class CenterForm extends React.Component {
       facilities:'',
       capacity: '',
       errors: {},
+      image_url: '',
     };
     
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.isValid = this.isValid.bind(this);
     this.logout = this.logout.bind(this);
-  }
-  
-  componentDidUpdate() {
-    // const { center } = this.props.center;
-    // if (this.props.path === '/view-center-event') {
-    //   this.setState({
-    //     centerName:center.centerName,
-    //     location:center.location,
-    //     facilities:center.facilities,
-    //     description:center.description,
-    //     errors: {},
-    //   });
-    // }
   }
 
   onChange(e) {
@@ -56,6 +44,7 @@ export default class CenterForm extends React.Component {
   onSubmit(e) {
     e.preventDefault();
     if (this.isValid()) {
+      this.state.image_url = this.props.center.url;
       if (this.props.path === '/add-center') {
         this.props.dispatch(addCenter(this.state));
       } else if(this.props.path === '/view-center-event') {
@@ -118,6 +107,7 @@ export default class CenterForm extends React.Component {
     return ( 
       
       <form id="add-center-form" onSubmit={this.onSubmit}>
+        <UploadImage />
         <span className="help-block">{this.props.center.addCenterError}</span>
         <TextField
           id='centerName'

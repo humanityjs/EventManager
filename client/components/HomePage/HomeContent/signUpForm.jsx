@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { validateSignupInput } from '../../../shared/userValidation';
-import TextField from '../../../common/textField'
+import TextField from '../../../common/textField3';
 
 
 

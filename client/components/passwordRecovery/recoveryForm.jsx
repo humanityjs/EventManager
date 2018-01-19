@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { confirmEmail, generateCode, updateUserDetails } from '../../actions/signInActions';
+import { confirmEmail, generateCode, updateUserDetails, wrongCode } from '../../actions/signInActions';
 import { recoverPassword, updateUser } from '../../shared/userValidation';
-import TextField from '../../common/textField';
+import TextField from '../../common/textField3';
 
 @connect((store) => {
   return {
@@ -19,6 +19,7 @@ export default class RecoveryForm extends React.Component {
       code: '',
       password: '',
       retypePass: '',
+      wrongCode: '',
     }
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -51,15 +52,12 @@ export default class RecoveryForm extends React.Component {
         this.props.dispatch(confirmEmail(this.state));
       }
     } else if (e.target.id === 'verifyCode') {
-      if (this.state.code === this.props.auth.code) {
-        this.showDiv('verifyCode', 'newPassword');
-      }
+      if (this.state.code !== this.props.auth.code) {
+        return this.props.dispatch(wrongCode());
+      } 
+      this.showDiv('verifyCode', 'newPassword');
     } else if (e.target.id === 'resendCode') {
       this.props.dispatch(generateCode());
-      if (this.props.auth.message === 'code sent') { // 201 means if code was sent successfully
-        this.showDiv('resendCode', 'verifyCode');
-        this.countDown();
-      }
     } else if (e.target.id === 'newPassword') {
       if (this.isValid(e.target.id)) {
         this.props.dispatch(updateUserDetails(this.state));
@@ -76,19 +74,27 @@ export default class RecoveryForm extends React.Component {
       this.showDiv('verifyEmail', 'verifyCode');
       this.countDown();
     }
+    if (this.props.auth.codeStatus === 'Code sent. It expires in 5 minutes') {
+      this.showDiv('resendCode', 'verifyCode');
+      this.countDown();
+    }
     if (this.props.auth.message === 'Changes Applied Successfully') {
       this.showDiv('newPassword', 'passChanged');
     }
   }
   countDown() {
     setTimeout(() => {
-      this.showDiv('verifyCode', 'resendCode');
+      let div = document.getElementById('verifyCode');
+      if (!div.hidden) {
+        this.showDiv('verifyCode', 'resendCode');
+        document.getElementById('code').disabled = true;
+      } 
     }, 20000);
   }
 
   render() {
     let form;
-    const { email, error, code, password, retypePass } = this.state;
+    const { email, error, code, password, retypePass, wrongCode } = this.state;
     const heading = (
       <span><strong class="text-primary">lets help you get back into your account</strong></span>
     )
@@ -100,67 +106,58 @@ export default class RecoveryForm extends React.Component {
       </div>
       <div id="newPassword" hidden>
         <form id="newPassword" onSubmit={this.onSubmit}>
+          <span><strong class="text-primary">New Password</strong></span><br/>
           <span className="help-block">{this.props.auth.message}</span>
-          <div id="input text-center">
-            <input
-            id='password'
-            value={this.state.password}
-            placeholder="Password"
-            type='text'
-            onChange={this.onChange}
-            error={error.password} 
-            />
-            <border></border>
-          </div>
-          <div id="input text-center">
-            <input
-            id='retypePass'
-            value={this.state.retypePass}
-            placeholder='Type password again'
-            type='text'
-            onChange={this.onChange}
-            error={error.retypePass} 
-            />
-            <border></border>
-          </div>
+          <TextField
+          id='password'
+          value={this.state.password}
+          placeholder="Password"
+          type='text'
+          onChange={this.onChange}
+          error={error.password} 
+          />
+          <TextField
+          id='retypePass'
+          value={this.state.retypePass}
+          placeholder='Type password again'
+          type='text'
+          onChange={this.onChange}
+          error={error.retypePass} 
+          />
           <input type="submit" value="Submit" className="btn btn-primary basic"/>
         </form>
       </div>
       <div id="resendCode" hidden>
         <form id="resendCode" onSubmit={this.onSubmit}>
           {heading}
-          <span className="help-block">{this.props.auth.message}</span>
+          <span className="help-block">{this.props.auth.codeStatus}</span>
           <p>Code has expired. Click the button below to get another </p>
-          <div id="input text-center">
-            <input
-            id='code'
-            value={this.state.code}
-            placeholder='---------'
-            type='text'
-            onChange={this.onChange}
-            error={error.code} 
-            disabled/>
-          </div>
+          <TextField
+          id='code'
+          value='------'
+          placeholder='------'
+          type='text'
+          onChange={this.onChange}
+          error={error.code} 
+          />
           <input type="submit" id="resendCode" value="Resend Code" className="btn btn-primary"/>
         </form>
       </div>
       <div id="verifyCode" hidden>
         <form id="verifyCode" onSubmit={this.onSubmit}>
           {heading}
-          <span className="help-block">{this.props.auth.message}</span>
+          <span className="help-block">{this.props.auth.codeStatus, this.props.auth.codeMessage}</span>
+          
           <p>Please type the code you received below </p>
-          <div id="input text-center">
-            <input
-            id='code'
-            value={this.state.code}
-            placeholder='---------'
-            type='text'
-            onChange={this.onChange}
-            error={error.code} 
-            />
-            <border></border>
-          </div>
-          <input type="submit" id="submitCode" value="Submit" className="btn btn-primary"/>
+          <TextField
+          id='code'
+          value={this.state.code}
+          placeholder='---------'
+          type='text'
+          onChange={this.onChange}
+          error={error.code} 
+          />
+          <input type="submit" id="verifyCode" value="Submit" className="btn btn-primary"/>
         </form>
       </div>
       <div id="verifyEmail">
@@ -168,9 +165,8 @@ export default class RecoveryForm extends React.Component {
           {heading}
           <p>Provide us with the email address used upon registration
             and a code will be sent to the email address </p>
-          <div id="input text-center">
           <span className="help-block">{this.props.auth.message}</span>
-          <input
+          <TextField
           id='email'
           value={this.state.email}
           placeholder='Email address'
@@ -178,8 +174,6 @@ export default class RecoveryForm extends React.Component {
           onChange={this.onChange}
           error={error.email} 
           />
-          <border></border>
-          </div>
           <input type="submit" value="Submit" className="btn btn-primary"/>
         </form>
       </div>

@@ -53,9 +53,7 @@ export default class Event extends React.Component {
     } else {
       centerInfo = (
         <div className="form-inner">
-          <div className="media">
-            <img className="img" src="images/image2.jpg"/>
-          </div>
+          <img className="img" src={center.image_url}/>
           <div className="media-body">
             <h2 className="media-heading">
               <span>{center.centerName}</span>

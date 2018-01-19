@@ -50,8 +50,17 @@ export default (state = initialState, action = {}) => {
       return {
         ...state,
         status: '',
-        message: 'Code sent. It expires in 5 minutes',
+        codeMessage: '',
+        codeStatus: 'Code sent. It expires in 5 minutes',
         code: action.payload,
+      }
+    }
+    case 'WRONG_CODE': {
+      return {
+        ...state,
+        status: '',
+        codeMessage: action.payload,
+        codeStatus:'',
       }
     }
     case 'UPDATE_USER': {

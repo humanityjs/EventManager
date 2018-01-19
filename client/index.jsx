@@ -18,6 +18,7 @@ import ViewCenter from './components/viewCenterPage';
 import UserPanel from './components/userPanelPage.jsx';
 import setAuthToken from './utils/setAuthorizationToken';
 import PasswordRecovery from './components/passwordRecoveryPage';
+import Profile from './components/profile';
 import { setCurrentUser } from './actions/signInActions';
 import style from './sass/style.scss';
 import Image from './components/imageUpload';
@@ -45,6 +46,7 @@ ReactDOM.render(
         <Route exact path="/modify-event" component={ModifyEvent} />
         <Route exact path="/view-center-event" component={ViewCenter} />
         <Route exact path="/recover-password" component={PasswordRecovery} />
+        <Route exact path="/profile" component={Profile} />
       </Switch>
     </Router>
   </Provider>

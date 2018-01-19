@@ -39,7 +39,7 @@ export default class DisplayCenters extends React.Component {
         <div className="row" key={center.id}>
           <div className="col-lg-3">
             <div className="media">
-              <img className="img" src="images/image2.jpg"/>
+              <img className="img" src={center.image_url}/>
             </div>
           </div>
           <div className="col-lg-9">
@@ -66,12 +66,12 @@ export default class DisplayCenters extends React.Component {
       )
     }); 
     
-    const guestCenterPage = _.map(this.props.centers, (center) => {
+    const guestCenterPage = _.map(centers, (center) => {
       return (
         <div className="row" id={center.id} key={center.id}>
           <div className="col-lg-3">
             <div className="media">
-              <img className="img" src="images/image2.jpg"/>
+              <img className="img" src={center.image_url}/>
             </div>
           </div>
           <div className="col-lg-9">

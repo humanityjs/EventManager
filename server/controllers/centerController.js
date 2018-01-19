@@ -128,7 +128,7 @@ class CenterController {
    */
   static postCenter(req, res) {
     const {
-      centerName, location, description, facilities, capacity,
+      centerName, location, description, facilities, capacity, image_url,
     } = req.body;
     const { id } = req.decoded;
 
@@ -146,6 +146,7 @@ class CenterController {
           description,
           facilities: facilityArray,
           capacity,
+          image_url,
           userId: id,
         }).then(center => res.status(201).send({
           center,

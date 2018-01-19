@@ -48,6 +48,13 @@ export function generateCode() {
   }
 }
 
+export function wrongCode() {
+  return (dispatch) => {
+    dispatch({ type: 'WRONG_CODE', payload: 'Wrong Code' });
+  }
+}
+
+
 export function updateUserDetails(data) {
   return (dispatch) => {
     dispatch({ type: 'UPDATE_USER' });

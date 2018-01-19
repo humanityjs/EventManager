@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import TextField from '../../../common/textField';
+import TextField from '../../../common/textField3';
 import { validateSigninInput } from '../../../shared/userValidation';
 
 class SignInForm extends React.Component {

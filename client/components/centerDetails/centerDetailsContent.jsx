@@ -123,17 +123,17 @@ export default class CenterDetailsContent extends React.Component {
               <div id="centerDetails">          
                 <div className="form-outer text-center">
                   <div className="form-inner">
-                    <div className="media">
-                      <img className="img" src="images/image2.jpg"/>
-                    </div>
-                    <strong className="logo text-primary">{center.centerName}</strong>
-                    <p>{center.location}</p>
-                    <h3>capacity</h3>
-                    <p>{center.capacity}</p>
-                    <h3>facilities</h3>
-                    <p>{center.facilities}</p>
-                    <h3>description</h3>
-                    <p>{center.description}</p>	
+                    <img className="img" src={center.image_url}/>
+                    <div className="media-body">
+                      <strong className="logo text-primary">{center.centerName}</strong>
+                      <p>{center.location}</p>
+                      <h3>capacity</h3>
+                      <p>{center.capacity}</p>
+                      <h3>facilities</h3>
+                      <p>{center.facilities}</p>
+                      <h3>description</h3>
+                      <p>{center.description}</p>
+                    </div>	
                   </div>
                   ... <i data-toggle-id="editCenterDetails" className="fa fa-pencil main-color" onClick={this.showHiddenDiv}> edit</i>
                 </div>
