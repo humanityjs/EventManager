@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { userSignupRequest } from '../../actions/signUpActions.js';
-import { userSignInRequest } from '../../actions/signInActions.js';
+import { userSignInRequest, sendMail, userSignupRequest } from '../../actions/signInActions.js';
 import { addFlashMessage } from '../../actions/flashMessages.js';
 import PropTypes from 'prop-types';
 
@@ -72,7 +71,8 @@ class HomeContent extends React.Component {
 HomeContent.propTypes = {
   userSignupRequest: PropTypes.func.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
-  userSignInRequest: PropTypes.func.isRequired
+  userSignInRequest: PropTypes.func.isRequired,
+  sendMail: PropTypes.func.isRequired,
 }
 
-export default connect(null, { userSignupRequest, userSignInRequest, addFlashMessage })(HomeContent);
+export default connect(null, { userSignupRequest, userSignInRequest, addFlashMessage, sendMail })(HomeContent);

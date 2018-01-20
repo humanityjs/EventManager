@@ -50,6 +50,10 @@ class SignUpForm extends React.Component {
             type: 'Success',
             text: 'Successfully Created Account.'
         });
+        let title = 'Welcome to Ecenter';
+        let message = `Thank you for choosing Ecenter, We hope to make your events
+        memorable.<br/> Click on this <a href="#">link</a> to see our event centers and get started`
+        this.props.sendMail(this.state.email, message, title);
         this.context.router.history.push('/dashboard')
       })
       .catch((error) => {
@@ -117,7 +121,8 @@ class SignUpForm extends React.Component {
 
 SignUpForm.propTypes = {
   userSignupRequest: PropTypes.func.isRequired,
-  addFlashMessage: PropTypes.func.isRequired
+  addFlashMessage: PropTypes.func.isRequired,
+  sendMail: PropTypes.func.isRequired,
 }
 
 SignUpForm.contextTypes = {

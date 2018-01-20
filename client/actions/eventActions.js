@@ -1,5 +1,4 @@
 import axios from 'axios';
-// import { GET_EVENTS_BEGIN, GET_EVENTS_ERROR, GET_EVENTS } from './types';
 
 export function createEvent(data) {
   return (dispatch) => {

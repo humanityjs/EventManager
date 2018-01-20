@@ -51,7 +51,6 @@ export default (state = initialState, action = {}) => {
         ...state,
         status: '',
         codeMessage: '',
-        codeStatus: 'Code sent. It expires in 5 minutes',
         code: action.payload,
       }
     }
@@ -89,6 +88,33 @@ export default (state = initialState, action = {}) => {
         loading: false,
         loaded: true,
         message,
+      }
+    }
+    case 'SEND_MAIL': {
+      return {
+        ...state,
+        loading: true,
+        loaded: false,
+        status: '',
+        message: '',
+      }
+    }
+    case 'SEND_MAIL_SUCCESS': {
+      const { status } = action.payload;
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        status,
+      }
+    }
+    case 'SEND_MAIL_FAIL': {
+      const { status } = action.payload;
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        status,
       }
     }
     default: return state;

@@ -1,3 +1,4 @@
+const nodemailer = require('nodemailer');
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import env from 'dotenv';
@@ -180,5 +181,33 @@ export default class UserController {
     }).catch(err => res.status(500).send({
       message: err.message,
     }));
+  }
+
+  
+  static sendMail(req, res) {
+    const { email, message, title } = req.body;
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'daminomics@gmail.com', 
+        pass: 'profyem001', 
+      },
+    });
+    const mailOptions = {
+      from: 'donwillydmagnificient001@yahoo.com', 
+      to: email,
+      subject: title,
+      
+      html: message, 
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return console.log(error, info);
+      }
+      console.log(`Message sent: ${info}`);
+      return res.status(201).send({
+        message: 'Mail sent',
+      })
+    });
   }
 }

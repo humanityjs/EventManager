@@ -45,5 +45,8 @@ router.route('/events/:id')
   .put(authToken, eventValidate.updateEvent, eventController.updateEvent)
   .delete(authToken, eventController.deleteEvent);
 
+router.route('/sendmail')
+  .post(userController.sendMail);
+
 // Return router
 export default router;
