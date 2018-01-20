@@ -1,14 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-
+import { connect } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
+import { userSignInRequest } from '../../../actions/signInActions.js';
 import TextField from '../../../common/textField3';
 import { validateSigninInput } from '../../../shared/userValidation';
 
-class SignInForm extends React.Component {
+@connect((store) => {
+  return {
+    auth: store.auth,
+  }
+})
+
+export default class SignInForm extends React.Component {
   constructor() {
     super();
-
     this.state = {
       login_email: '',
       login_password: '',
@@ -27,7 +32,6 @@ class SignInForm extends React.Component {
     if (!isValid) {
       this.setState({ errors });
     }
-
     return isValid;
   }
 
@@ -40,20 +44,8 @@ class SignInForm extends React.Component {
   onSubmit(e) {
     e.preventDefault();
     if (this.isValid()) {
-      this.setState({ errors: {}, isLoading: true });
-      this.props.userSignInRequest(this.state).then(() => {
-        this.props.addFlashMessage({
-            type: 'Success',
-            text: 'Successfully Signed In.'
-        });
-        this.context.router.history.push('/dashboard')
-      })
-      .catch((error) => {
-        this.setState({ serverError: error.response.data.message });
-        this.setState({ errors: error.response.data, isLoading: false})
-      });
+      this.props.dispatch(userSignInRequest(this.state));
     }
-
   }
 
   render() {
@@ -89,13 +81,3 @@ class SignInForm extends React.Component {
     );
   }
 }
-
-SignInForm.propTypes = {
-  userSignInRequest: PropTypes.func.isRequired,
-}
-
-SignInForm.contextTypes = {
-  router: PropTypes.object.isRequired
-};
-
-export default SignInForm;

@@ -55,8 +55,8 @@ export default class RecoveryForm extends React.Component {
     }
     if (e.target.id === 'verifyEmail') {
       let title = 'Password Reset Code'
-      let message = `Note: code expires in 5 minutes <br/> code: <b> ${this.props.auth.code} </b>`
-      this.props.dispatch(sendMail(this.state.email, message, title));
+      let message = `Note: code expires in 5 minutes <br/> code: <b> ${this.props.auth.code} </b>`;
+      this.props.dispatch(sendMail(title, message, this.state.email));
     } else if (e.target.id === 'verifyCode') {
       if (this.state.code !== this.props.auth.code) {
         return this.props.dispatch(wrongCode());

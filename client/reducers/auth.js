@@ -13,13 +13,70 @@ const initialState = {
 export default (state = initialState, action = {}) => {
   switch (action.type) {
     
-    case SET_CURRENT_USER:
+    case 'SET_CURRENT_USER': {
+      const { status } = action.payload;
+      const { isAdmin, id, email } = action.payload.data.data.user;
+      const { token } = action.payload.data;
+      const userData = {
+        isAdmin,
+        id,
+        email,
+      }
       return {
-        isAuth: !isEmpty(action.user),
-        user: action.user,
-        userToken: action.userToken,
+        isAuth: !isEmpty(userData),
+        user: userData,
+        userToken: token,
+        status,
       };
-
+    }
+    case 'USER_LOGIN': {
+      return {
+        ...state,
+        loading: true,
+        loaded: false,
+        status: '',
+      }
+    }
+    case 'USER_LOGIN_SUCCESS': {
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+      }
+    }
+    case 'USER_LOGIN_FAIL': {
+      const { status } = action.payload;
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        status,
+      }
+    }
+    case 'USER_SIGNUP': {
+      return {
+        ...state,
+        loading: true,
+        loaded: false,
+        status: '',
+      }
+    }
+    case 'USER_SIGNUP_SUCCESS': {
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+      }
+    }
+    case 'USER_SIGNUP_FAIL': {
+      const { status } = action.payload;
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        status,
+      }
+    }
     case 'VERIFY_EMAIL': {
       return {
         ...state,

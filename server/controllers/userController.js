@@ -57,7 +57,7 @@ export default class UserController {
                 expiresIn: 60 * 60 * 12,
               });
               req.body.token = token;
-              return res.status(200).send({
+              return res.status(201).send({
                 message: 'You are now Signed Up',
                 data: {
                   email: users.email,
@@ -193,6 +193,7 @@ export default class UserController {
         pass: 'profyem001', 
       },
     });
+    
     const mailOptions = {
       from: 'donwillydmagnificient001@yahoo.com', 
       to: email,

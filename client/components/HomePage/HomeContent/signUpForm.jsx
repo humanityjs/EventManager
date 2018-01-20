@@ -1,15 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
+import { connect } from 'react-redux';
+import { sendMail, userSignupRequest } from '../../../actions/signInActions.js';
 import { validateSignupInput } from '../../../shared/userValidation';
 import TextField from '../../../common/textField3';
 
-
-
-
-class SignUpForm extends React.Component {
-  constructor(props) {
-    super(props);
+@connect((store) => {
+  return {
+    auth: store.auth,
+  }
+})
+export default class SignUpForm extends React.Component {
+  constructor() {
+    super();
     this.state = {
       fullname: '',
       email: '',
@@ -35,7 +37,6 @@ class SignUpForm extends React.Component {
     if (!isValid) {
       this.setState({ errors });
     }
-
     return isValid;
   }
 
@@ -43,25 +44,9 @@ class SignUpForm extends React.Component {
   onSubmit(e) {
     e.preventDefault();
     if (this.isValid()) {
-      
-      this.setState({ errors: {}, isLoading: true });
-      this.props.userSignupRequest(this.state).then(() => {
-        this.props.addFlashMessage({
-            type: 'Success',
-            text: 'Successfully Created Account.'
-        });
-        let title = 'Welcome to Ecenter';
-        let message = `Thank you for choosing Ecenter, We hope to make your events
-        memorable.<br/> Click on this <a href="#">link</a> to see our event centers and get started`
-        this.props.sendMail(this.state.email, message, title);
-        this.context.router.history.push('/dashboard')
-      })
-      .catch((error) => {
-        this.setState({ serverError: error.response.data.message });
-        this.setState({ errors: error.response.data, isLoading: false})
-      });
+      this.props.dispatch(userSignupRequest(this.state));
+      this.context.router.history.push('/dashboard');
     }
-  
   }
  
  
@@ -119,14 +104,3 @@ class SignUpForm extends React.Component {
   }
 }
 
-SignUpForm.propTypes = {
-  userSignupRequest: PropTypes.func.isRequired,
-  addFlashMessage: PropTypes.func.isRequired,
-  sendMail: PropTypes.func.isRequired,
-}
-
-SignUpForm.contextTypes = {
-  router: PropTypes.object.isRequired
-};
-
-export default SignUpForm;

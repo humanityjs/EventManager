@@ -2,22 +2,46 @@ import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import shortid from 'shortid';
 import setAuthToken from '../utils/setAuthorizationToken';
-import { SET_CURRENT_USER } from './types';
 
-export function setCurrentUser(user) {
-  return {
-    type: SET_CURRENT_USER,
-    user,
+
+export function setCurrentUser(response) {
+  return (dispatch) => {
+    dispatch({ type: 'SET_CURRENT_USER', payload: response })
+  };
+}
+export function sendMail(title, message, email) {
+  return (dispatch) => {
+    const data = {
+      title,
+      message,
+      email,
+    }
+    dispatch({ type: 'SEND_MAIL' });
+    axios.post('api/v1/sendmail', data).then((response) => {
+      dispatch({ type: 'SEND_MAIL_SUCCESS', payload: response });
+    }).catch((err) => {
+      dispatch({ type: 'SEND_MAIL_FAIL', payload: err.response });
+    });
   };
 }
 
 export function userSignupRequest(user) {
-  return dispatch => axios.post('/api/v1/users', user).then((response) => {
-    const { token } = response.data;
-    localStorage.setItem('jwtToken', token);
-    setAuthToken(token);
-    dispatch(setCurrentUser(jwt.decode(token)));
-  })
+  return (dispatch) => {
+    dispatch({ type: 'USER_SIGNUP' });
+    axios.post('/api/v1/users', user).then((response) => {
+      dispatch({ type: 'USER_SIGNUP_SUCCESS' });
+      const { token } = response.data;
+      localStorage.setItem('jwtToken', token);
+      setAuthToken(token);
+      dispatch(setCurrentUser(response));
+      const title = 'Welcome to Ecenter';
+      const message = `Thank you for choosing Ecenter, We hope to make your events
+      memorable.<br/> Click on this <a href="#">link</a> to see our event centers and get started`;
+      dispatch(sendMail(title, message, response.data.data.user.email))
+    }).catch((err) => {
+      dispatch({ type: 'USER_SIGNUP_FAIL', payload: err.response });
+    });
+  }
 }
 
 export function logout() {
@@ -29,13 +53,18 @@ export function logout() {
 }
 
 export function userSignInRequest(user) {
-
-  return dispatch => axios.post('api/v1/users/login', user).then((response) => {
-    const { token } = response.data;
-    localStorage.setItem('jwtToken', token);
-    setAuthToken(token);
-    dispatch(setCurrentUser(jwt.decode(token)));
-  });
+  return (dispatch) => {
+    dispatch({ type: 'USER_LOGIN' });
+    axios.post('api/v1/users/login', user).then((response) => {
+      dispatch({ type: 'USER_LOGIN_SUCCESS' });
+      const { token } = response.data;
+      localStorage.setItem('jwtToken', token);
+      setAuthToken(token);
+      dispatch(setCurrentUser(response));
+    }).catch((err) => {
+      dispatch({ type: 'USER_LOGIN_FAIL', payload: err.response });
+    });
+  };
 }
 
 export function confirmEmail(data) {
@@ -45,22 +74,6 @@ export function confirmEmail(data) {
       dispatch({ type: 'VERIFY_EMAIL_SUCCESS', payload: response });
     }).catch((err) => {
       dispatch({ type: 'VERIFY_EMAIL_FAIL', payload: err.response.data });
-    });
-  };
-}
-
-export function sendEmail(title, message, email) {
-  return (dispatch) => {
-    const data = {
-      title,
-      message,
-      email,
-    }
-    dispatch({ type: 'SEND_EMAIL' });
-    axios.post('api/v1/sendmail', data).then((response) => {
-      dispatch({ type: 'SEND_EMAIL_SUCCESS', payload: response });
-    }).catch((err) => {
-      dispatch({ type: 'SEND_EMAIL_FAIL', payload: err.response });
     });
   };
 }
