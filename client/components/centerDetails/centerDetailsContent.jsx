@@ -89,6 +89,7 @@ export default class CenterDetailsContent extends React.Component {
   
 
   render() {
+    const { path } = this.props;
     const { event } = this.props.event;
     const { center } = this.props.center;
     const events = _.map(this.props.events, (event) => {
@@ -210,7 +211,7 @@ export default class CenterDetailsContent extends React.Component {
                 </div>
               </div>
             </div>
-            <DeleteModal />
+            <DeleteModal path={path}/>
             <Modal message={message}/>
           </div>
         </div>

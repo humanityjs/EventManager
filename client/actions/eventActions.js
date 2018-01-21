@@ -73,7 +73,7 @@ export function modifyEvent(id, data) {
   };
 }
 
-export function deleteCenterEvent(id, centerId) {
+export function deleteCenterEvent(id, centerId, user) {
   return (dispatch) => {
     dispatch({ type: 'DELETE_CENTER_EVENT' });
     axios.delete(`api/v1/events/${id}`).then((res) => {
@@ -97,3 +97,8 @@ export function deleteEvent(id) {
   };
 }
 
+export function clearEventState() {
+  return (dispatch) => {
+    dispatch({ type: 'CLEAR_EVENT_STATE' });
+  }
+}

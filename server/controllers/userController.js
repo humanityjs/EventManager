@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import env from 'dotenv';
@@ -96,7 +97,7 @@ export default class UserController {
       if (user && user.email.toLowerCase === login_email.toLowerCase) {
         const check = bcrypt.compareSync(login_password, user.password);
         if (check) {
-          const payload = { email: user.email, isAdmin: user.isAdmin, id: user.id };
+          const payload = { fullname: user.fullname, email: user.email, isAdmin: user.isAdmin, id: user.id };
           const token = jwt.sign(payload, process.env.SECRET, {
             expiresIn: 60 * 60 * 12,
           });
@@ -162,16 +163,14 @@ export default class UserController {
       if (user) {
         const saltRounds = 10;
         bcrypt.genSalt(saltRounds, (err, salt) => {
-          bcrypt.hash(password, salt, (err, hash) => {
-            return user.update({
-              fullname: fullname || user.fullname,
-              password: hash || user.password,
-            }).then(() => res.status(200).send({
-              message: 'Changes Applied Successfully',
-            })).catch(err => res.status(500).send({
-              message: err.message,
-            }))
-          });
+          bcrypt.hash(password, salt, (err, hash) => user.update({
+            fullname: fullname || user.fullname,
+            password: hash || user.password,
+          }).then(() => res.status(200).send({
+            message: 'Changes Applied Successfully',
+          })).catch(err => res.status(500).send({
+            message: err.message,
+          })));
         });
       } else {
         return res.status(400).send({
@@ -183,24 +182,25 @@ export default class UserController {
     }));
   }
 
-  
+
   static sendMail(req, res) {
     const { email, message, title } = req.body;
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'daminomics@gmail.com', 
-        pass: 'profyem001', 
+        user: 'daminomics@gmail.com',
+        pass: 'profyem001',
       },
     });
-    
+
     const mailOptions = {
-      from: 'donwillydmagnificient001@yahoo.com', 
+      from: 'donwillydmagnificient001@yahoo.com',
       to: email,
       subject: title,
-      
-      html: message, 
+
+      html: message,
     };
+    console.log(message, title, email)
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         return console.log(error, info);
@@ -208,7 +208,26 @@ export default class UserController {
       console.log(`Message sent: ${info}`);
       return res.status(201).send({
         message: 'Mail sent',
-      })
+      });
     });
+  }
+
+  static getUserEmail(req, res) {
+    Users.findOne({
+      where: {
+        id: req.params.id,
+      },
+    }).then((user) => {
+      if (user) {
+        return res.status(200).send({
+          email: user.email,
+        });
+      }
+      return res.status(400).send({
+        message: 'No user Found',
+      });
+    }).catch(error => res.status(500).send({
+      message: error.message,
+    }));
   }
 }

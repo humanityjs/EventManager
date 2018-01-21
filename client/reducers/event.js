@@ -46,6 +46,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        loaded: false,
+        message: '',
       };
     }
     case 'GET_CENTER_EVENTS_FAILS': {
@@ -133,6 +135,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        loaded: false,
+        message: '',
       };
     }
     case 'MODIFY_CENTER_EVENT_FAILS': {
@@ -226,6 +230,12 @@ export default (state = initialState, action) => {
         message,
         status,
       };
+    }
+    case 'CLEAR_EVENT_STATE': {
+      return  {
+        ...state,
+        status: '',
+      }
     }
     default:
       return state;

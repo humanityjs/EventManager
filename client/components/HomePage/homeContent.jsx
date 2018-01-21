@@ -31,9 +31,9 @@ export default class HomeContent extends React.Component {
   render() {
     const { isAuth, status } = this.props.auth;
 
-    if (status === 200) {
-      return (<Redirect to="/dashboard" />);
-    }
+    // if (status === 200) {
+    //   return (<Redirect to="/dashboard" />);
+    // }
     let messageDisplay, form;
     if (this.state.signupHidden) {
       messageDisplay = "Are you new here? Create An Account";

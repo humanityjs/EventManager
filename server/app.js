@@ -26,11 +26,6 @@ app.use(webpackHotMiddleware(compiler));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/index.html'));
-});
-
 app.use('/api/v1/', (req, res, next) => {
   let err = null;
   try {
@@ -45,8 +40,10 @@ app.use('/api/v1/', (req, res, next) => {
   
 }, userRoute);
 
+app.all('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/index.html'));
+});
 
-app.all('*', (req, res) => res.status(404).send({ error: 'page not found' }));
 
 app.set('port', process.env.PORT || 3000);
 

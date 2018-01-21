@@ -48,5 +48,8 @@ router.route('/events/:id')
 router.route('/sendmail')
   .post(userController.sendMail);
 
+router.route('/userEmail/:id')
+  .get(authAdminToken, userController.getUserEmail);
+
 // Return router
 export default router;

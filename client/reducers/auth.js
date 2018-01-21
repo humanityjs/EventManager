@@ -12,21 +12,13 @@ const initialState = {
 };
 export default (state = initialState, action = {}) => {
   switch (action.type) {
-    
+
     case 'SET_CURRENT_USER': {
-      const { status } = action.payload;
-      const { isAdmin, id, email } = action.payload.data.data.user;
-      const { token } = action.payload.data;
-      const userData = {
-        isAdmin,
-        id,
-        email,
-      }
+      const { token, user } = action.payload;
       return {
-        isAuth: !isEmpty(userData),
-        user: userData,
+        isAuth: !isEmpty(user),
+        user,
         userToken: token,
-        status,
       };
     }
     case 'USER_LOGIN': {
@@ -35,14 +27,14 @@ export default (state = initialState, action = {}) => {
         loading: true,
         loaded: false,
         status: '',
-      }
+      };
     }
     case 'USER_LOGIN_SUCCESS': {
       return {
         ...state,
         loading: false,
         loaded: true,
-      }
+      };
     }
     case 'USER_LOGIN_FAIL': {
       const { status } = action.payload;
@@ -51,7 +43,7 @@ export default (state = initialState, action = {}) => {
         loading: false,
         loaded: true,
         status,
-      }
+      };
     }
     case 'USER_SIGNUP': {
       return {
@@ -59,14 +51,14 @@ export default (state = initialState, action = {}) => {
         loading: true,
         loaded: false,
         status: '',
-      }
+      };
     }
     case 'USER_SIGNUP_SUCCESS': {
       return {
         ...state,
         loading: false,
         loaded: true,
-      }
+      };
     }
     case 'USER_SIGNUP_FAIL': {
       const { status } = action.payload;
@@ -75,15 +67,15 @@ export default (state = initialState, action = {}) => {
         loading: false,
         loaded: true,
         status,
-      }
+      };
     }
     case 'VERIFY_EMAIL': {
       return {
         ...state,
         loading: true,
         status: '',
-        message:'',
-      }
+        message: '',
+      };
     }
     case 'VERIFY_EMAIL_SUCCESS': {
       const { status } = action.payload;
@@ -92,7 +84,7 @@ export default (state = initialState, action = {}) => {
         loading: false,
         loaded: true,
         status,
-      }
+      };
     }
     case 'VERIFY_EMAIL_FAIL': {
       const { message } = action.payload;
@@ -101,7 +93,7 @@ export default (state = initialState, action = {}) => {
         loading: false,
         loaded: true,
         message,
-      }
+      };
     }
     case 'GENERATE_CODE': {
       return {
@@ -109,15 +101,15 @@ export default (state = initialState, action = {}) => {
         status: '',
         codeMessage: '',
         code: action.payload,
-      }
+      };
     }
     case 'WRONG_CODE': {
       return {
         ...state,
         status: '',
         codeMessage: action.payload,
-        codeStatus:'',
-      }
+        codeStatus: '',
+      };
     }
     case 'UPDATE_USER': {
       return {
@@ -127,7 +119,7 @@ export default (state = initialState, action = {}) => {
         code: '',
         loading: true,
         loaded: false,
-      }
+      };
     }
     case 'UPDATE_USER_SUCCESS': {
       const { message } = action.payload.data;
@@ -136,7 +128,7 @@ export default (state = initialState, action = {}) => {
         loading: false,
         loaded: true,
         message,
-      }
+      };
     }
     case 'UPDATE_USER_FAILS': {
       const { message } = action.payload;
@@ -145,7 +137,7 @@ export default (state = initialState, action = {}) => {
         loading: false,
         loaded: true,
         message,
-      }
+      };
     }
     case 'SEND_MAIL': {
       return {
@@ -154,7 +146,7 @@ export default (state = initialState, action = {}) => {
         loaded: false,
         status: '',
         message: '',
-      }
+      };
     }
     case 'SEND_MAIL_SUCCESS': {
       const { status } = action.payload;
@@ -163,7 +155,7 @@ export default (state = initialState, action = {}) => {
         loading: false,
         loaded: true,
         status,
-      }
+      };
     }
     case 'SEND_MAIL_FAIL': {
       const { status } = action.payload;
@@ -172,7 +164,16 @@ export default (state = initialState, action = {}) => {
         loading: false,
         loaded: true,
         status,
-      }
+      };
+    }
+    case 'GET_USER_EMAIL': {
+      const { email } = action.payload.data;
+      return {
+        ...state,
+        loaded: true,
+        loading: false,
+        email,
+      };
     }
     default: return state;
   }
