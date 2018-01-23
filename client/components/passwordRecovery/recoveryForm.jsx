@@ -187,8 +187,8 @@ export default class RecoveryForm extends React.Component {
           onChange={this.onChange}
           error={error.email} 
           />
-          <input type="submit" value="Submit" className="btn btn-primary"/>
-          <span onClick={this.swap}>Back</span>
+          <input type="submit" value="Submit" className="btn btn-primary"/><br/>
+          <a href="#"><p onClick={this.swap}>back</p></a>
         </form>
       </div>
       <div id="insertEmail">

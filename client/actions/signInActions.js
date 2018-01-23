@@ -5,7 +5,6 @@ import setAuthToken from '../utils/setAuthorizationToken';
 
 
 export function setCurrentUser(user, token) {
-  console.log(user)
   return (dispatch) => {
     dispatch({ type: 'SET_CURRENT_USER', payload: { user, token } })
   };
@@ -30,15 +29,11 @@ export function userSignupRequest(user) {
   return (dispatch) => {
     dispatch({ type: 'USER_SIGNUP' });
     axios.post('/api/v1/users', user).then((response) => {
-      dispatch({ type: 'USER_SIGNUP_SUCCESS' });
+      dispatch({ type: 'USER_SIGNUP_SUCCESS', payload: response });
       const { token } = response.data;
       localStorage.setItem('jwtToken', token);
       setAuthToken(token);
       dispatch(setCurrentUser(jwt.decode(token), token));
-      const title = 'Welcome to Ecenter';
-      const message = `Thank you for choosing Ecenter, We hope to make your events
-      memorable.<br/> Click on this <a href="#">link</a> to see our event centers and get started`;
-      dispatch(sendMail(title, message, response.data.data.user.email))
     }).catch((err) => {
       dispatch({ type: 'USER_SIGNUP_FAIL', payload: err.response });
     });

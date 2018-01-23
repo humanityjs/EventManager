@@ -1,5 +1,5 @@
 import isEmpty from 'lodash/isEmpty';
-import { SET_CURRENT_USER } from '../actions/types';
+
 
 const initialState = {
   isAuth: false,
@@ -9,6 +9,7 @@ const initialState = {
   status: '',
   message: '',
   error: '',
+  userToken:'',
 };
 export default (state = initialState, action = {}) => {
   switch (action.type) {
@@ -51,22 +52,27 @@ export default (state = initialState, action = {}) => {
         loading: true,
         loaded: false,
         status: '',
+        message: '',
       };
     }
     case 'USER_SIGNUP_SUCCESS': {
-      return {
-        ...state,
-        loading: false,
-        loaded: true,
-      };
-    }
-    case 'USER_SIGNUP_FAIL': {
       const { status } = action.payload;
       return {
         ...state,
         loading: false,
         loaded: true,
         status,
+      };
+    }
+    case 'USER_SIGNUP_FAIL': {
+      const { status } = action.payload;
+      const { message } = action.payload.data;
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        status,
+        message,
       };
     }
     case 'VERIFY_EMAIL': {

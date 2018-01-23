@@ -43,9 +43,11 @@ export default class UserController {
       const saltRounds = 10;
       bcrypt.genSalt(saltRounds, (err, salt) => {
         bcrypt.hash(password, salt, (err, hash) => {
+          const fname = fullname.toLowerCase();
+          const mail = email.toLowerCase();
           Users.create({
-            fullname,
-            email,
+            fullname: fname,
+            email: mail,
             password: hash,
           }).then(() => {
             Users.findOne({
@@ -200,7 +202,6 @@ export default class UserController {
 
       html: message,
     };
-    console.log(message, title, email)
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         return console.log(error, info);

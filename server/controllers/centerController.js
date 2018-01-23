@@ -17,9 +17,10 @@ class CenterController {
     let locationSearch;
     let facilitySearch;
     let capacitySearch;
+    const place = location;
     if (location) {
       locationSearch = {
-        $ilike: `%${location}%`,
+        $ilike: `%${place}%`,
       }
     } else {
       locationSearch = {
@@ -139,10 +140,11 @@ class CenterController {
             message: `${centerName} already exist`,
           });
         }
-        const facilityArray = facilities.split(',');
+        const place = location.tolowercase();
+        const facilityArray = facilities.split(',').toLowerCase();
         Centers.create({
           centerName,
-          location,
+          location: place,
           description,
           facilities: facilityArray,
           capacity,

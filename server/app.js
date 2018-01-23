@@ -40,7 +40,7 @@ app.use('/api/v1/', (req, res, next) => {
   
 }, userRoute);
 
-app.all('/*', (req, res) => {
+app.all('*/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 

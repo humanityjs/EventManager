@@ -32,9 +32,9 @@ export function getCenterSelected(id) {
   return (dispatch) => {
     dispatch({ type: 'GET_CENTER' });
     axios.get(`api/v1/centers/${id}`).then((response) => {
-      dispatch({ type: 'GET_CENTER_SUCCESS', payload: response.data });
+      dispatch({ type: 'GET_CENTER_SUCCESS', payload: response });
     }).catch((err) => {
-      dispatch({ type: 'GET_CENTER_FAILS', payload: err.response.data });
+      dispatch({ type: 'GET_CENTER_FAILS', payload: err.response });
     });
   };
 }

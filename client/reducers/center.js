@@ -47,7 +47,6 @@ export default (state = initialState, action) => {
     case 'GET_CENTER': {
       return {
         ...state,
-        loading: true,
         error: '',
       };
     }
@@ -61,7 +60,7 @@ export default (state = initialState, action) => {
       };
     }
     case 'GET_CENTER_SUCCESS': {
-      const { center } = action.payload;
+      const { center } = action.payload.data;
       return {
         ...state,
         loading: false,

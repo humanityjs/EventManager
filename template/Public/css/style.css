@@ -233,6 +233,14 @@ text-transform: capitalize;
 .home-inner-page p {
     color: #fff;
 }
+.dropzone {
+  max-width: 300px;
+  border: 2px dotted #808080d4;
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: 5px;
+  height: 180px;
+}
 
 .inner-page {
  background: #cfcbcb;

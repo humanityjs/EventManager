@@ -45,10 +45,18 @@ export default class SignUpForm extends React.Component {
     e.preventDefault();
     if (this.isValid()) {
       this.props.dispatch(userSignupRequest(this.state));
-      this.context.router.history.push('/dashboard');
+
+      // this.context.router.history.push('/dashboard');
     }
   }
- 
+ componentDidUpdate() {
+   if (this.props.auth.status === 201) {
+    const title = 'Welcome to Ecenter';
+    const message = `Thank you for choosing Ecenter, We hope to make your events
+    memorable.<br/> Click on this <a href="#">link</a> to see our event centers and get started`;
+    this.props.dispatch(sendMail(title, message, this.props.auth.user.email));
+   }
+ }
  
 
   render() {
@@ -64,6 +72,7 @@ export default class SignUpForm extends React.Component {
       <div>
         <div className="logo text-uppercase"><strong className="text-primary">Sign Up</strong></div>          
         <h2>Please fill in your details to get started</h2>
+        <span className="help-block">{this.props.auth.message}</span>
         <form id="signup-form" onSubmit={this.onSubmit}>
           <TextField
             id='fullname'
@@ -78,7 +87,7 @@ export default class SignUpForm extends React.Component {
             value={this.state.email}
             placeholder='Email Address'
             type='email'
-            error={errors.email, serverError}
+            error={errors.email}
             onChange={this.onChange} />
             
             <TextField
