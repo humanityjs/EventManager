@@ -33,12 +33,18 @@ export function getCenterEvents(id) {
   };
 }
 
-export function eventSelected(event) {
+export function setCurrentEvent(event) {
   return (dispatch) => {
-    dispatch({ type: 'EVENT_SELECTED', payload: event });
+    dispatch({ type: 'SET_CURRENT_EVENT', payload: event })
   };
 }
-
+export function eventSelected(id) {
+  return (dispatch) => {
+    dispatch({ type: 'EVENT_SELECTED', payload: id });
+    localStorage.setItem('eventId', id);
+    dispatch(setCurrentEvent(id));
+  };
+}
 export function getEventSelected(id) {
   return (dispatch) => {
     dispatch({ type: 'GET_EVENT' });

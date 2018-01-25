@@ -27,7 +27,18 @@ export function getCenters(data) {
     });
   };
 }
-
+export function setCurrentCenter(centerId) {
+  return (dispatch) => {
+    dispatch({ type: 'SET_CURRENT_CENTER', payload: centerId })
+  };
+}
+export function centerSelected(centerId) {
+  return (dispatch) => {
+    dispatch({ type: 'CENTER_SELECTED', payload: centerId });
+    localStorage.setItem('centerId', centerId);
+    dispatch(setCurrentCenter(centerId));
+  };
+}
 export function getCenterSelected(id) {
   return (dispatch) => {
     dispatch({ type: 'GET_CENTER' });
@@ -62,12 +73,6 @@ export function modifyCenter(data, centerId) {
   };
 }
 
-export function centerSelected(center) {
-  return (dispatch) => {
-    dispatch({ type: 'CENTER_SELECTED', payload: center });
-  };
-}
-
 export function uploadImage(id, data) {
   return (dispatch) => {
     dispatch({ type: 'ADD_IMAGE' });
@@ -93,3 +98,9 @@ export function deleteCenter(id) {
     });
   };
 }
+// export function clearState() {
+//   return dispatch => {
+//     const id = '';
+//     dispatch({ type: 'CLEAR _CENTER_STATE', payload: id});
+//   }
+// }

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import isEmpty from 'lodash/isEmpty';
-import { getCenters, getCenterSelected } from '../actions/centerActions';
+import { getCenters, getCenterSelected, clearState } from '../actions/centerActions';
 import { getEventSelected } from '../actions/eventActions';
 import AddEventForm from './eventPage/addEventForm.jsx';
 import Modal from './flash/modal';
@@ -20,10 +20,13 @@ export default class Event extends React.Component {
   
   
   componentWillMount() {
+    if (this.props.path === '/add-event') {
+      // this.props.dispatch(clearState());
+    }
     this.props.dispatch(getCenters());
-    this.props.dispatch(getCenterSelected(this.props.center.centerSelected));
-    if (this.props.path == '/modify-event') {
-      const id = this.props.event.eventSelected;
+    this.props.dispatch(getCenterSelected(this.props.center.id));
+    if (this.props.path === '/modify-event') {
+      const id = this.props.event.id;
       this.props.dispatch(getEventSelected(id));
     }
   }

@@ -1,5 +1,5 @@
-
-//import { GET_CENTERS, GET_CENTERS_BEGIN, GET_CENTERS_ERROR } from '../actions/types';
+import isEmpty from 'lodash/isEmpty';
+// import { GET_CENTERS, GET_CENTERS_BEGIN, GET_CENTERS_ERROR } from '../actions/types';
 
 const initialState = {
   loading: false,
@@ -11,6 +11,21 @@ const initialState = {
 };
 export default (state = initialState, action) => {
   switch (action.type) {
+    // case 'CLEAR_CENTER_STATE': {
+    //   const id = action.payload;
+    //   return {
+    //     ...state,
+    //     id,
+    //   };
+    // }
+    case 'SET_CURRENT_CENTER': {
+      const id = action.payload;
+      return {
+        ...state,
+        isCenter: !isEmpty(id),
+        id,
+      };
+    }
 
     case 'GET_CENTERS': {
       return {
@@ -41,8 +56,7 @@ export default (state = initialState, action) => {
     case 'CENTER_SELECTED': {
       return {
         ...state,
-        centerSelected: action.payload,
-      }
+      };
     }
     case 'GET_CENTER': {
       return {
@@ -121,7 +135,7 @@ export default (state = initialState, action) => {
         ...state,
         loading: true,
         status: '',
-      }
+      };
     }
     case 'ADD_CENTER_FAILS': {
       const { status } = action.payload;
@@ -139,14 +153,14 @@ export default (state = initialState, action) => {
         loaded: true,
         status,
         center,
-      }
+      };
     }
     case 'ADD_IMAGE': {
       return {
         ...state,
         loading: true,
         status: '',
-      }
+      };
     }
     case 'ADD_IMAGE_FAILS': {
       const { message } = action.payload;
@@ -162,8 +176,9 @@ export default (state = initialState, action) => {
         loading: false,
         loaded: true,
         url,
-      }
+      };
     }
+    
     default:
       return state;
   }

@@ -26,11 +26,12 @@ export default class AddEventPage extends React.Component {
     if (this.props.center.status === 401) {
       this.logout();
     }
+    const { pathname } = this.props.location;
     
     return (
       <div>
         <Navbar />
-        <Content />
+        <Content path={pathname} />
         <Footer />
       </div>
     )

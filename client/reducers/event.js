@@ -1,4 +1,4 @@
-
+import isEmpty from 'lodash/isEmpty';
 //import { GET_EVENTS, GET_EVENTS_BEGIN, GET_EVENTS_ERROR } from '../actions/types';
 
 const initialState = {
@@ -9,12 +9,21 @@ const initialState = {
   event: {
     eventTitle: '',
   },
-  eventSelected: '',
   message: '',
   status: '',
+  isEvent: false,
 };
 export default (state = initialState, action) => {
   switch (action.type) {
+
+    case 'SET_CURRENT_EVENT': {
+      const id = action.payload;
+      return {
+        ...state,
+        isEvent: !isEmpty(id),
+        id,
+      };
+    }
 
     case 'GET_EVENTS': {
       return {
@@ -76,7 +85,6 @@ export default (state = initialState, action) => {
     case 'EVENT_SELECTED': {
       return {
         ...state,
-        eventSelected: action.payload,
         message: '',
         status: '',
       }

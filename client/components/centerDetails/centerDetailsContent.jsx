@@ -33,7 +33,7 @@ export default class CenterDetailsContent extends React.Component {
   }
 
   componentWillMount() {
-    const id = this.props.center.centerSelected;
+    const id = this.props.center.id;
     this.props.dispatch(getCenterSelected(id));
     this.props.dispatch(getCenterEvents(id));
   }
