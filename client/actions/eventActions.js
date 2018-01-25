@@ -1,10 +1,12 @@
 import axios from 'axios';
+import { centerStatus } from './centerActions';
 
-export function createEvent(data) {
+export function createEvent(data, id) {
   return (dispatch) => {
     dispatch({ type: 'ADD_EVENT' });
-    axios.post('api/v1/events',data).then((response) => {
+    axios.post('api/v1/events', data).then((response) => {
       dispatch({ type: 'ADD_EVENT_SUCCESS', payload: response });
+      dispatch(centerStatus(id));
     }).catch((err) => {
       dispatch({ type: 'ADD_EVENT_FAILS', payload: err.response.data });
     });
@@ -68,11 +70,12 @@ export function modifyCenterEvent(id, data, centerId) {
   };
 }
 
-export function modifyEvent(id, data) {
+export function modifyEvent(id, data, centerId) {
   return (dispatch) => {
     dispatch({ type: 'MODIFY_EVENT' });
     axios.put(`api/v1/events/${id}`, data).then((response) => {
       dispatch({ type: 'MODIFY_EVENT_SUCCESS', payload: response });
+      dispatch(centerStatus(centerId));
     }).catch((err) => {
       dispatch({ type: 'MODIFY_EVENT_FAILS', payload: err.response.data });
     });

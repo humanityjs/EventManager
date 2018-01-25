@@ -221,6 +221,29 @@ class CenterController {
       message: error.message,
     }));
   }
+
+  static centerStatus(req, res) {
+    const { id } = req.params;
+    return Centers.findById(id).then((center) => {
+      if (center) {
+        return center.update({
+          status: false,
+        }).then(() => {
+          return res.status(200).send({
+            message: 'ok',
+          });
+        });
+      }
+      return res.status(404).send({
+        message: 'not found',
+      })
+    }).catch((error) => {
+      return res.status(500).send({
+        message: error.message,
+      });
+    });
+  }
 }
+
 
 export default CenterController;

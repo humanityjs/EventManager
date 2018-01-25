@@ -112,12 +112,12 @@ export default class AddEventForm extends React.Component {
         if (!isEmpty(this.state.description) || !isEmpty(this.state.eventTitle)
       || !isEmpty(this.state.bookedDate) || !isEmpty(this.state.centerId)) {
         if (this.isValid()) {
-          this.props.dispatch(modifyEvent(this.props.event.event.id, this.state));
+          this.props.dispatch(modifyEvent(this.props.event.event.id, this.state. this.state.centerId));
         }
       }      
     } else {
       if (this.isValid()) {
-        this.props.dispatch(createEvent(this.state));
+        this.props.dispatch(createEvent(this.state, this.state.centerId));
       }
     }
   }

@@ -51,5 +51,8 @@ router.route('/sendmail')
 router.route('/userEmail/:id')
   .get(authAdminToken, userController.getUserEmail);
 
+router.route('/centerStatus/:id')
+  .put(centerController.centerStatus);
+
 // Return router
 export default router;

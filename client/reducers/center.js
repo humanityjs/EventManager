@@ -178,7 +178,28 @@ export default (state = initialState, action) => {
         url,
       };
     }
-    
+    case 'CENTER_STATUS_UPDATE': {
+      return {
+        ...state,
+        loading: true,
+      }
+    }
+    case 'CENTER_STATUS_UPDATE_SUCCESS': {
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+      }
+    }
+    case 'CENTER_STATUS_UPDATE_FAILS': {
+      const { message } = action.payload;
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        error: message,
+      }
+    }
     default:
       return state;
   }

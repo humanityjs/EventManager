@@ -6,7 +6,7 @@ export function getCenters(data) {
   return (dispatch) => {
     dispatch({ type: 'GET_CENTERS' });
     let query;
-    
+
     if (data) {
       query = axios.get('api/v1/centers', {
         params: {
@@ -29,7 +29,7 @@ export function getCenters(data) {
 }
 export function setCurrentCenter(centerId) {
   return (dispatch) => {
-    dispatch({ type: 'SET_CURRENT_CENTER', payload: centerId })
+    dispatch({ type: 'SET_CURRENT_CENTER', payload: centerId });
   };
 }
 export function centerSelected(centerId) {
@@ -76,7 +76,7 @@ export function modifyCenter(data, centerId) {
 export function uploadImage(id, data) {
   return (dispatch) => {
     dispatch({ type: 'ADD_IMAGE' });
-    delete axios.defaults.headers.common["x-access-token"];
+    delete axios.defaults.headers.common['x-access-token'];
     axios.post('https://api.cloudinary.com/v1_1/kalel/image/upload', data)
       .then((response) => {
         dispatch({ type: 'ADD_IMAGE_SUCCESS', payload: response.data.secure_url });
@@ -95,6 +95,18 @@ export function deleteCenter(id) {
       dispatch(getCenters());
     }).catch((err) => {
       dispatch({ type: 'DELETE_CENTER_FAILS', payload: err.response.data });
+    });
+  };
+}
+
+export function centerStatus(id) {
+  return (dispatch) => {
+    dispatch({ type: 'CENTER_STATUS_UPDATE' });
+    console.log(id);
+    axios.put(`api/v1/centerStatus/${id}`).then((response) => {
+      dispatch({ type: 'CENTER_STATUS_UPDATE_SUCCESS', payload: response });
+    }).catch((err) => {
+      dispatch({ type: 'CENTER_STATUS_UPDATE_FAILS', payload: err.response.data });
     });
   };
 }
