@@ -102,13 +102,23 @@ export function deleteCenter(id) {
 export function centerStatus(id) {
   return (dispatch) => {
     dispatch({ type: 'CENTER_STATUS_UPDATE' });
-    console.log(id);
     axios.put(`api/v1/centerStatus/${id}`).then((response) => {
       dispatch({ type: 'CENTER_STATUS_UPDATE_SUCCESS', payload: response });
     }).catch((err) => {
       dispatch({ type: 'CENTER_STATUS_UPDATE_FAILS', payload: err.response.data });
     });
   };
+}
+
+export function setActivity(data) {
+  return (dispatch) => {
+    dispatch({ type: 'SET_ACTIVITY' });
+    axios.post('api/v1/activity', data).then((response) => {
+      dispatch({ type: 'SET_ACTIVITY_SUCCESS', payload: response });
+    }).catch((err) => {
+      dispatch({ type: 'SET_ACTIVITY_FAILS', payload: err.response.data });
+    });
+  }
 }
 // export function clearState() {
 //   return dispatch => {

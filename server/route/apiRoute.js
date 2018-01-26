@@ -3,6 +3,7 @@ import express from 'express';
 import userController from '../controllers/userController';
 import centerController from '../controllers/centerController';
 import eventController from '../controllers/eventController';
+import activityController from '../controllers/activityContoller';
 import authToken from '../middleware/authenticateToken';
 import authAdminToken from '../middleware/authAdminToken';
 import userValidate from '../middleware/userValidate';
@@ -54,5 +55,7 @@ router.route('/userEmail/:id')
 router.route('/centerStatus/:id')
   .put(centerController.centerStatus);
 
+router.route('/activity')
+  .post(activityController.setActivity);
 // Return router
 export default router;

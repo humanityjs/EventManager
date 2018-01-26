@@ -34,7 +34,7 @@ export default class DisplayCenters extends React.Component {
   render() {
     const path = this.props.path;
     const { centers } = this.props.center;
-    const adminCenterPage = _.map(centers, (center) => {
+    const adminCenter = _.map(centers, (center) => {
       return (
         <div className="row" key={center.id}>
           <div className="col-lg-3">
@@ -65,7 +65,17 @@ export default class DisplayCenters extends React.Component {
         </div>
       )
     }); 
-    
+    const adminCenterPage = (
+      <div className="row inner">
+        <div className="col-lg-9">
+          {adminCenter}
+        </div>
+        <div className="col-lg-3">
+          <div className="row ml">
+          </div>
+        </div>
+      </div>
+    )
     const guestCenterPage = _.map(centers, (center) => {
       return (
         <div className="row" id={center.id} key={center.id}>
@@ -96,7 +106,7 @@ export default class DisplayCenters extends React.Component {
     });
 
     return (
-      <div className="container">
+      <div>
         { this.props.auth.user.isAdmin ? adminCenterPage : guestCenterPage }
         <DeleteModal path={path}/>
       </div>

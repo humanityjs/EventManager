@@ -12,6 +12,7 @@ import { addEventValidation, modifyEventValidation } from '../../shared/eventVal
 
 @connect((store) => {
   return {
+    auth: store.user,
     centers: store.center.centers,
     center: store.center.center,
     dates: store.event.disableDates,
@@ -117,7 +118,14 @@ export default class AddEventForm extends React.Component {
       }      
     } else {
       if (this.isValid()) {
-        this.props.dispatch(createEvent(this.state, this.state.centerId));
+        const data = {
+          eventinfo: this.state,
+          centerid:this.state.centerId,
+          user: this.props.auth.user.fullname,
+          centername: this.props.center.center.centerName,
+          title: this.state.eventTitle,
+        }
+        this.props.dispatch(createEvent(data));
       }
     }
   }
