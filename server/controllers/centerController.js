@@ -140,8 +140,9 @@ class CenterController {
             message: `${centerName} already exist`,
           });
         }
-        const place = location.tolowercase();
-        const facilityArray = facilities.split(',').toLowerCase();
+        const place = location.toLowerCase();
+        const fac = facilities.toLowerCase();
+        const facilityArray = fac.split(',');
         Centers.create({
           centerName,
           location: place,

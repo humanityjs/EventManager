@@ -15,11 +15,14 @@ export default (state = initialState, action = {}) => {
   switch (action.type) {
 
     case 'SET_CURRENT_USER': {
-      const { token, user } = action.payload;
+      const { newUser, token } = action.payload;
+      const { fullname, email, isAdmin, id } = newUser;
+      const user = {
+        fullname, email, isAdmin, id, token,
+      }
       return {
-        isAuth: !isEmpty(user),
+        isAuth: !isEmpty(newUser),
         user,
-        userToken: token,
       };
     }
     case 'USER_LOGIN': {
@@ -39,11 +42,13 @@ export default (state = initialState, action = {}) => {
     }
     case 'USER_LOGIN_FAIL': {
       const { status } = action.payload;
+      const { message } = action.payload.data;
       return {
         ...state,
         loading: false,
         loaded: true,
         status,
+        message,
       };
     }
     case 'USER_SIGNUP': {

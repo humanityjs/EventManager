@@ -4,9 +4,9 @@ import shortid from 'shortid';
 import setAuthToken from '../utils/setAuthorizationToken';
 
 
-export function setCurrentUser(user, token) {
+export function setCurrentUser(newUser, token) {
   return (dispatch) => {
-    dispatch({ type: 'SET_CURRENT_USER', payload: { user, token } })
+    dispatch({ type: 'SET_CURRENT_USER', payload: { newUser, token } })
   };
 }
 export function sendMail(title, message, email) {
@@ -52,7 +52,8 @@ export function userSignInRequest(user) {
   return (dispatch) => {
     dispatch({ type: 'USER_LOGIN' });
     axios.post('api/v1/users/login', user).then((response) => {
-      dispatch({ type: 'USER_LOGIN_SUCCESS' });
+      dispatch({ type: 'USER_LOGIN_SUCCESS', payload: response });
+      console.log(response);
       const { token } = response.data;
       localStorage.setItem('jwtToken', token);
       setAuthToken(token);

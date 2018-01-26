@@ -18,7 +18,6 @@ export default class SignInForm extends React.Component {
       login_email: '',
       login_password: '',
       errors: {},
-      serverError: '',
       isLoading: false,
     }
 
@@ -50,12 +49,12 @@ export default class SignInForm extends React.Component {
 
   render() {
 
-    const { login_email, login_password, errors, serverError } = this.state;
+    const { login_email, login_password, errors } = this.state;
     return (
       <div>  
         <div className="logo text-uppercase"><strong className="text-primary">Sign In</strong></div>
         <h2>Welcome Back!</h2>
-        <span className="help-block">{serverError}</span>
+        <span className="help-block">{this.props.auth.message}</span>
         <form id="login-form" onSubmit={this.onSubmit}>
           <TextField
               id='login_email'

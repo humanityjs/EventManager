@@ -80,8 +80,9 @@ export function uploadImage(id, data) {
     axios.post('https://api.cloudinary.com/v1_1/kalel/image/upload', data)
       .then((response) => {
         dispatch({ type: 'ADD_IMAGE_SUCCESS', payload: response.data.secure_url });
-        axios.defaults.headers.common['x-access-token'] = store.getState().auth.userToken;
+        axios.defaults.headers.common['x-access-token'] = localStorage.jwtToken;
       }).catch((err) => {
+        axios.defaults.headers.common['x-access-token'] = localStorage.jwtToken;
         dispatch({ type: 'ADD_IMAGE_FAILS', payload: err.response });
       });
   };
