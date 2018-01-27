@@ -31,24 +31,7 @@ export default class AddCenterPage extends React.Component {
     const { center, status, message } = this.props.center;
     const { pathname } = this.props.location
 
-    if (status === 201) {
-      content = (
-        <div>
-          <span class="logo"><strong class="text-primary">add a new center</strong></span>
-          <hr/>
-          <UploadImage />
-      </div>
-      )
-    } else {
-      content = (
-        <div>
-          <span class="logo"><strong class="text-primary">add a new center</strong></span>
-          <hr/>
-          <CenterForm path={pathname}/>
-        </div>
-      )
-    }
-    if ( message === 'Successfully updated center') {
+    if (status === 201 || status === 200) {
       return (<Redirect to="/admin-centers" />);
     }
     return (
@@ -60,7 +43,9 @@ export default class AddCenterPage extends React.Component {
             <div className="col-lg-6">
               <div class="form-outer text-center">
                 <div class="form-inner">
-                  {content}
+                  <span class="logo"><strong class="text-primary">add a new center</strong></span>
+                  <hr/>
+                  <CenterForm path={pathname}/>
                 </div>
               </div>
             </div>

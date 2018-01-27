@@ -12,7 +12,7 @@ import { addEventValidation, modifyEventValidation } from '../../shared/eventVal
 
 @connect((store) => {
   return {
-    auth: store.user,
+    auth: store.auth,
     centers: store.center.centers,
     center: store.center.center,
     dates: store.event.disableDates,
@@ -95,7 +95,13 @@ export default class AddEventForm extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    
+    const data = {
+      eventinfo: this.state,
+      centerId:this.state.centerId,
+      user: this.props.auth.user.fullname,
+      centername: this.props.center.centerName,
+      title: this.state.eventTitle,
+    }
     let id = document.getElementById('bookedDate');
     this.state.bookedDate = id.value;
     if (this.props.path === '/modify-event') {
@@ -118,13 +124,6 @@ export default class AddEventForm extends React.Component {
       }      
     } else {
       if (this.isValid()) {
-        const data = {
-          eventinfo: this.state,
-          centerid:this.state.centerId,
-          user: this.props.auth.user.fullname,
-          centername: this.props.center.center.centerName,
-          title: this.state.eventTitle,
-        }
         this.props.dispatch(createEvent(data));
       }
     }

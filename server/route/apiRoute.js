@@ -56,6 +56,7 @@ router.route('/centerStatus/:id')
   .put(centerController.centerStatus);
 
 router.route('/activity')
-  .post(activityController.setActivity);
+  .post(activityController.setActivity)
+  .get(activityController.getActivity);
 // Return router
 export default router;

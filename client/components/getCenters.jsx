@@ -4,12 +4,14 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import { getCenters, centerSelected } from '../actions/centerActions';
 import DeleteModal from './deleteModal';
+import { getActivity } from '../actions/activityActions';
 
 // const store = reduxStore();
 @connect((store) => {
   return {
     center: store.center,
     auth: store.auth,
+    activity: store.activity,
   };
 })
 
@@ -17,6 +19,7 @@ export default class DisplayCenters extends React.Component {
 
   componentWillMount() {
     this.props.dispatch(getCenters());
+    this.props.dispatch(getActivity());
   }
 
   onClick(e) {
@@ -34,6 +37,15 @@ export default class DisplayCenters extends React.Component {
   render() {
     const path = this.props.path;
     const { centers } = this.props.center;
+    const { activities } = this.props.activity;
+
+    const recentActivity = _.map(activities,  (activity) => {
+      return (
+        <div className="row ml">
+          <Link to="/view-center-event"><span onClick={this.onClick.bind(this)} id={activity.centerId}>{activity.description}</span></Link>
+        </div>
+      )
+    })
     const adminCenter = _.map(centers, (center) => {
       return (
         <div className="row" key={center.id}>
@@ -71,8 +83,7 @@ export default class DisplayCenters extends React.Component {
           {adminCenter}
         </div>
         <div className="col-lg-3">
-          <div className="row ml">
-          </div>
+          {recentActivity}
         </div>
       </div>
     )

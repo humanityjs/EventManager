@@ -12,10 +12,21 @@ export default (sequelize, DataTypes) => {
         key: 'id',
       },
     },
+    centerId: {
+      type: DataTypes.INTEGER,
+      onDelete: 'CASCADE',
+      references: {
+        model: 'Centers',
+        key: 'id',
+      },
+    },
   });
   Activities.associate = (models) => {
     Activities.belongsTo(models.Events, {
       foreignKey: 'eventId',
+    });
+    Activities.belongsTo(models.Centers, {
+      foreignKey: 'centerId',
     });
   };
   return Activities;

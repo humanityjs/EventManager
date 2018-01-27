@@ -1,6 +1,6 @@
 import models from '../models';
 
-const { Centers, Events, Activity } = models;
+const { Centers, Events } = models;
 
 class CenterController {
   /**

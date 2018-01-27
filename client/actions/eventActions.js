@@ -1,14 +1,15 @@
 import axios from 'axios';
-import { centerStatus, setActivity } from './centerActions';
-
+import { centerStatus } from './centerActions';
+import { setActivity } from './activityActions';
 
 export function createEvent(data) {
-  const { eventinfo, centerid } = data;
+  const { eventinfo, centerId } = data;
   return (dispatch) => {
     dispatch({ type: 'ADD_EVENT' });
     axios.post('api/v1/events', eventinfo).then((response) => {
       dispatch({ type: 'ADD_EVENT_SUCCESS', payload: response });
-      dispatch(centerStatus(centerid));
+      data.eventId = response.data.bookedEvent.id;
+      dispatch(centerStatus(centerId));
       dispatch(setActivity(data))
     }).catch((err) => {
       dispatch({ type: 'ADD_EVENT_FAILS', payload: err.response.data });

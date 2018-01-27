@@ -111,16 +111,7 @@ export function centerStatus(id) {
   };
 }
 
-export function setActivity(data) {
-  return (dispatch) => {
-    dispatch({ type: 'SET_ACTIVITY' });
-    axios.post('api/v1/activity', data).then((response) => {
-      dispatch({ type: 'SET_ACTIVITY_SUCCESS', payload: response });
-    }).catch((err) => {
-      dispatch({ type: 'SET_ACTIVITY_FAILS', payload: err.response.data });
-    });
-  }
-}
+
 // export function clearState() {
 //   return dispatch => {
 //     const id = '';

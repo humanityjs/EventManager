@@ -200,28 +200,7 @@ export default (state = initialState, action) => {
         error: message,
       }
     }
-    case 'SET_ACTIVITY': {
-      return {
-        ...state,
-        loading: true,
-      }
-    }
-    case 'SET_ACTIVITY_SUCCESS': {
-      return {
-        ...state,
-        loading: false,
-        loaded: true,
-      }
-    }
-    case 'SET_ACTIVITY_FAILS': {
-      const { message } = action.payload;
-      return {
-        ...state,
-        loading: false,
-        loaded: true,
-        error: message,
-      }
-    }
+  
     default:
       return state;
   }
