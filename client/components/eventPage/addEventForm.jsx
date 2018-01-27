@@ -101,6 +101,7 @@ export default class AddEventForm extends React.Component {
       user: this.props.auth.user.fullname,
       centername: this.props.center.centerName,
       title: this.state.eventTitle,
+      userId: this.props.auth.user.id,
     }
     let id = document.getElementById('bookedDate');
     this.state.bookedDate = id.value;

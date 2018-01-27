@@ -187,7 +187,6 @@ export default class UserController {
 
   static sendMail(req, res) {
     const { email, message, title } = req.body;
-    console.log(req.body)
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {

@@ -4,6 +4,7 @@ import userController from '../controllers/userController';
 import centerController from '../controllers/centerController';
 import eventController from '../controllers/eventController';
 import activityController from '../controllers/activityContoller';
+import adminActivityController from '../controllers/adminActivitiesController';
 import authToken from '../middleware/authenticateToken';
 import authAdminToken from '../middleware/authAdminToken';
 import userValidate from '../middleware/userValidate';
@@ -57,6 +58,12 @@ router.route('/centerStatus/:id')
 
 router.route('/activity')
   .post(activityController.setActivity)
-  .get(activityController.getActivity);
+  .get(activityController.getActivity)
+  .delete(activityController.deleteActivity);
+
+router.route('/adminactivity/:id')
+  .post(adminActivityController.setActivity)
+  .get(adminActivityController.getActivity);
+  
 // Return router
 export default router;

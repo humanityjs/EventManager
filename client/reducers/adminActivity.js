@@ -53,31 +53,6 @@ export default (state = initialState, action) => {
         message,
       };
     }
-    case 'DELETE_ACTIVITY': {
-      return {
-        ...state,
-        loading: true,
-        message:'',
-      }
-    }
-    case 'DELETE_ACTIVITY_SUCCESS': {
-      const { message } = action.payload.data;
-      return {
-        ...state,
-        loading: false,
-        loaded: true,
-        message,
-      }
-    }
-    case 'DELETE_ACTIVITY_FAILS': {
-      const { message } = action.payload;
-      return {
-        ...state,
-        loading: false,
-        loaded: true,
-        error: message,
-      }
-    }
     default:
       return state;
   }

@@ -1,10 +1,14 @@
 import models from '../models';
 
-const { Activities } = models;
+const { Adminactivities } = models;
 
-export default class ActivityController {
+export default class AdminctivityController {
   static getActivity(req, res) {
-    Activities.findAll().then((activities) => {
+    Adminactivities.findAll({
+      where: {
+        userId: req.params.id,
+      }
+    }).then((activities) => {
       // if activities are available
       if (activities) {
         // show activities
@@ -21,12 +25,10 @@ export default class ActivityController {
     }));
   }
   static setActivity(req, res) {
-    const { user, centername, title, eventId, centerId, userId } = req.body;
-    const info = `${user} booked ${title} for ${centername}`;
-    Activities.create({
+    const { eventTitle, userId } = req.body;
+    const info = `Your Event booking, "${eventTitle}" has been approved`;
+    Adminactivities.create({
       description: info,
-      eventId,
-      centerId,
       userId,
     }).then(() => res.status(200).send({
       message: 'Activity added successfully',
@@ -37,7 +39,7 @@ export default class ActivityController {
 
   static deleteActivity(req, res) {
     const { id } = req.params;
-    return Activities.findAll({
+    return Adminactivities.findAll({
       where: {
         eventId: id,
       }

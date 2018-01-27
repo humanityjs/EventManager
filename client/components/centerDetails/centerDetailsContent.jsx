@@ -65,10 +65,16 @@ export default class CenterDetailsContent extends React.Component {
         centerId: event.centerId,
         bookedDate: event.bookedDate,
         isApproved: 'TRUE',
+        id: event.id,
       }
-      this.props.dispatch(modifyCenterEvent(event.id, data, centerId));
+      this.props.dispatch(modifyCenterEvent(data));
     } else {
-      this.props.dispatch(deleteCenterEvent(event.id, centerId));
+      const data = {
+        eventTitle: event.eventTitle,
+        centerId: event.centerId,
+        id: event.id,
+      }
+      this.props.dispatch(deleteCenterEvent(data));
     } 
   }
 

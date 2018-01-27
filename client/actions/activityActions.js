@@ -21,3 +21,14 @@ export function setActivity(data) {
     });
   }
 }
+
+export function deleteActivity(data) {
+  return (dispatch) => {
+    dispatch({ type: 'DELETE_ACTIVITY' });
+    axios.delete('api/v1/activity', data).then((response) => {
+      dispatch({ type: 'DELETE_ACTIVITY_SUCCESS', payload: response });
+    }).catch((err) => {
+      dispatch({ type: 'DELETE_ACTIVITY_FAILS', payload: err.response.data });
+    });
+  }
+}

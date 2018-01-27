@@ -44,20 +44,15 @@ export default class SignUpForm extends React.Component {
   onSubmit(e) {
     e.preventDefault();
     if (this.isValid()) {
-      this.props.dispatch(userSignupRequest(this.state));
+      const title = 'Welcome to Ecenter';
+      const message = `Thank you for choosing Ecenter, We hope to make your events
+      memorable.<br/> Click on this <a href="#">link</a> to see our event centers and get started`;
+      const email = this.state.email;  
+      this.props.dispatch(userSignupRequest(this.state, title, message, email));
 
       // this.context.router.history.push('/dashboard');
     }
-  }
- componentDidUpdate() {
-   if (this.props.auth.status === 201) {
-    const title = 'Welcome to Ecenter';
-    const message = `Thank you for choosing Ecenter, We hope to make your events
-    memorable.<br/> Click on this <a href="#">link</a> to see our event centers and get started`;
-    this.props.dispatch(sendMail(title, message, this.props.auth.user.email));
-   }
- }
- 
+  } 
 
   render() {
     const {

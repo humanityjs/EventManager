@@ -20,6 +20,14 @@ export default (sequelize, DataTypes) => {
         key: 'id',
       },
     },
+    userId: {
+      type: DataTypes.INTEGER,
+      onDelete: 'CASCADE',
+      references: {
+        model: 'Users',
+        key: 'id',
+      },
+    },
   });
   Activities.associate = (models) => {
     Activities.belongsTo(models.Events, {
@@ -27,6 +35,9 @@ export default (sequelize, DataTypes) => {
     });
     Activities.belongsTo(models.Centers, {
       foreignKey: 'centerId',
+    });
+    Activities.belongsTo(models.Users, {
+      foreignKey: 'userId',
     });
   };
   return Activities;

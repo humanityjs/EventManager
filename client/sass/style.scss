@@ -24,15 +24,10 @@
     background: none;
     padding: 0;
   }
-  .ml {
-    margin-left: 1px;
-    background: #f97e04;
-  }
-  .ml span {
-    color: white;
-  }
+  
   .img {
-    max-width: 380px;
+    max-width: 280px;
+    max-height: 220px;
   }
 }
 #center-page, #event-page {  
@@ -77,6 +72,13 @@
     text-align: center;
     font-size: 1.7rem;
   }
+  .ml {
+    margin-left: 1px;
+    background: #f97e04;
+  }
+  .ml span {
+    color: white;
+  }
 
   // .media-body {
   //   text-align: left;
@@ -91,9 +93,15 @@
   }
 }
 #event-page {
+  .ml {
+    margin-top: 35px;
+  }
+  .fit {
+    padding: 30px 2px;
+  }
   .form-outer {
-    width: 350px;
-    margin: 5px 10px;
+    width: 280px;
+    margin: 5px 5px;
   }
 
   form input {
@@ -164,7 +172,8 @@
     padding-bottom: 20px;
   }
   .img {
-    max-width: 380px;
+    max-width: 280px;
+    max-height: 220px;
   }
 }
 
