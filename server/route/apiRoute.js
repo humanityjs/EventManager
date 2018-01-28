@@ -58,7 +58,9 @@ router.route('/centerStatus/:id')
 
 router.route('/activity')
   .post(activityController.setActivity)
-  .get(activityController.getActivity)
+  .get(activityController.getActivity);
+
+router.route('/activity/:id') 
   .delete(activityController.deleteActivity);
 
 router.route('/adminactivity/:id')

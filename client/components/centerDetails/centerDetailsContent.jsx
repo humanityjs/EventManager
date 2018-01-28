@@ -66,6 +66,10 @@ export default class CenterDetailsContent extends React.Component {
         bookedDate: event.bookedDate,
         isApproved: 'TRUE',
         id: event.id,
+        userId: event.userId,
+        text: 'approved',
+        reason:'',
+        suggestion:'',
       }
       this.props.dispatch(modifyCenterEvent(data));
     } else {
@@ -73,6 +77,7 @@ export default class CenterDetailsContent extends React.Component {
         eventTitle: event.eventTitle,
         centerId: event.centerId,
         id: event.id,
+        text: 'deleted',
       }
       this.props.dispatch(deleteCenterEvent(data));
     } 
@@ -101,7 +106,7 @@ export default class CenterDetailsContent extends React.Component {
     const events = _.map(this.props.events, (event) => {
       let eStatus;
       if (event.isApproved == true) {
-        eStatus = <span onClick={this.onClick} data-toggle="modal" data-target="#eventStatus"><i id={event.id} className="fa fa-thumbs-up green"></i></span>
+        eStatus = <i id={event.id} className="fa fa-thumbs-up green"></i>
         } else {
           eStatus = <span onClick={this.onClick} data-toggle="modal" data-target="#eventStatus"><i id={event.id} className="fa fa-spinner main-color"></i></span>;
         }

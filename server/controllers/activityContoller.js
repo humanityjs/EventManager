@@ -21,8 +21,10 @@ export default class ActivityController {
     }));
   }
   static setActivity(req, res) {
-    const { user, centername, title, eventId, centerId, userId } = req.body;
-    const info = `${user} booked ${title} for ${centername}`;
+    const {
+ user, centername, eventTitle, eventId, centerId, userId, 
+} = req.body;
+    const info = `${user} booked ${eventTitle} for ${centername}`;
     Activities.create({
       description: info,
       eventId,
@@ -36,21 +38,13 @@ export default class ActivityController {
   }
 
   static deleteActivity(req, res) {
-    const { id } = req.params;
-    return Activities.findAll({
+    return Activities.destroy({
       where: {
-        eventId: id,
-      }
-    }).then((Activity) => {
-      if (Activity) {
-        return Activity.destroy().then(() => res.status(200).send({
-          message: 'Activity Deleted',
-        }));
-      }
-      return res.status(400).send({
-        message: 'Activity does not exist',
-      });
-    }).catch(error => res.status(500).send({
+        eventId: req.params.id,
+      },
+    }).then(() => res.status(200).send({
+      message: 'Activity Deleted',
+    })).catch(error => res.status(500).send({
       message: error.message,
     }));
   }

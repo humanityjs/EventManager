@@ -4,6 +4,7 @@ import { deleteCenterEvent, deleteEvent, clearEventState } from '../actions/even
 import { deleteCenter } from '../actions/centerActions';
 import { getUserEmail, sendMail } from '../actions/signInActions';
 
+
 @connect((store) => {
   return {
     center: store.center,
@@ -31,28 +32,32 @@ export default class DeleteModal extends React.Component {
       this.props.dispatch(deleteCenter(centerId));
     } else {
       const { event } = this.props.event;
-      const centerId = this.props.center.centerSelected;
+      const data = {
+        eventTitle: event.eventTitle,
+        centerId: event.centerId,
+        id: event.id,
+        text: 'deleted',
+        userId: event.userId,
+        reason: this.state.reason,
+        suggestion: this.state.suggestion,
+      }
       this.props.dispatch(getUserEmail(event.userId));
-      this.props.dispatch(deleteCenterEvent(event.id, centerId));
-    }
-  }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.auth.email !== this.props.auth.email) {
-      
+      this.props.dispatch(deleteCenterEvent(data));
     }
   }
   componentDidUpdate() {
-    if (this.props.event.status === '200') {
+    if (this.props.event.message === 'Event Deleted') {
       const { event } = this.props.event;
+      const { center } = this.prop.center;
       const title = 'Event Disapproved';
-      const message = `We are sorry to tell you that this event has been disapproved due to the reason(s) shown below
-      <br/>
-      <b> Reasons </b>
-      ${this.state.reason}
+      const message = `We are sorry to tell you that your event booking, "${event.eventTitle}" has been disapproved due to the reason(s) shown below
       <br/>
       <b>Event: ${event.eventTitle}</b> <br/>
       <b>Date: ${event.bookedDate}</b> <br/>
-      <b>Center: ${event.centerId}</b> <br/>
+      <b>Center: ${center.centerName}</b> <br/>
+      <b> Reasons </b><br/>
+      ${this.state.reason}
+      <br/>
       <b>Suggestions</b><br/>
       ${this.state.suggestion} <br/>
       Best Regards

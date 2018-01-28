@@ -6,10 +6,16 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       description: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+      },
+      reason: {
+        type: Sequelize.STRING,
+      },
+      suggestion: {
+        type: Sequelize.STRING,
       },
       userId: {
         type: Sequelize.INTEGER,
@@ -21,11 +27,11 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       }
     });
   },

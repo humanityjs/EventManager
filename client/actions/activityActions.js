@@ -22,10 +22,10 @@ export function setActivity(data) {
   }
 }
 
-export function deleteActivity(data) {
+export function deleteActivity(id) {
   return (dispatch) => {
     dispatch({ type: 'DELETE_ACTIVITY' });
-    axios.delete('api/v1/activity', data).then((response) => {
+    axios.delete(`api/v1/activity/${id}`).then((response) => {
       dispatch({ type: 'DELETE_ACTIVITY_SUCCESS', payload: response });
     }).catch((err) => {
       dispatch({ type: 'DELETE_ACTIVITY_FAILS', payload: err.response.data });

@@ -25,11 +25,19 @@ export default class AdminctivityController {
     }));
   }
   static setActivity(req, res) {
-    const { eventTitle, userId } = req.body;
-    const info = `Your Event booking, "${eventTitle}" has been approved`;
+    const { eventTitle, userId, text, reason, suggestion } = req.body;
+    let info;
+    if (text) {
+      info = `Your Event booking, "${eventTitle}" has been ${text}`;
+    } else {
+      info = `Your Event booking, "${eventTitle}" is added and awaiting approval`;
+    }
+    
     Adminactivities.create({
       description: info,
       userId,
+      reason,
+      suggestion,
     }).then(() => res.status(200).send({
       message: 'Activity added successfully',
     })).catch(error => res.status(500).send({

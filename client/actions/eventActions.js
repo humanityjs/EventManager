@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { centerStatus } from './centerActions';
-import { setActivity } from './activityActions';
+import { setActivity, deleteActivity } from './activityActions';
 import { setAdminActivity } from './adminActivityActions';
 
 export function createEvent(data) {
@@ -11,7 +11,8 @@ export function createEvent(data) {
       dispatch({ type: 'ADD_EVENT_SUCCESS', payload: response });
       data.eventId = response.data.bookedEvent.id;
       dispatch(centerStatus(centerId));
-      dispatch(setActivity(data))
+      dispatch(setActivity(data));
+      dispatch(setAdminActivity(data));
     }).catch((err) => {
       dispatch({ type: 'ADD_EVENT_FAILS', payload: err.response.data });
     });
@@ -70,6 +71,7 @@ export function modifyCenterEvent(data) {
     axios.put(`api/v1/events/${id}`, data).then((res) => {
       dispatch({ type: 'MODIFY_CENTER_EVENT_SUCCESS', payload: res });
       dispatch(setAdminActivity(data));
+      dispatch(deleteActivity(id));
       dispatch(getCenterEvents(centerId));
     }).catch((err) => {
       dispatch({ type: 'MODIFY_CENTER_EVENT_FAILS', payload: err.response.data });
@@ -96,6 +98,7 @@ export function deleteCenterEvent(data) {
     axios.delete(`api/v1/events/${id}`).then((res) => {
       dispatch({ type: 'DELETE_CENTER_EVENT_SUCCESS', payload: res });
       dispatch(setAdminActivity(data));
+      dispatch(deleteActivity(id));
       dispatch(getCenterEvents(centerId));
     }).catch((err) => {
       dispatch({ type: 'DELETE_CENTER_EVENT_FAILS', payload: err.response.data });

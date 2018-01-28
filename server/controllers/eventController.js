@@ -2,7 +2,7 @@
 
 import models from '../models';
 
-const { Events, Centers } = models;
+const { Events, Centers, Activities } = models;
 
 class EventController {
   /**

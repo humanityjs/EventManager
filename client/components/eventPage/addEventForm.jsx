@@ -95,14 +95,18 @@ export default class AddEventForm extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    const data = {
+    let data = {
       eventinfo: this.state,
       centerId:this.state.centerId,
       user: this.props.auth.user.fullname,
       centername: this.props.center.centerName,
-      title: this.state.eventTitle,
+      eventTitle: this.state.eventTitle,
       userId: this.props.auth.user.id,
+      reason: '',
+      suggestion: '',
+      text: '',
     }
+    
     let id = document.getElementById('bookedDate');
     this.state.bookedDate = id.value;
     if (this.props.path === '/modify-event') {
