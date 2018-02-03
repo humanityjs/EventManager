@@ -48,13 +48,13 @@ export default class DeleteModal extends React.Component {
   componentDidUpdate() {
     if (this.props.event.message === 'Event Deleted') {
       const { event } = this.props.event;
-      const { center } = this.prop.center;
+      
       const title = 'Event Disapproved';
       const message = `We are sorry to tell you that your event booking, "${event.eventTitle}" has been disapproved due to the reason(s) shown below
       <br/>
       <b>Event: ${event.eventTitle}</b> <br/>
       <b>Date: ${event.bookedDate}</b> <br/>
-      <b>Center: ${center.centerName}</b> <br/>
+    
       <b> Reasons </b><br/>
       ${this.state.reason}
       <br/>
@@ -63,7 +63,7 @@ export default class DeleteModal extends React.Component {
       Best Regards
       ${this.props.user.fullname}`;
       this.props.dispatch(sendMail(title, message, this.props.auth.email));
-      this.props.dispatch(clearEventState());
+      
     }
   }
   onCancel() {

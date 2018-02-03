@@ -156,11 +156,13 @@ export default (state = initialState, action) => {
     }
     case 'MODIFY_CENTER_EVENT_SUCCESS': {
       const { status } = action.payload;
+      const { message } = action.payload.data;
       return {
         ...state,
         loading: false,
         loaded: true,
         status,
+        message,
       };
     }
     case 'DELETE_CENTER_EVENT': {

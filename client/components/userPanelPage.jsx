@@ -28,6 +28,7 @@ export default class Dashboard extends React.Component {
   componentWillMount() {
     this.props.dispatch(getEvents());
     this.props.dispatch(getAdminActivity(this.props.auth.user.id));
+    
   }
   
   onClick(e) {
@@ -77,6 +78,13 @@ export default class Dashboard extends React.Component {
     this.props.dispatch(logout());
   }
   
+  timeDiff(data) {
+    let creationDate = data.replace(/-/g,'/').replace('Z','').replace('T',' ');
+    let diff = Math.abs(new Date() - new Date(creationDate));
+    let pastTime = new Date(diff * 1000);
+    let hr = pastTime.getHours();
+    console.log(hr, diff, pastTime)
+  }
    
   render() {
     if (!this.props.auth.isAuth) {
@@ -85,7 +93,6 @@ export default class Dashboard extends React.Component {
     if (this.props.event.status === 401) {
       this.logout();
     }
-    
     if (isEmpty(this.props.event)) {
       const content = (
         <div className="form-inner">
@@ -96,6 +103,7 @@ export default class Dashboard extends React.Component {
       );
     }
     const { activities } = this.props.activity;
+
     const { message } = this.props.event;
     let eventId, editEventId, eventBody, form;
     const { pathname } = this.props.location;
@@ -155,6 +163,7 @@ export default class Dashboard extends React.Component {
       return (
         <div className="row ml">
           <span>{activity.description}</span>
+          <span>{this.timeDiff(activity.createdAt)}</span>
         </div>
       )
     });
