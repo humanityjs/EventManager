@@ -12,6 +12,7 @@ import { addEventValidation, modifyEventValidation } from '../../shared/eventVal
 
 @connect((store) => {
   return {
+    auth: store.auth,
     centers: store.center.centers,
     center: store.center.center,
     dates: store.event.disableDates,
@@ -94,6 +95,17 @@ export default class AddEventForm extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
+    let data = {
+      eventinfo: this.state,
+      centerId:this.state.centerId,
+      user: this.props.auth.user.fullname,
+      centername: this.props.center.centerName,
+      eventTitle: this.state.eventTitle,
+      userId: this.props.auth.user.id,
+      reason: '',
+      suggestion: '',
+      text: '',
+    }
     
     let id = document.getElementById('bookedDate');
     this.state.bookedDate = id.value;
@@ -112,12 +124,12 @@ export default class AddEventForm extends React.Component {
         if (!isEmpty(this.state.description) || !isEmpty(this.state.eventTitle)
       || !isEmpty(this.state.bookedDate) || !isEmpty(this.state.centerId)) {
         if (this.isValid()) {
-          this.props.dispatch(modifyEvent(this.props.event.event.id, this.state));
+          this.props.dispatch(modifyEvent(this.props.event.event.id, this.state. this.state.centerId));
         }
       }      
     } else {
       if (this.isValid()) {
-        this.props.dispatch(createEvent(this.state));
+        this.props.dispatch(createEvent(data));
       }
     }
   }

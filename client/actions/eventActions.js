@@ -1,11 +1,18 @@
 import axios from 'axios';
-// import { GET_EVENTS_BEGIN, GET_EVENTS_ERROR, GET_EVENTS } from './types';
+import { centerStatus } from './centerActions';
+import { setActivity, deleteActivity } from './activityActions';
+import { setAdminActivity } from './adminActivityActions';
 
 export function createEvent(data) {
+  const { eventinfo, centerId } = data;
   return (dispatch) => {
     dispatch({ type: 'ADD_EVENT' });
-    axios.post('api/v1/events',data).then((response) => {
+    axios.post('api/v1/events', eventinfo).then((response) => {
       dispatch({ type: 'ADD_EVENT_SUCCESS', payload: response });
+      data.eventId = response.data.bookedEvent.id;
+      dispatch(centerStatus(centerId));
+      dispatch(setActivity(data));
+      dispatch(setAdminActivity(data));
     }).catch((err) => {
       dispatch({ type: 'ADD_EVENT_FAILS', payload: err.response.data });
     });
@@ -34,12 +41,18 @@ export function getCenterEvents(id) {
   };
 }
 
-export function eventSelected(event) {
+export function setCurrentEvent(event) {
   return (dispatch) => {
-    dispatch({ type: 'EVENT_SELECTED', payload: event });
+    dispatch({ type: 'SET_CURRENT_EVENT', payload: event })
   };
 }
-
+export function eventSelected(id) {
+  return (dispatch) => {
+    dispatch({ type: 'EVENT_SELECTED', payload: id });
+    localStorage.setItem('eventId', id);
+    dispatch(setCurrentEvent(id));
+  };
+}
 export function getEventSelected(id) {
   return (dispatch) => {
     dispatch({ type: 'GET_EVENT' });
@@ -51,43 +64,42 @@ export function getEventSelected(id) {
   };
 }
 
-export function modifyCenterEvent(id, data, centerId) {
+export function modifyCenterEvent(data) {
+  const { id, centerId } = data;
   return (dispatch) => {
     dispatch({ type: 'MODIFY_CENTER_EVENT' });
     axios.put(`api/v1/events/${id}`, data).then((res) => {
       dispatch({ type: 'MODIFY_CENTER_EVENT_SUCCESS', payload: res });
-      axios.get(`api/v1/centerEvents/${centerId}`).then((response) => {
-        dispatch({ type: 'GET_CENTER_EVENTS_SUCCESS', payload: response.data });
-      }).catch((err) => {
-        dispatch({ type: 'GET_CENTER_EVENTS_FAILS', error: err.response.data });
-      });
+      dispatch(setAdminActivity(data));
+      dispatch(deleteActivity(id));
+      dispatch(getCenterEvents(centerId));
     }).catch((err) => {
       dispatch({ type: 'MODIFY_CENTER_EVENT_FAILS', payload: err.response.data });
     });
   };
 }
 
-export function modifyEvent(id, data) {
+export function modifyEvent(id, data, centerId) {
   return (dispatch) => {
     dispatch({ type: 'MODIFY_EVENT' });
     axios.put(`api/v1/events/${id}`, data).then((response) => {
       dispatch({ type: 'MODIFY_EVENT_SUCCESS', payload: response });
+      dispatch(centerStatus(centerId));
     }).catch((err) => {
       dispatch({ type: 'MODIFY_EVENT_FAILS', payload: err.response.data });
     });
   };
 }
 
-export function deleteCenterEvent(id, centerId) {
+export function deleteCenterEvent(data) {
+  const { id, centerId } = data;
   return (dispatch) => {
     dispatch({ type: 'DELETE_CENTER_EVENT' });
     axios.delete(`api/v1/events/${id}`).then((res) => {
       dispatch({ type: 'DELETE_CENTER_EVENT_SUCCESS', payload: res });
-      axios.get(`api/v1/centerEvents/${centerId}`).then((response) => {
-        dispatch({ type: 'GET_CENTER_EVENTS_SUCCESS', payload: response.data });
-      }).catch((err) => {
-        dispatch({ type: 'GET_CENTER_EVENTS_FAILS', error: err.response.data });
-      });
+      dispatch(setAdminActivity(data));
+      dispatch(deleteActivity(id));
+      dispatch(getCenterEvents(centerId));
     }).catch((err) => {
       dispatch({ type: 'DELETE_CENTER_EVENT_FAILS', payload: err.response.data });
     });
@@ -99,14 +111,15 @@ export function deleteEvent(id) {
     dispatch({ type: 'DELETE_EVENT' });
     axios.delete(`api/v1/events/${id}`).then((res) => {
       dispatch({ type: 'DELETE_EVENT_SUCCESS', payload: res });
-      axios.get('api/v1/userEvents').then((response) => {
-        dispatch({ type: 'GET_EVENTS_SUCCESS', payload: response.data });
-      }).catch((err) => {
-        dispatch({ type: 'GET_EVENTS_FAILS', error: err });
-      });
+      dispatch(getEvents());
     }).catch((err) => {
       dispatch({ type: 'DELETE_EVENT_FAILS', payload: err.response.data });
     });
   };
 }
 
+export function clearEventState() {
+  return (dispatch) => {
+    dispatch({ type: 'CLEAR_EVENT_STATE' });
+  }
+}

@@ -17,9 +17,10 @@ class CenterController {
     let locationSearch;
     let facilitySearch;
     let capacitySearch;
+    const place = location;
     if (location) {
       locationSearch = {
-        $ilike: `%${location}%`,
+        $ilike: `%${place}%`,
       }
     } else {
       locationSearch = {
@@ -128,7 +129,7 @@ class CenterController {
    */
   static postCenter(req, res) {
     const {
-      centerName, location, description, facilities, capacity,
+      centerName, location, description, facilities, capacity, image_url,
     } = req.body;
     const { id } = req.decoded;
 
@@ -139,13 +140,16 @@ class CenterController {
             message: `${centerName} already exist`,
           });
         }
-        const facilityArray = facilities.split(',');
+        const place = location.toLowerCase();
+        const fac = facilities.toLowerCase();
+        const facilityArray = fac.split(',');
         Centers.create({
           centerName,
-          location,
+          location: place,
           description,
           facilities: facilityArray,
           capacity,
+          image_url,
           userId: id,
         }).then(center => res.status(201).send({
           center,
@@ -184,7 +188,7 @@ class CenterController {
         facilities: facilityArray || center.facilities,
         capacity: capacity || center.capacity,
         image_url: image_url || center.image_url,
-      }).then(() => res.status(201).send({
+      }).then(() => res.status(200).send({
         message: 'Successfully updated center',
       })).catch(error => res.status(500).send({
         message: error.message,
@@ -218,6 +222,31 @@ class CenterController {
       message: error.message,
     }));
   }
+
+  static centerStatus(req, res) {
+    const { id } = req.params;
+    return Centers.findById(id).then((center) => {
+      if (center) {
+        return center.update({
+          status: false,
+        }).then(() => {
+          return res.status(200).send({
+            message: 'ok',
+          });
+        });
+      }
+      return res.status(404).send({
+        message: 'not found',
+      })
+    }).catch((error) => {
+      return res.status(500).send({
+        message: error.message,
+      });
+    });
+  }
+
+  
 }
+
 
 export default CenterController;

@@ -1,4 +1,4 @@
-
+import isEmpty from 'lodash/isEmpty';
 //import { GET_EVENTS, GET_EVENTS_BEGIN, GET_EVENTS_ERROR } from '../actions/types';
 
 const initialState = {
@@ -9,12 +9,21 @@ const initialState = {
   event: {
     eventTitle: '',
   },
-  eventSelected: '',
   message: '',
   status: '',
+  isEvent: false,
 };
 export default (state = initialState, action) => {
   switch (action.type) {
+
+    case 'SET_CURRENT_EVENT': {
+      const id = action.payload;
+      return {
+        ...state,
+        isEvent: !isEmpty(id),
+        id,
+      };
+    }
 
     case 'GET_EVENTS': {
       return {
@@ -46,6 +55,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        loaded: false,
+        message: '',
       };
     }
     case 'GET_CENTER_EVENTS_FAILS': {
@@ -74,7 +85,6 @@ export default (state = initialState, action) => {
     case 'EVENT_SELECTED': {
       return {
         ...state,
-        eventSelected: action.payload,
         message: '',
         status: '',
       }
@@ -133,6 +143,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        loaded: false,
+        message: '',
       };
     }
     case 'MODIFY_CENTER_EVENT_FAILS': {
@@ -144,11 +156,13 @@ export default (state = initialState, action) => {
     }
     case 'MODIFY_CENTER_EVENT_SUCCESS': {
       const { status } = action.payload;
+      const { message } = action.payload.data;
       return {
         ...state,
         loading: false,
         loaded: true,
         status,
+        message,
       };
     }
     case 'DELETE_CENTER_EVENT': {
@@ -226,6 +240,13 @@ export default (state = initialState, action) => {
         message,
         status,
       };
+    }
+    case 'CLEAR_EVENT_STATE': {
+      return  {
+        ...state,
+        status: '',
+        message: '',
+      }
     }
     default:
       return state;

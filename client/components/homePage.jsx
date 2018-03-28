@@ -8,7 +8,7 @@ export default class Homepage extends React.Component {
 
     const { pathname } = this.props.location;
     return (
-      <div className="page-wrapper">
+      <div id="homepage">
         <Navbar path={pathname}/>
         <Content />
         <Footer />

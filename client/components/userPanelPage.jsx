@@ -13,19 +13,22 @@ import DeleteModal from './deleteModal';
 import { centerSelected } from '../actions/centerActions';
 import Modal from './flash/modal';
 import { logout } from '../actions/signInActions';
-
+import { getAdminActivity } from '../actions/adminActivityActions';
 @connect((store) => {
   return {
     auth: store.auth,
     events: store.event.userEvents,
     event: store.event,
+    activity: store.adminActivity,
   };
 })
 
 export default class Dashboard extends React.Component {
 
   componentWillMount() {
-    this.props.dispatch(getEvents()); 
+    this.props.dispatch(getEvents());
+    this.props.dispatch(getAdminActivity(this.props.auth.user.id));
+    
   }
   
   onClick(e) {
@@ -75,6 +78,13 @@ export default class Dashboard extends React.Component {
     this.props.dispatch(logout());
   }
   
+  timeDiff(data) {
+    let creationDate = data.replace(/-/g,'/').replace('Z','').replace('T',' ');
+    let diff = Math.abs(new Date() - new Date(creationDate));
+    let pastTime = new Date(diff * 1000);
+    let hr = pastTime.getHours();
+    console.log(hr, diff, pastTime)
+  }
    
   render() {
     if (!this.props.auth.isAuth) {
@@ -83,7 +93,6 @@ export default class Dashboard extends React.Component {
     if (this.props.event.status === 401) {
       this.logout();
     }
-    
     if (isEmpty(this.props.event)) {
       const content = (
         <div className="form-inner">
@@ -93,7 +102,9 @@ export default class Dashboard extends React.Component {
         </div>
       );
     }
-    const message = this.props.event.message;
+    const { activities } = this.props.activity;
+
+    const { message } = this.props.event;
     let eventId, editEventId, eventBody, form;
     const { pathname } = this.props.location;
     const content = _.map(this.props.events, (event) => {
@@ -105,11 +116,11 @@ export default class Dashboard extends React.Component {
       return (
         <div className="center">
           <div id={eventId} key={eventId}>
-            <div className="col-lg-4">
+            <div className="col-lg-3">
               <div class="form-outer text-center">
                 <div class="form-inner">
                   <div id={event.centerId}>
-                    <img className="img" src="images/image2.jpg"/>
+                    <img className="img" src={event.Center.image_url}/>
                     <h2>
                       <span className="media-heading" data-toggle-id={eventBody} onClick={this.showHiddenDiv}>
                         {event.eventTitle} 
@@ -148,14 +159,29 @@ export default class Dashboard extends React.Component {
         </div>
       )
     });
+    const recentActivity = _.map(activities,  (activity) => {
+      return (
+        <div className="row ml">
+          <span>{activity.description}</span>
+          <span>{this.timeDiff(activity.createdAt)}</span>
+        </div>
+      )
+    });
     return (
         <div id="event-page">
           <Navbar />
           <div className="container">
-            <div className="row">
-              {content}
-              <DeleteModal path={pathname}/>
-              <Modal message={message}/>
+            <div className="row fit inner">
+              <div className="col-lg-10">
+                <div className="row fit">
+                  {content}
+                  <DeleteModal path={pathname}/>
+                  <Modal message={message}/>
+                </div>
+              </div>
+              <div className="col-lg-2">
+                {recentActivity}
+              </div>
             </div>
           </div>
           <Footer />

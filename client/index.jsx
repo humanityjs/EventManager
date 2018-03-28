@@ -18,7 +18,10 @@ import ViewCenter from './components/viewCenterPage';
 import UserPanel from './components/userPanelPage.jsx';
 import setAuthToken from './utils/setAuthorizationToken';
 import PasswordRecovery from './components/passwordRecoveryPage';
+import Profile from './components/profile';
 import { setCurrentUser } from './actions/signInActions';
+import { setCurrentEvent } from './actions/eventActions';
+import { setCurrentCenter } from './actions/centerActions';
 import style from './sass/style.scss';
 import Image from './components/imageUpload';
 
@@ -26,9 +29,13 @@ import Image from './components/imageUpload';
 if (localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);
   store.dispatch(setCurrentUser(jwt.decode(localStorage.jwtToken)));
-
 }
-
+if (localStorage.eventId) {
+  store.dispatch(setCurrentEvent(localStorage.eventId));
+}
+if (localStorage.centerId) {
+  store.dispatch(setCurrentCenter(localStorage.centerId));
+}
 //put component into html page
 ReactDOM.render(
   <Provider store={store}>
@@ -45,6 +52,7 @@ ReactDOM.render(
         <Route exact path="/modify-event" component={ModifyEvent} />
         <Route exact path="/view-center-event" component={ViewCenter} />
         <Route exact path="/recover-password" component={PasswordRecovery} />
+        <Route exact path="/profile" component={Profile} />
       </Switch>
     </Router>
   </Provider>

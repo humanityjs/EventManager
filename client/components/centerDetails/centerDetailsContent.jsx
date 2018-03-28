@@ -33,13 +33,13 @@ export default class CenterDetailsContent extends React.Component {
   }
 
   componentWillMount() {
-    const id = this.props.center.centerSelected;
+    const id = this.props.center.id;
     this.props.dispatch(getCenterSelected(id));
     this.props.dispatch(getCenterEvents(id));
   }
 
   componentDidUpdate() {
-    if (this.props.event.status === 201 || this.props.event.status === 200 || this.props.center.status === 201) {
+    if (this.props.event.status === 201 || this.props.event.status === 200 || this.props.center.status === 200) {
       $(document).ready( function(){
         $('#eventStatus').modal('hide');
         $('#deleteModal').modal('hide');
@@ -65,10 +65,21 @@ export default class CenterDetailsContent extends React.Component {
         centerId: event.centerId,
         bookedDate: event.bookedDate,
         isApproved: 'TRUE',
+        id: event.id,
+        userId: event.userId,
+        text: 'approved',
+        reason:'',
+        suggestion:'',
       }
-      this.props.dispatch(modifyCenterEvent(event.id, data, centerId));
+      this.props.dispatch(modifyCenterEvent(data));
     } else {
-      this.props.dispatch(deleteCenterEvent(event.id, centerId));
+      const data = {
+        eventTitle: event.eventTitle,
+        centerId: event.centerId,
+        id: event.id,
+        text: 'deleted',
+      }
+      this.props.dispatch(deleteCenterEvent(data));
     } 
   }
 
@@ -89,12 +100,13 @@ export default class CenterDetailsContent extends React.Component {
   
 
   render() {
+    const { path } = this.props;
     const { event } = this.props.event;
     const { center } = this.props.center;
     const events = _.map(this.props.events, (event) => {
       let eStatus;
       if (event.isApproved == true) {
-        eStatus = <span onClick={this.onClick} data-toggle="modal" data-target="#eventStatus"><i id={event.id} className="fa fa-thumbs-up green"></i></span>
+        eStatus = <i id={event.id} className="fa fa-thumbs-up green"></i>
         } else {
           eStatus = <span onClick={this.onClick} data-toggle="modal" data-target="#eventStatus"><i id={event.id} className="fa fa-spinner main-color"></i></span>;
         }
@@ -112,7 +124,7 @@ export default class CenterDetailsContent extends React.Component {
       message = "Approved";
     } else if (this.props.event.status === 200) {
       message = this.props.event.message;
-    } else if (this.props.center.status === 201) {
+    } else if (this.props.center.status === 200) {
       message = this.props.center.message;
     }
     return (
@@ -123,17 +135,17 @@ export default class CenterDetailsContent extends React.Component {
               <div id="centerDetails">          
                 <div className="form-outer text-center">
                   <div className="form-inner">
-                    <div className="media">
-                      <img className="img" src="images/image2.jpg"/>
-                    </div>
-                    <strong className="logo text-primary">{center.centerName}</strong>
-                    <p>{center.location}</p>
-                    <h3>capacity</h3>
-                    <p>{center.capacity}</p>
-                    <h3>facilities</h3>
-                    <p>{center.facilities}</p>
-                    <h3>description</h3>
-                    <p>{center.description}</p>	
+                    <img className="img" src={center.image_url}/>
+                    <div className="media-body">
+                      <strong className="logo text-primary">{center.centerName}</strong>
+                      <p>{center.location}</p>
+                      <h3>capacity</h3>
+                      <p>{center.capacity}</p>
+                      <h3>facilities</h3>
+                      <p>{center.facilities}</p>
+                      <h3>description</h3>
+                      <p>{center.description}</p>
+                    </div>	
                   </div>
                   ... <i data-toggle-id="editCenterDetails" className="fa fa-pencil main-color" onClick={this.showHiddenDiv}> edit</i>
                 </div>
@@ -210,7 +222,7 @@ export default class CenterDetailsContent extends React.Component {
                 </div>
               </div>
             </div>
-            <DeleteModal />
+            <DeleteModal path={path}/>
             <Modal message={message}/>
           </div>
         </div>

@@ -3,6 +3,8 @@ import express from 'express';
 import userController from '../controllers/userController';
 import centerController from '../controllers/centerController';
 import eventController from '../controllers/eventController';
+import activityController from '../controllers/activityContoller';
+import adminActivityController from '../controllers/adminActivitiesController';
 import authToken from '../middleware/authenticateToken';
 import authAdminToken from '../middleware/authAdminToken';
 import userValidate from '../middleware/userValidate';
@@ -45,5 +47,25 @@ router.route('/events/:id')
   .put(authToken, eventValidate.updateEvent, eventController.updateEvent)
   .delete(authToken, eventController.deleteEvent);
 
+router.route('/sendmail')
+  .post(userController.sendMail);
+
+router.route('/userEmail/:id')
+  .get(authAdminToken, userController.getUserEmail);
+
+router.route('/centerStatus/:id')
+  .put(centerController.centerStatus);
+
+router.route('/activity')
+  .post(activityController.setActivity)
+  .get(activityController.getActivity);
+
+router.route('/activity/:id') 
+  .delete(activityController.deleteActivity);
+
+router.route('/adminactivity/:id')
+  .post(adminActivityController.setActivity)
+  .get(adminActivityController.getActivity);
+  
 // Return router
 export default router;

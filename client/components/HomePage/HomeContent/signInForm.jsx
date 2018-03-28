@@ -1,19 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-
-import TextField from '../../../common/textField';
+import { connect } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
+import { userSignInRequest } from '../../../actions/signInActions.js';
+import TextField from '../../../common/textField3';
 import { validateSigninInput } from '../../../shared/userValidation';
 
-class SignInForm extends React.Component {
+@connect((store) => {
+  return {
+    auth: store.auth,
+  }
+})
+
+export default class SignInForm extends React.Component {
   constructor() {
     super();
-
     this.state = {
       login_email: '',
       login_password: '',
       errors: {},
-      serverError: '',
       isLoading: false,
     }
 
@@ -27,7 +31,6 @@ class SignInForm extends React.Component {
     if (!isValid) {
       this.setState({ errors });
     }
-
     return isValid;
   }
 
@@ -40,30 +43,18 @@ class SignInForm extends React.Component {
   onSubmit(e) {
     e.preventDefault();
     if (this.isValid()) {
-      this.setState({ errors: {}, isLoading: true });
-      this.props.userSignInRequest(this.state).then(() => {
-        this.props.addFlashMessage({
-            type: 'Success',
-            text: 'Successfully Signed In.'
-        });
-        this.context.router.history.push('/dashboard')
-      })
-      .catch((error) => {
-        this.setState({ serverError: error.response.data.message });
-        this.setState({ errors: error.response.data, isLoading: false})
-      });
+      this.props.dispatch(userSignInRequest(this.state));
     }
-
   }
 
   render() {
 
-    const { login_email, login_password, errors, serverError } = this.state;
+    const { login_email, login_password, errors } = this.state;
     return (
       <div>  
         <div className="logo text-uppercase"><strong className="text-primary">Sign In</strong></div>
         <h2>Welcome Back!</h2>
-        <span className="help-block">{serverError}</span>
+        <span className="help-block">{this.props.auth.message}</span>
         <form id="login-form" onSubmit={this.onSubmit}>
           <TextField
               id='login_email'
@@ -89,13 +80,3 @@ class SignInForm extends React.Component {
     );
   }
 }
-
-SignInForm.propTypes = {
-  userSignInRequest: PropTypes.func.isRequired,
-}
-
-SignInForm.contextTypes = {
-  router: PropTypes.object.isRequired
-};
-
-export default SignInForm;

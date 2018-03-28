@@ -13,26 +13,21 @@
     padding: 10px;
     opacity: .9;
   }
-  body {
-    position: relative;
-    margin: 0;
-    padding-bottom: 6rem;
-    min-height: 100%;
-  }
-  
-  .main-footer {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    padding: 1rem;
-  }
 }
 #center-page {
   .row {
     background: #fff;
     margin-bottom: 10px;
     opacity: .9;
+  }
+  .inner {
+    background: none;
+    padding: 0;
+  }
+  
+  .img {
+    max-width: 280px;
+    max-height: 220px;
   }
 }
 #center-page, #event-page {  
@@ -43,20 +38,20 @@
       /* opacity: .9; */
   }
 
-  body {
-    position: relative;
-    margin: 0;
-    padding-bottom: 6rem;
-    min-height: 100%;
-  }
+  // body {
+  //   position: relative;
+  //   margin: 0;
+  //   padding-bottom: 6rem;
+  //   min-height: 100%;
+  // }
 
-  .main-footer {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    padding: 1rem;
-  }
+  // .main-footer {
+  //   position: absolute;
+  //   right: 0;
+  //   bottom: 0;
+  //   left: 0;
+  //   padding: 1rem;
+  // }
 
   span {
     text-transform: capitalize;
@@ -77,6 +72,13 @@
     text-align: center;
     font-size: 1.7rem;
   }
+  .ml {
+    margin-left: 1px;
+    background: #f97e04;
+  }
+  .ml span {
+    color: white;
+  }
 
   // .media-body {
   //   text-align: left;
@@ -91,9 +93,15 @@
   }
 }
 #event-page {
+  .ml {
+    margin-top: 35px;
+  }
+  .fit {
+    padding: 30px 2px;
+  }
   .form-outer {
-    width: 350px;
-    margin: 5px 10px;
+    width: 280px;
+    margin: 5px 5px;
   }
 
   form input {
@@ -135,7 +143,6 @@
   }
   form input {
     text-align: left;
-    text-transform: lowercase;
   }
   .btn {
     text-align: center;
@@ -163,6 +170,10 @@
   }
   .form-outer {
     padding-bottom: 20px;
+  }
+  .img {
+    max-width: 280px;
+    max-height: 220px;
   }
 }
 
@@ -197,13 +208,14 @@
     color: #fff;
     font-size: 1.2em;
   }
-  Dropzone {
-    margin: 0 auto;
-  }
 }
 #homepage {
   form input {
     text-align: center;
+  }
+  form-input:focus, input:focus {
+    border-bottom: none;
+    transition: 1s all;
   }
 }
 
@@ -221,25 +233,21 @@
     text-transform: none;
     text-align: center;
   }
-  form-input:focus, input:hover {
+  form-input:focus, input:focus {
     border-bottom: none;
     transition: 1s all;
   }
-
-  border {
-    position: absolute;
-      left: 50%;
-    content: '';
-    height: 40px;
-    height: 2px;
-      background: #F97E04;
-      transition: all 0.5s linear;
-      width: 0; 
+  .fa {
+    font-size: 4rem;
   }
-  input:focus ~ border {
-    width: 300px;
-    margin-left: -150px;
+  .text-primary {
+    font-style: normal;
   }
-  
+  p {
+    color: #007bff;
+    font-style: italic;
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+  }
 
 }

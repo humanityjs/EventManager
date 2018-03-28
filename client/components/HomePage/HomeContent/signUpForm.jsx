@@ -1,15 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
+import { connect } from 'react-redux';
+import { sendMail, userSignupRequest } from '../../../actions/signInActions.js';
 import { validateSignupInput } from '../../../shared/userValidation';
-import TextField from '../../../common/textField'
+import TextField from '../../../common/textField3';
 
-
-
-
-class SignUpForm extends React.Component {
-  constructor(props) {
-    super(props);
+@connect((store) => {
+  return {
+    auth: store.auth,
+  }
+})
+export default class SignUpForm extends React.Component {
+  constructor() {
+    super();
     this.state = {
       fullname: '',
       email: '',
@@ -35,7 +37,6 @@ class SignUpForm extends React.Component {
     if (!isValid) {
       this.setState({ errors });
     }
-
     return isValid;
   }
 
@@ -43,24 +44,15 @@ class SignUpForm extends React.Component {
   onSubmit(e) {
     e.preventDefault();
     if (this.isValid()) {
-      
-      this.setState({ errors: {}, isLoading: true });
-      this.props.userSignupRequest(this.state).then(() => {
-        this.props.addFlashMessage({
-            type: 'Success',
-            text: 'Successfully Created Account.'
-        });
-        this.context.router.history.push('/dashboard')
-      })
-      .catch((error) => {
-        this.setState({ serverError: error.response.data.message });
-        this.setState({ errors: error.response.data, isLoading: false})
-      });
+      const title = 'Welcome to Ecenter';
+      const message = `Thank you for choosing Ecenter, We hope to make your events
+      memorable.<br/> Click on this <a href="#">link</a> to see our event centers and get started`;
+      const email = this.state.email;  
+      this.props.dispatch(userSignupRequest(this.state, title, message, email));
+
+      // this.context.router.history.push('/dashboard');
     }
-  
-  }
- 
- 
+  } 
 
   render() {
     const {
@@ -75,6 +67,7 @@ class SignUpForm extends React.Component {
       <div>
         <div className="logo text-uppercase"><strong className="text-primary">Sign Up</strong></div>          
         <h2>Please fill in your details to get started</h2>
+        <span className="help-block">{this.props.auth.message}</span>
         <form id="signup-form" onSubmit={this.onSubmit}>
           <TextField
             id='fullname'
@@ -89,7 +82,7 @@ class SignUpForm extends React.Component {
             value={this.state.email}
             placeholder='Email Address'
             type='email'
-            error={errors.email, serverError}
+            error={errors.email}
             onChange={this.onChange} />
             
             <TextField
@@ -115,13 +108,3 @@ class SignUpForm extends React.Component {
   }
 }
 
-SignUpForm.propTypes = {
-  userSignupRequest: PropTypes.func.isRequired,
-  addFlashMessage: PropTypes.func.isRequired
-}
-
-SignUpForm.contextTypes = {
-  router: PropTypes.object.isRequired
-};
-
-export default SignUpForm;

@@ -1,10 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { userSignupRequest } from '../../actions/signUpActions.js';
+import { Redirect } from 'react-router-dom';
 import { userSignInRequest } from '../../actions/signInActions.js';
-import { addFlashMessage } from '../../actions/flashMessages.js';
-import PropTypes from 'prop-types';
-
 import Welcome from './HomeContent/welcome.jsx';
 import SignInForm from './HomeContent/signInForm.jsx';
 import SignUpForm from  './HomeContent/signUpForm.jsx';
@@ -15,7 +12,7 @@ import SignUpForm from  './HomeContent/signUpForm.jsx';
   }
 })
 
-class HomeContent extends React.Component { 
+export default class HomeContent extends React.Component { 
   constructor() {
     super();
     this.state = {
@@ -32,9 +29,12 @@ class HomeContent extends React.Component {
  
 
   render() {
+    const { isAuth, status } = this.props.auth;
+
+    // if (status === 200) {
+    //   return (<Redirect to="/dashboard" />);
+    // }
     let messageDisplay, form;
-    const { isAuth } = this.props.auth;
-    const  { userSignupRequest, userSignInRequest, addFlashMessage } = this.props;
     if (this.state.signupHidden) {
       messageDisplay = "Are you new here? Create An Account";
     }
@@ -46,8 +46,8 @@ class HomeContent extends React.Component {
         form =  (
           <div className="form-outer text-center">
             <div className="form-inner">
-              {!this.state.signupHidden && <SignUpForm userSignupRequest={userSignupRequest} addFlashMessage={addFlashMessage}/>}    
-              {!this.state.signinHidden && <SignInForm userSignInRequest={userSignInRequest} addFlashMessage={addFlashMessage} />}
+              {!this.state.signupHidden && <SignUpForm />}    
+              {!this.state.signinHidden && <SignInForm />}
               <span onClick={this.toggleDiv.bind(this)} className="goto">{messageDisplay}</span>       
             </div>
           </div>
@@ -69,10 +69,3 @@ class HomeContent extends React.Component {
   }
 }
 
-HomeContent.propTypes = {
-  userSignupRequest: PropTypes.func.isRequired,
-  addFlashMessage: PropTypes.func.isRequired,
-  userSignInRequest: PropTypes.func.isRequired
-}
-
-export default connect(null, { userSignupRequest, userSignInRequest, addFlashMessage })(HomeContent);
