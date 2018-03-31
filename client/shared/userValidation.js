@@ -5,8 +5,8 @@ export function validateSignupInput(data) {
   const errors = {};
 
   const {
- fullname, email, password, retypePass 
-} = data;
+    fullname, email, password, retypePass,
+  } = data;
 
   if (!validator.isEmpty(fullname)) {
     if (!validator.isLength(fullname, { min: 5, max: 20 })) {
@@ -66,24 +66,24 @@ export function recoverPassword(data) {
 
 
   if (email === undefined || validator.isEmpty(email)) {
-    error.email = 'email is required';
+    errors.email = 'email is required';
   }
 
   if (!validator.isEmail(email)) {
-    error.email = 'Type a valid email';
+    errors.email = 'Type a valid email';
   }
   return { error, isValid: isEmpty(error) };
 }
 
-export function updateUser(data) {
+export function updateUserValidation(data) {
   const {
     fullname,
     email,
-    password,
+    newPassword,
     retypePass,
   } = data;
 
-  const error = {};
+  const errors = {};
 
   Object.entries(data).forEach((entry) => {
 
@@ -94,10 +94,10 @@ export function updateUser(data) {
     if (entry[0] === 'fullname') {
       if (entry[1] !== null) {
         if (!/^[a-zA-Z0-9 ]+$/.test(fullname)) {
-          error.fullname = 'Fullname can only contain numbers and letters';
+          errors.fullname = 'Fullname can only contain numbers and letters';
         }
         if (!validator.isLength(fullname, { min: 5, max: 20 })) {
-          error.fullname = 'Fullname must be more than 5 characters but less than 20';
+          errors.fullname = 'Fullname must be more than 5 characters but less than 20';
         }
       }
     }
@@ -105,28 +105,28 @@ export function updateUser(data) {
     if (entry[0] === 'email') {
       if (entry[1] !== null) {
         if (!validator.isEmail(email)) {
-          error.email = 'Email is invalid';
+          errors.email = 'Email is invalid';
         }
       }
     }
 
-    if (entry[0] === 'password') {
+    if (entry[0] === 'newPassword') {
       if (entry[1] !== null) {
-        if (!validator.isLength(password, { min: 5, max: 20 })) {
-          error.password = 'Password length must be between 5 and 20';
+        if (!validator.isLength(newPassword, { min: 5, max: 20 })) {
+          errors.newPassword = 'Password length must be between 5 and 20';
         }
       }
     }
 
     if (entry[0] === 'retypePass') {
       if (entry[1] !== null) {
-        if (retypePass !== password) {
-          error.retypePass = 'Password must match';
+        if (retypePass !== newPassword) {
+          errors.retypePass = 'Password must match';
         }
       }
     }
-    return error;
+    return errors;
   });
 
-  return { error, isValid: isEmpty(error) };
+  return { errors, isValid: isEmpty(errors) };
 }

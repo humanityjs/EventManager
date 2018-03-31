@@ -15,7 +15,7 @@ const router = express.Router();
 // Routes
 router.route('/users')
   .post(userValidate.signup, userController.signup)
-  .put(userValidate.updateUser, userController.updateUser);
+  .put(authToken, userValidate.updateUser, userController.updateUser);
 
 router.route('/users/login')
   .post(userValidate.signin, userController.signin);
@@ -51,7 +51,7 @@ router.route('/sendmail')
   .post(userController.sendMail);
 
 router.route('/userEmail/:id')
-  .get(authAdminToken, userController.getUserEmail);
+  .get(authToken, userController.getUserEmail);
 
 router.route('/centerStatus/:id')
   .put(centerController.centerStatus);
@@ -66,6 +66,9 @@ router.route('/activity/:id')
 router.route('/adminactivity/:id')
   .post(adminActivityController.setActivity)
   .get(adminActivityController.getActivity);
+
+router.route('/passwordcheck')
+  .post(authToken, userController.PasswordCheck);
   
 // Return router
 export default router;

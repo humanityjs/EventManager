@@ -49,27 +49,21 @@ export default class UserController {
             fullname: fname,
             email: mail,
             password: hash,
-          }).then(() => {
-            Users.findOne({
-              where: {
-                email,
+          }).then((users) => {
+            const payload = { email: users.email, isAdmin: users.isAdmin, id: users.id };
+            const token = jwt.sign(payload, process.env.SECRET, {
+              expiresIn: 60 * 60 * 12,
+            });
+            req.body.token = token;
+            return res.status(201).send({
+              message: 'You are now Signed Up',
+              data: {
+                email: users.email,
+                isAdmin: users.isAdmin,
+                id: users.id,
+                password,
               },
-            }).then((users) => {
-              const payload = { email: users.email, isAdmin: users.isAdmin, id: users.id };
-              const token = jwt.sign(payload, process.env.SECRET, {
-                expiresIn: 60 * 60 * 12,
-              });
-              req.body.token = token;
-              return res.status(201).send({
-                message: 'You are now Signed Up',
-                data: {
-                  email: users.email,
-                  isAdmin: users.isAdmin,
-                  id: users.id,
-                  password,
-                },
-                token,
-              });
+              token,
             });
           }).catch(error => res.status(500).send({
             message: error.message,
@@ -99,7 +93,9 @@ export default class UserController {
       if (user && user.email.toLowerCase === login_email.toLowerCase) {
         const check = bcrypt.compareSync(login_password, user.password);
         if (check) {
-          const payload = { fullname: user.fullname, email: user.email, isAdmin: user.isAdmin, id: user.id };
+          const payload = {
+            fullname: user.fullname, email: user.email, isAdmin: user.isAdmin, id: user.id,
+          };
           const token = jwt.sign(payload, process.env.SECRET, {
             expiresIn: 60 * 60 * 12,
           });
@@ -153,13 +149,37 @@ export default class UserController {
     }));
 
   }
+  static PasswordCheck(req, res) {
+    const { id, oldPassword } = req.body;
+    Users.findOne({
+      where: {
+        id,
+      },
+    }).then((user) => {
+      if (user) {
+        const check = bcrypt.compareSync(oldPassword, user.password);
+        if (check) {
+          return res.status(200).send({
+            message: 'Password Match',
+          });
+        }
+        return res.status(400).send({
+          message: 'Wrong Password',
+        });
+      }
+    }).catch(error => res.status(500).send({
+      message: error.message,
+    }));
+  }
 
   static updateUser(req, res) {
-    const { email, password, fullname } = req.body;
+    const {
+      id, email, password, fullname,
+    } = req.body;
 
     Users.findOne({
       where: {
-        email,
+        id,
       },
     }).then((user) => {
       if (user) {
@@ -168,15 +188,26 @@ export default class UserController {
           bcrypt.hash(password, salt, (err, hash) => user.update({
             fullname: fullname || user.fullname,
             password: hash || user.password,
-          }).then(() => res.status(200).send({
-            message: 'Changes Applied Successfully',
-          })).catch(err => res.status(500).send({
+            email: email || user.email,
+          }).then(() => {
+            const payload = {
+              fullname: user.fullname, email: user.email, isAdmin: user.isAdmin, id: user.id,
+            };
+            const token = jwt.sign(payload, process.env.SECRET, {
+              expiresIn: 60 * 60 * 12,
+            });
+            req.body.token = token;
+            return res.status(200).send({
+              token,
+              message: 'Changes Applied Successfully',
+            });
+          }).catch(err => res.status(500).send({
             message: err.message,
           })));
         });
       } else {
         return res.status(400).send({
-          message: 'Email not found',
+          message: 'User not found',
         });
       }
     }).catch(err => res.status(500).send({
