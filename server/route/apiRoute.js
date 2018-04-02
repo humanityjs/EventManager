@@ -69,6 +69,12 @@ router.route('/adminactivity/:id')
 
 router.route('/passwordcheck')
   .post(authToken, userController.PasswordCheck);
+
+router.route('/eventsbookedcount/:id')
+  .get(authToken, eventController.getEventBookedCount);
+
+router.route('/datejoined/:id')
+  .get(authToken, userController.getDateJoined);
   
 // Return router
 export default router;

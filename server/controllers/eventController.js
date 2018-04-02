@@ -231,8 +231,29 @@ class EventController {
     }));
   }
 
-}
+  static getEventBookedCount(req, res) {
+    Events.findAll({
+      where: {
+        userId: req.params.id,
+      }
+    }).then((event) => {
+      const eventBookedCount = event.length;
+      res.status(200).send({
+        eventBookedCount,
+      })
+    }).catch(err => res.status(500).send({
+      message: err.message,
+    }));
+  }
 
+  // static getEventDeletedCount(req, res) {
+  //   Events.findById(req.params.id).then(eventDeletedCount => res.status(200).send({
+  //     eventDeletedCount,
+  //   })).catch(err => res.status(500).send({
+  //     message: err.message,
+  //   }));
+  // }
+}
 
 
 export default EventController;

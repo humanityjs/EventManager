@@ -7,11 +7,12 @@ import { uploadImage } from '../actions/centerActions';
 import UploadImage from './imageUpload';
 import { updateUserValidation } from '../shared/userValidation';
 import { updateUserDetails, checkPassword } from '../actions/signInActions';
-
+import { eventBooked } from '../actions/eventActions';
 
 @connect((store) => {
   return {
     auth: store.auth,
+    event: store.event,
   };
 })
 
@@ -33,7 +34,10 @@ export default class Profile extends React.Component {
     this.showDiv = this.showDiv.bind(this);
     this.checkPassword = this.checkPassword.bind(this);
   }
-  
+  componentWillMount() {
+    const { id } = this.props.auth.user;
+    this.props.dispatch(eventBooked(id));
+  }
   componentDidMount() {
     const { user } = this.props.auth;
     this.setState({
@@ -91,6 +95,7 @@ export default class Profile extends React.Component {
 
   render() {
     const { fullname, email, retypePass, newPassword, oldPassword, errors, wrongPasswordError } = this.state;
+    const evenBooked = _.map()
     return (
       <div id="profile-page">
         <Navbar />
@@ -180,7 +185,19 @@ export default class Profile extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="col-3 bg"></div>
+            <div className="card col-lg-3 text-center pt-4 bb">
+              
+                  <div className="text-primary">Activities</div>
+                  <hr/>
+                  <div className="mb-4">
+                  <h4 className="mt-4">Date Joined</h4>
+                  <h3 className="mt-4">March 2, 2015</h3>
+                  </div>
+                  <div className="mb-4">
+                  <h4 className="mt-4">Events Booked</h4>
+                  <span className="display-3">{this.props.event.eventBookedCount}</span>
+                  </div>
+                </div>
           </div>
         </div>
         <Footer />

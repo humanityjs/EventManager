@@ -86,8 +86,13 @@ hr {
   color: #F97E04 !important;
   font-style: italic;
   text-transform: capitalize;
+  font-size: 1.5em;
 }
 
+.bb {
+  border-bottom: 3px solid #F97E04;
+  border-radius: 0;
+}
 
 
 /* Navigation bar */

@@ -248,6 +248,56 @@ export default (state = initialState, action) => {
         message: '',
       }
     }
+    case 'GET_EVENTS_BOOKED_COUNT': {
+      return {
+        ...state,
+        loading: true,
+        message: '',
+        status: '',
+      }
+    }
+    case 'EVENTS_BOOKED_COUNT_SUCCESS': {
+      const { eventBookedCount, message } = action.payload.data;
+      const { status } = action.payload;
+      return {
+        ...state,
+        message,
+        status,
+        eventBookedCount,
+      }
+    }
+    case 'EVENTS_BOOKED_COUNT_FAIL': {
+      const { message } = action.payload;
+      return {
+        ...state,
+        error: message,
+      };
+    }
+    case 'GET_EVENTS_DELETED_COUNT': {
+      return {
+        ...state,
+        loading: true,
+        message: '',
+        status: '',
+      }
+    }
+    case 'EVENTS_DELETED_COUNT_SUCCESS': {
+      const { eventDeletedCount, message } = action.payload.data;
+      const { status } = action.payload;
+      return {
+        ...state,
+        message,
+        status,
+        eventDeletedCount,
+      }
+    }
+    case 'EVENTS_DELETED_COUNT_FAIL': {
+      const { message } = action.payload;
+      return {
+        ...state,
+        error: message,
+      };
+    }
     default:
       return state;
   }

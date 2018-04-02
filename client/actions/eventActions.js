@@ -9,7 +9,7 @@ export function createEvent(data) {
     dispatch({ type: 'ADD_EVENT' });
     axios.post('api/v1/events', eventinfo).then((response) => {
       dispatch({ type: 'ADD_EVENT_SUCCESS', payload: response });
-      data.eventId = response.data.bookedEvent.id;
+      data.eventId = response.data.DELETEDEvent.id;
       dispatch(centerStatus(centerId));
       dispatch(setActivity(data));
       dispatch(setAdminActivity(data));
@@ -122,4 +122,26 @@ export function clearEventState() {
   return (dispatch) => {
     dispatch({ type: 'CLEAR_EVENT_STATE' });
   }
+}
+
+export function eventBooked(id) {
+  return (dispatch) => {
+    dispatch({ type: 'GET_EVENTS_BOOKED_COUNT' });
+    axios.get(`api/v1/eventsbookedcount/${id}`).then((res) => {
+      dispatch({ type: 'EVENTS_BOOKED_COUNT_SUCCESS', payload: res });
+    }).catch((err) => {
+      dispatch({ type: 'EVENTS_BOOKED_COUNT_FAIL', payload: err.response.data });
+    });
+  };
+}
+
+export function dateJoined(id) {
+  return (dispatch) => {
+    dispatch({ type: 'GET_DATE_JOINED' });
+    axios.get(`api/v1/datejoined/${id}`).then((res) => {
+      dispatch({ type: 'DATE_JOINED_SUCCESS', payload: res });
+    }).catch((err) => {
+      dispatch({ type: 'DATE_JOINED_FAILS', payload: err.response.data });
+    });
+  };
 }

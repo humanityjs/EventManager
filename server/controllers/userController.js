@@ -262,4 +262,14 @@ export default class UserController {
       message: error.message,
     }));
   }
+
+  static getDateJoined(req, res) {
+    Users.findById(req.params.id).then((user) => {
+      joinedDate = user.createdAt.slice(0, 10);
+      console.log(joinedDate);
+      return res.status(200).send({
+        joinedDate,
+      });
+    });
+  }
 }
