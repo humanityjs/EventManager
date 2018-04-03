@@ -5,13 +5,13 @@ import classnames from 'classnames';
 const TextField = ({ field, id, type, placeholder, value, onChange, error}) => {
   return  (
     <div id="input text-center">
+      {error && <span className="help-block">{error}</span>}
       <input 
       id={id}
       type={type} 
       placeholder={placeholder} 
       value={value} 
       onChange={onChange} required/>
-      {error && <span className="help-block">{error}</span>}
     <border></border>
     </div>
   );

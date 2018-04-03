@@ -86,8 +86,13 @@ hr {
   color: #F97E04 !important;
   font-style: italic;
   text-transform: capitalize;
+  font-size: 1.5em;
 }
 
+.bb {
+  border-bottom: 3px solid #F97E04;
+  border-radius: 0;
+}
 
 
 /* Navigation bar */
@@ -234,12 +239,11 @@ text-transform: capitalize;
     color: #fff;
 }
 .dropzone {
-  max-width: 300px;
+  max-width: 280px;
   border: 2px dotted #808080d4;
   margin: 0 auto;
-  padding: 10px;
-  border-radius: 5px;
-  height: 180px;
+  border-radius: 100%;
+  height:250px;
 }
 
 .inner-page {
@@ -307,8 +311,6 @@ form input, .inner-page form input {
   border: none;
   border-bottom: 1px solid #97a1aa;
   margin-top: 20px;
-  font-size: 1.0em;
-
 }
 form input {
   color: #494c4f;
@@ -370,7 +372,7 @@ li > a {
 }
 
 
-form input[type='submit'] {
+form input[type='submit'], form input[type='button'] {
   width: 200px;
   border-radius: 50px;
   text-transform: uppercase;
@@ -455,6 +457,9 @@ input:focus ~ border {
   color: #F97E04;
   text-decoration: none;
   cursor: pointer;
+}
+.no-border {
+  border: none;
 }
 @media (min-width: 768px) {
     .container-fluid {

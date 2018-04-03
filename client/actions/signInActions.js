@@ -3,6 +3,11 @@ import jwt from 'jsonwebtoken';
 import shortid from 'shortid';
 import setAuthToken from '../utils/setAuthorizationToken';
 
+export function clearStatus() {
+  return (dispatch) => {
+    dispatch({ type: 'CLEAR_STATUS' });
+  }
+}
 
 export function setCurrentUser(newUser, token) {
   return (dispatch) => {
@@ -54,7 +59,6 @@ export function userSignInRequest(user) {
     dispatch({ type: 'USER_LOGIN' });
     axios.post('api/v1/users/login', user).then((response) => {
       dispatch({ type: 'USER_LOGIN_SUCCESS', payload: response });
-      console.log(response);
       const { token } = response.data;
       localStorage.setItem('jwtToken', token);
       setAuthToken(token);
@@ -88,6 +92,10 @@ export function updateUserDetails(data) {
     dispatch({ type: 'UPDATE_USER' });
     axios.put('api/v1/users', data).then((response) => {
       dispatch({ type: 'UPDATE_USER_SUCCESS', payload: response });
+      const { token } = response.data;
+      localStorage.setItem('jwtToken', token);
+      setAuthToken(token);
+      dispatch(setCurrentUser(jwt.decode(token), token));
     }).catch((err) => {
       dispatch({ type: 'UPDATE_USER_FAILS', payload: err.response.data })
     });
@@ -101,3 +109,17 @@ export function getUserEmail(id) {
     });
   }
 }
+
+export function checkPassword(data) {
+  return (dispatch) => {
+    dispatch({ type: 'CHECK_PASSWORD' });
+    axios.post('api/v1/passwordcheck', data).then((response) => {
+      dispatch({ type: 'CHECK_PASSWORD_SUCCESS', payload: response });
+      dispatch(clearStatus());
+    }).catch((err) => {
+      dispatch({ type: 'CHECK_PASSWORD_FAILS', payload: err.response });
+    });
+  }
+}
+
+

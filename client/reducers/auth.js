@@ -177,13 +177,67 @@ export default (state = initialState, action = {}) => {
         status,
       };
     }
-    case 'GET_USER_EMAIL': {
-      const { email } = action.payload.data;
+    case 'GET_USER': {
       return {
         ...state,
         loaded: true,
         loading: false,
-        email,
+      };
+    }
+    case 'GET_USER_SUCCESS': {
+      const { userInfo } = action.payload.data;
+      const { status } = action.payload;
+      return {
+        ...state,
+        loaded: true,
+        loading: false,
+        userInfo,
+        status,
+      };
+    }
+    case 'GET_USER_FAILS': {
+      const { status } = action.payload;
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        status,
+      };
+    }
+    case 'CHECK_PASSWORD': {
+      return {
+        ...state,
+        loading: true,
+        loaded: false,
+      };
+    }
+    case 'CHECK_PASSWORD_SUCCESS': {
+      const { message } = action.payload.data;
+      const { status } = action.payload;
+      return {
+        ...state,
+        loaded: true,
+        loading: false,
+        message,
+        status,
+      };
+    }
+    case 'CHECK_PASSWORD_FAILS': {
+      const { message } = action.payload.data;
+      const { status } = action.payload;
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        status,
+        message,
+      };
+    }
+    case 'CLEAR_STATUS': {
+      return {
+        ...state,
+        status: '',
+        message: '',
       };
     }
     default: return state;

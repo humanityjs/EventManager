@@ -42,7 +42,7 @@ class NavBar extends React.Component {
               <Link to="/dashboard" className="nav-link"><span className="nav-link-text"><i className="fa fa-dashboard"></i> Dashboard</span></Link>
             </li>
             <li className="nav-item">
-              <Link to="/" onClick={this.logout.bind(this)} className="nav-link"><span className="nav-link-text"><i className="fa fa-sign-out"></i> logout </span></Link>
+              <Link to="/" onClick={this.logout.bind(this)} className="nav-link"><span className="nav-link-text"><i className="fa fa-power-off"></i> logout </span></Link>
             </li>
           </ul>
         )
@@ -62,10 +62,10 @@ class NavBar extends React.Component {
             <Link to="/add-event" className="nav-link"><span className="nav-link-text"><i className="fa fa-plus-square"></i> add event</span></Link>
           </li>
           <li className="nav-item">
-            <Link to="/profile" className="nav-link"><span className="nav-link-text"><i className="fa fa-user-circle"></i> profile</span></Link>
+            <Link to="/profile" className="nav-link"><span className="nav-link-text"><i className="fa fa-user"></i> profile</span></Link>
           </li>
           <li className="nav-item">
-            <Link to="/" onClick={this.logout.bind(this)} className="nav-link"><span className="nav-link-text"><i className="fa fa-sign-out"> logout</i></span></Link>
+            <Link to="/" onClick={this.logout.bind(this)} className="nav-link"><span className="nav-link-text"><i className="fa fa-power-off"></i> logout</span></Link>
           </li>
         </ul>
       );
@@ -86,7 +86,7 @@ class NavBar extends React.Component {
               <Link to="/dashboard" className="nav-link"><span className="nav-link-text"><i className="fa fa-dashboard"></i> Dashboard</span></Link>
             </li>
             <li className="nav-item">
-              <Link to="/" onClick={this.logout.bind(this)} className="nav-link"><span className="nav-link-text"><i className="fa fa-sign-out"></i> logout </span></Link>
+              <Link to="/" onClick={this.logout.bind(this)} className="nav-link"><span className="nav-link-text"><i className="fa fa-power-off"></i> logout </span></Link>
             </li>
           </ul>
         )
@@ -100,10 +100,10 @@ class NavBar extends React.Component {
             <Link to="/add-event" className="nav-link"><span className="nav-link-text"><i className="fa fa-plus-square"></i> add event</span></Link>
           </li>
           <li className="nav-item">
-            <Link to="/profile" className="nav-link"><span className="nav-link-text"><i className="fa fa-user-circle"></i> profile</span></Link>
+            <Link to="/profile" className="nav-link"><span className="nav-link-text"><i className="fa fa-user"></i> profile</span></Link>
           </li>
           <li className="nav-item">
-            <Link to="/" onClick={this.logout.bind(this)} className="nav-link"><span className="nav-link-text"><i className="fa fa-sign-out"> logout</i></span></Link>
+            <Link to="/" onClick={this.logout.bind(this)} className="nav-link"><span className="nav-link-text"><i className="fa fa-power-off"></i> logout</span></Link>
           </li>
         </ul>
       );
