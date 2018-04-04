@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Center Information</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="css/style.css" type="text/css">
+<style>
+	body {
+		background-image: none;
+		background-color:#e9e6e6;
+
+	}
+</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <a class="navbar-brand" href="admin_panel.html"><h1>event <strong class="text-primary">center </strong></h1></a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+              <a class="nav-link" href="admin_panel.html"><span class="nav-link-text"><i class="fa fa-dashboard"></i> Dashboard</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="add_center.html"><span class="nav-link-text"><i class="fa fa-plus-square"></i> add center</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><span class="nav-link-text"><i class="fa fa-user-circle"></i> profile</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="index.html"><span class="nav-link-text">logout <i class="fa fa-sign-out"></i></span></a>
+            </li>
+      </ul>     
+    </div>
+  </nav>
+<div class="container">
+      <div class="row">
+  	 	<div class="col-lg-5">
+        <div class="form-outer text-center">
+          <div class="form-inner">
+            <div class="logo"><strong class="text-primary">Balmoral</strong></div>
+            <p>ojota, lagos state</p>
+            <h3>facilities</h3>
+            <p> ample car park space</p>
+            <h3>description</h3>
+			      <p>An event center with a first class feeling</p>
+ 			      <span onClick="show('center_info')"><a href="#"><i class="fa fa-pencil"></i>edit</a></span> 
+            <div id="center_info" style="display:none">
+              <form id="add-center-form">
+ 		            <div class="form-group">            
+			            <input type="text" id="center_name" placeholder="Center Name" required>
+		            </div>
+                <div class="form-group">            
+			  	        <input type="text" id="center_location" placeholder="Center Location" required>
+		            </div> 
+         	      <p class="subtitle">separate facilities with spaces</p>
+          	    <div class="form-group">            
+			            <input type="text" id="center_facilities" placeholder="Facilities In Center" required>
+		            </div> 
+                <p class="subtitle">describe center in few words</p>
+                <div class="form-group">
+                  <textarea class="form-control"></textarea>
+                </div> 
+                <input id="add-center" type="submit" value="apply changes" class="btn btn-primary">
+              </form>	
+            </div>
+          </div>
+        </div>
+		  </div>
+	 	<div class="col-lg-7">
+	 	<div class="form-outer text-center d-flex align-items-center">
+          <div class="form-inner">
+            <div class="logo"><strong class="text-primary">events scheduled</strong></div>
+            <div class="earnings">
+			<table cellpadding="0" class="table table-responsive table-hover text-center">
+			<thead><tr>
+  <th>title</th>
+     <th>date</th>
+     <th>status</th>
+      <th></th>
+			</tr>
+				</thead>
+			<tbody>
+				<tr>
+					<td><a href="event_status.html">wedding ceremony</a></td>
+					<td>12/12/2017</td>
+					<td><i class="fa fa-check-square-o"></i></td>
+					<td><i class="fa fa-trash"></i></td>				
+				</tr>
+				<tr>
+					<td><a href="event_status.html">valedictory service</a></td>
+					<td>18/12/2017</td>
+					<td><i class="fa fa-check-square-o"></i></td>
+					<td><i class="fa fa-trash"></i></td>				
+				</tr>
+				<tr>
+					<td><a href="event_status.html">conference</a></td>
+					<td>22/12/2017</td>
+          <td><i class="fa fa-check-square-o"></i></td>
+					<td><i class="fa fa-trash"></i></td>				
+				</tr>
+			</tbody>
+			</table>
+		</div>
+
+            <nav class="text-center">
+   			      <ul class="pagination">
+                <li> <a href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span> </a> </li>
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span> </a> </li>
+              </ul>
+  		    	</nav>
+          </div>
+        </div>
+      </div>
+  	</div>
+	 	</div>
+   
+	  <footer class="main-footer">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 text-center">
+            <p>eCenter 2017</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,192 @@
+import validator from 'validator';
+import isEmpty from 'lodash/isEmpty';
+
+
+/**
+ * Validates users signup and signin operations
+ * @class Validation
+ */
+export default class Validation {
+
+  /**
+     * Validates all User signup details before allowing access to controller class
+     * @static
+     * @param {object} req
+     * @param {object} res
+     * @param {object} next
+     * @returns {object} Validation error messages or contents of req.body
+     * @memberof UserValidations
+     */
+  static signup(req, res, next) {
+    const {
+      fullname,
+      email,
+      password,
+      retypePass,
+    } = req.body;
+
+    const errors = {};
+
+    if (fullname === undefined || email === undefined || password === undefined || retypePass === undefined) {
+      return res.status(400).send({
+        message: 'All or some fields are not defined',
+      });
+    }
+
+    if (!validator.isEmpty(fullname)) {
+      if (!validator.isLength(fullname, { min: 5, max: 20 })) {
+        errors.fullname = 'Fullname must be more than 5 characters but less than 20';
+      }
+    } else {
+      errors.fullname = 'Fullname cannot be blank';
+    }
+    if (!/^[a-zA-Z0-9 ]+$/.test(fullname)) {
+      errors.fullname = 'Fullname can only contain numbers and letters';
+    }
+
+    if (!validator.isEmpty(email)) {
+      if (!validator.isEmail(email)) {
+        errors.email = 'Email is invalid';
+      }
+    } else { errors.email = 'Email is required'; }
+
+    if (!validator.isEmpty(password)) {
+      if (!validator.isLength(password, { min: 5, max: 20 })) {
+        errors.password = 'Password length must be between 5 and 20';
+      }
+    } else { errors.password = 'Password is required'; }
+
+    if (!validator.isEmpty(retypePass)) {
+      if (retypePass !== password) {
+        errors.retypePass = 'Password must match';
+      }
+    } else { errors.retypePass = 'Type Password Again'; }
+
+    const isValid = Object.keys(errors).length === 0;
+
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    next();
+  }
+
+  /**
+     * Validates signin form input fields before allowing access to controller class
+     * @static
+     * @param {object} req
+     * @param {object} res
+     * @param {object} next
+     * @returns {object} Validation error messages or contents of req.body
+     * @memberof UserValidations
+     */
+  static signin(req, res, next) {
+    const { login_email, login_password } = req.body;
+
+    const errors = {};
+    if (login_email === undefined || login_password === undefined) {
+      return res.status(400).send({
+        message: 'Email or Password is undefined',
+      });
+    }
+
+    if (validator.isEmpty(login_email)) {
+      errors.login_email = 'email is required';
+    }
+
+    if (!validator.isEmail(login_email)) {
+      errors.login_email = 'Type a valid email';
+    }
+
+    if (validator.isEmpty(login_password)) {
+      errors.login_password = 'Password is required';
+    }
+
+    const isValid = Object.keys(errors).length === 0;
+
+    if (!isValid) {
+      return res.status(400).send(errors);
+    }
+    next();
+  }
+
+  static recoverPassword(req, res, next) {
+    const { email } = req.body;
+    const error = {};
+
+    if (email === undefined || validator.isEmpty(email)) {
+      error.email = 'email is required';
+    }
+
+    if (!validator.isEmail(email)) {
+      error.email = 'Type a valid email';
+    }
+
+    const isValid = Object.keys(error).length === 0;
+
+    if (!isValid) {
+      return res.status(400).send(error);
+    }
+    next();
+  }
+
+  static updateUser(req, res, next) {
+    const {
+      fullname,
+      email,
+      password,
+      retypePass,
+    } = req.body;
+
+    const error = {};
+
+    Object.entries(req.body).forEach((entry) => {
+
+      if (isEmpty(entry[1])) {
+        entry[1] = null;
+      }
+
+      if (entry[0] === 'fullname') {
+        if (entry[1] !== null) {
+          if (!/^[a-zA-Z0-9 ]+$/.test(fullname)) {
+            error.fullname = 'Fullname can only contain numbers and letters';
+          }
+          if (!validator.isLength(fullname, { min: 5, max: 20 })) {
+            error.fullname = 'Fullname must be more than 5 characters but less than 20';
+          }
+        }
+      }
+
+      if (entry[0] === 'email') {
+        if (entry[1] !== null) {
+          if (!validator.isEmail(email)) {
+            error.email = 'Email is invalid';
+          }
+        }
+      }
+
+      if (entry[0] === 'password') {
+        if (entry[1] !== null) {
+          if (!validator.isLength(password, { min: 5, max: 20 })) {
+            error.password = 'Password length must be between 5 and 20';
+          }
+        }
+      }
+
+      if (entry[0] === 'retypePass') {
+        if (entry[1] !== null) {
+          if (retypePass !== password) {
+            error.retypePass = 'Password must match';
+          }
+        }
+      }
+      return error;
+    });
+    const isValid = Object.keys(error).length === 0;
+
+    if (!isValid) {
+      return res.status(400).send(error);
+    }
+    next();
+  }
+}

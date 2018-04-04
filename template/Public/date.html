@@ -1,0 +1,38 @@
+<!Doctype html>
+<html>  
+  <head>
+    <meta charset="utf-8" />
+    <title>My Event Manager App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+       <!-- Bootstrap CSS -->
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+       <link rel="stylesheet" href="/css/bootstrap.css">
+       <link rel="stylesheet" href="/css/style.css">
+       
+
+       <!-- Bootstrap Font Awesome -->
+       <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  </head>
+  <body>
+    <div id="page-wrapper">
+<div className="input-group date" data-provide="datepicker-inline">
+          <input type="text" class="form-control"/>
+          <i className="fa fa-calendar"></i>
+        </div>
+        <input type="text" id="date" class="form-control"/>
+</div>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap-datepicker3.min.css">
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready( function() {
+      let date_input=$('input[name="date"]');
+      date_input.datepicker({
+      format:'yyyy/mm/dd',
+      autoclose:true,
+      })
+      })
+      </script>
+  </body>
+</html>  
