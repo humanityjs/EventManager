@@ -5,9 +5,9 @@ module.exports = {
     username: 'postgres',
     database: 'centermanager',
     password: 'profyem001',
-    host: '127.0.0.1',
+    host: 'localhost',
     dialect: 'postgres',
-    port: 8080,
+    port: 5432,
   },
   test: {
     username: 'postgres',
