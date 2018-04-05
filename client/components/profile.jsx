@@ -95,7 +95,6 @@ export default class Profile extends React.Component {
         this.state.wrongPasswordError= 'Wrong Password';
     }
   }
-
   render() {
     const { fullname, email, retypePass, newPassword, oldPassword, errors, wrongPasswordError } = this.state;
     const createdAt = this.props.auth.user.createdAt.slice(0, 10);
