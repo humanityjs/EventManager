@@ -50,7 +50,7 @@ export default class UserController {
             email: mail,
             password: hash,
           }).then((users) => {
-            const payload = { email: users.email, isAdmin: users.isAdmin, id: users.id };
+            const payload = { email: users.email, isAdmin: users.isAdmin, id: users.id , fullname, createdAt: user.createdAt };
             const token = jwt.sign(payload, process.env.SECRET, {
               expiresIn: 60 * 60 * 12,
             });
@@ -84,17 +84,17 @@ export default class UserController {
      */
   static signin(req, res) {
     const { login_email, login_password } = req.body;
-
+    const userEmail = login_email.toLowerCase();
     Users.findOne({
       where: {
-        email: login_email,
+        email: userEmail,
       },
     }).then((user) => {
-      if (user && user.email.toLowerCase === login_email.toLowerCase) {
+      if (user) {
         const check = bcrypt.compareSync(login_password, user.password);
         if (check) {
           const payload = {
-            fullname: user.fullname, email: user.email, isAdmin: user.isAdmin, id: user.id,
+            fullname: user.fullname, email: user.email, isAdmin: user.isAdmin, id: user.id, createdAt: user.createdAt
           };
           const token = jwt.sign(payload, process.env.SECRET, {
             expiresIn: 60 * 60 * 12,

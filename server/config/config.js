@@ -7,7 +7,7 @@ module.exports = {
     password: 'profyem001',
     host: '127.0.0.1',
     dialect: 'postgres',
-    port: 8080,
+    port: 5432,
   },
   test: {
     username: 'postgres',
