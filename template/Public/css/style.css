@@ -370,7 +370,9 @@ li > a {
   color: #337ab7;
   text-decoration: none;
 }
-
+.pointer {
+  cursor: pointer;
+}
 
 form input[type='submit'], form input[type='button'] {
   width: 200px;

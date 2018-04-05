@@ -50,7 +50,7 @@ export default class UserController {
             email: mail,
             password: hash,
           }).then((users) => {
-            const payload = { email: users.email, isAdmin: users.isAdmin, id: users.id , fullname };
+            const payload = { email: users.email, isAdmin: users.isAdmin, id: users.id , fullname, createdAt: user.createdAt };
             const token = jwt.sign(payload, process.env.SECRET, {
               expiresIn: 60 * 60 * 12,
             });
@@ -94,7 +94,7 @@ export default class UserController {
         const check = bcrypt.compareSync(login_password, user.password);
         if (check) {
           const payload = {
-            fullname: user.fullname, email: user.email, isAdmin: user.isAdmin, id: user.id,
+            fullname: user.fullname, email: user.email, isAdmin: user.isAdmin, id: user.id, createdAt: user.createdAt
           };
           const token = jwt.sign(payload, process.env.SECRET, {
             expiresIn: 60 * 60 * 12,

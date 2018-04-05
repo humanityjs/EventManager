@@ -134,7 +134,7 @@ export default class Validation {
     const {
       fullname,
       email,
-      password,
+      newPassword,
       retypePass,
     } = req.body;
 
@@ -165,17 +165,17 @@ export default class Validation {
         }
       }
 
-      if (entry[0] === 'password') {
+      if (entry[0] === 'newPassword') {
         if (entry[1] !== null) {
-          if (!validator.isLength(password, { min: 5, max: 20 })) {
-            error.password = 'Password length must be between 5 and 20';
+          if (!validator.isLength(newPassword, { min: 5, max: 20 })) {
+            error.newPassword = 'Password length must be between 5 and 20';
           }
         }
       }
 
       if (entry[0] === 'retypePass') {
         if (entry[1] !== null) {
-          if (retypePass !== password) {
+          if (retypePass !== newPassword) {
             error.retypePass = 'Password must match';
           }
         }
