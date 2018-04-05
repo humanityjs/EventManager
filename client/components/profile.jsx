@@ -104,7 +104,7 @@ export default class Profile extends React.Component {
         <Navbar />
         <div className="container">
           <div className="row">
-            <div className="card col-lg-3 text-center pt-4 bb mb-4 pb-4">
+            <div className="card col-lg-6 text-center pt-4 bb mb-4 pb-4">
               <div className="text-primary">Personal Information</div>
               <hr/>
               <form id="editdetails">
@@ -112,7 +112,7 @@ export default class Profile extends React.Component {
                 <h3 className="pt-1">
                   <TextField
                     id='fullname'
-                    value={fullname}
+                    value={fullname.toUpperCase()}
                     placeholder='Fullname'
                     type='text'
                     error={errors.fullname} 
