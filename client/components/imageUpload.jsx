@@ -27,11 +27,12 @@ export default class ImageUpload extends React.Component {
     if (this.props.path === '/profile') {
       this.props.dispatch(uploadUserImage(this.props.auth.user.id, formData))
     } else {
-      this.props.dispatch(uploadImage(this.props.center.id, formData));
+      this.props.dispatch(uploadImage(formData));
     }
   }
   
     render() {
+      console.log(this.props.uploadedImage)
       return (
         <div>
           <div>

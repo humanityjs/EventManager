@@ -26,16 +26,16 @@ export function getCenters(data) {
     });
   };
 }
-export function setCurrentCenter(centerId) {
+export function setCurrentCenter(center) {
   return (dispatch) => {
-    dispatch({ type: 'SET_CURRENT_CENTER', payload: centerId });
+    dispatch({ type: 'SET_CURRENT_CENTER', payload: center });
   };
 }
-export function centerSelected(centerId) {
+export function centerSelected(center) {
   return (dispatch) => {
-    dispatch({ type: 'CENTER_SELECTED', payload: centerId });
-    localStorage.setItem('centerId', centerId);
-    dispatch(setCurrentCenter(centerId));
+    dispatch({ type: 'CENTER_SELECTED', payload: center });
+    localStorage.setItem('center', center);
+    dispatch(setCurrentCenter(center));
   };
 }
 export function getCenterSelected(id) {
@@ -72,7 +72,7 @@ export function modifyCenter(data, centerId) {
   };
 }
 
-export function uploadImage(id, data) {
+export function uploadImage(data) {
   return (dispatch) => {
     dispatch({ type: 'ADD_IMAGE' });
     delete axios.defaults.headers.common['x-access-token'];

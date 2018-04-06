@@ -107,7 +107,7 @@ export default class CenterForm extends React.Component {
     return ( 
       
       <form id="add-center-form" onSubmit={this.onSubmit}>
-        <UploadImage />
+        <UploadImage uploadedImage={this.props.center.url}/>
         <span className="help-block">{this.props.center.addCenterError}</span>
         <TextField
           id='centerName'
