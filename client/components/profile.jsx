@@ -27,6 +27,7 @@ export default class Profile extends React.Component {
       oldPassword: '',
       errors: {},
       wrongPasswordError: '',
+      imageUrl: '',
     }
     this.initialState = this.state;
     this.onChange = this.onChange.bind(this);
@@ -44,7 +45,8 @@ export default class Profile extends React.Component {
     this.setState({
       fullname: user.fullname || '',
       email: user.email || '',
-      id: this.props.auth.user.id,
+      id: user.id,
+      imageUrl: user.imageUrl,
     })
   }
   
@@ -102,7 +104,7 @@ export default class Profile extends React.Component {
     if (this.props.event.status === 401) {
       this.logout();
     }
-    const { fullname, email, retypePass, newPassword, oldPassword, errors, wrongPasswordError } = this.state;
+    const { fullname, email, retypePass, newPassword, oldPassword, errors, wrongPasswordError, imageUrl } = this.state;
     const createdAt = this.props.auth.user.createdAt.slice(0, 10);
     const evenBooked = _.map()
     return (
@@ -114,7 +116,7 @@ export default class Profile extends React.Component {
               <div className="text-primary">Personal Information</div>
               <hr/>
               <form id="editdetails">
-                <UploadImage path={this.props.location.pathname}/>
+                <UploadImage path={this.props.location.pathname} uploadedImage={imageUrl}/>
                 <h3 className="pt-1">
                   <TextField
                     id='fullname'

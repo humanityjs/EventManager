@@ -19,16 +19,10 @@ export default class ImageUpload extends React.Component {
       uploadedImage: ''
     };
   }
-  onImageDrop(files) {
-    this.setState({
-      uploadedFile: files[0]
-    });
-    this.sendFile(files[0]);
-  }
 
-  sendFile(file) {
+  sendFile(e) {
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("file", e.target.files[0]);
     formData.append("upload_preset", "u8asaoka");
     if (this.props.path === '/profile') {
       this.props.dispatch(uploadUserImage(this.props.auth.user.id, formData))
@@ -38,26 +32,23 @@ export default class ImageUpload extends React.Component {
   }
   
     render() {
-      console.log(this.props)
       return (
         <div>
-        <div className="FileUpload">
-        <Dropzone
-          className="img-fluid dropzone p-5"
-          multiple={false}
-          accept="image/*"
-          onDrop={this.onImageDrop.bind(this)}>
-          <p>Drop an image or click to select a file to upload.</p>
-        </Dropzone>
-        </div>
-  
-        <div>
-          {this.state.uploadedImage === '' ? null :
           <div>
-            <p>{this.state.uploadedFile.name}</p>
-            <img src={this.state.uploadedImage} />
-          </div>}
-        </div>
+            {this.props.uploadedImage === undefined ? 
+            <div className="imageUpload">
+              <label for="imageInput">
+                <p className="img-fluid dropzone p-5">Click here to upload your image </p>
+              </label>
+            <input type="file" id="imageInput" onChange={this.sendFile.bind(this)}/>
+          </div> :
+            <div className="imageUpload">
+              <label for="imageInput">
+                <img src={this.props.uploadedImage} className="img-fluid dropzone"/>  
+              </label>
+              <input type="file" id="imageInput" onChange={this.sendFile.bind(this)}/>
+            </div>}
+          </div>
         </div>
       )
       

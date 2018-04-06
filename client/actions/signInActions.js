@@ -87,6 +87,17 @@ export function generateCode() {
   }
 }
 
+export function getUser() {
+  return (dispatch) => {
+    dispatch({ type: 'GET_USER' });
+    axios.get('api/v1/users').then((response) => {
+      dispatch({ type: 'GET_USER_SUCCESS', payload: response });
+    }).catch((err) => {
+      dispatch({ type: 'GET_USER_FAILS', payload: err.response.data })
+    });
+  }
+}
+
 export function updateUserDetails(data) {
   return (dispatch) => {
     dispatch({ type: 'UPDATE_USER' });
@@ -101,7 +112,7 @@ export function updateUserDetails(data) {
     });
   }
 }
-
+ 
 export function getUserEmail(id) {
   return (dispatch) => {
     axios.get(`api/v1/userEmail/${id}`).then((response) => {
@@ -122,7 +133,7 @@ export function checkPassword(data) {
   }
 }
 
-export function uploadUserImage(data) {
+export function uploadUserImage(id, data) {
   return (dispatch) => {
     dispatch({ type: 'UPLOAD_IMAGE' });
     delete axios.defaults.headers.common['x-access-token'];
@@ -130,10 +141,10 @@ export function uploadUserImage(data) {
       .then((response) => {
         dispatch({ type: 'UPLOAD_IMAGE_SUCCESS', payload: response.data.secure_url });
         axios.defaults.headers.common['x-access-token'] = localStorage.jwtToken;
-        const user = {
-          imageUrl: payload,
+        const data = {
+          imageUrl: response.data.secure_url,
         }
-        dispatch(updateUserDetails(user));
+        dispatch(updateUserDetails(data));
       }).catch((err) => {
         axios.defaults.headers.common['x-access-token'] = localStorage.jwtToken;
         dispatch({ type: 'UPLOAD_IMAGE_FAILS', payload: err.response });

@@ -134,11 +134,13 @@ export default (state = initialState, action = {}) => {
     }
     case 'UPDATE_USER_SUCCESS': {
       const { message } = action.payload.data;
+      const { status } = action.payload;
       return {
         ...state,
         loading: false,
         loaded: true,
         message,
+        status,
       };
     }
     case 'UPDATE_USER_FAILS': {
@@ -185,13 +187,11 @@ export default (state = initialState, action = {}) => {
       };
     }
     case 'GET_USER_SUCCESS': {
-      const { userInfo } = action.payload.data;
       const { status } = action.payload;
       return {
         ...state,
         loaded: true,
         loading: false,
-        userInfo,
         status,
       };
     }
