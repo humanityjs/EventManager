@@ -28,6 +28,9 @@ export default (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER,
     },
+    imageUrl: {
+      type: DataTypes.STRING,
+    }
   });
   Users.associate = (models) => {
     Users.hasMany(models.Centers, {

@@ -130,7 +130,7 @@ export function eventBooked(id) {
     axios.get(`api/v1/eventsbookedcount/${id}`).then((res) => {
       dispatch({ type: 'EVENTS_BOOKED_COUNT_SUCCESS', payload: res });
     }).catch((err) => {
-      dispatch({ type: 'EVENTS_BOOKED_COUNT_FAIL', payload: err.response.data });
+      dispatch({ type: 'EVENTS_BOOKED_COUNT_FAIL', payload: err.response });
     });
   };
 }

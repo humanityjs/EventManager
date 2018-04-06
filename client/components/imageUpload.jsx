@@ -2,10 +2,12 @@ import React from 'react';
 import Dropzone from 'react-dropzone';
 import { connect } from 'react-redux';
 import { uploadImage } from '../actions/centerActions';
+import { uploadUserImage } from '../actions/signInActions';
 
 @connect((store) => {
   return {
     center: store.center.center,
+    auth: store.auth,
   }
 })
 
@@ -28,10 +30,15 @@ export default class ImageUpload extends React.Component {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", "u8asaoka");
-    this.props.dispatch(uploadImage(this.props.center.id, formData));
+    if (this.props.path === '/profile') {
+      this.props.dispatch(uploadUserImage(this.props.auth.user.id, formData))
+    } else {
+      this.props.dispatch(uploadImage(this.props.center.id, formData));
+    }
   }
   
     render() {
+      console.log(this.props)
       return (
         <div>
         <div className="FileUpload">

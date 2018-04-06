@@ -122,4 +122,21 @@ export function checkPassword(data) {
   }
 }
 
-
+export function uploadUserImage(data) {
+  return (dispatch) => {
+    dispatch({ type: 'UPLOAD_IMAGE' });
+    delete axios.defaults.headers.common['x-access-token'];
+    axios.post('https://api.cloudinary.com/v1_1/kalel/image/upload', data)
+      .then((response) => {
+        dispatch({ type: 'UPLOAD_IMAGE_SUCCESS', payload: response.data.secure_url });
+        axios.defaults.headers.common['x-access-token'] = localStorage.jwtToken;
+        const user = {
+          imageUrl: payload,
+        }
+        dispatch(updateUserDetails(user));
+      }).catch((err) => {
+        axios.defaults.headers.common['x-access-token'] = localStorage.jwtToken;
+        dispatch({ type: 'UPLOAD_IMAGE_FAILS', payload: err.response });
+      });
+  };
+}
