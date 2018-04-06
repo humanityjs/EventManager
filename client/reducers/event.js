@@ -267,10 +267,12 @@ export default (state = initialState, action) => {
       }
     }
     case 'EVENTS_BOOKED_COUNT_FAIL': {
-      const { message } = action.payload;
+      const { message } = action.payload.data;
+      const { status } = action.payload;
       return {
         ...state,
         error: message,
+        status,
       };
     }
     case 'GET_EVENTS_DELETED_COUNT': {

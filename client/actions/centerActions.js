@@ -1,6 +1,5 @@
 import axios from 'axios';
 import store from '../store';
-// import { GET_CENTERS_BEGIN, GET_CENTERS_ERROR, GET_CENTERS } from './types';
 
 export function getCenters(data) {
   return (dispatch) => {

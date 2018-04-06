@@ -50,7 +50,8 @@ export default class UserController {
             email: mail,
             password: hash,
           }).then((users) => {
-            const payload = { email: users.email, isAdmin: users.isAdmin, id: users.id , fullname, createdAt: user.createdAt };
+            const payload = { email: users.email, isAdmin: users.isAdmin, id: users.id , fullname, createdAt: users.createdAt,
+              imageUrl: users.imageUrl };
             const token = jwt.sign(payload, process.env.SECRET, {
               expiresIn: 60 * 60 * 12,
             });
@@ -94,7 +95,8 @@ export default class UserController {
         const check = bcrypt.compareSync(login_password, user.password);
         if (check) {
           const payload = {
-            fullname: user.fullname, email: user.email, isAdmin: user.isAdmin, id: user.id, createdAt: user.createdAt
+            fullname: user.fullname, email: user.email, isAdmin: user.isAdmin, id: user.id, createdAt: user.createdAt,
+            imageUrl: user.imageUrl,
           };
           const token = jwt.sign(payload, process.env.SECRET, {
             expiresIn: 60 * 60 * 12,
@@ -174,24 +176,26 @@ export default class UserController {
 
   static updateUser(req, res) {
     const {
-      id, email, password, fullname,
+      email, newPassword, fullname, imageUrl
     } = req.body;
 
     Users.findOne({
       where: {
-        id,
+        id: req.decoded.id,
       },
     }).then((user) => {
       if (user) {
         const saltRounds = 10;
         bcrypt.genSalt(saltRounds, (err, salt) => {
-          bcrypt.hash(password, salt, (err, hash) => user.update({
+          bcrypt.hash(newPassword, salt, (err, hash) => user.update({
             fullname: fullname || user.fullname,
             password: hash || user.password,
             email: email || user.email,
-          }).then(() => {
+            imageUrl: imageUrl || user.imageUrl,
+          }).then((updatedUser) => {
             const payload = {
-              fullname: user.fullname, email: user.email, isAdmin: user.isAdmin, id: user.id,
+              fullname: updatedUser.fullname, email: updatedUser.email, isAdmin: updatedUser.isAdmin, id: updatedUser.id, imageUrl: updatedUser.imageUrl,
+              createdAt: updatedUser.createdAt,
             };
             const token = jwt.sign(payload, process.env.SECRET, {
               expiresIn: 60 * 60 * 12,
@@ -253,6 +257,33 @@ export default class UserController {
       if (user) {
         return res.status(200).send({
           email: user.email,
+        });
+      }
+      return res.status(400).send({
+        message: 'No user Found',
+      });
+    }).catch(error => res.status(500).send({
+      message: error.message,
+    }));
+  }
+
+  static getUser(req, res) {
+    Users.findOne({
+      where: {
+        id: req.decoded.id,
+      },
+    }).then((user) => {
+      if (user) {
+        const payload = {
+          fullname: user.fullname, email: user.email, isAdmin: user.isAdmin, id: user.id, createdAt: user.createdAt,
+          imageUrl: user.imageUrl,
+        };
+        const token = jwt.sign(payload, process.env.SECRET, {
+          expiresIn: 60 * 60 * 12,
+        });
+        req.body.token = token;
+        return res.status(200).send({
+          token,
         });
       }
       return res.status(400).send({

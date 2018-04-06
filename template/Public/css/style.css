@@ -206,6 +206,9 @@ text-transform: capitalize;
   padding: 50px 0;
   margin-top: 30px;
 }
+.imageUpload > input {
+  display: none;
+}
 .page {
   position: absolute;
   top: 0;

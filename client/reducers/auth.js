@@ -16,9 +16,9 @@ export default (state = initialState, action = {}) => {
 
     case 'SET_CURRENT_USER': {
       const { newUser, token } = action.payload;
-      const { fullname, email, isAdmin, id, createdAt } = newUser;
+      const { fullname, email, isAdmin, id, createdAt, imageUrl } = newUser;
       const user = {
-        fullname, email, isAdmin, id, token, createdAt,
+        fullname, email, isAdmin, id, token, createdAt, imageUrl,
       }
       return {
         isAuth: !isEmpty(newUser),
@@ -134,11 +134,13 @@ export default (state = initialState, action = {}) => {
     }
     case 'UPDATE_USER_SUCCESS': {
       const { message } = action.payload.data;
+      const { status } = action.payload;
       return {
         ...state,
         loading: false,
         loaded: true,
         message,
+        status,
       };
     }
     case 'UPDATE_USER_FAILS': {
@@ -185,13 +187,11 @@ export default (state = initialState, action = {}) => {
       };
     }
     case 'GET_USER_SUCCESS': {
-      const { userInfo } = action.payload.data;
       const { status } = action.payload;
       return {
         ...state,
         loaded: true,
         loading: false,
-        userInfo,
         status,
       };
     }
@@ -231,6 +231,28 @@ export default (state = initialState, action = {}) => {
         loaded: true,
         status,
         message,
+      };
+    }
+    case 'UPLOAD_IMAGE': {
+      return {
+        ...state,
+        loading: true,
+        loaded: false,
+      }
+    }
+    case 'UPLOAD_IMAGE_SUCCESS': {
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        url: action.payload,
+      }
+    }
+    case 'UPLOAD_IMAGE_FAILS': {
+      const { message } = action.payload;
+      return {
+        ...state,
+        error: message,
       };
     }
     case 'CLEAR_STATUS': {

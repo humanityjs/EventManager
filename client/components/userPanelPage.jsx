@@ -83,7 +83,6 @@ export default class Dashboard extends React.Component {
     let diff = Math.abs(new Date() - new Date(creationDate));
     let pastTime = new Date(diff * 1000);
     let hr = pastTime.getHours();
-    console.log(hr, diff, pastTime)
   }
    
   render() {

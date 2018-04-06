@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import TextField from '../common/textField3';
 import Navbar from './navbar.jsx';
 import Footer from './footer.jsx';
-import { uploadImage } from '../actions/centerActions';
 import UploadImage from './imageUpload';
 import { updateUserValidation } from '../shared/userValidation';
 import { updateUserDetails, checkPassword } from '../actions/signInActions';
 import { eventBooked } from '../actions/eventActions';
+import { logout } from '../actions/signInActions';
 
 @connect((store) => {
   return {
@@ -27,6 +27,7 @@ export default class Profile extends React.Component {
       oldPassword: '',
       errors: {},
       wrongPasswordError: '',
+      imageUrl: '',
     }
     this.initialState = this.state;
     this.onChange = this.onChange.bind(this);
@@ -44,7 +45,8 @@ export default class Profile extends React.Component {
     this.setState({
       fullname: user.fullname || '',
       email: user.email || '',
-      id: this.props.auth.user.id,
+      id: user.id,
+      imageUrl: user.imageUrl,
     })
   }
   
@@ -95,8 +97,14 @@ export default class Profile extends React.Component {
         this.state.wrongPasswordError= 'Wrong Password';
     }
   }
+  logout(e) {
+    this.props.dispatch(logout());
+  }
   render() {
-    const { fullname, email, retypePass, newPassword, oldPassword, errors, wrongPasswordError } = this.state;
+    if (this.props.event.status === 401) {
+      this.logout();
+    }
+    const { fullname, email, retypePass, newPassword, oldPassword, errors, wrongPasswordError, imageUrl } = this.state;
     const createdAt = this.props.auth.user.createdAt.slice(0, 10);
     const evenBooked = _.map()
     return (
@@ -108,7 +116,7 @@ export default class Profile extends React.Component {
               <div className="text-primary">Personal Information</div>
               <hr/>
               <form id="editdetails">
-                <UploadImage />
+                <UploadImage path={this.props.location.pathname} uploadedImage={imageUrl}/>
                 <h3 className="pt-1">
                   <TextField
                     id='fullname'

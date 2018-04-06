@@ -1,5 +1,4 @@
 import isEmpty from 'lodash/isEmpty';
-// import { GET_CENTERS, GET_CENTERS_BEGIN, GET_CENTERS_ERROR } from '../actions/types';
 
 const initialState = {
   loading: false,

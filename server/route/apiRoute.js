@@ -15,7 +15,8 @@ const router = express.Router();
 // Routes
 router.route('/users')
   .post(userValidate.signup, userController.signup)
-  .put(authToken, userValidate.updateUser, userController.updateUser);
+  .put(authToken, userValidate.updateUser, userController.updateUser)
+  .get(authToken, userController.getUser);
 
 router.route('/users/login')
   .post(userValidate.signin, userController.signin);
