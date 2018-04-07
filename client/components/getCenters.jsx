@@ -23,7 +23,11 @@ export default class DisplayCenters extends React.Component {
   }
 
   onClick(e) {
-    this.props.dispatch(centerSelected(e.target.id));
+    const center = {
+      centerId: e.target.id,
+      centerName: e.target.parentNode.id,
+    }
+    this.props.dispatch(centerSelected(center));
   }
 
   componentDidUpdate() {
@@ -48,37 +52,34 @@ export default class DisplayCenters extends React.Component {
     })
     const adminCenter = _.map(centers, (center) => {
       return (
-        <div className="row" key={center.id}>
-          <div className="col-lg-3">
-            <div className="media">
-              <img className="img" src={center.image_url}/>
-            </div>
+        <div className="row bw" key={center.id}>
+          <div className="col-lg-4 col-md-12 col-sm-12 text-center">
+            <img className="img-fluid" src={center.image_url}/>
           </div>
-          <div className="col-lg-9">
-            <div className="media-body">
-              <h2 className="media-heading">
+          <div className="col-8 col-md-8 col-sm-12 pl-4">
+
+              <h2 className="media-heading text-center">
                 <Link to="/view-center-event"><span onClick={this.onClick.bind(this)} id={center.id}>{center.centerName}</span></Link>
               </h2>
-              <div className="col-lg-9">
+
                 <h3><span>Location: </span> {center.location}</h3>
-              </div>
-              <div className="col-lg-9">
+
+
                 <h3><span>capacity: </span> {center.capacity}</h3>
-              </div>
-              <div className="col-lg-9">
+ 
+
                 <h3><span>facilities: </span> {center.facilities}</h3>
-              </div>
-              <div className="col-lg-9">
+
+
                 <h3><span>description: </span> {center.description}</h3>
-              </div>
-            </div>
+
           </div>
-          <span onClick={this.onClick.bind(this)} className="trash" data-toggle="modal" data-target="#deleteModal"><i id={center.id} className="fa fa-trash trash"></i></span>      
+          <span onClick={this.onClick.bind(this)} className="trash p-2" data-toggle="modal" data-target="#deleteModal"id={center.centerName}><i id={center.id} className="fa fa-trash trash"></i></span>      
         </div>
       )
     }); 
     const adminCenterPage = (
-      <div className="row inner">
+      <div className="row">
         <div className="col-lg-9">
           {adminCenter}
         </div>
@@ -90,27 +91,24 @@ export default class DisplayCenters extends React.Component {
     const guestCenterPage = _.map(centers, (center) => {
       return (
         <div className="row" id={center.id} key={center.id}>
-          <div className="col-lg-3">
-            <div className="media">
+          <div className="col-lg-4 col-md-12 col-sm-12 text-center">
+
               <img className="img" src={center.image_url}/>
-            </div>
+
           </div>
-          <div className="col-lg-9">
-            <div className="media-body">
-              <h2 className="media-heading">{center.centerName}</h2>
-              <div className="col-lg-9">
+          <div className="col-8 col-md-8 pl-4">
+              <h2 className="media-heading text-center">{center.centerName}</h2>
+
                 <h3><span>Location: </span> {center.location}</h3>
-              </div>
-              <div className="col-lg-9">
+
+
                 <h3><span>capacity: </span> {center.capacity}</h3>
-              </div>
-              <div className="col-lg-9">
+ 
+
                 <h3><span>facilities: </span> {center.facilities}</h3>
-              </div>
-              <div className="col-lg-9">
+
+
                 <h3><span>description: </span> {center.description}</h3>
-              </div>
-            </div>
           </div>
         </div>
       )

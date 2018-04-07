@@ -93,7 +93,9 @@ hr {
   border-bottom: 3px solid #F97E04;
   border-radius: 0;
 }
-
+.bw {
+  background-color: white;
+}
 
 /* Navigation bar */
 nav.navbar {

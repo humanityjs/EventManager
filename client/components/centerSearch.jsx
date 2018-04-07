@@ -59,7 +59,7 @@ export default class SearchForm extends React.Component {
     const between = "<>";
     const { location, facilities, capacity, capacityType, errors } = this.state;
     return (
-      <div className="row search" id="center-search">
+      <div className="row bw" id="center-search">
         <p className="subtitle"><i className="fa fa-filter green"></i> filter centers by</p>
         <div className="col-lg-3">
           <div className="form-group">

@@ -28,8 +28,7 @@ export default class DeleteModal extends React.Component {
     if (this.props.path === '/dashboard') {
       this.props.dispatch(deleteEvent(this.props.event.eventSelected));
     } else if (this.props.path === '/admin-centers') {
-      const centerId = this.props.center.centerSelected;
-      this.props.dispatch(deleteCenter(centerId));
+      this.props.dispatch(deleteCenter(this.props.center.centerId));
     } else {
       const { event } = this.props.event;
       const data = {
@@ -101,8 +100,7 @@ export default class DeleteModal extends React.Component {
     } else {
       content = (
         <div className="form-inner">
-          <p className="text-primary">{this.props.event.event.eventTitle}</p>
-          <span className="help-block">Are sure you want to delete event?</span>
+          <span className="help-block">Are sure you want to delete {this.props.center.centerName}?</span>
           <br/>
           <i className="fa fa-trash red"  id="disapprove" onClick={this.onAttend.bind(this)}></i>
           <i className="fa fa-save green" onClick={this.onCancel.bind(this)}></i>

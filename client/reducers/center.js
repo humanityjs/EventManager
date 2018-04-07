@@ -18,11 +18,12 @@ export default (state = initialState, action) => {
     //   };
     // }
     case 'SET_CURRENT_CENTER': {
-      const id = action.payload;
+      const { centerId, centerName } = action.payload;
       return {
         ...state,
-        isCenter: !isEmpty(id),
-        id,
+        isCenter: !isEmpty(action.payload),
+        centerId,
+        centerName,
       };
     }
 
