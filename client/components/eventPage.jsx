@@ -81,7 +81,7 @@ export default class Event extends React.Component {
                   {centerInfo}
              
               </div>
-              <div className="col-lg-7 card text-center bb">
+              <div className="col-lg-7 card text-center bb pb-3">
                 
                     <div className="logo">lets make your <strong className="text-primary">event</strong> a memorable one</div>
                     <hr/>
