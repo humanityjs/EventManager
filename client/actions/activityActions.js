@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { setAdminActivity } from './adminActivityActions';
 
 export function getActivity() {
   return (dispatch) => {
@@ -16,10 +17,11 @@ export function setActivity(data) {
     dispatch({ type: 'SET_ACTIVITY' });
     axios.post('api/v1/activity', data).then((response) => {
       dispatch({ type: 'SET_ACTIVITY_SUCCESS', payload: response });
+      dispatch(setAdminActivity(data));
     }).catch((err) => {
       dispatch({ type: 'SET_ACTIVITY_FAILS', payload: err.response.data });
     });
-  }
+  };
 }
 
 export function deleteActivity(id) {
@@ -30,5 +32,5 @@ export function deleteActivity(id) {
     }).catch((err) => {
       dispatch({ type: 'DELETE_ACTIVITY_FAILS', payload: err.response.data });
     });
-  }
+  };
 }

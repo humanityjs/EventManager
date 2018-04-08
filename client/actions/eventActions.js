@@ -4,15 +4,19 @@ import { setActivity, deleteActivity } from './activityActions';
 import { setAdminActivity } from './adminActivityActions';
 
 export function createEvent(data) {
-  const { eventinfo, centerId } = data;
+  const { eventInfo } = data;
   return (dispatch) => {
     dispatch({ type: 'ADD_EVENT' });
-    axios.post('api/v1/events', eventinfo).then((response) => {
+    axios.post('api/v1/events', eventInfo).then((response) => {
       dispatch({ type: 'ADD_EVENT_SUCCESS', payload: response });
-      data.eventId = response.data.DELETEDEvent.id;
-      dispatch(centerStatus(centerId));
-      dispatch(setActivity(data));
-      dispatch(setAdminActivity(data));
+      const info = {
+        id: eventInfo.centerId,
+        eventTitle: eventInfo.eventTitle,
+        eventId: response.data.bookedEvent.id,
+        username: data.user,
+      };
+      dispatch(centerStatus(info.id));
+      dispatch(setActivity(info));
     }).catch((err) => {
       dispatch({ type: 'ADD_EVENT_FAILS', payload: err.response.data });
     });
@@ -46,11 +50,9 @@ export function setCurrentEvent(event) {
     dispatch({ type: 'SET_CURRENT_EVENT', payload: event })
   };
 }
-export function eventSelected(id) {
+export function eventSelected(eventData) {
   return (dispatch) => {
-    dispatch({ type: 'EVENT_SELECTED', payload: id });
-    localStorage.setItem('eventId', id);
-    dispatch(setCurrentEvent(id));
+    dispatch({ type: 'EVENT_SELECTED', payload: eventData });
   };
 }
 export function getEventSelected(id) {

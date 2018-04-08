@@ -13,12 +13,12 @@ import DeleteModal from './deleteModal';
 import { centerSelected } from '../actions/centerActions';
 import Modal from './flash/modal';
 import { logout } from '../actions/signInActions';
-import { getAdminActivity } from '../actions/adminActivityActions';
+import { getActivity } from '../actions/activityActions';
 
 @connect((store) => {
   return {
     auth: store.auth,
-    events: store.event.userEvents,
+    events: store.event,
     event: store.event,
     activity: store.adminActivity,
   };
@@ -28,7 +28,7 @@ export default class Dashboard extends React.Component {
 
   componentWillMount() {
     this.props.dispatch(getEvents());
-    this.props.dispatch(getAdminActivity(this.props.auth.user.id));
+    this.props.dispatch(getActivity(this.props.auth.user.id));
     
   }
   
@@ -51,14 +51,19 @@ export default class Dashboard extends React.Component {
     if (this.props.event.status === 200) {
       $(document).ready( function(){
         $('#deleteModal').modal('hide');
-        $('#event').modal('show');
       });
-      setTimeout(() => {
-        $('#event').modal('hide');
-      },3000)
+      alert(this.props.event.message);
     }
   }
 
+  onDelete(e) {
+    const eventData = {
+      eventId: e.target.id,
+      eventName: e.target.parentNode.id,
+    }
+    this.props.dispatch(eventSelected(eventData));
+  }
+  
   showHiddenDiv(e) {
     let id = e.target.dataset.toggleId;
     let id2 = e.target.id;
@@ -77,13 +82,6 @@ export default class Dashboard extends React.Component {
 
   logout(e) {
     this.props.dispatch(logout());
-  }
-  
-  timeDiff(data) {
-    let creationDate = data.replace(/-/g,'/').replace('Z','').replace('T',' ');
-    let diff = Math.abs(new Date() - new Date(creationDate));
-    let pastTime = new Date(diff * 1000);
-    let hr = pastTime.getHours();
   }
    
   render() {
@@ -106,64 +104,51 @@ export default class Dashboard extends React.Component {
         </div>
       );
     } else {
-      content = _.map(this.props.events, (event) => {
+      content = _.map(this.props.event.events, (event, index) => {
         eventBody = `event-body${event.id}`;
         eventId = `eventDetails${event.id}`;
         editEventId = `editEventDetails${event.id}`;
         form = `form${event.id}`;
         let dateBooked = `date${event.id}`;
         return (
-          <div className="center">
-            <div id={eventId} key={eventId}>
-              <div className="col-lg-3">
-                <div class="form-outer text-center">
-                  <div class="form-inner">
-                    <div id={event.centerId}>
-                      <img className="img" src={event.Center.image_url}/>
-                      <h2>
-                        <span className="media-heading" data-toggle-id={eventBody} onClick={this.showHiddenDiv}>
-                          {event.eventTitle} 
-                        </span>
-                      </h2>
-                      <Link to="/modify-event" id={event.centerId}><span onClick={this.onClick.bind(this)} id={event.id}>edit</span></Link>
-                    </div>
-                    <div id={eventBody} hidden>
-                      <div className="media-body">
-                          <h3><span>Date: </span> {event.bookedDate}</h3>
-                          <h3><span>Center: </span> {event.Center.centerName}</h3>
-                          <h3><span>Capacity: </span> {event.Center.capacity}</h3>
-                          <h3><span>Location: </span> {event.Center.location}</h3>
-                          <h3><span>facilities: </span> {event.Center.facilities}</h3>
-                          <h3><span>Event description: </span> {event.description}</h3>
-                      </div>
-                    </div>
-                    <i id={eventId} data-toggle-id={editEventId} className="fa fa-pencil main-color edit" onClick={this.showHiddenDiv}></i>
-                    <span onClick={this.getId.bind(this)} className="trash" data-toggle="modal" data-target="#deleteModal"><i id={event.id} className="fa fa-trash trash"></i></span>
+          <div className="center" key={index}>
+            <div id={eventId} key={eventId} className="text-center">
+              <div className="card p-1 bb mb-3">
+                <div id={event.centerId}>
+                  <img className="img" src={event.Center.image_url}/>
+                  <h2>
+                    <span className="media-heading" data-toggle-id={eventBody} onClick={this.showHiddenDiv}>
+                      <Link to="/modify-event" id={event.centerId}>{event.eventTitle}</Link> 
+                    </span>
+                  </h2>
+                </div>
+                <div id={eventBody} hidden>
+                  <div className="media-body">
+                      <h3><span>Date: </span> {event.bookedDate}</h3>
+                      <h3><span>Center: </span> {event.Center.centerName}</h3>
+                      <h3><span>Capacity: </span> {event.Center.capacity}</h3>
+                      <h3><span>Location: </span> {event.Center.location}</h3>
+                      <h3><span>facilities: </span> {event.Center.facilities}</h3>
+                      <h3><span>Event description: </span> {event.description}</h3>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div id={editEventId} key={form} hidden>
-              <div class="form-outer text-center">
-                <div class="form-inner">
-                  <i className="fa fa-list-alt main-color"></i><br/>
-                  <span className="media-heading" data-toggle-id={eventBody} onClick={this.showHiddenDiv}>
-                    {event.eventTitle} 
-                  </span>
-                  <EventForm id={event.id} title={event.eventTitle} description={event.description} isApproved={event.isApproved} date={event.bookedDate} center={event.Center.id}/> 
-                </div>
-                <i id={eventId} data-toggle-id={editEventId} className="fa fa-home main-color" onClick={this.showHiddenDiv}> home</i>
+                <span id={event.eventTitle}>
+                  <i id={eventId} data-toggle-id={editEventId} className="fa fa-pencil main-color edit" onClick={this.showHiddenDiv}></i>
+                  <i id={event.id} className="fa fa-trash trash" onClick={this.onDelete.bind(this)} data-toggle="modal" data-target="#deleteModal"></i>
+                </span>
               </div>
             </div>
           </div>
         )
       });
     }
-    const recentActivity = _.map(activities,  (activity) => {
+    const recentActivity = _.map(activities,  (activity, index) => {
+      const creationDate = activity.createdAt.replace(/-/g,'/').replace('Z','').replace('T',' ').slice(0, 16);
       return (
-        <div className="row ml">
-          <span>{activity.description}</span>
-          <span>{this.timeDiff(activity.createdAt)}</span>
+        <div className="row card p-1 mb-1" key={index}>
+          <span><p className="activity-font mb-0 p-1" onClick={this.onClick.bind(this)} id={activity.eventId}>{activity.description}
+          <br/>
+          {creationDate}</p></span>
         </div>
       )
     });
@@ -171,15 +156,15 @@ export default class Dashboard extends React.Component {
         <div id="event-page">
           <Navbar />
           <div className="container">
-            <div className="row fit inner">
-              <div className="col-lg-10">
-                <div className="row fit">
+            <div className="row pt-4">
+              <div className="col-lg-9">
+                <div className="row">
                   {content}
                   <DeleteModal path={pathname}/>
-                  <Modal message={message}/>
+                  <Modal message={this.props.event.message}/>
                 </div>
               </div>
-              <div className="col-lg-2">
+              <div className="col-lg-3">
                 {recentActivity}
               </div>
             </div>

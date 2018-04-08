@@ -32,7 +32,6 @@ export default (state = initialState, action) => {
         message: '',
         status: '',
         error: '',
-        userEvents: '',
       };
     }
     case 'GET_EVENTS_FAILS': {
@@ -48,7 +47,7 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
         loaded: true,
-        userEvents: events,
+        events,
       };
     }
     case 'GET_CENTER_EVENTS': {
@@ -83,11 +82,12 @@ export default (state = initialState, action) => {
       };
     }
     case 'EVENT_SELECTED': {
+      const { eventId, eventName } = action.payload;
       return {
         ...state,
-        message: '',
-        status: '',
-      }
+        eventId,
+        eventName,
+      };
     }
     case 'GET_EVENT': {
       return {

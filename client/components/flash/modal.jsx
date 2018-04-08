@@ -2,6 +2,7 @@ import React from 'react';
 
 export default class ModalContent extends React.Component {
   render() {
+    console.log(this.props)
     const { message } = this.props;
     return (
       <div className="modal hide" id="event">

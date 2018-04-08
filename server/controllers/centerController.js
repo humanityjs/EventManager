@@ -118,6 +118,7 @@ class CenterController {
           req.body.token = token;
           return res.status(200).send({
             token,
+            center,
           });
         }
         return res.status(400).send({

@@ -60,9 +60,8 @@ export default class DisplayCenters extends React.Component {
     if (isEmpty(this.props.center.centers)) {
       adminCenter = (
         <div className="emptyCenter img-fluid text-center ml-2 mt-2">
-            <span><p className="display-3">No Center Found</p></span>
+          <span><p className="display-3">No Center Found</p></span>
         </div>
-
       );
     } else {
       adminCenter = _.map(centers, (center, index) => {
@@ -89,7 +88,7 @@ export default class DisplayCenters extends React.Component {
                   <h3><span>description: </span> {center.description}</h3>
   
             </div>
-            <span onClick={this.onDelete.bind(this)} className="trash p-2" data-toggle="modal" data-target="#deleteModal"id={center.centerName}><i id={center.id} className="fa fa-trash trash"></i></span>      
+            <span onClick={this.onDelete.bind(this)} className="trash p-2" data-toggle="modal" data-target="#deleteModal" id={center.centerName}><i id={center.id} className="fa fa-trash trash"></i></span>      
           </div>
         )
       }); 

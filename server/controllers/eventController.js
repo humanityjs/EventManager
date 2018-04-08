@@ -123,7 +123,7 @@ class EventController {
     }).then((event) => {
       if (event) {
         return res.status(400).send({
-          message: 'The date chosen is booked, Please select another day',
+          message: 'The date chosen is booked, Please select another day or center',
         });
       }
       return Events.create({

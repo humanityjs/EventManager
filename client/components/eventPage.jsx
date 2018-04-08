@@ -24,7 +24,6 @@ export default class Event extends React.Component {
       // this.props.dispatch(clearState());
     }
     this.props.dispatch(getCenters());
-    this.props.dispatch(getCenterSelected(this.props.center.id));
     if (this.props.path === '/modify-event') {
       const id = this.props.event.id;
       this.props.dispatch(getEventSelected(id));
@@ -56,7 +55,7 @@ export default class Event extends React.Component {
     } else {
       centerInfo = (
         <div className="form-inner">
-          <img className="img" src={center.image_url}/>
+          <img className="img-fluid" src={center.image_url}/>
           <div className="media-body">
             <h2 className="media-heading">
               <span>{center.centerName}</span>
@@ -75,18 +74,14 @@ export default class Event extends React.Component {
 
         <div id="event-form">
           <div className="container">
-            <div className="row">
+            <div className="row m-auto">
               <div className="col-lg-4 card mr-2 text-center bb">
-                
                   {centerInfo}
-             
               </div>
               <div className="col-lg-7 card text-center bb pb-3">
-                
-                    <div className="logo">lets make your <strong className="text-primary">event</strong> a memorable one</div>
-                    <hr/>
-                    <AddEventForm path={path}/>
-                
+              <div className="logo">lets make your <strong className="text-primary">event</strong> a memorable one</div>
+              <hr/>
+              <AddEventForm path={path}/>
               </div>
               <span data-toggle="modal" data-target="#event">Modal</span>
               <Modal message={message}/>

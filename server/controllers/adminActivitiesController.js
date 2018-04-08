@@ -25,15 +25,16 @@ export default class AdminctivityController {
     }));
   }
   static setActivity(req, res) {
-    const { eventTitle, text, reason, suggestion, centerName, id } = req.body;
+    const { eventTitle, text, reason, suggestion, centerName, id, username } = req.body;
     let info;
     if (text) {
       info = `Your Event booking, "${eventTitle}" has been ${text}`;
+    } else if (username) {
+      info = `${username} added an event ${eventTitle}`; 
+    } else if (centerName) {
+      info = `You added a new center ${centerName}`;
     } else {
       info = `Your Event booking, "${eventTitle}" is added and awaiting approval`;
-    }
-    if (centerName) {
-      info = `You added a new center ${centerName}`;
     }
     Adminactivities.create({
       description: info,

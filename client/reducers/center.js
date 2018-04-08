@@ -83,10 +83,12 @@ export default (state = initialState, action) => {
       };
     }
     case 'GET_CENTER_SUCCESS': {
+      const { center } = action.payload.data;
       return {
         ...state,
         loading: false,
         loaded: true,
+        center,
       };
     }
     case 'MODIFY_CENTER': {
