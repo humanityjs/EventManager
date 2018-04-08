@@ -25,6 +25,10 @@ module.exports = {
           key: 'id',
         },
       },
+      centerId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -32,7 +36,7 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-      }
+      },
     });
   },
   down: (queryInterface, Sequelize) => {

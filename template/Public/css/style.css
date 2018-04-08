@@ -96,7 +96,19 @@ hr {
 .bw {
   background-color: white;
 }
-
+.emptyCenter, .emptyEvent {
+  width: 100%;
+  min-height: 600px;
+  line-height: 600px;
+  background-image: url(../images/emptycatalog.png);
+}
+.emptyEvent {
+  background-image: url(../images/emptybookings.png);
+  background-repeat: no-repeat;
+}
+.activity-font {
+  font-size: 1rem;
+}
 /* Navigation bar */
 nav.navbar {
   background: #dbd9dc3d;

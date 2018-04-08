@@ -20,6 +20,10 @@ export default (sequelize, DataTypes) => {
         key: 'id',
       },
     },
+    centerId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
   });
   Adminactivities.associate = (models) => {
     Adminactivities.belongsTo(models.Users, {

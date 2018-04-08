@@ -6,8 +6,8 @@ export default class AdminctivityController {
   static getActivity(req, res) {
     Adminactivities.findAll({
       where: {
-        userId: req.params.id,
-      }
+        userId: req.decoded.id,
+      },
     }).then((activities) => {
       // if activities are available
       if (activities) {
@@ -25,19 +25,22 @@ export default class AdminctivityController {
     }));
   }
   static setActivity(req, res) {
-    const { eventTitle, userId, text, reason, suggestion } = req.body;
+    const { eventTitle, text, reason, suggestion, centerName, id } = req.body;
     let info;
     if (text) {
       info = `Your Event booking, "${eventTitle}" has been ${text}`;
     } else {
       info = `Your Event booking, "${eventTitle}" is added and awaiting approval`;
     }
-    
+    if (centerName) {
+      info = `You added a new center ${centerName}`;
+    }
     Adminactivities.create({
       description: info,
-      userId,
+      userId: req.decoded.id,
       reason,
       suggestion,
+      centerId: id,
     }).then(() => res.status(200).send({
       message: 'Activity added successfully',
     })).catch(error => res.status(500).send({
@@ -50,7 +53,7 @@ export default class AdminctivityController {
     return Adminactivities.findAll({
       where: {
         eventId: id,
-      }
+      },
     }).then((Activity) => {
       if (Activity) {
         return Activity.destroy().then(() => res.status(200).send({

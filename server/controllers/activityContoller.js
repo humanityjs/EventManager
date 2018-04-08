@@ -4,7 +4,11 @@ const { Activities } = models;
 
 export default class ActivityController {
   static getActivity(req, res) {
-    Activities.findAll().then((activities) => {
+    Activities.findAll({
+      where: {
+        userId: req.decoded.id,
+      },
+    }).then((activities) => {
       // if activities are available
       if (activities) {
         // show activities
@@ -22,8 +26,8 @@ export default class ActivityController {
   }
   static setActivity(req, res) {
     const {
- user, centername, eventTitle, eventId, centerId, userId, 
-} = req.body;
+      user, centername, eventTitle, eventId, centerId, userId, 
+    } = req.body;
     const info = `${user} booked ${eventTitle} for ${centername}`;
     Activities.create({
       description: info,

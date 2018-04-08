@@ -5,27 +5,27 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'SET_ACTIVITY': {
+    case 'SET_ADMINCTIVITY': {
       return {
         ...state,
         loading: true,
       }
     }
-    case 'SET_ACTIVITY_SUCCESS': {
+    case 'SET_ADMINACTIVITY_SUCCESS': {
       return {
         ...state,
         loading: false,
         loaded: true,
       }
     }
-    case 'SET_ACTIVITY_FAILS': {
+    case 'SET_ADMINACTIVITY_FAILS': {
       const { message } = action.payload;
       return {
         ...state,
         loading: false,
         loaded: true,
         error: message,
-      }
+      };
     }
     case 'GET_ACTIVITIES': {
       return {

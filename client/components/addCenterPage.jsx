@@ -31,7 +31,7 @@ export default class AddCenterPage extends React.Component {
     const { center, status, message } = this.props.center;
     const { pathname } = this.props.location
 
-    if (status === 201 || status === 200) {
+    if (status === 201) {
       return (<Redirect to="/admin-centers" />);
     }
     return (

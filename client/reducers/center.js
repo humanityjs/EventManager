@@ -7,7 +7,9 @@ const initialState = {
   error: '',
   centerSelected: '',
   center: {},
-  centerInfo: {},
+  centerInfo: {
+    facilities: [],
+  },
 };
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -98,6 +100,8 @@ export default (state = initialState, action) => {
       const { message } = action.payload;
       return {
         ...state,
+        loading: false,
+        loaded: true,
         error: message,
       };
     }
@@ -145,9 +149,11 @@ export default (state = initialState, action) => {
     }
     case 'ADD_CENTER_FAILS': {
       const { status } = action.payload;
+      const { message } = action.payload.data;
       return {
         ...state,
         status,
+        error: message,
       };
     }
     case 'ADD_CENTER_SUCCESS': {

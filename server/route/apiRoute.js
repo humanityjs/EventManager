@@ -58,15 +58,15 @@ router.route('/centerStatus/:id')
   .put(centerController.centerStatus);
 
 router.route('/activity')
-  .post(activityController.setActivity)
-  .get(activityController.getActivity);
+  .post(authToken, activityController.setActivity)
+  .get(authToken, activityController.getActivity);
 
-router.route('/activity/:id') 
-  .delete(activityController.deleteActivity);
+router.route('/activity/:id')
+  .delete(authToken, activityController.deleteActivity);
 
-router.route('/adminactivity/:id')
-  .post(adminActivityController.setActivity)
-  .get(adminActivityController.getActivity);
+router.route('/adminactivity')
+  .post(authAdminToken, adminActivityController.setActivity)
+  .get(authAdminToken, adminActivityController.getActivity);
 
 router.route('/passwordcheck')
   .post(authToken, userController.PasswordCheck);
