@@ -76,19 +76,17 @@ export default class Event extends React.Component {
         <div id="event-form">
           <div className="container">
             <div className="row">
-              <div className="col-lg-4">
-                <div className="form-outer text-center">
+              <div className="col-lg-4 card mr-2 text-center bb">
+                
                   {centerInfo}
-                </div>
+             
               </div>
-              <div className="col-lg-8">
-                <div className="form-outer text-center">
-                  <div className="form-inner">
+              <div className="col-lg-7 card text-center bb">
+                
                     <div className="logo">lets make your <strong className="text-primary">event</strong> a memorable one</div>
                     <hr/>
                     <AddEventForm path={path}/>
-                  </div>
-                </div>
+                
               </div>
               <span data-toggle="modal" data-target="#event">Modal</span>
               <Modal message={message}/>
