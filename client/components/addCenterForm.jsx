@@ -19,15 +19,14 @@ export default class CenterForm extends React.Component {
   constructor(props) {
 
     super(props);
-    const { centerName, location, description, facilities, capacity, image_url } = props.center.centerInfo;
     this.state = {
-      centerName: centerName || '',
-      location: location || '',
-      description: description || '',
-      facilities: facilities || '',
-      capacity: capacity || '',
+      centerName: '',
+      location: '',
+      description: '',
+      facilities: '',
+      capacity: '',
       errors: {},
-      image_url: image_url || '',
+      image_url: '',
     };
     
     this.onChange = this.onChange.bind(this);
@@ -57,15 +56,6 @@ export default class CenterForm extends React.Component {
         this.setState({ errors });
       }
       return isValid;
-    } else {
-      if (!isEmpty(this.state.description) || !isEmpty(this.state.centerName) || !isEmpty(this.state.location)
-        || !isEmpty(this.state.facilities) || !isEmpty(this.state.capacity)) {
-          const { errors, isValid } = modifyCenterValidation(this.state);
-          if (!isValid) {
-            this.setState({ errors });
-          }
-          return isValid;
-      }
     }
   }
 
@@ -74,11 +64,6 @@ export default class CenterForm extends React.Component {
   }
 
   render() {
-    if (this.props.path === '/view-center-event') {
-      
-    }
-    // const { centerName } = this.props.venue;
-    
     const {
       centerName,
       location,
@@ -101,10 +86,9 @@ export default class CenterForm extends React.Component {
     locationHolder = "Center location";
     capacityHolder = "Capacity";
     return ( 
-      
       <form id="add-center-form" onSubmit={this.onSubmit}>
         <UploadImage uploadedImage={this.props.center.url}/>
-        <span className="help-block">{this.props.center.addCenterError}</span>
+        <span className="help-block">{this.props.center.error}</span>
         <TextField
           id='centerName'
           value={centerName}

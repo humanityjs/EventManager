@@ -15,8 +15,8 @@ class CenterController {
    */
   static getAllCenters(req, res) {
     const {
- location, facilities, capacity, capacityType, btwValue 
-} = req.query;
+      location, facilities, capacity, capacityType, btwValue, 
+    } = req.query;
     let locationSearch;
     let facilitySearch;
     let capacitySearch;
@@ -185,7 +185,6 @@ class CenterController {
       centerName, location, description, facilities, capacity, image_url,
     } = req.body;
     const { id } = req.params;
-    console.log(req.body)
     return Centers.findById(id).then((center) => {
       if (center) {
         let facilityArray;

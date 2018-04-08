@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link, Redirect, browserHistory } from 'react-router-dom';
 import _ from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
 import { getCenters, getCenterSelected, centerSelected } from '../actions/centerActions';
 import { getCenterEvents } from '../actions/eventActions';
 import DeleteModal from './deleteModal';
-import { getActivity } from '../actions/activityActions';
+import { getAdminActivity } from '../actions/adminActivityActions';
 
 
 @connect((store) => {
@@ -20,7 +21,7 @@ export default class DisplayCenters extends React.Component {
 
   componentWillMount() {
     this.props.dispatch(getCenters());
-    this.props.dispatch(getActivity());
+    this.props.dispatch(getAdminActivity());
   }
 
   onClick(e) {
@@ -45,48 +46,55 @@ export default class DisplayCenters extends React.Component {
   }
 
   render() {
-    // if (this.props.center.message === 'Center Found') {
-    //   return <Redirect to="/view-center-event" />;
-    // }
     const path = this.props.path;
     const { centers } = this.props.center;
     const { activities } = this.props.activity;
-
-    const recentActivity = _.map(activities,  (activity) => {
+    let adminCenter;
+    const recentActivity = _.map(activities,  (activity, index) => {
       return (
-        <div className="row ml">
-          <Link to="/view-center-event"><span onClick={this.onClick.bind(this)} id={activity.centerId}>{activity.description}</span></Link>
+        <div className="row ml p-1" key={index}>
+          <Link to="/view-center-event"><span><p className="activity-font mb-0 p-1" onClick={this.onClick.bind(this)} id={activity.centerId}>{activity.description}</p></span></Link>
         </div>
       )
     })
-    const adminCenter = _.map(centers, (center) => {
-      return (
-        <div className="row bw" key={center.id}>
-          <div className="col-lg-4 col-md-12 col-sm-12 text-center">
-            <img className="img-fluid" src={center.image_url}/>
-          </div>
-          <div className="col-8 col-md-8 col-sm-12 pl-4">
-
-              <h2 className="media-heading text-center">
-                <Link to="/view-center-event"><span onClick={this.onClick.bind(this)} id={center.id}>{center.centerName}</span></Link>
-              </h2>
-
-                <h3><span>Location: </span> {center.location}</h3>
-
-
-                <h3><span>capacity: </span> {center.capacity}</h3>
- 
-
-                <h3><span>facilities: </span> {center.facilities}</h3>
-
-
-                <h3><span>description: </span> {center.description}</h3>
-
-          </div>
-          <span onClick={this.onDelete.bind(this)} className="trash p-2" data-toggle="modal" data-target="#deleteModal"id={center.centerName}><i id={center.id} className="fa fa-trash trash"></i></span>      
+    if (isEmpty(this.props.center.centers)) {
+      adminCenter = (
+        <div className="emptyCenter img-fluid text-center ml-2 mt-2">
+            <span><p className="display-3">No Center Found</p></span>
         </div>
-      )
-    }); 
+
+      );
+    } else {
+      adminCenter = _.map(centers, (center, index) => {
+        return (
+          <div className="row bw" key={index}>
+            <div className="col-lg-4 col-md-12 col-sm-12 text-center">
+              <img className="img-fluid" src={center.image_url}/>
+            </div>
+            <div className="col-8 col-md-8 col-sm-12 pl-4">
+  
+                <h2 className="media-heading text-center">
+                  <Link to="/view-center-event"><span onClick={this.onClick.bind(this)} id={center.id}>{center.centerName}</span></Link>
+                </h2>
+  
+                  <h3><span>Location: </span> {center.location}</h3>
+  
+  
+                  <h3><span>capacity: </span> {center.capacity}</h3>
+   
+  
+                  <h3><span>facilities: </span> {center.facilities}</h3>
+  
+  
+                  <h3><span>description: </span> {center.description}</h3>
+  
+            </div>
+            <span onClick={this.onDelete.bind(this)} className="trash p-2" data-toggle="modal" data-target="#deleteModal"id={center.centerName}><i id={center.id} className="fa fa-trash trash"></i></span>      
+          </div>
+        )
+      }); 
+    }
+    
     const adminCenterPage = (
       <div className="row">
         <div className="col-lg-9">

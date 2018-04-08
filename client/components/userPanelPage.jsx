@@ -14,6 +14,7 @@ import { centerSelected } from '../actions/centerActions';
 import Modal from './flash/modal';
 import { logout } from '../actions/signInActions';
 import { getAdminActivity } from '../actions/adminActivityActions';
+
 @connect((store) => {
   return {
     auth: store.auth,
@@ -86,78 +87,78 @@ export default class Dashboard extends React.Component {
   }
    
   render() {
+    let content;
     if (!this.props.auth.isAuth) {
       return <Redirect to="/" />;
     }
     if (this.props.event.status === 401) {
       this.logout();
     }
-    if (isEmpty(this.props.event)) {
-      const content = (
-        <div className="form-inner">
-          <div className="media largeIcon">
-            <img src="images/image2.jpg" className="img" />
-          </div>
-        </div>
-      );
-    }
     const { activities } = this.props.activity;
 
     const { message } = this.props.event;
     let eventId, editEventId, eventBody, form;
     const { pathname } = this.props.location;
-    const content = _.map(this.props.events, (event) => {
-      eventBody = `event-body${event.id}`;
-      eventId = `eventDetails${event.id}`;
-      editEventId = `editEventDetails${event.id}`;
-      form = `form${event.id}`;
-      let dateBooked = `date${event.id}`;
-      return (
-        <div className="center">
-          <div id={eventId} key={eventId}>
-            <div className="col-lg-3">
-              <div class="form-outer text-center">
-                <div class="form-inner">
-                  <div id={event.centerId}>
-                    <img className="img" src={event.Center.image_url}/>
-                    <h2>
-                      <span className="media-heading" data-toggle-id={eventBody} onClick={this.showHiddenDiv}>
-                        {event.eventTitle} 
-                      </span>
-                    </h2>
-                    <Link to="/modify-event" id={event.centerId}><span onClick={this.onClick.bind(this)} id={event.id}>edit</span></Link>
-                  </div>
-                  <div id={eventBody} hidden>
-                    <div className="media-body">
-                        <h3><span>Date: </span> {event.bookedDate}</h3>
-                        <h3><span>Center: </span> {event.Center.centerName}</h3>
-                        <h3><span>Capacity: </span> {event.Center.capacity}</h3>
-                        <h3><span>Location: </span> {event.Center.location}</h3>
-                        <h3><span>facilities: </span> {event.Center.facilities}</h3>
-                        <h3><span>Event description: </span> {event.description}</h3>
+    if (isEmpty(this.props.event.events)) {
+      content = (
+        <div className="emptyEvent img-fluid text-center ml-2 mt-3 pt-2">
+            <span><p className="display-3">No Event Booked Yet</p></span>
+        </div>
+      );
+    } else {
+      content = _.map(this.props.events, (event) => {
+        eventBody = `event-body${event.id}`;
+        eventId = `eventDetails${event.id}`;
+        editEventId = `editEventDetails${event.id}`;
+        form = `form${event.id}`;
+        let dateBooked = `date${event.id}`;
+        return (
+          <div className="center">
+            <div id={eventId} key={eventId}>
+              <div className="col-lg-3">
+                <div class="form-outer text-center">
+                  <div class="form-inner">
+                    <div id={event.centerId}>
+                      <img className="img" src={event.Center.image_url}/>
+                      <h2>
+                        <span className="media-heading" data-toggle-id={eventBody} onClick={this.showHiddenDiv}>
+                          {event.eventTitle} 
+                        </span>
+                      </h2>
+                      <Link to="/modify-event" id={event.centerId}><span onClick={this.onClick.bind(this)} id={event.id}>edit</span></Link>
                     </div>
+                    <div id={eventBody} hidden>
+                      <div className="media-body">
+                          <h3><span>Date: </span> {event.bookedDate}</h3>
+                          <h3><span>Center: </span> {event.Center.centerName}</h3>
+                          <h3><span>Capacity: </span> {event.Center.capacity}</h3>
+                          <h3><span>Location: </span> {event.Center.location}</h3>
+                          <h3><span>facilities: </span> {event.Center.facilities}</h3>
+                          <h3><span>Event description: </span> {event.description}</h3>
+                      </div>
+                    </div>
+                    <i id={eventId} data-toggle-id={editEventId} className="fa fa-pencil main-color edit" onClick={this.showHiddenDiv}></i>
+                    <span onClick={this.getId.bind(this)} className="trash" data-toggle="modal" data-target="#deleteModal"><i id={event.id} className="fa fa-trash trash"></i></span>
                   </div>
-                  <i id={eventId} data-toggle-id={editEventId} className="fa fa-pencil main-color edit" onClick={this.showHiddenDiv}></i>
-                  <span onClick={this.getId.bind(this)} className="trash" data-toggle="modal" data-target="#deleteModal"><i id={event.id} className="fa fa-trash trash"></i></span>
                 </div>
               </div>
             </div>
-          </div>
-          <div id={editEventId} key={form} hidden>
-            <div class="form-outer text-center">
-              <div class="form-inner">
-                <i className="fa fa-list-alt main-color"></i><br/>
-                <span className="media-heading" data-toggle-id={eventBody} onClick={this.showHiddenDiv}>
-                  {event.eventTitle} 
-                </span>
-                <EventForm id={event.id} title={event.eventTitle} description={event.description} isApproved={event.isApproved} date={event.bookedDate} center={event.Center.id}/> 
+            <div id={editEventId} key={form} hidden>
+              <div class="form-outer text-center">
+                <div class="form-inner">
+                  <i className="fa fa-list-alt main-color"></i><br/>
+                  <span className="media-heading" data-toggle-id={eventBody} onClick={this.showHiddenDiv}>
+                    {event.eventTitle} 
+                  </span>
+                  <EventForm id={event.id} title={event.eventTitle} description={event.description} isApproved={event.isApproved} date={event.bookedDate} center={event.Center.id}/> 
+                </div>
+                <i id={eventId} data-toggle-id={editEventId} className="fa fa-home main-color" onClick={this.showHiddenDiv}> home</i>
               </div>
-              <i id={eventId} data-toggle-id={editEventId} className="fa fa-home main-color" onClick={this.showHiddenDiv}> home</i>
             </div>
           </div>
-        </div>
-      )
-    });
+        )
+      });
+    }
     const recentActivity = _.map(activities,  (activity) => {
       return (
         <div className="row ml">

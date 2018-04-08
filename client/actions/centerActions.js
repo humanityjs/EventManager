@@ -1,5 +1,6 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
+import { setAdminActivity } from './adminActivityActions';
 
 export function clearState() {
   return (dispatch) => {
@@ -61,6 +62,8 @@ export function addCenter(data) {
     dispatch({ type: 'ADD_CENTER' });
     axios.post('api/v1/centers', data).then((response) => {
       dispatch({ type: 'ADD_CENTER_SUCCESS', payload: response });
+      const { center } = response.data;
+      dispatch(setAdminActivity(center));
     }).catch((err) => {
       dispatch({ type: 'ADD_CENTER_FAILS', payload: err.response });
     });

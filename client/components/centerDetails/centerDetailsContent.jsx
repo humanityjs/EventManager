@@ -22,7 +22,6 @@ export default class CenterDetailsContent extends React.Component {
   constructor(props) {
     super(props);
     const { centerName, location, description, capacity, image_url, facilities, id } = props.center.centerInfo;
-
     this.state = {
       centerName: centerName || '',
       location: location || '',
@@ -49,10 +48,11 @@ export default class CenterDetailsContent extends React.Component {
       [e.target.id]: e.target.value,
     });
   }
-  onSubmit() {
-    if (this.initialState !== this.state) {
+  onSubmit(e) {
+    if (this.state != this.initialState) {
       this.props.dispatch(modifyCenter(this.state, this.state.id));
     }
+    this.showHiddenDiv(e);
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.center.centerInfo !== this.props.center.centerInfo) {
@@ -161,38 +161,56 @@ export default class CenterDetailsContent extends React.Component {
       <div id="center-event">
         <div className="container">
           <div className="row">
-            <div className="col-lg-6 card bb text-center pt-4">
+            <div className="col-lg-6 card bb text-center pt-4 pb-4">
               <div id="centerDetails">          
-              
-                    <UploadImage path={this.props.path} uploadedImage={image_url}/>
-                    <div className="media-body text-center mb-4">
-                      <form id="edit-center-form">
-                        <div>
-                          <input type="text" value={centerName} id='centerName' onChange={this.onChange} onBlur={this.onSubmit} className="logo text-primary text-center no-border"/>
-                        <border></border>
-                        </div>
-                        <h3 className="mt-2">location</h3>
-                        <div>
-                          <input type="text" value={location} id='location' onChange={this.onChange} onBlur={this.onSubmit} className="text-center no-border mt-0 "/>
-                        <border></border>
-                        </div>
-                        <h3 className="mt-2">capacity</h3>
-                        <div>
-                          <input type="text" value={capacity} id='capacity' onChange={this.onChange} onBlur={this.onSubmit} className="text-center no-border mt-0 "/>
-                        <border></border>
-                        </div>
-                        <h3 className="mt-2">facilities</h3>
-                        <div>
-                          <input type="text" value={facilities} id='facilities' onChange={this.onChange} onBlur={this.onSubmit} className="text-center no-border mt-0 "/>
-                        <border></border>
-                        </div>
-                        <h3 className="mt-2">description</h3>
-                        <div>
-                          <input type="text" value={description} id='description' onChange={this.onChange} onBlur={this.onSubmit} className="text-center no-border mt-0 "/>
-                        <border></border>
-                        </div>
-                      </form>
-                    </div>	
+                <div className="imageUpload">
+                  <img className="img-fluid dropzone" src={image_url}/>
+                </div>
+                <div className="media-body text-center mb-4 mt-4">
+                  <strong className="logo text-primary mb-2">{centerName}</strong>
+                  <h3 className="mt-2">location</h3>
+                  <p>{location}</p>
+                  <h3 className="mt-2">capacity</h3>
+                  <p>{capacity}</p>
+                  <h3 className="mt-2">facilities</h3>
+                  <p>{facilities}</p>
+                  <h3 className="mt-2">description</h3>
+                  <p>{description}</p>
+                </div>  
+                ... <i data-toggle-id="editCenterDetails" className="fa fa-pencil main-color" onClick={this.showHiddenDiv}> edit</i>	
+              </div>
+              <div id="editCenterDetails" hidden>
+                <UploadImage path={this.props.path} uploadedImage={image_url}/>
+                <div className="media-body text-center mb-4">
+                  <form id="edit-center-form">
+                    <div>
+                      <input type="text" value={centerName} id='centerName' onChange={this.onChange} className="logo text-primary text-center no-border"/>
+                    <border></border>
+                    </div>
+                    <h3 className="mt-2">location</h3>
+                    <div>
+                      <input type="text" value={location} id='location' onChange={this.onChange} className="text-center no-border mt-0 "/>
+                    <border></border>
+                    </div>
+                    <h3 className="mt-2">capacity</h3>
+                    <div>
+                      <input type="text" value={capacity} id='capacity' onChange={this.onChange} className="text-center no-border mt-0 "/>
+                    <border></border>
+                    </div>
+                    <h3 className="mt-2">facilities</h3>
+                    <div>
+                      <input type="text" value={facilities} id='facilities' onChange={this.onChange} className="text-center no-border mt-0 "/>
+                    <border></border>
+                    </div>
+                    <h3 className="mt-2">description</h3>
+                    <div>
+                      <input type="text" value={description} id='description' onChange={this.onChange} className="text-center no-border mt-0 "/>
+                    <border></border>
+                    </div>
+                    <input type="button" data-toggle-id="editCenterDetails" className="btn btn-sm btn-success p-1 mr-1" onClick={this.onSubmit} value="save"/>
+                    <input type="button" data-toggle-id="editCenterDetails" className="btn btn-sm btn-danger p-1 ml-1" onClick={this.showHiddenDiv} value="cancel"/>
+                  </form>
+                </div>
               </div>
             </div>
             <div className="col-lg-5">
