@@ -16,17 +16,18 @@ import UploadImage from './imageUpload';
 })
 
 export default class CenterForm extends React.Component {
-  constructor() {
+  constructor(props) {
 
-    super();
+    super(props);
+    const { centerName, location, description, facilities, capacity, image_url } = props.center.centerInfo;
     this.state = {
-      centerName: '',
-      location:'',
-      description:'',
-      facilities:'',
-      capacity: '',
+      centerName: centerName || '',
+      location: location || '',
+      description: description || '',
+      facilities: facilities || '',
+      capacity: capacity || '',
       errors: {},
-      image_url: '',
+      image_url: image_url || '',
     };
     
     this.onChange = this.onChange.bind(this);
@@ -45,11 +46,7 @@ export default class CenterForm extends React.Component {
     e.preventDefault();
     if (this.isValid()) {
       this.state.image_url = this.props.center.url;
-      if (this.props.path === '/add-center') {
-        this.props.dispatch(addCenter(this.state));
-      } else if(this.props.path === '/view-center-event') {
-        this.props.dispatch(modifyCenter(this.state, this.props.center.centerSelected));
-      }
+      this.props.dispatch(addCenter(this.state));
     } 
   }
 
@@ -77,8 +74,11 @@ export default class CenterForm extends React.Component {
   }
 
   render() {
+    if (this.props.path === '/view-center-event') {
+      
+    }
+    // const { centerName } = this.props.venue;
     
-    const { center } = this.props.center;
     const {
       centerName,
       location,
@@ -91,19 +91,15 @@ export default class CenterForm extends React.Component {
     let buttonValue, nameHolder, facHolder, descHolder, locationHolder, capacityHolder;
     if (this.props.path === '/add-center') {
       buttonValue = 'Add Center';
-      nameHolder = 'Center name';
-      facHolder = "Facilities in center";
-      descHolder = "Describe center in few words";
-      locationHolder = "Center location";
-      capacityHolder = "Capacity"
     } else {
       buttonValue = 'Save';
-      nameHolder = center.centerName;
-      facHolder = center.facilities;
-      descHolder = center.description;
-      locationHolder = center.location;
-      capacityHolder = center.capacity;
     }
+
+    nameHolder = 'Center name';
+    facHolder = "Facilities in center";
+    descHolder = "Describe center in few words";
+    locationHolder = "Center location";
+    capacityHolder = "Capacity";
     return ( 
       
       <form id="add-center-form" onSubmit={this.onSubmit}>
@@ -111,7 +107,7 @@ export default class CenterForm extends React.Component {
         <span className="help-block">{this.props.center.addCenterError}</span>
         <TextField
           id='centerName'
-          value={this.state.centerName}
+          value={centerName}
           placeholder={nameHolder}
           type='text'
           error={errors.centerName} 

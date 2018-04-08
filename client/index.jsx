@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, browserHistory, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import jwt from 'jsonwebtoken';
-
-
 import store from './store';
 import allReducers from './reducers/reducersIndex';
 import HomePage from './components/homepage.jsx';
@@ -33,8 +31,8 @@ if (localStorage.jwtToken) {
 if (localStorage.eventId) {
   store.dispatch(setCurrentEvent(localStorage.eventId));
 }
-if (localStorage.centerId) {
-  store.dispatch(setCurrentCenter(localStorage.centerId));
+if (localStorage.center) {
+  store.dispatch(setCurrentCenter(jwt.decode(localStorage.center)));
 }
 //put component into html page
 ReactDOM.render(

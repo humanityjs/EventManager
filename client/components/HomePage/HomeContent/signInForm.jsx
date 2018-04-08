@@ -58,7 +58,7 @@ export default class SignInForm extends React.Component {
         <form id="login-form" onSubmit={this.onSubmit}>
           <TextField
               id='login_email'
-              value={this.state.login_email}
+              value={login_email}
               placeholder='Email Address'
               type='email'
               error={errors.login_email}
@@ -66,7 +66,7 @@ export default class SignInForm extends React.Component {
               
             <TextField
               id='login_password'
-              value={this.state.login_password}
+              value={login_password}
               placeholder='Password'
               type='password'
               error={errors.login_password} 

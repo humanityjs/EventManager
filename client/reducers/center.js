@@ -7,23 +7,27 @@ const initialState = {
   error: '',
   centerSelected: '',
   center: {},
+  centerInfo: {},
 };
 export default (state = initialState, action) => {
   switch (action.type) {
-    // case 'CLEAR_CENTER_STATE': {
-    //   const id = action.payload;
-    //   return {
-    //     ...state,
-    //     id,
-    //   };
-    // }
-    case 'SET_CURRENT_CENTER': {
-      const { centerId, centerName } = action.payload;
+    case 'CLEAR_CENTER_STATE': {
       return {
         ...state,
-        isCenter: !isEmpty(action.payload),
-        centerId,
-        centerName,
+        loading: '',
+        loaded: '',
+        message: '',
+        status: '',
+      };
+    }
+    case 'SET_CURRENT_CENTER': {
+      const { center } = action.payload;
+      const { centerName, location, capacity, description, facilities, image_url, id } = center;
+      const centerInfo = { centerName, location, capacity, description, facilities, image_url, id }
+      return {
+        ...state,
+        isCenter: !isEmpty(center),
+        centerInfo,
       };
     }
 
@@ -54,8 +58,11 @@ export default (state = initialState, action) => {
       };
     }
     case 'CENTER_SELECTED': {
+      const { centerId, centerName } = action.payload;
       return {
         ...state,
+        centerId,
+        centerName,
       };
     }
     case 'GET_CENTER': {
@@ -74,12 +81,10 @@ export default (state = initialState, action) => {
       };
     }
     case 'GET_CENTER_SUCCESS': {
-      const { center } = action.payload.data;
       return {
         ...state,
         loading: false,
         loaded: true,
-        center,
       };
     }
     case 'MODIFY_CENTER': {
@@ -135,6 +140,7 @@ export default (state = initialState, action) => {
         ...state,
         loading: true,
         status: '',
+        url: '',
       };
     }
     case 'ADD_CENTER_FAILS': {

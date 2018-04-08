@@ -2,11 +2,12 @@ import React from 'react';
 import { Link, Redirect, browserHistory } from 'react-router-dom';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import { getCenters, centerSelected } from '../actions/centerActions';
+import { getCenters, getCenterSelected, centerSelected } from '../actions/centerActions';
+import { getCenterEvents } from '../actions/eventActions';
 import DeleteModal from './deleteModal';
 import { getActivity } from '../actions/activityActions';
 
-// const store = reduxStore();
+
 @connect((store) => {
   return {
     center: store.center,
@@ -23,11 +24,8 @@ export default class DisplayCenters extends React.Component {
   }
 
   onClick(e) {
-    const center = {
-      centerId: e.target.id,
-      centerName: e.target.parentNode.id,
-    }
-    this.props.dispatch(centerSelected(center));
+    const id = e.target.id;
+    this.props.dispatch(getCenterSelected(id));
   }
 
   componentDidUpdate() {
@@ -38,7 +36,18 @@ export default class DisplayCenters extends React.Component {
     }
   }
 
+  onDelete(e) {
+    const center = {
+      centerId: e.target.id,
+      centerName: e.target.parentNode.id,
+    }
+    this.props.dispatch(centerSelected(center));
+  }
+
   render() {
+    // if (this.props.center.message === 'Center Found') {
+    //   return <Redirect to="/view-center-event" />;
+    // }
     const path = this.props.path;
     const { centers } = this.props.center;
     const { activities } = this.props.activity;
@@ -74,7 +83,7 @@ export default class DisplayCenters extends React.Component {
                 <h3><span>description: </span> {center.description}</h3>
 
           </div>
-          <span onClick={this.onClick.bind(this)} className="trash p-2" data-toggle="modal" data-target="#deleteModal"id={center.centerName}><i id={center.id} className="fa fa-trash trash"></i></span>      
+          <span onClick={this.onDelete.bind(this)} className="trash p-2" data-toggle="modal" data-target="#deleteModal"id={center.centerName}><i id={center.id} className="fa fa-trash trash"></i></span>      
         </div>
       )
     }); 

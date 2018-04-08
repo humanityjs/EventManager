@@ -101,7 +101,6 @@ export default class Validation {
       centerName, facilities, description, location, capacity,
     } = req.body;
     const errors = {};
-
     Object.entries(req.body).forEach((entry) => {
       
       if (isEmpty(entry[1])) {
