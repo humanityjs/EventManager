@@ -166,7 +166,10 @@ export default class AddEventForm extends React.Component {
           <span className="help-block">{this.props.event.error}</span>
           <CenterSearch />
           <p className="subtitle">select your preferred event center</p>
-          <div className="form-group">
+          <div className="input-group">
+            <span class="input-group-addon">
+              <i className="fa fa-home"></i>
+            </span>
             <select className="form-control" defaultValue={this.state.centerId} id="centerId" onChange={this.onChange}>            
               <option value="">Select Center</option>
               {showCenters}
@@ -174,24 +177,21 @@ export default class AddEventForm extends React.Component {
           </div>
 
           <span className="help-block">{errors.bookedDate}</span>
-          <div class="form-group">
             <div class="input-group">
               <span class="input-group-addon">
                 <i className="fa fa-calendar"></i>
               </span>
               <input type="text" id="bookedDate" onBlur={this.onChange} class="form-control" value={this.state.bookedDate} placeholder={dateHolder}/>
             </div>
-          </div>
 
-          <span className="help-block">{errors.eventTitle}</span>
-          <div class="form-group">   
+          <span className="help-block">{errors.eventTitle}</span>  
             <div class="input-group">
               <span class="input-group-addon">
                 <i className="fa fa-microphone"></i>
               </span> 
               <input type="text" id="eventTitle" onChange={this.onChange} class="form-control" value={this.state.eventTitle} placeholder={titleHolder}/>
             </div>
-          </div>
+
           <span className="help-block">{errors.description}</span>
           <p className="subtitle">describe your event in few words</p>
           <div className="form-group">

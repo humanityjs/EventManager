@@ -61,65 +61,57 @@ export default class SearchForm extends React.Component {
     return (
       <div className="row bw" id="center-search">
         <p className="subtitle"><i className="fa fa-filter green"></i> filter centers by</p>
-        <div className="col-lg-3">
-          <div className="form-group">
-            <input
-              id='location'
-              value={this.state.location}
-              placeholder='location'
-              type='text'
-              onChange={this.onChange}
-              className="form-control"
-            />
-            <div className="help-block">{errors.location}</div>
-          </div>
-        </div>
-        <div className="col-lg-3">
-          <div className="form-group">
-            <input
-            id='facilities'
-            value={this.state.facilities}
-            placeholder='facilities'
+ 
+        <div className="input-group">
+          <span class="input-group-addon">
+            <i className="fa fa-map-marker p-1"></i>
+          </span>
+          <input
+            id='location'
+            value={this.state.location}
+            placeholder='location'
             type='text'
             onChange={this.onChange}
-            className="form-control" 
-            />
-            <div className="help-block">{errors.facilities}</div>
+            className="form-control"
+          />
+          <div className="help-block">{errors.location}</div>
+
+          <span class="input-group-addon">
+            <i className="fa fa-cogs p-1"></i>
+          </span>
+          <input
+          id='facilities'
+          value={this.state.facilities}
+          placeholder='facilities'
+          type='text'
+          onChange={this.onChange}
+          className="form-control" 
+          />
+          <div className="help-block">{errors.facilities}</div>
+          <div className="input-group-addon">
+            <select onChange={this.onChange} id="capacityType">
+              <option value="greater">{greater}</option>
+              <option value="lesser">{lesser}</option>
+              <option value="equal">{equal}</option>
+              <option value="between">{between}</option>
+            </select>
           </div>
-        </div>
-        
-        <div className="col-lg-3">
-          <div className="form-group">
-            <div className="input-group">
-              <div className="input-group-addon">
-                <select onChange={this.onChange} id="capacityType">
-                  <option>conditions</option>
-                  <option value="greater">{greater}</option>
-                  <option value="lesser">{lesser}</option>
-                  <option value="equal">{equal}</option>
-                  <option value="between">{between}</option>
-                </select>
-              </div>
-              <input
-              id='capacity'
-              value={this.state.capacity}
-              placeholder='capacity'
-              type='number'
-              onChange={this.onChange}
-              className="form-control" 
-              />
-              <input
-              id='btwValue'
-              value={this.state.btwValue}
-              placeholder='capacity'
-              type='number'
-              onChange={this.onChange}
-              className="form-control" hidden
-              />  
-            </div> 
-          </div>
-        </div>
-        <div className="col-lg-2">
+          <input
+          id='capacity'
+          value={this.state.capacity}
+          placeholder='capacity'
+          type='number'
+          onChange={this.onChange}
+          className="form-control" 
+          />
+          <input
+          id='btwValue'
+          value={this.state.btwValue}
+          placeholder='capacity'
+          type='number'
+          onChange={this.onChange}
+          className="form-control" hidden
+          />
           <button className="btn btn-success"><i className="fa fa-search" onClick={this.search}> Search</i></button>
         </div>
       </div>
