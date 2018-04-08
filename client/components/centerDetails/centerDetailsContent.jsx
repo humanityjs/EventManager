@@ -1,11 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getCenterSelected } from '../../actions/centerActions';
+import { getCenterSelected, modifyCenter, clearState } from '../../actions/centerActions';
 import { getEventSelected, modifyCenterEvent, deleteCenterEvent, getCenterEvents } from '../../actions/eventActions';
 import ModalContent from '../modalContent';
 import CenterForm from '../addCenterForm';
 import DeleteModal from '../deleteModal';
 import Modal from '../flash/modal';
+import UploadImage from '../imageUpload';
+
 
 @connect((store) => {
   return {
@@ -15,29 +17,57 @@ import Modal from '../flash/modal';
     message: store.event.message,
   };
 })
+
 export default class CenterDetailsContent extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    const { centerName, location, description, capacity, image_url, facilities, id } = props.center.centerInfo;
+
     this.state = {
-      centerName:'',
-      location:'',
-      facilities:'',
-      description:'',
-      capacity: '',
-      errors: {},
-      event:{},
+      centerName: centerName || '',
+      location: location || '',
+      facilities: facilities.join() || '',
+      description: description || '',
+      capacity: capacity || '',
+      errors: '',
+      event: '',
+      image_url: image_url || '',
+      id: id || '',
     }
+    this.initialState = this.state;
     this.onClick = this.onClick.bind(this);
     this.onAttend = this.onAttend.bind(this);
     this.showHiddenDiv = this.showHiddenDiv.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
-
-  componentWillMount() {
-    const id = this.props.center.id;
-    this.props.dispatch(getCenterSelected(id));
-    this.props.dispatch(getCenterEvents(id));
+  onChange(e) {
+    if (this.props.center.message) {
+      this.props.dispatch(clearState());
+    }
+    this.setState({
+      [e.target.id]: e.target.value,
+    });
   }
-
+  onSubmit() {
+    if (this.initialState !== this.state) {
+      this.props.dispatch(modifyCenter(this.state, this.state.id));
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.center.centerInfo !== this.props.center.centerInfo) {
+      const { centerName, location, facilities, description, capacity, image_url, id } = nextProps.center.centerInfo;
+      this.setState({
+        centerName: centerName || '',
+        location: location || '',
+        facilities: facilities.join() || '',
+        description: description || '',
+        image_url: image_url || '',
+        capacity: capacity || '',
+        id: id || '',
+      })
+    }
+  }
   componentDidUpdate() {
     if (this.props.event.status === 201 || this.props.event.status === 200 || this.props.center.status === 200) {
       $(document).ready( function(){
@@ -95,14 +125,14 @@ export default class CenterDetailsContent extends React.Component {
       }
       return div2.style.display="";
     } 
-    
   }  
   
 
   render() {
+    const { centerInfo } = this.props.center;
+    const { centerName, location, facilities, description, image_url, capacity, errors } = this.state;
     const { path } = this.props;
     const { event } = this.props.event;
-    const { center } = this.props.center;
     const events = _.map(this.props.events, (event) => {
       let eStatus;
       if (event.isApproved == true) {
@@ -131,32 +161,38 @@ export default class CenterDetailsContent extends React.Component {
       <div id="center-event">
         <div className="container">
           <div className="row">
-            <div className="col-lg-6">
+            <div className="col-lg-6 card bb text-center pt-4">
               <div id="centerDetails">          
-                <div className="form-outer text-center">
-                  <div className="form-inner">
-                    <img className="img" src={center.image_url}/>
-                    <div className="media-body">
-                      <strong className="logo text-primary">{center.centerName}</strong>
-                      <p>{center.location}</p>
-                      <h3>capacity</h3>
-                      <p>{center.capacity}</p>
-                      <h3>facilities</h3>
-                      <p>{center.facilities}</p>
-                      <h3>description</h3>
-                      <p>{center.description}</p>
+              
+                    <UploadImage path={this.props.path} uploadedImage={image_url}/>
+                    <div className="media-body text-center mb-4">
+                      <form id="edit-center-form">
+                        <div>
+                          <input type="text" value={centerName} id='centerName' onChange={this.onChange} onBlur={this.onSubmit} className="logo text-primary text-center no-border"/>
+                        <border></border>
+                        </div>
+                        <h3 className="mt-2">location</h3>
+                        <div>
+                          <input type="text" value={location} id='location' onChange={this.onChange} onBlur={this.onSubmit} className="text-center no-border mt-0 "/>
+                        <border></border>
+                        </div>
+                        <h3 className="mt-2">capacity</h3>
+                        <div>
+                          <input type="text" value={capacity} id='capacity' onChange={this.onChange} onBlur={this.onSubmit} className="text-center no-border mt-0 "/>
+                        <border></border>
+                        </div>
+                        <h3 className="mt-2">facilities</h3>
+                        <div>
+                          <input type="text" value={facilities} id='facilities' onChange={this.onChange} onBlur={this.onSubmit} className="text-center no-border mt-0 "/>
+                        <border></border>
+                        </div>
+                        <h3 className="mt-2">description</h3>
+                        <div>
+                          <input type="text" value={description} id='description' onChange={this.onChange} onBlur={this.onSubmit} className="text-center no-border mt-0 "/>
+                        <border></border>
+                        </div>
+                      </form>
                     </div>	
-                  </div>
-                  ... <i data-toggle-id="editCenterDetails" className="fa fa-pencil main-color" onClick={this.showHiddenDiv}> edit</i>
-                </div>
-              </div>
-              <div id="editCenterDetails" hidden>
-                <div class="form-outer text-center">
-                  <div class="form-inner">
-                    <CenterForm path={this.props.path} center={center}/>
-                  </div>
-                  <i data-toggle-id="editCenterDetails" className="fa fa-home main-color" onClick={this.showHiddenDiv}> home</i>
-                </div>
               </div>
             </div>
             <div className="col-lg-5">

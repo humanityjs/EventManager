@@ -1,5 +1,11 @@
 import axios from 'axios';
-import store from '../store';
+import jwt from 'jsonwebtoken';
+
+export function clearState() {
+  return (dispatch) => {
+    dispatch({ type: 'CLEAR_CENTER_STATE' });
+  };
+}
 
 export function getCenters(data) {
   return (dispatch) => {
@@ -34,8 +40,6 @@ export function setCurrentCenter(center) {
 export function centerSelected(center) {
   return (dispatch) => {
     dispatch({ type: 'CENTER_SELECTED', payload: center });
-    localStorage.setItem('center', center);
-    dispatch(setCurrentCenter(center));
   };
 }
 export function getCenterSelected(id) {
@@ -43,6 +47,9 @@ export function getCenterSelected(id) {
     dispatch({ type: 'GET_CENTER' });
     axios.get(`api/v1/centers/${id}`).then((response) => {
       dispatch({ type: 'GET_CENTER_SUCCESS', payload: response });
+      const { token } = response.data;
+      localStorage.setItem('center', token);
+      dispatch(setCurrentCenter(jwt.decode(token)));
     }).catch((err) => {
       dispatch({ type: 'GET_CENTER_FAILS', payload: err.response });
     });
@@ -111,9 +118,4 @@ export function centerStatus(id) {
 }
 
 
-// export function clearState() {
-//   return dispatch => {
-//     const id = '';
-//     dispatch({ type: 'CLEAR _CENTER_STATE', payload: id});
-//   }
-// }
+

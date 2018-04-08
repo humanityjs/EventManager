@@ -2,11 +2,12 @@ import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import shortid from 'shortid';
 import setAuthToken from '../utils/setAuthorizationToken';
+import { setCurrentCenter } from './centerActions';
 
 export function clearStatus() {
   return (dispatch) => {
     dispatch({ type: 'CLEAR_STATUS' });
-  }
+  };
 }
 
 export function setCurrentUser(newUser, token) {
@@ -51,6 +52,8 @@ export function logout() {
     localStorage.removeItem('jwtToken');
     setAuthToken(false);
     dispatch(setCurrentUser({}));
+    localStorage.removeItem('center');
+    dispatch(setCurrentCenter({}));
   };
 }
 

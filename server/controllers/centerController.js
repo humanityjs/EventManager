@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken';
 import models from '../models';
 
 const { Centers, Events } = models;
@@ -13,7 +14,9 @@ class CenterController {
    * @memberof CenterController
    */
   static getAllCenters(req, res) {
-    const { location, facilities, capacity, capacityType, btwValue } = req.query;
+    const {
+ location, facilities, capacity, capacityType, btwValue 
+} = req.query;
     let locationSearch;
     let facilitySearch;
     let capacitySearch;
@@ -21,46 +24,46 @@ class CenterController {
     if (location) {
       locationSearch = {
         $ilike: `%${place}%`,
-      }
+      };
     } else {
       locationSearch = {
         $ne: null,
-      } 
+      };
     }
     if (facilities) {
-      let facility = facilities.toLowerCase();
+      const facility = facilities.toLowerCase();
       facilitySearch = {
         $contains: [facility],
-      }
+      };
     } else {
       facilitySearch = {
         $ne: null,
-      }
+      };
     }
     if (capacity) {
       if (capacityType === 'greater') {
         capacitySearch = {
           $gt: capacity,
-        }
+        };
       } else if (capacityType === 'lesser') {
         capacitySearch = {
           $lt: capacity,
-        }
+        };
       } else if (capacityType === 'equal') {
         capacitySearch = {
           $eq: capacity,
-        }
+        };
       } else if (capacityType === 'between') {
         capacitySearch = {
           $between: [capacity, btwValue],
-        }
+        };
       }
     } else {
       capacitySearch = {
         $ne: null,
-      }
+      };
     }
-      
+
     // get centers
     Centers.findAll({
       where: {
@@ -106,8 +109,15 @@ class CenterController {
     })
       .then((center) => {
         if (center) {
-          return res.status(200).send({
+          const payload = {
             center,
+          };
+          const token = jwt.sign(payload, process.env.SECRET, {
+            expiresIn: 60 * 60 * 12,
+          });
+          req.body.token = token;
+          return res.status(200).send({
+            token,
           });
         }
         return res.status(400).send({
@@ -175,26 +185,32 @@ class CenterController {
       centerName, location, description, facilities, capacity, image_url,
     } = req.body;
     const { id } = req.params;
-
+    console.log(req.body)
     return Centers.findById(id).then((center) => {
-      let facilityArray;
-      if (facilities !== '') {
-        facilityArray = facilities.split(',');
+      if (center) {
+        let facilityArray;
+        if (facilities) {
+          const fac = facilities.toLowerCase();
+          facilityArray = fac.split(',');
+        }
+        return center.update({
+          centerName: centerName.toLowerCase() || center.centerName,
+          location: location.toLowerCase() || center.location,
+          description: description.toLowerCase() || center.description,
+          facilities: facilityArray || center.facilities,
+          capacity: capacity || center.capacity,
+          image_url: image_url || center.image_url,
+        }).then(() => res.status(200).send({
+          message: 'Successfully updated center',
+        })).catch(error => res.status(500).send({
+          message: error.message,
+        }));
       }
-      return center.update({
-        centerName: centerName || center.centerName,
-        location: location || center.location,
-        description: description || center.description,
-        facilities: facilityArray || center.facilities,
-        capacity: capacity || center.capacity,
-        image_url: image_url || center.image_url,
-      }).then(() => res.status(200).send({
-        message: 'Successfully updated center',
-      })).catch(error => res.status(500).send({
-        message: error.message,
-      }));
-    }).catch(() => res.status(404).send({
-      message: 'Center not found',
+      return res.status(404).send({
+        message: 'Center not Found',
+      });
+    }).catch(err => res.status(500).send({
+      message: err.message,
     }));
   }
   /**
@@ -229,23 +245,17 @@ class CenterController {
       if (center) {
         return center.update({
           status: false,
-        }).then(() => {
-          return res.status(200).send({
+        }).then(() => res.status(200).send({
             message: 'ok',
-          });
-        });
+          }));
       }
       return res.status(404).send({
         message: 'not found',
-      })
-    }).catch((error) => {
-      return res.status(500).send({
-        message: error.message,
       });
-    });
+    }).catch((error) => res.status(500).send({
+        message: error.message,
+      }));
   }
-
-  
 }
 
 
