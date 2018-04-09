@@ -26,14 +26,13 @@ export default class ActivityController {
   }
   static setActivity(req, res) {
     const {
-      user, centername, eventTitle, eventId, centerId, userId, 
+      eventTitle, eventId,
     } = req.body;
-    const info = `${user} booked ${eventTitle} for ${centername}`;
+    const info = `${eventTitle} is added and awaiting approval`;
     Activities.create({
       description: info,
       eventId,
-      centerId,
-      userId,
+      userId: req.decoded.id,
     }).then(() => res.status(200).send({
       message: 'Activity added successfully',
     })).catch(error => res.status(500).send({

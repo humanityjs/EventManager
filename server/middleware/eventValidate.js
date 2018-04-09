@@ -18,6 +18,7 @@ export default class Validation {
     const {
       eventTitle, bookedDate, description, centerId,
     } = req.body;
+    console.log(req.body)
     const errors = {};
     if (eventTitle === undefined || bookedDate === undefined || description === undefined
         || centerId === undefined) {

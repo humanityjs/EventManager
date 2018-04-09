@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
+import CenterSearch from '../centerSearch';
 import { getCenters, getCenterSelected } from '../../actions/centerActions';
 import { createEvent, getCenterEvents , modifyEvent } from '../../actions/eventActions';
 import TextField from '../../common/textField';
-import CenterSearch from '../centerSearch';
 import DatePicker from '../datePicker';
 import { addEventValidation, modifyEventValidation } from '../../shared/eventValidations';
 
@@ -66,10 +66,8 @@ export default class AddEventForm extends React.Component {
       this.setState({
         centerId: e.target.value
       });
-      this.props.dispatch(getCenterSelected(e.target.value));
-  
+      this.props.dispatch(getCenterSelected(e.target.value, 'tag'));
     }
-
   }
 
   isValid() {
@@ -96,12 +94,9 @@ export default class AddEventForm extends React.Component {
   onSubmit(e) {
     e.preventDefault();
     let data = {
-      eventinfo: this.state,
-      centerId:this.state.centerId,
+      eventInfo: this.state,
       user: this.props.auth.user.fullname,
-      centername: this.props.center.centerName,
-      eventTitle: this.state.eventTitle,
-      userId: this.props.auth.user.id,
+      centerName: this.props.center.centerName,
       reason: '',
       suggestion: '',
       text: '',
@@ -144,15 +139,9 @@ export default class AddEventForm extends React.Component {
     }
 
     let titleHolder, dateHolder, descriptionHolder;
-    if (this.props.path === '/modify-event') {
-      titleHolder = event.eventTitle;
-      dateHolder = event.bookedDate;
-      descriptionHolder = event.description;
-    } else {
       titleHolder = "Give your event a title";
       dateHolder = "Choose a date for your event";
       descriptionHolder = "Write few things about the event";
-    }
     const { eventTitle, bookedDate, description, errors, isLoading, centerId } = this.state;
     const showCenters = _.map(this.props.centers, (center) => {
       return (

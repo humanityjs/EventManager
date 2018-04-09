@@ -4,7 +4,8 @@ import { Redirect } from 'react-router-dom';
 import isEmpty from 'lodash/isEmpty';
 import { getCenters, getCenterSelected, clearState } from '../actions/centerActions';
 import { getEventSelected } from '../actions/eventActions';
-import AddEventForm from './eventPage/addEventForm.jsx';
+import AddEventForm from './eventPage/addEventForm';
+import EditEventForm from './eventPage/editEventForm';
 import Modal from './flash/modal';
 
 @connect((store) => {
@@ -20,15 +21,7 @@ export default class Event extends React.Component {
   
   
   componentWillMount() {
-    if (this.props.path === '/add-event') {
-      // this.props.dispatch(clearState());
-    }
     this.props.dispatch(getCenters());
-    this.props.dispatch(getCenterSelected(this.props.center.id));
-    if (this.props.path === '/modify-event') {
-      const id = this.props.event.id;
-      this.props.dispatch(getEventSelected(id));
-    }
   }
 
   componentDidUpdate() {
@@ -41,6 +34,7 @@ export default class Event extends React.Component {
     if (this.props.event.status === 201) {
       return (<Redirect to="/dashboard" />);
     }
+    let content;
     const message = this.props.event.message;
     const { path } = this.props;
     const center = this.props.center.center;
@@ -56,7 +50,7 @@ export default class Event extends React.Component {
     } else {
       centerInfo = (
         <div className="form-inner">
-          <img className="img" src={center.image_url}/>
+          <img className="img-fluid" src={center.image_url}/>
           <div className="media-body">
             <h2 className="media-heading">
               <span>{center.centerName}</span>
@@ -71,22 +65,27 @@ export default class Event extends React.Component {
         </div>
       )
     }
+    if (this.props.path === '/modify-event') {
+      content = (
+        <EditEventForm />
+      )
+    } else {
+      content = (
+        <AddEventForm />
+      )
+    }
     return (
 
         <div id="event-form">
           <div className="container">
-            <div className="row">
+            <div className="row m-auto">
               <div className="col-lg-4 card mr-2 text-center bb">
-                
                   {centerInfo}
-             
               </div>
               <div className="col-lg-7 card text-center bb pb-3">
-                
-                    <div className="logo">lets make your <strong className="text-primary">event</strong> a memorable one</div>
-                    <hr/>
-                    <AddEventForm path={path}/>
-                
+              <div className="logo">lets make your <strong className="text-primary">event</strong> a memorable one</div>
+              <hr/>
+              {content}
               </div>
               <span data-toggle="modal" data-target="#event">Modal</span>
               <Modal message={message}/>

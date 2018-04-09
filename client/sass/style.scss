@@ -92,9 +92,6 @@
   }
 }
 #event-page {
-  .ml {
-    margin-top: 35px;
-  }
   .fit {
     padding: 30px 2px;
   }
@@ -118,6 +115,9 @@
   }
   .media-heading {
     cursor: pointer;
+  }
+  .row {
+    padding: 0;
   }
 }
 

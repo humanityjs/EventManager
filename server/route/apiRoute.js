@@ -65,7 +65,7 @@ router.route('/activity/:id')
   .delete(authToken, activityController.deleteActivity);
 
 router.route('/adminactivity')
-  .post(authAdminToken, adminActivityController.setActivity)
+  .post(authToken, adminActivityController.setActivity)
   .get(authAdminToken, adminActivityController.getActivity);
 
 router.route('/passwordcheck')

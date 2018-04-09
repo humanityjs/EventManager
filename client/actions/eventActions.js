@@ -1,18 +1,23 @@
 import axios from 'axios';
+import jwt from 'jsonwebtoken';
 import { centerStatus } from './centerActions';
 import { setActivity, deleteActivity } from './activityActions';
 import { setAdminActivity } from './adminActivityActions';
 
 export function createEvent(data) {
-  const { eventinfo, centerId } = data;
+  const { eventInfo } = data;
   return (dispatch) => {
     dispatch({ type: 'ADD_EVENT' });
-    axios.post('api/v1/events', eventinfo).then((response) => {
+    axios.post('api/v1/events', eventInfo).then((response) => {
       dispatch({ type: 'ADD_EVENT_SUCCESS', payload: response });
-      data.eventId = response.data.DELETEDEvent.id;
-      dispatch(centerStatus(centerId));
-      dispatch(setActivity(data));
-      dispatch(setAdminActivity(data));
+      const info = {
+        id: eventInfo.centerId,
+        eventTitle: eventInfo.eventTitle,
+        eventId: response.data.bookedEvent.id,
+        username: data.user,
+      };
+      dispatch(centerStatus(info.id));
+      dispatch(setActivity(info));
     }).catch((err) => {
       dispatch({ type: 'ADD_EVENT_FAILS', payload: err.response.data });
     });
@@ -43,14 +48,12 @@ export function getCenterEvents(id) {
 
 export function setCurrentEvent(event) {
   return (dispatch) => {
-    dispatch({ type: 'SET_CURRENT_EVENT', payload: event })
+    dispatch({ type: 'SET_CURRENT_EVENT', payload: event });
   };
 }
-export function eventSelected(id) {
+export function eventSelected(eventData) {
   return (dispatch) => {
-    dispatch({ type: 'EVENT_SELECTED', payload: id });
-    localStorage.setItem('eventId', id);
-    dispatch(setCurrentEvent(id));
+    dispatch({ type: 'EVENT_SELECTED', payload: eventData });
   };
 }
 export function getEventSelected(id) {
@@ -58,6 +61,9 @@ export function getEventSelected(id) {
     dispatch({ type: 'GET_EVENT' });
     axios.get(`api/v1/events/${id}`).then((response) => {
       dispatch({ type: 'GET_EVENT_SUCCESS', payload: response.data });
+      const { token } = response.data;
+      localStorage.setItem('event', token);
+      dispatch(setCurrentEvent(jwt.decode(token)));
     }).catch((err) => {
       dispatch({ type: 'GET_EVENT_FAILS', payload: err.response.data });
     });
@@ -79,12 +85,12 @@ export function modifyCenterEvent(data) {
   };
 }
 
-export function modifyEvent(id, data, centerId) {
+export function modifyEvent(id, data) {
   return (dispatch) => {
     dispatch({ type: 'MODIFY_EVENT' });
     axios.put(`api/v1/events/${id}`, data).then((response) => {
       dispatch({ type: 'MODIFY_EVENT_SUCCESS', payload: response });
-      dispatch(centerStatus(centerId));
+      // dispatch(centerStatus(centerId));
     }).catch((err) => {
       dispatch({ type: 'MODIFY_EVENT_FAILS', payload: err.response.data });
     });

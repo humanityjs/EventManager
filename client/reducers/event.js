@@ -6,9 +6,7 @@ const initialState = {
   loaded: false,
   events: [],
   error: null,
-  event: {
-    eventTitle: '',
-  },
+  event: {},
   message: '',
   status: '',
   isEvent: false,
@@ -17,11 +15,11 @@ export default (state = initialState, action) => {
   switch (action.type) {
 
     case 'SET_CURRENT_EVENT': {
-      const id = action.payload;
+      const event = action.payload;
       return {
         ...state,
-        isEvent: !isEmpty(id),
-        id,
+        isEvent: !isEmpty(event),
+        event,
       };
     }
 
@@ -32,7 +30,6 @@ export default (state = initialState, action) => {
         message: '',
         status: '',
         error: '',
-        userEvents: '',
       };
     }
     case 'GET_EVENTS_FAILS': {
@@ -48,7 +45,7 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
         loaded: true,
-        userEvents: events,
+        events,
       };
     }
     case 'GET_CENTER_EVENTS': {
@@ -83,11 +80,12 @@ export default (state = initialState, action) => {
       };
     }
     case 'EVENT_SELECTED': {
+      const { eventId, eventName } = action.payload;
       return {
         ...state,
-        message: '',
-        status: '',
-      }
+        eventId,
+        eventName,
+      };
     }
     case 'GET_EVENT': {
       return {

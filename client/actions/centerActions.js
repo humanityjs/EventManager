@@ -33,9 +33,9 @@ export function getCenters(data) {
     });
   };
 }
-export function setCurrentCenter(center) {
+export function setCurrentCenter(centerData) {
   return (dispatch) => {
-    dispatch({ type: 'SET_CURRENT_CENTER', payload: center });
+    dispatch({ type: 'SET_CURRENT_CENTER', payload: centerData });
   };
 }
 export function centerSelected(center) {
@@ -43,14 +43,16 @@ export function centerSelected(center) {
     dispatch({ type: 'CENTER_SELECTED', payload: center });
   };
 }
-export function getCenterSelected(id) {
+export function getCenterSelected(id, tag) {
   return (dispatch) => {
     dispatch({ type: 'GET_CENTER' });
     axios.get(`api/v1/centers/${id}`).then((response) => {
       dispatch({ type: 'GET_CENTER_SUCCESS', payload: response });
-      const { token } = response.data;
-      localStorage.setItem('center', token);
-      dispatch(setCurrentCenter(jwt.decode(token)));
+      if (!tag) {
+        const { token } = response.data;
+        localStorage.setItem('center', token);
+        dispatch(setCurrentCenter(jwt.decode(token)));
+      }
     }).catch((err) => {
       dispatch({ type: 'GET_CENTER_FAILS', payload: err.response });
     });

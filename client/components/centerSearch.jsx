@@ -45,9 +45,9 @@ export default class SearchForm extends React.Component {
     return isValid;
   }
 
-  search() {
-    if (this.isValid()) {
-      console.log(this.state);
+  search(e) {
+    e.preventDefault();
+    if (this.isValid()) {;
       this.props.dispatch(getCenters(this.state));
     }
   }
@@ -59,7 +59,7 @@ export default class SearchForm extends React.Component {
     const between = "<>";
     const { location, facilities, capacity, capacityType, errors } = this.state;
     return (
-      <div className="row bw" id="center-search">
+      <div className="row bw p-3" id="center-search">
         <p className="subtitle"><i className="fa fa-filter green"></i> filter centers by</p>
  
         <div className="input-group">

@@ -26,7 +26,7 @@ export default class DeleteModal extends React.Component {
   }
   onAttend(e) {
     if (this.props.path === '/dashboard') {
-      this.props.dispatch(deleteEvent(this.props.event.eventSelected));
+      this.props.dispatch(deleteEvent(this.props.event.eventId));
     } else if (this.props.path === '/admin-centers') {
       this.props.dispatch(deleteCenter(this.props.center.centerId));
     } else {
@@ -44,27 +44,27 @@ export default class DeleteModal extends React.Component {
       this.props.dispatch(deleteCenterEvent(data));
     }
   }
-  componentDidUpdate() {
-    if (this.props.event.message === 'Event Deleted') {
-      const { event } = this.props.event;
+  // componentDidUpdate() {
+  //   if (this.props.event.message === 'Event Deleted') {
+  //     const { event } = this.props.event;
       
-      const title = 'Event Disapproved';
-      const message = `We are sorry to tell you that your event booking, "${event.eventTitle}" has been disapproved due to the reason(s) shown below
-      <br/>
-      <b>Event: ${event.eventTitle}</b> <br/>
-      <b>Date: ${event.bookedDate}</b> <br/>
+  //     const title = 'Event Disapproved';
+  //     const message = `We are sorry to tell you that your event booking, "${event.eventTitle}" has been disapproved due to the reason(s) shown below
+  //     <br/>
+  //     <b>Event: ${event.eventTitle}</b> <br/>
+  //     <b>Date: ${event.bookedDate}</b> <br/>
     
-      <b> Reasons </b><br/>
-      ${this.state.reason}
-      <br/>
-      <b>Suggestions</b><br/>
-      ${this.state.suggestion} <br/>
-      Best Regards
-      ${this.props.user.fullname}`;
-      this.props.dispatch(sendMail(title, message, this.props.auth.email));
+  //     <b> Reasons </b><br/>
+  //     ${this.state.reason}
+  //     <br/>
+  //     <b>Suggestions</b><br/>
+  //     ${this.state.suggestion} <br/>
+  //     Best Regards
+  //     ${this.props.user.fullname}`;
+  //     this.props.dispatch(sendMail(title, message, this.props.auth.email));
       
-    }
-  }
+  //   }
+  // }
   onCancel() {
       $(document).ready( function(){
         $('#deleteModal').modal('hide');
@@ -78,11 +78,16 @@ export default class DeleteModal extends React.Component {
 
   render() {
     let content;
+    let title;
+    if (this.props.path === "/dashboard") {
+      title = this.props.event.eventName;
+    } else {
+      title = this.props.center.centerName;
+    }
     if (this.props.path === '/view-center-event') {
       content = (
         <div className="form-inner">
-          <p className="text-primary">{this.props.event.event.eventTitle}</p>
-          <span className="help-block">Are sure you want to delete event?</span>
+          <span className="help-block">Are sure you want to delete event {this.props.event.event.eventTitle}?</span>
           <br/><br/>
           <div class="form-group">
               <textarea class="form-control" id="reason" onChange={this.onChange} placeholder="Give reasons for disapproving this event" value={this.state.reason}></textarea>
@@ -100,7 +105,7 @@ export default class DeleteModal extends React.Component {
     } else {
       content = (
         <div className="form-inner">
-          <span className="help-block">Are sure you want to delete {this.props.center.centerName}?</span>
+          <span className="help-block">Are sure you want to delete {title}?</span>
           <br/>
           <i className="fa fa-trash red"  id="disapprove" onClick={this.onAttend.bind(this)}></i>
           <i className="fa fa-save green" onClick={this.onCancel.bind(this)}></i>
