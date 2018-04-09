@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
+import CenterSearch from '../centerSearch';
 import { getCenters, getCenterSelected } from '../../actions/centerActions';
 import { createEvent, getCenterEvents , modifyEvent } from '../../actions/eventActions';
 import TextField from '../../common/textField';
-import CenterSearch from '../centerSearch';
 import DatePicker from '../datePicker';
 import { addEventValidation, modifyEventValidation } from '../../shared/eventValidations';
 
@@ -124,7 +124,6 @@ export default class AddEventForm extends React.Component {
       }      
     } else {
       if (this.isValid()) {
-        console.log(data)
         this.props.dispatch(createEvent(data));
       }
     }
@@ -140,15 +139,9 @@ export default class AddEventForm extends React.Component {
     }
 
     let titleHolder, dateHolder, descriptionHolder;
-    if (this.props.path === '/modify-event') {
-      titleHolder = event.eventTitle;
-      dateHolder = event.bookedDate;
-      descriptionHolder = event.description;
-    } else {
       titleHolder = "Give your event a title";
       dateHolder = "Choose a date for your event";
       descriptionHolder = "Write few things about the event";
-    }
     const { eventTitle, bookedDate, description, errors, isLoading, centerId } = this.state;
     const showCenters = _.map(this.props.centers, (center) => {
       return (

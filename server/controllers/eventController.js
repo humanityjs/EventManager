@@ -1,5 +1,5 @@
 
-
+import jwt from 'jsonwebtoken';
 import models from '../models';
 
 const { Events, Centers, Activities } = models;
@@ -95,11 +95,20 @@ class EventController {
       where: {
         id: req.params.id,
       },
+      include: [{
+        model: Centers,
+      }],
     })
       .then((event) => {
         if (event) {
+          const payload = { description: event.description, eventTitle: event.eventTitle, id: event.id, bookedDate: event.bookedDate, centerId: event.centerId, centerName: event.Center.centerName };
+          const token = jwt.sign(payload, process.env.SECRET, {
+            expiresIn: 60 * 60 * 12,
+          });
+          req.body.token = token;
           return res.status(200).send({
-            event,
+            message: 'Event Found',
+            token,
           });
         }
         return res.status(400).send({

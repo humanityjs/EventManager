@@ -6,9 +6,7 @@ const initialState = {
   loaded: false,
   events: [],
   error: null,
-  event: {
-    eventTitle: '',
-  },
+  event: {},
   message: '',
   status: '',
   isEvent: false,
@@ -17,11 +15,11 @@ export default (state = initialState, action) => {
   switch (action.type) {
 
     case 'SET_CURRENT_EVENT': {
-      const id = action.payload;
+      const event = action.payload;
       return {
         ...state,
-        isEvent: !isEmpty(id),
-        id,
+        isEvent: !isEmpty(event),
+        event,
       };
     }
 

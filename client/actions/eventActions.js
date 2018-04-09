@@ -1,4 +1,5 @@
 import axios from 'axios';
+import jwt from 'jsonwebtoken';
 import { centerStatus } from './centerActions';
 import { setActivity, deleteActivity } from './activityActions';
 import { setAdminActivity } from './adminActivityActions';
@@ -47,7 +48,7 @@ export function getCenterEvents(id) {
 
 export function setCurrentEvent(event) {
   return (dispatch) => {
-    dispatch({ type: 'SET_CURRENT_EVENT', payload: event })
+    dispatch({ type: 'SET_CURRENT_EVENT', payload: event });
   };
 }
 export function eventSelected(eventData) {
@@ -60,6 +61,9 @@ export function getEventSelected(id) {
     dispatch({ type: 'GET_EVENT' });
     axios.get(`api/v1/events/${id}`).then((response) => {
       dispatch({ type: 'GET_EVENT_SUCCESS', payload: response.data });
+      const { token } = response.data;
+      localStorage.setItem('event', token);
+      dispatch(setCurrentEvent(jwt.decode(token)));
     }).catch((err) => {
       dispatch({ type: 'GET_EVENT_FAILS', payload: err.response.data });
     });
@@ -81,12 +85,12 @@ export function modifyCenterEvent(data) {
   };
 }
 
-export function modifyEvent(id, data, centerId) {
+export function modifyEvent(id, data) {
   return (dispatch) => {
     dispatch({ type: 'MODIFY_EVENT' });
     axios.put(`api/v1/events/${id}`, data).then((response) => {
       dispatch({ type: 'MODIFY_EVENT_SUCCESS', payload: response });
-      dispatch(centerStatus(centerId));
+      // dispatch(centerStatus(centerId));
     }).catch((err) => {
       dispatch({ type: 'MODIFY_EVENT_FAILS', payload: err.response.data });
     });

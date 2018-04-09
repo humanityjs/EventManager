@@ -4,13 +4,13 @@ import _ from 'lodash';
 import isEmpty from 'lodash/isEmpty';
 import { Redirect, Link } from 'react-router-dom';
 
-import { getEvents, eventSelected } from '../actions/eventActions';
+import { getEvents, eventSelected, getEventSelected } from '../actions/eventActions';
 import EventForm from '../components/eventPage/editEventForm';
 import Navbar from './navbar.jsx';
 import Footer from './footer.jsx';
 import FlashMessageList from './flash/flashMessagesList';
 import DeleteModal from './deleteModal';
-import { centerSelected } from '../actions/centerActions';
+import { centerSelected, getCenterSelected } from '../actions/centerActions';
 import Modal from './flash/modal';
 import { logout } from '../actions/signInActions';
 import { getActivity } from '../actions/activityActions';
@@ -33,10 +33,8 @@ export default class Dashboard extends React.Component {
   }
   
   onClick(e) {
-    let child = document.getElementById(e.target.id);
-    let parent = child.parentNode;
-    this.props.dispatch(eventSelected(e.target.id));
-    this.getCenter(parent.id);
+    this.props.dispatch(getCenterSelected(e.target.parentNode.id));
+    this.props.dispatch(getEventSelected(e.target.id));
   }
 
   getId(e) {
@@ -65,19 +63,9 @@ export default class Dashboard extends React.Component {
   }
   
   showHiddenDiv(e) {
-    let id = e.target.dataset.toggleId;
-    let id2 = e.target.id;
-    if(!id) return;
-    const div = document.getElementById(id);
+    const targetDiv = e.target.id;
+    const div = document.getElementById(targetDiv);
     div.hidden = !div.hidden;
-
-    if (id) {
-      const div2 = document.getElementById(id2);
-      if (!div.hidden) {
-        return div2.style.display="none";
-      }
-      return div2.style.display="";
-    } 
   }
 
   logout(e) {
@@ -105,24 +93,23 @@ export default class Dashboard extends React.Component {
       );
     } else {
       content = _.map(this.props.event.events, (event, index) => {
-        eventBody = `event-body${event.id}`;
         eventId = `eventDetails${event.id}`;
-        editEventId = `editEventDetails${event.id}`;
+        editEventId = `eventDetails${event.id}`;
         form = `form${event.id}`;
         let dateBooked = `date${event.id}`;
         return (
           <div className="center" key={index}>
-            <div id={eventId} key={eventId} className="text-center">
+            <div key={eventId} className="text-center">
               <div className="card p-1 bb mb-3">
                 <div id={event.centerId}>
                   <img className="img" src={event.Center.image_url}/>
                   <h2>
-                    <span className="media-heading" data-toggle-id={eventBody} onClick={this.showHiddenDiv}>
-                      <Link to="/modify-event" id={event.centerId}>{event.eventTitle}</Link> 
+                    <span className="media-heading" id={event.centerId}>
+                      <Link to="/modify-event" id={event.id} onClick={this.onClick.bind(this)}>{event.eventTitle}</Link> 
                     </span>
                   </h2>
                 </div>
-                <div id={eventBody} hidden>
+                <div id={eventId} hidden>
                   <div className="media-body">
                       <h3><span>Date: </span> {event.bookedDate}</h3>
                       <h3><span>Center: </span> {event.Center.centerName}</h3>
@@ -132,8 +119,8 @@ export default class Dashboard extends React.Component {
                       <h3><span>Event description: </span> {event.description}</h3>
                   </div>
                 </div>
-                <span id={event.eventTitle}>
-                  <i id={eventId} data-toggle-id={editEventId} className="fa fa-pencil main-color edit" onClick={this.showHiddenDiv}></i>
+                <span>
+                  <i id={eventId} className="fa fa-pencil main-color edit" onClick={this.showHiddenDiv}></i>
                   <i id={event.id} className="fa fa-trash trash" onClick={this.onDelete.bind(this)} data-toggle="modal" data-target="#deleteModal"></i>
                 </span>
               </div>

@@ -28,8 +28,8 @@ if (localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);
   store.dispatch(setCurrentUser(jwt.decode(localStorage.jwtToken)));
 }
-if (localStorage.eventId) {
-  store.dispatch(setCurrentEvent(localStorage.eventId));
+if (localStorage.event) {
+  store.dispatch(setCurrentEvent(jwt.decode(localStorage.event)));
 }
 if (localStorage.center) {
   store.dispatch(setCurrentCenter(jwt.decode(localStorage.center)));

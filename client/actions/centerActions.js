@@ -33,9 +33,9 @@ export function getCenters(data) {
     });
   };
 }
-export function setCurrentCenter(center) {
+export function setCurrentCenter(centerData) {
   return (dispatch) => {
-    dispatch({ type: 'SET_CURRENT_CENTER', payload: center });
+    dispatch({ type: 'SET_CURRENT_CENTER', payload: centerData });
   };
 }
 export function centerSelected(center) {

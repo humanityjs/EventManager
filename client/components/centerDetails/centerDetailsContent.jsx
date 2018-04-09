@@ -21,7 +21,7 @@ import UploadImage from '../imageUpload';
 export default class CenterDetailsContent extends React.Component {
   constructor(props) {
     super(props);
-    const { centerName, location, description, capacity, image_url, facilities, id } = props.center.centerInfo;
+    const { centerName, location, description, capacity, image_url, facilities, id } = props.center.center;
     this.state = {
       centerName: centerName || '',
       location: location || '',
@@ -55,8 +55,8 @@ export default class CenterDetailsContent extends React.Component {
     this.showHiddenDiv(e);
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.center.centerInfo !== this.props.center.centerInfo) {
-      const { centerName, location, facilities, description, capacity, image_url, id } = nextProps.center.centerInfo;
+    if (nextProps.center.center !== this.props.center.center) {
+      const { centerName, location, facilities, description, capacity, image_url, id } = nextProps.center.center;
       this.setState({
         centerName: centerName || '',
         location: location || '',
@@ -129,7 +129,7 @@ export default class CenterDetailsContent extends React.Component {
   
 
   render() {
-    const { centerInfo } = this.props.center;
+    const { center } = this.props.center;
     const { centerName, location, facilities, description, image_url, capacity, errors } = this.state;
     const { path } = this.props;
     const { event } = this.props.event;
