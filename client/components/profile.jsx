@@ -49,17 +49,31 @@ export default class Profile extends React.Component {
       imageUrl: user.imageUrl,
     })
   }
-  
+  // componentWillReceiveProps(nextProps) {
+  //   const { fullname, email, imageUrl } = nextProps.auth.user;
+  //   if (nextProps.auth !== this.props.auth) {
+  //     this.state = {
+  //       fullname: fullname || '',
+  //       email: email || '',
+  //       imageUrl: imageUrl || '',
+  //     }
+  //   }
+  // }
   showDiv(e) {
-    if (e) {
       e.preventDefault();
-    } 
-    const div = document.getElementById('passwordUpdate');
-    const div2 = document.getElementById('submitButton');
-    const span = document.getElementById('subtitle');
-    div.hidden = !div.hidden;
-    div2.hidden = !div2.hidden;
-    span.hidden = !span.hidden;
+      if (e.target.id === 'details') {
+        const div = document.getElementById('editDetails');
+        const div2 = document.getElementById('showDetails');
+        div.hidden = false;
+        div2.hidden = true;
+      } else {
+      const div = document.getElementById('passwordUpdate');
+      const div2 = document.getElementById('submitButton');
+      const span = document.getElementById('subtitle');
+      div.hidden = !div.hidden;
+      div2.hidden = !div2.hidden;
+      span.hidden = !span.hidden;
+    }
   }
   onChange(e) {
     this.setState({
@@ -101,12 +115,11 @@ export default class Profile extends React.Component {
     this.props.dispatch(logout());
   }
   render() {
-    if (this.props.event.status === 401) {
+    if (this.props.event.status === 403) {
       this.logout();
     }
     const { fullname, email, retypePass, newPassword, oldPassword, errors, wrongPasswordError, imageUrl } = this.state;
     const createdAt = this.props.auth.user.createdAt.slice(0, 10);
-    const evenBooked = _.map()
     return (
       <div id="profile-page">
         <Navbar />
@@ -115,7 +128,13 @@ export default class Profile extends React.Component {
             <div className="card col-lg-6 text-center pt-4 bb mb-4 pb-4">
               <div className="text-primary">Personal Information</div>
               <hr/>
-              <form id="editdetails">
+              <div id="showDetails">
+                <img src={imageUrl} className="img-fluid dropzone" />
+                <h3 className="pt-4">{fullname.toUpperCase()}</h3>
+                <span>{email}</span>
+                <span className="subtitle pointer" id="details" onClick={this.showDiv}>Edit</span>
+              </div>
+              <form id="editDetails" hidden>
                 <UploadImage path={this.props.location.pathname} uploadedImage={imageUrl}/>
                 <h3 className="pt-1">
                   <TextField
@@ -154,9 +173,8 @@ export default class Profile extends React.Component {
                   </div>
                   <br/>
                   <br/>
-                  <button onClick={this.checkPassword} className="btn btn-sm btn-success mt-2 mr-4">check</button>
-                  <button onClick={this.showDiv} id="cancelButton" className="btn btn-sm btn-danger mt-2">cancel</button>
-                  {/* <input type="button" className="btn btn-sm btn-primary mt-4" value="check" onClick={this.checkPassword} /> */}
+                  <input type="button" className="btn btn-sm btn-success mt-4" value="check" onClick={this.checkPassword} />
+                  <input type="button" className="btn btn-sm btn-danger mt-4" value="cancel" onClick={this.checkPassword} />
                 </div>
 
                 <div id="newPasswordDiv" hidden>

@@ -238,7 +238,7 @@ export default (state = initialState, action = {}) => {
         ...state,
         loading: true,
         loaded: false,
-      }
+      };
     }
     case 'UPLOAD_IMAGE_SUCCESS': {
       return {
@@ -246,7 +246,7 @@ export default (state = initialState, action = {}) => {
         loading: false,
         loaded: true,
         url: action.payload,
-      }
+      };
     }
     case 'UPLOAD_IMAGE_FAILS': {
       const { message } = action.payload;
