@@ -51,19 +51,21 @@ export function setCurrentEvent(event) {
     dispatch({ type: 'SET_CURRENT_EVENT', payload: event });
   };
 }
-export function eventSelected(eventData) {
-  return (dispatch) => {
-    dispatch({ type: 'EVENT_SELECTED', payload: eventData });
-  };
-}
-export function getEventSelected(id) {
+// export function eventSelected(eventData) {
+//   return (dispatch) => {
+//     dispatch({ type: 'EVENT_SELECTED', payload: eventData });
+//   };
+// }
+export function getEventSelected(id, tag) {
   return (dispatch) => {
     dispatch({ type: 'GET_EVENT' });
     axios.get(`api/v1/events/${id}`).then((response) => {
       dispatch({ type: 'GET_EVENT_SUCCESS', payload: response.data });
-      const { token } = response.data;
-      localStorage.setItem('event', token);
-      dispatch(setCurrentEvent(jwt.decode(token)));
+      if (!tag) {
+        const { token } = response.data;
+        localStorage.setItem('event', token);
+        dispatch(setCurrentEvent(jwt.decode(token)));
+      }
     }).catch((err) => {
       dispatch({ type: 'GET_EVENT_FAILS', payload: err.response.data });
     });
@@ -74,10 +76,9 @@ export function modifyCenterEvent(data) {
   const { id, centerId } = data;
   return (dispatch) => {
     dispatch({ type: 'MODIFY_CENTER_EVENT' });
-    axios.put(`api/v1/events/${id}`, data).then((res) => {
+    axios.put(`api/v1/approveEvent/${id}`).then((res) => {
       dispatch({ type: 'MODIFY_CENTER_EVENT_SUCCESS', payload: res });
-      dispatch(setAdminActivity(data));
-      dispatch(deleteActivity(id));
+      dispatch(setActivity(data));
       dispatch(getCenterEvents(centerId));
     }).catch((err) => {
       dispatch({ type: 'MODIFY_CENTER_EVENT_FAILS', payload: err.response.data });
@@ -103,8 +104,7 @@ export function deleteCenterEvent(data) {
     dispatch({ type: 'DELETE_CENTER_EVENT' });
     axios.delete(`api/v1/events/${id}`).then((res) => {
       dispatch({ type: 'DELETE_CENTER_EVENT_SUCCESS', payload: res });
-      dispatch(setAdminActivity(data));
-      dispatch(deleteActivity(id));
+      dispatch(setActivity(data));
       dispatch(getCenterEvents(centerId));
     }).catch((err) => {
       dispatch({ type: 'DELETE_CENTER_EVENT_FAILS', payload: err.response.data });
@@ -127,7 +127,7 @@ export function deleteEvent(id) {
 export function clearEventState() {
   return (dispatch) => {
     dispatch({ type: 'CLEAR_EVENT_STATE' });
-  }
+  };
 }
 
 export function eventBooked(id) {

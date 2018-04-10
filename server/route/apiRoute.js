@@ -40,6 +40,9 @@ router.route('/events')
 router.route('/centerEvents/:id')
   .get(authAdminToken, eventController.getCenterEvents);
 
+router.route('/approveEvent/:id')
+  .put(authAdminToken, eventController.approveEvent);
+
 router.route('/userEvents')
   .get(authToken, eventController.getUserEvents);
 

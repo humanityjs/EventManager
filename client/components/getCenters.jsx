@@ -51,9 +51,11 @@ export default class DisplayCenters extends React.Component {
     const { activities } = this.props.activity;
     let adminCenter;
     const recentActivity = _.map(activities,  (activity, index) => {
+      const creationDate = activity.createdAt.replace(/-/g,'/').replace('Z','').replace('T',' ').slice(0, 16);
       return (
         <div className="row ml p-1" key={index}>
-          <Link to="/view-center-event"><span><p className="activity-font mb-0 p-1" onClick={this.onClick.bind(this)} id={activity.centerId}>{activity.description}</p></span></Link>
+          <Link to="/view-center-event"><span><p className="activity-font mb-0 p-1" onClick={this.onClick.bind(this)} id={activity.centerId}>{activity.description}<br/>
+          {creationDate}</p></span></Link>
         </div>
       )
     })

@@ -80,11 +80,11 @@ export default (state = initialState, action) => {
       };
     }
     case 'EVENT_SELECTED': {
-      const { eventId, eventName } = action.payload;
+      const { eventId, eventTitle } = action.payload;
       return {
         ...state,
         eventId,
-        eventName,
+        eventTitle,
       };
     }
     case 'GET_EVENT': {

@@ -109,6 +109,7 @@ class EventController {
           return res.status(200).send({
             message: 'Event Found',
             token,
+            event,
           });
         }
         return res.status(400).send({
@@ -176,7 +177,6 @@ class EventController {
                 bookedDate: bookedDate || events.bookedDate,
                 description: description || events.description,
                 centerId: centerId || events.centerId,
-                isApproved: isApproved || events.isApproved,
               }).then(() => res.status(200).send({
                 message: 'Changes Applied',
                 event,
@@ -194,7 +194,6 @@ class EventController {
             bookedDate: bookedDate || Events.bookedDate,
             description: description || Events.description,
             centerId: centerId || Events.centerId,
-            isApproved: isApproved || Events.isApproved,
           }, {
             where: {
               id,
@@ -216,6 +215,25 @@ class EventController {
     });
   }
 
+  static approveEvent(req, res) {
+    const { id } = req.params;
+    Events.findById(id).then((event) => {
+      if (event) {
+        return event.update({
+          isApproved: true,
+        }).then(() => res.status(200).send({
+          message: 'Event Approved',
+        })).catch(err => res.status(500).send({
+          message: err.message,
+        }));
+      }
+      return res.status(404).send({
+        message: 'Event no found',
+      });
+    }).catch(err => res.status(500).send({
+      message: err.message,
+    }));
+  }
 
   static deleteEvent(req, res) {
     const eventId = req.params.id;
