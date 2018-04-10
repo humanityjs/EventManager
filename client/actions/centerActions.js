@@ -1,6 +1,7 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import { setAdminActivity } from './adminActivityActions';
+import { getCenterEvents } from './eventActions';
 
 export function clearState() {
   return (dispatch) => {
@@ -36,6 +37,7 @@ export function getCenters(data) {
 export function setCurrentCenter(centerData) {
   return (dispatch) => {
     dispatch({ type: 'SET_CURRENT_CENTER', payload: centerData });
+    dispatch(getCenterEvents(centerData.center.id));
   };
 }
 export function centerSelected(center) {

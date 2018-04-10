@@ -40,6 +40,7 @@ export default class CenterDetailsContent extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
+  
   onChange(e) {
     if (this.props.center.message) {
       this.props.dispatch(clearState());
@@ -73,30 +74,24 @@ export default class CenterDetailsContent extends React.Component {
       $(document).ready( function(){
         $('#eventStatus').modal('hide');
         $('#deleteModal').modal('hide');
-        $('#event').modal('show');
       });
-      setTimeout(() => {
-        $('#event').modal('hide');
-      },3000)
     }
   }
 
   onClick(e) {
-    this.props.dispatch(getEventSelected(e.target.id));
+    this.props.dispatch(getEventSelected(e.target.id, 'tag'));
   }
 
   onAttend(e) {
-    const { event } = this.props.event;
-    const centerId = this.props.center.centerSelected;
+    const { id, eventTitle, userId } = this.props.event.event;
+    const centerId = this.props.center.center.id;
     if (e.target.id === "approve") {
       const data = {
-        eventTitle: event.eventTitle,
-        description: event.description,
-        centerId: event.centerId,
-        bookedDate: event.bookedDate,
+        eventTitle: eventTitle,
+        centerId,
         isApproved: 'TRUE',
-        id: event.id,
-        userId: event.userId,
+        id,
+        userId,
         text: 'approved',
         reason:'',
         suggestion:'',
@@ -107,7 +102,7 @@ export default class CenterDetailsContent extends React.Component {
         eventTitle: event.eventTitle,
         centerId: event.centerId,
         id: event.id,
-        text: 'deleted',
+        text: 'disapproved',
       }
       this.props.dispatch(deleteCenterEvent(data));
     } 
@@ -138,7 +133,7 @@ export default class CenterDetailsContent extends React.Component {
       if (event.isApproved == true) {
         eStatus = <i id={event.id} className="fa fa-thumbs-up green"></i>
         } else {
-          eStatus = <span onClick={this.onClick} data-toggle="modal" data-target="#eventStatus"><i id={event.id} className="fa fa-spinner main-color"></i></span>;
+          eStatus = <span onClick={this.onClick} data-toggle="modal" data-target="#eventStatus" id={event.eventTitle}><i id={event.id} className="fa fa-spinner main-color"></i></span>;
         }
       return (
       <tr id={event.id} key={event.id}>
@@ -252,7 +247,6 @@ export default class CenterDetailsContent extends React.Component {
                 <div className="modal-content">
                   <div className="form-inner text-center">
                     <div className="form-inner">
-                      <p className="text-primary">{event.eventTitle}</p>
                       <i id="approve" className="fa fa-thumbs-up green" onClick={this.onAttend}></i>
                       <i data-toggle-id="disapprove" className="fa fa-thumbs-down trash" onClick={this.showHiddenDiv}></i>
                       <br/>

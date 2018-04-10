@@ -8,6 +8,7 @@ export default class ActivityController {
       where: {
         userId: req.decoded.id,
       },
+      order: [['createdAt', 'DESC']],
     }).then((activities) => {
       // if activities are available
       if (activities) {
@@ -26,13 +27,18 @@ export default class ActivityController {
   }
   static setActivity(req, res) {
     const {
-      eventTitle, eventId,
+      eventTitle, eventId, text, userId,
     } = req.body;
-    const info = `${eventTitle} is added and awaiting approval`;
+    let info;
+    if (text) {
+      info = `${eventTitle} has been ${text}`;
+    } else {
+      info = `${eventTitle} is added and awaiting approval`;
+    }
     Activities.create({
       description: info,
       eventId,
-      userId: req.decoded.id,
+      userId: userId || req.decoded.id,
     }).then(() => res.status(200).send({
       message: 'Activity added successfully',
     })).catch(error => res.status(500).send({

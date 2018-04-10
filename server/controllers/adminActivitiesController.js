@@ -8,6 +8,7 @@ export default class AdminctivityController {
       where: {
         userId: req.decoded.id,
       },
+      order: [['createdAt', 'DESC']],
     }).then((activities) => {
       // if activities are available
       if (activities) {
@@ -27,14 +28,12 @@ export default class AdminctivityController {
   static setActivity(req, res) {
     const { eventTitle, text, reason, suggestion, centerName, id, username } = req.body;
     let info;
-    if (text) {
-      info = `Your Event booking, "${eventTitle}" has been ${text}`;
-    } else if (username) {
+    if (username) {
       info = `${username} added an event ${eventTitle}`; 
     } else if (centerName) {
       info = `You added a new center ${centerName}`;
-    } else {
-      info = `Your Event booking, "${eventTitle}" is added and awaiting approval`;
+    } else if (text) {
+      info = `You ${text} ${eventTitle}`;
     }
     Adminactivities.create({
       description: info,
