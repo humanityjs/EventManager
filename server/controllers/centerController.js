@@ -140,7 +140,7 @@ class CenterController {
    */
   static postCenter(req, res) {
     const {
-      centerName, location, description, facilities, capacity, image_url,
+      centerName, location, description, facilities, capacity, imageUrl,
     } = req.body;
     const { id } = req.decoded;
 
@@ -160,7 +160,7 @@ class CenterController {
           description,
           facilities: facilityArray,
           capacity,
-          image_url,
+          imageUrl,
           userId: id,
         }).then(center => res.status(201).send({
           center,
@@ -183,7 +183,7 @@ class CenterController {
      */
   static updateCenter(req, res) {
     const {
-      centerName, location, description, facilities, capacity, image_url,
+      centerName, location, description, facilities, capacity, imageUrl,
     } = req.body;
     const { id } = req.params;
     return Centers.findById(id).then((center) => {
@@ -199,7 +199,7 @@ class CenterController {
           description: description.toLowerCase() || center.description,
           facilities: facilityArray || center.facilities,
           capacity: capacity || center.capacity,
-          image_url: image_url || center.image_url,
+          imageUrl: imageUrl || center.imageUrl,
         }).then(() => res.status(200).send({
           message: 'Successfully updated center',
         })).catch(error => res.status(500).send({

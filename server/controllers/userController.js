@@ -1,10 +1,8 @@
-const nodemailer = require('nodemailer');
-
+import nodemailer from 'nodemailer';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import env from 'dotenv';
 import models from '../models';
-import { error } from 'util';
 
 const { Users } = models;
 
@@ -84,15 +82,15 @@ export default class UserController {
      * @memberof UserController
      */
   static signin(req, res) {
-    const { login_email, login_password } = req.body;
-    const userEmail = login_email.toLowerCase();
+    const { loginEmail, loginPassword } = req.body;
+    const userEmail = loginEmail.toLowerCase();
     Users.findOne({
       where: {
         email: userEmail,
       },
     }).then((user) => {
       if (user) {
-        const check = bcrypt.compareSync(login_password, user.password);
+        const check = bcrypt.compareSync(loginPassword, user.password);
         if (check) {
           const payload = {
             fullname: user.fullname, email: user.email, isAdmin: user.isAdmin, id: user.id, createdAt: user.createdAt,
@@ -297,7 +295,6 @@ export default class UserController {
   static getDateJoined(req, res) {
     Users.findById(req.params.id).then((user) => {
       joinedDate = user.createdAt.slice(0, 10);
-      console.log(joinedDate);
       return res.status(200).send({
         joinedDate,
       });
