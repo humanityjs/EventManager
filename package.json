@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --watch server --exec babel-node -- server/app.js",
-    "test": "nyc --reporter=html --reporter=text mocha --require babel-register --require babel-polyfill --recursive server/test/apiTest.js --timeout 30000 --exit",
+    "test": "NODE_ENV=test npm run seed nyc --reporter=html --reporter=text mocha --require babel-register --require babel-polyfill --recursive server/test/index.js --timeout 30000 --exit",
     "coverage": "nyc report --reporter=text-icov | coveralls",
     "unmigrate": "sequelize db:migrate:undo:all",
     "migrate": "sequelize db:migrate",
@@ -60,7 +60,7 @@
     "morgan": "^1.9.0",
     "nodemailer": "^4.4.1",
     "nyc": "^11.3.0",
-    "pg": "^7.4.0",
+    "pg": "^7.4.1",
     "pg-hstore": "^2.3.2",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
