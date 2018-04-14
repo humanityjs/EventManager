@@ -27,7 +27,10 @@ export default class SignInForm extends React.Component {
   }
 
   isValid() {
-    const { errors, isValid } = validateSigninInput(this.state);
+    const {
+      errors,
+      isValid
+    } = validateSigninInput(this.state);
     if (!isValid) {
       this.setState({ errors });
     }
@@ -49,7 +52,11 @@ export default class SignInForm extends React.Component {
 
   render() {
 
-    const { loginEmail, loginPassword, errors } = this.state;
+    const {
+      loginEmail,
+      loginPassword,
+      errors
+    } = this.state;
     return (
       <div>  
         <div className="logo text-uppercase"><strong className="text-primary">Sign In</strong></div>

@@ -26,6 +26,7 @@ class EventController {
         // show events
         return res.status(200).send({
           events,
+          message: 'Event found',
         });
       }
       // No Event found
@@ -52,6 +53,7 @@ class EventController {
         // show events
         return res.status(200).send({
           events,
+          message: 'Center events found',
         });
       }
       // No Event found
@@ -79,6 +81,7 @@ class EventController {
         // show events
         return res.status(200).send({
           events,
+          message: 'User events found',
         });
       }
       // No Event found
@@ -101,7 +104,14 @@ class EventController {
     })
       .then((event) => {
         if (event) {
-          const payload = { description: event.description, eventTitle: event.eventTitle, id: event.id, bookedDate: event.bookedDate, centerId: event.centerId, centerName: event.Center.centerName };
+          const payload = {
+            description: event.description,
+            eventTitle: event.eventTitle,
+            id: event.id,
+            bookedDate: event.bookedDate,
+            centerId: event.centerId,
+            centerName: event.Center.centerName
+          };
           const token = jwt.sign(payload, process.env.SECRET, {
             expiresIn: 60 * 60 * 12,
           });
@@ -159,7 +169,11 @@ class EventController {
 
   static updateEvent(req, res) {
     const {
-      eventTitle, description, bookedDate, centerId, isApproved,
+      eventTitle,
+      description,
+      bookedDate,
+      centerId,
+      isApproved,
     } = req.body;
     const { id } = req.params;
     // find the requested event
@@ -184,7 +198,7 @@ class EventController {
                 message: error.message,
               }));
             }
-            return res.status(401).send({
+            return res.status(409).send({
               message: 'The date you chose is not available, choose another day or center',
             });
           }
@@ -237,7 +251,10 @@ class EventController {
 
   static deleteEvent(req, res) {
     const eventId = req.params.id;
-    const { id, isAdmin } = req.decoded;
+    const {
+      id,
+      isAdmin
+    } = req.decoded;
 
     return Events.findById(eventId).then((event) => {
       if (event) {
@@ -259,27 +276,19 @@ class EventController {
   }
 
   static getEventBookedCount(req, res) {
-    Events.findAll({
+    Events.findAndCountAll({
       where: {
         userId: req.params.id,
-      }
+      },
     }).then((event) => {
-      const eventBookedCount = event.length;
+      const eventBookedCount = event.count;
       res.status(200).send({
         eventBookedCount,
-      })
+      });
     }).catch(err => res.status(500).send({
       message: err.message,
     }));
   }
-
-  // static getEventDeletedCount(req, res) {
-  //   Events.findById(req.params.id).then(eventDeletedCount => res.status(200).send({
-  //     eventDeletedCount,
-  //   })).catch(err => res.status(500).send({
-  //     message: err.message,
-  //   }));
-  // }
 }
 
 

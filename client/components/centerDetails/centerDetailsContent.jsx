@@ -21,7 +21,15 @@ import UploadImage from '../imageUpload';
 export default class CenterDetailsContent extends React.Component {
   constructor(props) {
     super(props);
-    const { centerName, location, description, capacity, imageUrl, facilities, id } = props.center.center;
+    const {
+      centerName,
+      location,
+      description,
+      capacity,
+      imageUrl,
+      facilities, 
+      id } = props.center.center;
+
     this.state = {
       centerName: centerName || '',
       location: location || '',
@@ -57,7 +65,15 @@ export default class CenterDetailsContent extends React.Component {
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.center.center !== this.props.center.center) {
-      const { centerName, location, facilities, description, capacity, imageUrl, id } = nextProps.center.center;
+      const {
+        centerName,
+        location,
+        facilities,
+        description,
+        capacity,
+        imageUrl,
+        id
+      } = nextProps.center.center;
       this.setState({
         centerName: centerName || '',
         location: location || '',
@@ -83,7 +99,11 @@ export default class CenterDetailsContent extends React.Component {
   }
 
   onAttend(e) {
-    const { id, eventTitle, userId } = this.props.event.event;
+    const {
+      id,
+      eventTitle,
+      userId
+    } = this.props.event.event;
     const centerId = this.props.center.center.id;
     if (e.target.id === "approve") {
       const data = {
@@ -125,7 +145,15 @@ export default class CenterDetailsContent extends React.Component {
 
   render() {
     const { center } = this.props.center;
-    const { centerName, location, facilities, description, imageUrl, capacity, errors } = this.state;
+    const {
+      centerName,
+      location,
+      facilities,
+      description,
+      imageUrl,
+      capacity,
+      errors
+    } = this.state;
     const { path } = this.props;
     const { event } = this.props.event;
     const events = _.map(this.props.events, (event) => {

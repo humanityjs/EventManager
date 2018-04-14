@@ -51,7 +51,10 @@ export default class CenterForm extends React.Component {
 
   isValid() {
     if (this.props.path === '/add-center') {
-      const { errors, isValid } = addCenterValidation(this.state);
+      const {
+        errors,
+        isValid
+      } = addCenterValidation(this.state);
       if (!isValid) {
         this.setState({ errors });
       }

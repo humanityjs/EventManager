@@ -17,7 +17,10 @@ export default class Validation {
      */
   static postEvent(req, res, next) {
     const {
-      eventTitle, bookedDate, description, centerId,
+      eventTitle,
+      bookedDate,
+      description,
+      centerId,
     } = req.body;
     const errors = {};
     if (eventTitle === undefined || bookedDate === undefined || description === undefined
@@ -78,7 +81,9 @@ export default class Validation {
 
   static updateEvent(req, res, next) {
     const {
-      eventTitle, bookedDate, description,
+      eventTitle,
+      bookedDate,
+      description,
     } = req.body;
     const errors = {};
 

@@ -75,7 +75,10 @@ export default class Validation {
      * @memberof UserValidations
      */
   static signin(req, res, next) {
-    const { loginEmail, loginPassword } = req.body;
+    const {
+      loginEmail,
+      loginPassword
+    } = req.body;
 
     const errors = {};
     if (!loginEmail || !loginPassword) {

@@ -2,7 +2,10 @@ import validator from 'validator';
 import isEmpty from 'lodash/isEmpty';
 
 export default function validateInput(data) {
-  const { loginEmail, loginPassword } = data;
+  const {
+    loginEmail,
+    loginPassword
+  } = data;
 
   const errors = {};
 

@@ -10,6 +10,7 @@ import authAdminToken from '../middleware/authAdminToken';
 import userValidate from '../middleware/userValidate';
 import centerValidate from '../middleware/centerValidate';
 import eventValidate from '../middleware/eventValidate';
+import sendMail from '../helper/sendMail';
 
 const router = express.Router();
 // Routes
@@ -52,7 +53,7 @@ router.route('/events/:id')
   .delete(authToken, eventController.deleteEvent);
 
 router.route('/sendmail')
-  .post(userController.sendMail);
+  .post(sendMail);
 
 router.route('/userEmail/:id')
   .get(authToken, userController.getUserEmail);
@@ -79,6 +80,9 @@ router.route('/eventsbookedcount/:id')
 
 router.route('/datejoined/:id')
   .get(authToken, userController.getDateJoined);
+
+router.route('/shortcode')
+  .get(shortCode);
   
 // Return router
 export default router;

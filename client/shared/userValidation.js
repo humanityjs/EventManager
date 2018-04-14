@@ -5,7 +5,10 @@ export function validateSignupInput(data) {
   const errors = {};
 
   const {
-    fullname, email, password, retypePass,
+    fullname,
+    email,
+    password,
+    retypePass,
   } = data;
 
   if (!validator.isEmpty(fullname)) {
@@ -41,7 +44,10 @@ export function validateSignupInput(data) {
 }
 
 export function validateSigninInput(data) {
-  const { loginEmail, loginPassword } = data;
+  const {
+    loginEmail,
+    loginPassword
+  } = data;
 
   const errors = {};
 
