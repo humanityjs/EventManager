@@ -81,8 +81,8 @@ router.route('/eventsbookedcount/:id')
 router.route('/datejoined/:id')
   .get(authToken, userController.getDateJoined);
 
-router.route('/shortcode')
-  .get(shortCode);
-  
+// router.route('/shortcode')
+//   .get(shortCode);
+
 // Return router
 export default router;

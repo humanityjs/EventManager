@@ -28,7 +28,7 @@ export default class CenterForm extends React.Component {
       errors: {},
       imageUrl: '',
     };
-    
+
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.isValid = this.isValid.bind(this);
@@ -46,7 +46,7 @@ export default class CenterForm extends React.Component {
     if (this.isValid()) {
       this.state.imageUrl = this.props.center.url;
       this.props.dispatch(addCenter(this.state));
-    } 
+    }
   }
 
   isValid() {
@@ -88,16 +88,16 @@ export default class CenterForm extends React.Component {
     descHolder = "Describe center in few words";
     locationHolder = "Center location";
     capacityHolder = "Capacity";
-    return ( 
+    return (
       <form id="add-center-form" onSubmit={this.onSubmit}>
-        <UploadImage uploadedImage={this.props.center.url}/>
+        <UploadImage uploadedImage={this.props.center.url} />
         <span className="help-block">{this.props.center.error}</span>
         <TextField
           id='centerName'
           value={centerName}
           placeholder={nameHolder}
           type='text'
-          error={errors.centerName} 
+          error={errors.centerName}
           onChange={this.onChange} />
 
         <TextField
@@ -105,7 +105,7 @@ export default class CenterForm extends React.Component {
           value={this.state.location}
           placeholder={locationHolder}
           type='text'
-          error={errors.location} 
+          error={errors.location}
           onChange={this.onChange} />
         <p class="subtitle">separate facilities with commas. Do not include spaces</p>
         <TextField
@@ -113,7 +113,7 @@ export default class CenterForm extends React.Component {
           value={this.state.facilities}
           placeholder={facHolder}
           type='text'
-          error={errors.facilities} 
+          error={errors.facilities}
           onChange={this.onChange} />
 
         <TextField
@@ -121,15 +121,15 @@ export default class CenterForm extends React.Component {
           value={this.state.capacity}
           placeholder={capacityHolder}
           type='text'
-          error={errors.capacity} 
+          error={errors.capacity}
           onChange={this.onChange} />
 
-          <span className="help-block">{errors.description}</span>
-          <p class="subtitle">describe the center in few words</p>
-          <div class="form-group">
-            <textarea class="form-control" id="description" onChange={this.onChange} placeholder={descHolder} value={this.state.description}></textarea>
-          </div> 
-          <input id="add-event" type="submit" value={buttonValue} class="btn btn-primary basic"/>
+        <span className="help-block">{errors.description}</span>
+        <p class="subtitle">describe the center in few words</p>
+        <div class="form-group">
+          <textarea class="form-control" id="description" onChange={this.onChange} placeholder={descHolder} value={this.state.description}></textarea>
+        </div>
+        <input id="add-event" type="submit" value={buttonValue} class="btn btn-primary basic" />
       </form>
     );
   }

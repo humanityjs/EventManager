@@ -6,6 +6,7 @@
   "scripts": {
     "start": "nodemon --watch server --exec babel-node -- server/app.js",
     "test": "NODE_ENV=test npm run seed nyc --reporter=html --reporter=text mocha --require babel-register --require babel-polyfill --recursive server/test/index.js --timeout 30000 --exit",
+    "test:client": "jest",
     "coverage": "nyc report --reporter=text-icov | coveralls",
     "unmigrate": "sequelize db:migrate:undo:all",
     "migrate": "sequelize db:migrate",
@@ -15,22 +16,34 @@
   },
   "author": "Olayemi Lawal",
   "license": "ISC",
+  "jest": {
+    "setupFiles": [
+      "<rootDir>/test-setup.js"
+    ],
+    "collectCoverage": true
+  },
   "devDependencies": {
     "babel-core": "^6.26.0",
+    "babel-jest": "^22.4.3",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.7",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^4.11.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "html-webpack-plugin": "^2.30.1",
+    "jest": "^22.4.3",
     "loader-utils": "^1.1.0",
     "node-sass": "^4.7.2",
     "nodemon": "^1.12.1",
+    "regenerator-runtime": "^0.11.1",
     "sass-loader": "^6.0.6",
+    "sinon": "^4.5.0",
     "style-loader": "^0.19.1"
   },
   "dependencies": {

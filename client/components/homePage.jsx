@@ -20,7 +20,7 @@ export default class Homepage extends React.Component {
     const { pathname } = this.props.location;
     return (
       <div id="homepage">
-        <Navbar path={pathname}/>
+        <Navbar path={pathname} />
         <Content />
         <Footer />
       </div>
